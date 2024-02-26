@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'><nta><declaration>const int TIMESTAMPS[11] = {1708936690082, 1708936700096, 1708936710104, 1708936716353, 1708936720109, 1708936721760, 1708936730110, 1708936730449, 1708936740116, 1708936741815, 1708936750130};
+
+ const string EVENTS[11] = {C, A, Z, F, L, N, Y, I, Q, X, U};
+
+</declaration></nta>

@@ -17,19 +17,23 @@ class XMLFormatter:
         self.log = log
 
     def format_xml(self):
-        root = ET.Element("log")
-        event_elem = ET.SubElement(root, "events")
-        for event in self.log.events:
-            timestamp_elem = ET.SubElement(event_elem, "timestamp")
-            timestamp_elem.text = str(event.timestamp)
-            event_text_elem = ET.SubElement(event_elem, "event")
-            event_text_elem.text = event.event_text
-        tree = ET.ElementTree(root)
-        return tree
+        self.root = ET.Element("nta")
+        declaration = ET.SubElement(self.root, "declaration")
+        declaration.text = f"{self.format_array([event.timestamp for event in self.log.events], 'int', 'TIMESTAMPS')} {self.format_array([event.event_text for event in self.log.events], 'string', 'EVENTS')}"
+        self.tree = ET.ElementTree(self.root)
+    
+    def format_array(self, arr, type, name):
+        return f"const {type} {name}[{arr.__len__()}] = {{{', '.join(arr)}}};\n\n"
+
     
     def write_to_file(self, file_path):
-        xml_tree = self.format_xml()
-        xml_tree.write(file_path)
+        self.format_xml()
+        xml_string = ET.tostring(self.root, encoding="utf-8")
+        # Manually add DOCTYPE declaration
+        xml_with_doctype = b"<?xml version='1.0' encoding='utf-8'?>\n<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>" + xml_string
+        # Write to file
+        with open(file_path, "wb") as file:
+            file.write(xml_with_doctype)
 
 
 if __name__ == "__main__":
@@ -42,5 +46,5 @@ if __name__ == "__main__":
 
     # Create an XMLFormatter object and use it to write the log to an XML file.
     formatter = XMLFormatter(log)
-    formatter.write_to_file("xml-formatter/formattedXML/log.xml")
+    formatter.write_to_file("xml-formatter/formattedXML/log1.xml")
 
