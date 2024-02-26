@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+//    Regular Expression 
+//    AB(AB)*C
+
+int i = 0;
+const string E[7] = {"A", "B", "A", "B", "A", "B", "C"};
+const int T[7] = {1, 5, 6, 8, 11, 17, 21};
+bool accepted;
+</declaration>
+	<template>
+		<name>EventCounter</name>
+		<location id="id0" x="0" y="0">
+		</location>
+		<init ref="id0"/>
+		<transition id="id1">
+			<source ref="id0"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-42" y="-153">!accepted</label>
+			<label kind="synchronisation" x="-42" y="-136">NextEvent!</label>
+			<label kind="assignment" x="-17" y="-119">i++</label>
+			<nail x="-51" y="-93"/>
+			<nail x="42" y="-93"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">TimedAutomata</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id2" x="-17" y="-195">
+		</location>
+		<location id="id3" x="-280" y="-221">
+		</location>
+		<location id="id4" x="-93" y="-391">
+		</location>
+		<location id="id5" x="119" y="-382">
+			<name x="85" y="-365">Accepted</name>
+		</location>
+		<init ref="id2"/>
+		<transition id="id6">
+			<source ref="id4"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-42" y="-382">E[i] == "C"</label>
+		</transition>
+		<transition id="id7">
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-331" y="-408">E[i] == "A"</label>
+			<nail x="-263" y="-382"/>
+		</transition>
+		<transition id="id8">
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-187" y="-297">E[i] == "B"</label>
+		</transition>
+		<transition id="id9">
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-195" y="-195">E[i] == "A"</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+system EventCounter, TimedAutomata;
+</system>
+	<queries>
+		<query>
+			<formula/>
+			<comment/>
+		</query>
+	</queries>
+</nta>

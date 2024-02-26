@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+int i = 0;
+const string input[5] = {"A", "B", "B", "B", "C"};
+const int timestamp[5] = {2, 3, 5, 6,7};
+bool stringAccepted = false;</declaration>
+	<template>
+		<name x="5" y="5">Template</name>
+		<declaration>// Place local declarations here.
+
+//RE: AB(AB)*C
+
+</declaration>
+		<location id="id0" x="0" y="-135">
+		</location>
+		<location id="id1" x="-263" y="-161">
+		</location>
+		<location id="id2" x="-76" y="-331">
+		</location>
+		<location id="id3" x="136" y="-322">
+			<name x="119" y="-305">Accepted</name>
+		</location>
+		<init ref="id0"/>
+		<transition id="id4">
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-34" y="-322">input[i] == "C"</label>
+			<label kind="assignment" x="-51" y="-373">i++,
+stringAccepted = true</label>
+		</transition>
+		<transition id="id5">
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-314" y="-348">input[i] == "A"</label>
+			<label kind="assignment" x="-280" y="-331">i++</label>
+			<nail x="-246" y="-322"/>
+		</transition>
+		<transition id="id6">
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-161" y="-254">input[i] == "B"</label>
+			<label kind="assignment" x="-178" y="-237">i++</label>
+		</transition>
+		<transition id="id7">
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-186" y="-144">input[i] == "A"</label>
+			<label kind="assignment" x="-135" y="-127">i++</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+Process = Template();
+// List one or more processes to be composed into a system.
+system Process;
+</system>
+	<queries>
+		<query>
+			<formula>E[] stringAccepted == true</formula>
+			<comment/>
+			<result outcome="failure" type="quality" timestamp="2024-02-22 10:40:57 +0100">
+			</result>
+		</query>
+	</queries>
+</nta>

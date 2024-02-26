@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+int i = 0;
+const string input[5] = {"A", "A", "B", "B", "C"};
+const int timestamp[5] = {2, 3, 5, 6, 7};
+bool stringAccepted = false;</declaration>
+	<template>
+		<name x="5" y="5">Template</name>
+		<declaration>// Place local declarations here.
+
+//RE: AB(AB)*C
+
+</declaration>
+		<location id="id0" x="0" y="-135">
+		</location>
+		<location id="id1" x="-153" y="-229">
+		</location>
+		<location id="id2" x="136" y="-322">
+			<name x="102" y="-306">Accepted</name>
+		</location>
+		<init ref="id0"/>
+		<transition id="id3">
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-102" y="-314">input[i] == "C"</label>
+			<label kind="assignment" x="-51" y="-297">i++</label>
+		</transition>
+		<transition id="id4">
+			<source ref="id1"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-365" y="-93">input[i] == "A"</label>
+			<label kind="assignment" x="-323" y="-76">i++</label>
+			<nail x="-212" y="-85"/>
+			<nail x="-280" y="-110"/>
+		</transition>
+		<transition id="id5">
+			<source ref="id1"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-433" y="-280">input[i] == "B"</label>
+			<label kind="assignment" x="-382" y="-255">i++</label>
+			<nail x="-306" y="-212"/>
+			<nail x="-289" y="-280"/>
+		</transition>
+		<transition id="id6">
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-34" y="-195">input[i] == "A"</label>
+			<label kind="assignment" x="17" y="-178">i++</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+Process = Template();
+// List one or more processes to be composed into a system.
+system Process;
+</system>
+	<queries>
+		<query>
+			<formula>E[] Template.Accepted == true</formula>
+			<comment/>
+		</query>
+	</queries>
+</nta>
