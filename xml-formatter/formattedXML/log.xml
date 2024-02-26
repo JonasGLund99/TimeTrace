@@ -1,46 +1,26 @@
 <log>
-    <event>
+    <events>
         <timestamp>1708936690082</timestamp>
-        <event_text>C</event_text>
-    </event>
-    <event>
+        <event>C</event>
         <timestamp>1708936700096</timestamp>
-        <event_text>A</event_text>
-    </event>
-    <event>
+        <event>A</event>
         <timestamp>1708936710104</timestamp>
-        <event_text>Z</event_text>
-    </event>
-    <event>
+        <event>Z</event>
         <timestamp>1708936716353</timestamp>
-        <event_text>F</event_text>
-    </event>
-    <event>
+        <event>F</event>
         <timestamp>1708936720109</timestamp>
-        <event_text>L</event_text>
-    </event>
-    <event>
+        <event>L</event>
         <timestamp>1708936721760</timestamp>
-        <event_text>N</event_text>
-    </event>
-    <event>
+        <event>N</event>
         <timestamp>1708936730110</timestamp>
-        <event_text>Y</event_text>
-    </event>
-    <event>
+        <event>Y</event>
         <timestamp>1708936730449</timestamp>
-        <event_text>I</event_text>
-    </event>
-    <event>
+        <event>I</event>
         <timestamp>1708936740116</timestamp>
-        <event_text>Q</event_text>
-    </event>
-    <event>
+        <event>Q</event>
         <timestamp>1708936741815</timestamp>
-        <event_text>X</event_text>
-    </event>
-    <event>
+        <event>X</event>
         <timestamp>1708936750130</timestamp>
-        <event_text>U</event_text>
-    </event>
+        <event>U</event>
+    </events>
 </log>

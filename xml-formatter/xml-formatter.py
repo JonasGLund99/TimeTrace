@@ -18,11 +18,11 @@ class XMLFormatter:
 
     def format_xml(self):
         root = ET.Element("log")
+        event_elem = ET.SubElement(root, "events")
         for event in self.log.events:
-            event_elem = ET.SubElement(root, "event")
             timestamp_elem = ET.SubElement(event_elem, "timestamp")
             timestamp_elem.text = str(event.timestamp)
-            event_text_elem = ET.SubElement(event_elem, "event_text")
+            event_text_elem = ET.SubElement(event_elem, "event")
             event_text_elem.text = event.event_text
         tree = ET.ElementTree(root)
         return tree
