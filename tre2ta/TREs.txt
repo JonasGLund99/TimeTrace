@@ -1,5 +1,5 @@
-DOCKER command: 
-docker run -i maswag/tre2ta -e '(AB)%(0,35)$' (erstat TRE)
+DOCKER command
+docker run -i maswag/tre2ta -e '(AB)%(0,35)$'
 
 Timed Regular Expressions
 tre1:   '(AB)%(0,35)$'
