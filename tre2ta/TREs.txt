@@ -3,5 +3,6 @@ docker run -i maswag/tre2ta -e '(AB)%(0,35)$'
 
 Timed Regular Expressions
 tre1:   '(AB)%(0,35)$'
+tre1s:  '(AB)*%(0,35)$'
 tre2:   '(AC*D*E*F*G*I*B)%(0,200)$'
 tre3:   '((AC*D*E*F*G*I*B)%(0,200)&(CA*D*E*F*G*I*B)%(50,200))$'
