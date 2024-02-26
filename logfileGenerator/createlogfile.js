@@ -37,11 +37,11 @@ function simulateUserActivity() {
     const logEntryLogout = generateLogEntry(userID, EVENTS['logout'].event);
     fs.appendFileSync(FILEEVENT, logEntryLogout);
     fs.appendFileSync(FILEEVENTALIAS, logEntryLogoutAlias);
-  }, randomTimeInRange(LOGOUTMIN, LOGOUTMAX)); // Random time between 5 to 10 minutes in milliseconds
+  }, randomTimeInRange(LOGOUTMIN, LOGOUTMAX)); 
 }
 
 // Simulate user activity
-setInterval(simulateUserActivity, SIMULATEUSERINTERVAL); // Simulate user activity every 1 seconds
+setInterval(simulateUserActivity, SIMULATEUSERINTERVAL); // Simulate user activity every SIMULATEUSERINTERVAL milliseconds
 
 // Initial log entry
 fs.writeFileSync(FILEEVENT, generateLogEntry('SYSTEM', 'initialized\n'));
