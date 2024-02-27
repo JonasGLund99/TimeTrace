@@ -5,7 +5,7 @@
 
 //tre1s:   '(AB)*%(0,35)$'
 int i = 0;
-const string E[9] = {"A", "B", "A", "A", "B", "A", "B", "A", "$"};
+const string E[9] = {"A", "B", "A", "B", "A", "B", "B", "A", "$"};
 //const int T[8] = {0, 19, 20, 21, 27, 28, 31, 34};
 const int T[8] = {0, 25, 38, 49, 56, 57, 63, 90};
 bool accepted = false;
@@ -13,11 +13,11 @@ bool accepted = false;
 	<template>
 		<name x="5" y="5">TimedAutomata</name>
 		<declaration>// Place local declarations here.</declaration>
-		<location id="id0" x="263" y="263">
-			<name x="238" y="229">s5</name>
+		<location id="id0" x="263" y="-34">
+			<name x="238" y="-68">s5</name>
 		</location>
 		<location id="id1" x="263" y="119">
-			<name x="253" y="85">s4</name>
+			<name x="289" y="85">s4</name>
 		</location>
 		<location id="id2" x="-204" y="119">
 			<name x="-229" y="93">s1</name>
@@ -31,40 +31,24 @@ bool accepted = false;
 		<init ref="id4"/>
 		<transition id="id5">
 			<source ref="id3"/>
-			<target ref="id3"/>
-			<label kind="guard" x="-136" y="17">E[i] == "A"</label>
-			<label kind="assignment" x="-111" y="-8">i++</label>
-			<nail x="-85" y="51"/>
-			<nail x="-60" y="34"/>
-		</transition>
-		<transition id="id6">
-			<source ref="id1"/>
-			<target ref="id1"/>
-			<label kind="guard" x="297" y="-34">E[i] != "$"</label>
-			<label kind="assignment" x="323" y="-8">i++</label>
-			<nail x="263" y="-25"/>
-			<nail x="374" y="42"/>
-		</transition>
-		<transition id="id7">
-			<source ref="id3"/>
 			<target ref="id2"/>
 			<label kind="guard" x="-178" y="204">E[i] == "B"</label>
 			<label kind="assignment" x="-153" y="221">i++</label>
 			<nail x="-136" y="204"/>
 		</transition>
-		<transition id="id8">
+		<transition id="id6">
 			<source ref="id1"/>
 			<target ref="id0"/>
-			<label kind="guard" x="289" y="169">E[i] == "$"</label>
-			<label kind="assignment" x="280" y="195">accepted = true</label>
+			<label kind="guard" x="280" y="17">E[i] == "$"</label>
+			<label kind="assignment" x="272" y="51">accepted = true</label>
 		</transition>
-		<transition id="id9">
+		<transition id="id7">
 			<source ref="id4"/>
 			<target ref="id3"/>
 			<label kind="guard" x="-8" y="8">E[i] == "A"</label>
 			<label kind="assignment" x="-8" y="25">i++</label>
 		</transition>
-		<transition id="id10">
+		<transition id="id8">
 			<source ref="id3"/>
 			<target ref="id1"/>
 			<label kind="guard" x="51" y="127">E[i] == "B" &amp;&amp;
@@ -72,7 +56,7 @@ T[i] &lt; 35 &amp;&amp;
 T[i] &gt; 0</label>
 			<label kind="assignment" x="76" y="195">i++</label>
 		</transition>
-		<transition id="id11">
+		<transition id="id9">
 			<source ref="id2"/>
 			<target ref="id3"/>
 			<label kind="guard" x="-178" y="76">E[i] == "A"</label>
