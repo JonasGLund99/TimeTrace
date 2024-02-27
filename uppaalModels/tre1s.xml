@@ -5,9 +5,9 @@
 
 //tre1s:   '(AB)*%(0,35)$'
 int i = 0;
-const string E[9] = {"A", "B", "A", "B", "A", "B", "B", "A", "$"};
-//const int T[8] = {0, 19, 20, 21, 27, 28, 31, 34};
-const int T[8] = {0, 25, 38, 49, 56, 57, 63, 90};
+const string E[9] = {"A", "B", "A", "B", "A", "B", "A", "B", "$"};
+const int T[8] = {0, 19, 20, 21, 27, 28, 31, 34};
+//const int T[8] = {0, 25, 38, 49, 56, 57, 63, 90};
 bool accepted = false;
 </declaration>
 	<template>
@@ -70,13 +70,13 @@ system TimedAutomata;
 		<query>
 			<formula>E&lt;&gt; accepted == true</formula>
 			<comment/>
-			<result outcome="success" type="quality" timestamp="2024-02-26 11:19:21 +0100">
+			<result outcome="success" type="quality" timestamp="2024-02-27 09:25:07 +0100">
 			</result>
 		</query>
 		<query>
 			<formula>A&lt;&gt; accepted == true</formula>
 			<comment/>
-			<result outcome="failure" type="quality" timestamp="2024-02-26 11:19:19 +0100">
+			<result outcome="failure" type="quality" timestamp="2024-02-27 09:25:05 +0100">
 			</result>
 		</query>
 	</queries>
