@@ -26,13 +26,13 @@ function randomTimeInRange(min, max) {
 // Function to generate log entries without user id
 function generateLogEntryWithoutUserID(action) {
   const timestamp = new Date().toISOString();
-  return `${timestamp} - ${action}\n`;
+  return `${action} ${timestamp}\n`;
 }
 
 // Function to generate log entries
 function generateLogEntry(userID, action) {
   const timestamp = new Date().toISOString();
-  return `${timestamp} - User ${userID} ${action}\n`;
+  return `User ${userID} ${action} ${timestamp}\n`;
 }
 
 // Function to simulate user logins and logouts
