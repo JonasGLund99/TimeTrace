@@ -1,0 +1,11 @@
+{
+    "log-search" : {
+        "logfiles" : [
+            {
+                "file-name" : "myLog123.txt",
+                "file-content": "FILE CONTENT of myLog123.txt"
+            }
+        ],
+        "TRE" : "(AB)*%(0,35)"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "log-matches" : {
+        "logfiles" : [
+            { 
+                "file-name" : "myLog123.txt", 
+                "line-matches" : [
+                    [1, 5], [7, 10], [25, 40]
+                ]
+            }
+        ], 
+        "TRE" : "(AB)*%(0,35)"
+    }
+}
