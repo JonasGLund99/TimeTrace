@@ -2,9 +2,12 @@
 
 Better Timed Pattern Searching in Log Files
 
-Run Vue
+## Run Vue
 `cd TimeTrace`
 
-Hot reload
+### Hot reload
 `npm run dev`
 
+### Recommended extensions for VSCode:
+Headwind
+Vue
