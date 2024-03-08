@@ -3,9 +3,8 @@
 Better Timed Pattern Searching in Log Files
 
 Run Vue
-`cd log-searcher`
-`npm run serve`
+`cd TimeTrace`
 
-Compile Tailwind
-`cd log-searcher`
-`npx tailwindcss -i ./src/input.css -o ./public/output.css --watch`
+Hot reload
+`npm run dev`
+
