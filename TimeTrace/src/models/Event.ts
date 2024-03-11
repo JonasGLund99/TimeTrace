@@ -1,5 +1,5 @@
 export class Event {
-    timestamp: Date | undefined;
-    text: string = "";
-    line: number = -1;
+    public timestamp: Date | undefined;
+    public text: string = "";
+    public line: number = -1;
 }
