@@ -1,7 +1,6 @@
 import { MonaaMatch } from './MonaaMatch';
 import { TREBuilder } from './TREBuilder';
 import axios, { AxiosRequestConfig} from 'axios';
-import fs from 'fs';
 import FormData from 'form-data';
 
 export class QueryHandler {
@@ -14,12 +13,11 @@ export class QueryHandler {
     public mappings: Map<string, string> = new Map<string, string>();
 
     public async search(TRE: string, mappedFile: File): Promise<MonaaMatch[]> {
-        // @Todo add request to monaaserver.
         const httpClient = axios.create();
         const requestBody = new FormData();
-        const file = fs.createReadStream('/C:/Users/jonas/Downloads/input.txt').read();
-        requestBody.append('file', file.read());
-        requestBody.append('regex', '(AB)%(0,20)$');
+        const fileData: ArrayBuffer = await mappedFile.arrayBuffer();
+        requestBody.append('file', fileData);
+        requestBody.append('regex', this.TREBuilder.buildTRE(TRE));
         this.config.headers = requestBody.getHeaders();
         this.config.data = requestBody;
 
@@ -48,3 +46,6 @@ interface MonaaServerResponse {
     regex: string;
     status: string;
 }
+
+const queryHandler = new QueryHandler();
+queryHandler.search("(AB)%(0,20)$", new File(["../../../experiments/logfiles/logMappedAB.txt"], "logMappedAB.txt"));
