@@ -6,8 +6,8 @@ Better Timed Pattern Searching in Log Files
 `cd TimeTrace`
 
 ### Hot reload
-`npm run dev`
+`npm start`
 
 ### Recommended extensions for VSCode:
 Headwind
-Vue
+
