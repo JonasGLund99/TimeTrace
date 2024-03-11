@@ -6,5 +6,4 @@ Run Vue
 `cd TimeTrace`
 
 Hot reload
-`npm run dev`
-
+`npm start`
