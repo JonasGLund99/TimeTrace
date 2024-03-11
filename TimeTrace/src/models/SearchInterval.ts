@@ -1,3 +1,5 @@
-export class SearchInterval{
-    
+export type SearchInterval = {
+    start: number;
+    end: number;
 }
+    
