@@ -1,8 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { QueryHandler } from './models/QueryHandler';
 
 function App() {
+  const queryHandler = new QueryHandler();
+  queryHandler.search("(AB)%(0,20)$", new File(["../../../experiments/logfiles/logMappedAB.txt"], "logMappedAB.txt"));
+
   return (
     <div className="App">
       <header className="App-header">
