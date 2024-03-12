@@ -16,7 +16,6 @@ export class QueryHandler {
     public async search(TRE: string, mappedFile: File): Promise<MonaaMatch[]> {
         const httpClient = axios.create();
         const requestBody = new FormData();
-        
         const bytes = await mappedFile.arrayBuffer();
         const blob = new Blob([bytes], { type: 'application/octet-stream' });
         requestBody.append('file', blob, mappedFile.name);
