@@ -8,15 +8,20 @@ export class QueryHandler {
         method: 'post',
         maxBodyLength: Infinity,
         url: "http://localhost:5000/monaa/",
+        headers: {
+            'Content-Type': 'file'
+        }
     }
     public TREBuilder: TREBuilder = new TREBuilder();
     public mappings: Map<string, string> = new Map<string, string>();
 
     public async search(TRE: string, mappedFile: File): Promise<MonaaMatch[]> {
-        console.log(mappedFile);
         const httpClient = axios.create();
         const requestBody = new FormData();
-        requestBody.append('file', mappedFile);
+        
+        const bytes = await mappedFile.arrayBuffer();
+        const blob = new Blob([bytes], { type: 'application/octet-stream' });
+        requestBody.append('file', blob, mappedFile.name);
         requestBody.append('regex', this.TREBuilder.buildTRE(TRE));
         this.config.data = requestBody;
 
@@ -26,10 +31,8 @@ export class QueryHandler {
         } catch (error) {
             console.log(error);
         }
-        console.log(response);
-        
-        this.TREBuilder.buildTRE(TRE);
 
+        // TODO use response
 
         return [];
     }
