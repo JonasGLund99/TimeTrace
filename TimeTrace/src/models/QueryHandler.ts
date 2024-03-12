@@ -8,9 +8,7 @@ export class QueryHandler {
         method: 'post',
         maxBodyLength: Infinity,
         url: "http://localhost:5000/monaa/",
-        headers: {
-            'Content-Type': 'file'
-        }
+
     }
     public TREBuilder: TREBuilder = new TREBuilder();
     public mappings: Map<string, string> = new Map<string, string>();
