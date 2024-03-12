@@ -15,11 +15,14 @@ import Navbar from './components/Navbar';
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/create-mappings" element={<MappingsPage />} />
-        <Route path="/view-log" element={<LogPage />} />
-      </Routes>
+      <Navbar/>
+      <div className="p-5">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create-mappings" element={<MappingsPage />} />
+          <Route path="/view-log" element={<LogPage />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   )
 }
@@ -29,7 +32,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Navbar/>
     <App />
   </React.StrictMode>
 );

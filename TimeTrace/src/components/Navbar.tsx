@@ -1,9 +1,9 @@
-// import something here
+import { Link, useLocation } from "react-router-dom";
 
 const navigation = [
-    { name: 'Home', href: '/', current: true },
-    { name: 'Create mappings', href: '/create-mappings', current: false },
-    { name: 'View log', href: '/view-log', current: false },
+    { name: 'Home', href: '/'},
+    { name: 'Create mappings', href: '/create-mappings'},
+    { name: 'View log', href: '/view-log'},
 ]
 
 function classNames(...classes : String[]) {
@@ -11,21 +11,23 @@ function classNames(...classes : String[]) {
 }
 
 function Navbar() {
+    const { pathname } = useLocation();
+    
     return (
 		<nav className="w-full p-4 bg-gray-800">
             <div className="flex space-x-4">
                 {navigation.map((item) => (
-                    <a
+                    <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
-                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                            'rounded-md px-3 py-2 text-sm font-medium'
+                            pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                            'rounded-md px-6 py-2 text-sm font-medium'
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={pathname === item.href ? 'page' : undefined}
                         >
                         {item.name}
-                    </a>
+                    </Link>
                 ))}
             </div>
         </nav>
