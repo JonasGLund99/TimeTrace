@@ -1,3 +1,3 @@
-export abstract class TREParam {
-    abstract modifyData(data: any): void;
+export interface TREParam {
+    convertToTre(): string;
 }

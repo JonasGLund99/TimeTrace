@@ -1,8 +1,17 @@
 import { TREParam } from './TREParam';
+export class TREBuilder{
+    TREParams: TREParam[] = [];
+    TREString: string = ""
 
-export class TREBuilder {
-    public buildTRE(TRE: string): void {
+
+    buildTRE(TREString:string): string {
+        this.TREString = TREString;
+
+       for (const TreParam of this.TREParams) {
+            this.TREString += TreParam.convertToTre();
+       }
+
+        return this.TREString;
     }
-
-    public TREParams: TREParam[] = [];
 }
+
