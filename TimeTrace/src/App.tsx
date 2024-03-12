@@ -1,8 +1,29 @@
-import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { LogFormatter } from './models/LogFormatter';
+import React, { useEffect, useState } from 'react'
 
 function App() {
+  let lf: LogFormatter = new LogFormatter()
+    let mappings: Map<string, string> = new Map([
+        ["login", "A"],
+        ["logout", "B"]
+    ]);
+
+    const [formattedFile, setFormattedFile] = useState<File | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                let res: File = await lf.formatLog(lf.file, mappings);
+                setFormattedFile(res);
+            } catch (e) {
+                console.error(e);
+            }
+        })();
+    }, []); 
+ 
+
   return (
     <div className="App">
       <header className="App-header">
