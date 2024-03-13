@@ -1,3 +1,4 @@
+import { log } from "console";
 
 
 export class LogFormatter {
@@ -8,6 +9,12 @@ export class LogFormatter {
     //     this.file = new File(["1 login\n2 logout\n3 login\n4 logout\n4 singin\n"], "original_log.txt");
     // }
     //******************************* */
+
+    // let mappings: Map<string, string> = new Map([
+    //     ["login", "A"],
+    //     ["logout", "B"]
+    // ]);
+
 
     async getFileLines(original_log: File): Promise<string[]> {
         return new Promise<string[]>((resolve, reject) => { //must return promise because reader is async
@@ -29,7 +36,7 @@ export class LogFormatter {
             let lines: string[] = await this.getFileLines(original_log); //convert file to array of strings. Has format <time> <event>
             let mapped_lines: string[] = this.convertLines(lines, mappings) //map all events and format to <event> <time>
             console.log({"mapped_lines": mapped_lines})
-            let f: File = new File([mapped_lines.join("\n")], "mapped.txt") //return file object with mapped and formatted events
+            let f: File = new File([mapped_lines.join("\n")], "mapped.txt", {type: "text/plain"}) //return file object with mapped and formatted events
             return f;
         } catch (error) { //readfile might throw error
             console.log("Error formatting the log.", error);
@@ -43,7 +50,7 @@ export class LogFormatter {
         lines.forEach(line => {
             let line_elements: string[] = line.split(" ")
             if (line_elements.length === 2) { //only map rows that has two elements (ignore newlines at bottom etc)
-                let event: string = line_elements[1]; //event is second element
+                let event: string = line_elements[1].trim(); //event is second element
                 let timestamp: string = line_elements[0]; // timestamp is first element
                 map_value = this.getMapValue(event, mappings)
                 mapped_rows.push(map_value+ " " + timestamp) //format data <mapped_event> <timestamp>
