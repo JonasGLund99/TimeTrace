@@ -2,12 +2,11 @@
 
 export class LogFormatter {
 
-    //THIS IS NOT RELEVANT IN PRODUCTION
     // file: File;
     // constructor() { //ONLY TO CREATE FAKE IN MEMORY FILE FOR TESTING
-    //     this.file = new File(["1 login\n2 logout\n3 login\n4 logout\n4 singin\n"], "original_log.txt");
+    //     this.file = new File(["2024-02-06T09:45:24.3100333Z login\n2024-02-06T09:45:26.3100333Z logout\n2024-02-06T09:47:24.3100333Z login\n2024-02-06T09:55:24.3100333Z logout\n2024-02-06T19:45:24.3100333Z singin\n"], "original_log.txt");
     // }
-    //******************************* */
+    
 
     async getFileLines(original_log: File): Promise<string[]> {
         return new Promise<string[]>((resolve, reject) => { //must return promise because reader is async
@@ -46,7 +45,7 @@ export class LogFormatter {
                 let event: string = line_elements[1]; //event is second element
                 let timestamp: string = line_elements[0]; // timestamp is first element
                 map_value = this.getMapValue(event, mappings)
-                mapped_rows.push(map_value+ " " + timestamp) //format data <mapped_event> <timestamp>
+                mapped_rows.push(map_value+ " " + this.convertDateformat(timestamp)) //format data <mapped_event> <timestamp>
             }
         });
         return mapped_rows;
@@ -58,5 +57,10 @@ export class LogFormatter {
             map_value = "Z"
         }
         return map_value
+    }
+
+    convertDateformat(timestamp: string): string {
+        let miliseconds: number = Date.parse(timestamp)
+        return miliseconds.toString()
     }
 }
