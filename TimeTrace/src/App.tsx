@@ -4,25 +4,26 @@ import { LogFormatter } from './models/LogFormatter';
 import React, { useEffect, useState } from 'react'
 
 function App() {
-  let lf: LogFormatter = new LogFormatter()
-    let mappings: Map<string, string> = new Map([
-        ["login", "A"],
-        ["logout", "B"]
-    ]);
+  //This is to test the log formatter******************** */
+  // let lf: LogFormatter = new LogFormatter()
+  //   let mappings: Map<string, string> = new Map([
+  //       ["login", "A"],
+  //       ["logout", "B"]
+  //   ]);
 
-    const [formattedFile, setFormattedFile] = useState<File | null>(null);
+  //   const [formattedFile, setFormattedFile] = useState<File | null>(null);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                let res: File = await lf.formatLog(lf.file, mappings);
-                setFormattedFile(res);
-            } catch (e) {
-                console.error(e);
-            }
-        })();
-    }, []); 
- 
+  //   useEffect(() => {
+  //       (async () => {
+  //           try {
+  //               let res: File = await lf.formatLog(lf.file, mappings);
+  //               setFormattedFile(res);
+  //           } catch (e) {
+  //               console.error(e);
+  //           }
+  //       })();
+  //   }, []); 
+    //********************************' */
 
   return (
     <div className="App">
