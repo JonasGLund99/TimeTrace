@@ -17,17 +17,25 @@ return (
         <span>
             2024-02-26T08:22:14.642Z some_event.xxxxxxxxsdsdsdsdsds
         </span>
-        <input type="text" value={mapping} onChange={(event) => {
-           handleMappingChange(event);
-        }} />
+
+        {props.displaysMappings && (
+            <div>
+                
+                <input type="text" value={mapping} onChange={(event) => {
+                    handleMappingChange(event);
+                }} />
+                <button>
+                    Remove this mapping
+                </button>
+            </div>
+            )}
         
     </div>
 );
 }
 
 export type LogTableProps = {
-    displayMapEvent: boolean | undefined;
-    displayRemoveMapping: boolean | undefined;
+    displaysMappings: boolean | undefined;
     events: string[];
 }
   
