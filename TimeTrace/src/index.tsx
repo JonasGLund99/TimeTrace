@@ -1,8 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import './styles/index.css';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+//Pages
+import Home from './pages/Home';
+import MappingsPage from './pages/MappingsPage';
+import LogPage from './pages/LogPage';
+
+//Components
+import Navbar from './components/Navbar';
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Navbar/>
+      <div className="p-5">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create-mappings" element={<MappingsPage />} />
+          <Route path="/view-log" element={<LogPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  )
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
