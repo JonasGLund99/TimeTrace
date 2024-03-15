@@ -18,16 +18,16 @@ jobs:
           node-version: "v18.15.0"
 
       - name: Navigate to project folder
-        run: cd ../TimeTrace
+        run: cd TimeTrace
 
       - name: Install dependencies
         run: npm install
-        working-directory: ../TimeTrace
+        working-directory: TimeTrace
 
       - name: Run tests
         run: npm test
-        working-directory: ../src/TimeTrace
+        working-directory: TimeTrace/src
 
       - name: Build project
         run: npm run build
-        working-directory: ../TimeTrace
+        working-directory: TimeTrace
