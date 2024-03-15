@@ -22,7 +22,7 @@ function LogTable(props: LogTableProps) {
     <div className="relative w-[60%] h-[92%] overflow-auto border-2 border-gray-300 p-5 rounded-md">
       <div className="flex flex-col overflow-auto log-table">
         {props.events.map((event: string, i: number) => {
-          return <pre className="w-full py-2">{event}      </pre>;
+          return <pre className="w-full py-2">{`Line ${i}: `+event}      </pre>;
         })}
 
         <div className="absolute top-0 right-0 flex flex-col pt-5 bg-white mapping-container">
