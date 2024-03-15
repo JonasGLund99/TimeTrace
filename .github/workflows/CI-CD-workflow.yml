@@ -29,5 +29,5 @@ jobs:
       #   working-directory: TimeTrace/src       <<When test enviroment have been setup, this can be commented in>>
 
       - name: Build project
-        run: npm run build
+        run: CI=false npm run build
         working-directory: TimeTrace
