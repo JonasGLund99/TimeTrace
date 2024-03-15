@@ -24,9 +24,9 @@ jobs:
         run: npm install
         working-directory: TimeTrace
 
-      - name: Run tests
-        run: npm test
-        working-directory: TimeTrace/src
+      # - name: Run tests
+      #   run: npm test
+      #   working-directory: TimeTrace/src       <<When test enviroment have been setup, this can be commented in>>
 
       - name: Build project
         run: npm run build
