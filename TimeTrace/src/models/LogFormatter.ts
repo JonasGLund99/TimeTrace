@@ -1,27 +1,6 @@
 import { getFileLines } from "./helpers/getFileLines";
 
 export class LogFormatter {
-
-    // file: File;
-    // constructor() { //ONLY TO CREATE FAKE IN MEMORY FILE FOR TESTING
-    //     this.file = new File(["2024-02-06T09:45:24.3100333Z login\n2024-02-06T09:45:26.3100333Z logout\n2024-02-06T09:47:24.3100333Z login\n2024-02-06T09:55:24.3100333Z logout\n2024-02-06T19:45:24.3100333Z singin\n"], "original_log.txt");
-    // }
-    
-
-    async getFileLines(originalLog: File): Promise<string[]> {
-        return new Promise<string[]>((resolve, reject) => { //must return promise because reader is async
-            let reader = new FileReader();
-            reader.onload = async (event) => {
-                let textLines = (reader.result as string).split("\n"); //split file on newlines
-                resolve(textLines); //all went well, return textLines
-            };
-            reader.onerror = async (e) => { //on error reject
-                console.error("Unable to read file", originalLog.name, e);
-                reject(e);
-            };
-            reader.readAsText(originalLog); //call reader
-        });
-    }
     
     async formatLog(originalLog: File, mappings: Map<string, string>): Promise<File> {
         try {
@@ -38,25 +17,25 @@ export class LogFormatter {
 
     convertLines(lines: string[], mappings: Map<string, string>): string[] {
         let mappedRows: string[] = [];
-        let mapValue: string;
+        let mappedValue: string;
         lines.forEach(line => {
             let lineElements: string[] = line.split(" ")
-            if (lineElements.length === 2) { //only map rows that has two elements (ignore newlines at bottom etc)
-                let event: string = lineElements[1]; //event is second element
-                let timestamp: string = lineElements[0]; // timestamp is first element
-                mapValue = this.getMapValue(event, mappings)
-                mappedRows.push(mapValue+ " " + this.convertDateformat(timestamp)) //format data <mapped_event> <timestamp>
+            if (lineElements.length >= 2) { //only map rows that has two elements (ignore newlines at bottom etc)
+                let timestamp: string = lineElements.shift() || ""; 
+                let event: string = lineElements.join(" ");
+                mappedValue = this.getMappedValue(event, mappings)
+                mappedRows.push(mappedValue+ " " + this.convertDateformat(timestamp.replace(" ", ""))) //format data <mapped_event> <timestamp>
             }
         });
         return mappedRows;
     }
 
-    getMapValue(event: string, mappings: Map<string, string>): string {
-        let mapValue: string | undefined = mappings.get(event) //try to map value
-        if (mapValue === undefined) { //if value was not mapped then map to Z
-            mapValue = "Z"
+    getMappedValue(event: string, mappings: Map<string, string>): string {
+        let mappedValue: string | undefined = mappings.get(event) //try to map value
+        if (mappedValue === undefined) { //if value was not mapped then map to Z
+            mappedValue = "Z"
         }
-        return mapValue
+        return mappedValue
     }
 
     convertDateformat(timestamp: string): string {
