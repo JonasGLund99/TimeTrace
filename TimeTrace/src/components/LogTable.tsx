@@ -11,7 +11,6 @@ function LogTable(props: LogTableProps) {
     const mapKey = props.events[mappingIndex];
     props.mappings.set(mapKey, filteredValue);
     const newMappings = new Map(props.mappings);
-    console.log(newMappings);
     props.setMappings(newMappings);
   }
 
