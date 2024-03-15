@@ -16,20 +16,21 @@ export class QueryHandler {
 
     public async search(TRE: string): Promise<MonaaZone[]> {
         const httpClient = axios.create();
-        const requestBody = new FormData();
-        requestBody.append('file', this.formattedFile);
-        requestBody.append('regex', this.TREBuilder.buildTRE(TRE));
-        this.config.data = requestBody;
-
+    
+        this.config.data = {
+            'lines': this.formattedFile,
+            'regex': this.TREBuilder.buildTRE(TRE)
+        };
+    
         let response: MonaaServerResponse | undefined;
         try {
             response = await httpClient.request(this.config);
         } catch (error) {
             console.log(error);
         }
-
+        
         // TODO use response
-
+    
         return [];
     }
 }
