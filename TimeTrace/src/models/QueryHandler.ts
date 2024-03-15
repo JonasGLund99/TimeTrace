@@ -1,4 +1,4 @@
-import { MonaaZone } from './MonaZone';
+import { MonaaZone } from './MonaaZone';
 import { TREBuilder } from './TREBuilder';
 import axios, { AxiosRequestConfig} from 'axios';
 import FormData from 'form-data';
