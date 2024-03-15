@@ -1,3 +1,3 @@
-export class MonaaFormatter{
-    
+export class MonaaFormatter {
+
 }

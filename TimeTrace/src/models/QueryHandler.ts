@@ -1,3 +1,3 @@
-export class QueryHandler{
-    
+export class QueryHandler {
+
 }

@@ -1,11 +1,11 @@
 import { SearchInterval } from './SearchInterval';
 import { LogSearcher } from './LogSearcher';
-import { MonaaZone } from './MonaZone';
+import { MonaaZone } from './MonaaZone';
 
 export class LogHandler{
      
     MapMonaaOutputToEvent(MonaaOutput: string[], MappedFile: File, logFile: string[], mappings: Map<string,string> ): MonaaZone[]{
-        let logSearcher = new LogSearcher;
+        let logSearcher = new LogSearcher();
         return  logSearcher.findZones(logFile, this.extractSearchInterval(MonaaOutput))
     }
 
