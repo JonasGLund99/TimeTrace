@@ -16,7 +16,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Navbar/>
-      <div className="p-5">
+      <div className="w-full h-full p-5">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create-mappings" element={<MappingsPage />} />
