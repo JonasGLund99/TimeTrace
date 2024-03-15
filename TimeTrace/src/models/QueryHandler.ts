@@ -1,6 +1,6 @@
-import { MonaaMatch } from './MonaaMatch';
+import { MonaaZone } from './MonaaZone';
 import { TREBuilder } from './TREBuilder';
-import axios, { AxiosRequestConfig} from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import FormData from 'form-data';
 
 export class QueryHandler {
@@ -13,7 +13,7 @@ export class QueryHandler {
     public TREBuilder: TREBuilder = new TREBuilder();
     public mappings: Map<string, string> = new Map<string, string>();
 
-    public async search(TRE: string, mappedFile: File): Promise<MonaaMatch[]> {
+    public async search(TRE: string, mappedFile: File): Promise<MonaaZone[]> {
         const httpClient = axios.create();
         const requestBody = new FormData();
         const bytes = await mappedFile.arrayBuffer();
@@ -24,7 +24,7 @@ export class QueryHandler {
 
         let response: MonaaServerResponse | undefined;
         try {
-            response = await httpClient.request(this.config);            
+            response = await httpClient.request(this.config);
         } catch (error) {
             console.log(error);
         }
