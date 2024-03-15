@@ -1,7 +1,6 @@
 import { MonaaZone } from './MonaaZone';
 import { TREBuilder } from './TREBuilder';
 import axios, { AxiosRequestConfig } from 'axios';
-import FormData from 'form-data';
 
 export class QueryHandler {
     public file: string[] | null = null;
