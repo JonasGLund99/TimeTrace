@@ -1,8 +1,11 @@
-// import something here
+import FileUploadButton from "../components/FileUploadButton";
 
 function MappingsPage() {
     return (
-		<h1>MappingsPage</h1>
+		<div>
+      <h1>MappingsPage</h1>
+      <FileUploadButton />
+    </div>
         
     );
 }

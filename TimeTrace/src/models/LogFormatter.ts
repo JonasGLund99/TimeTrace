@@ -7,7 +7,7 @@ export class LogFormatter {
             let lines: string[] = await getFileLines(originalLog); //convert file to array of strings. Has format <time> <event>
             let mappedLines: string[] = this.convertLines(lines, mappings) //map all events and format to <event> <time>
             console.log({"mappedLines": mappedLines})
-            let f: File = new File([mappedLines.join("\n")], "mapped.txt") //return file object with mapped and formatted events
+            let f: File = new File([mappedLines.join("\n")], "mapped.txt", {type: "text/plain"}) //return file object with mapped and formatted events
             return f;
         } catch (error) { //readfile might throw error
             console.log("Error formatting the log.", error);
