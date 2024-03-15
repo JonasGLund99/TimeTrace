@@ -4,7 +4,7 @@ export class TREBuilder {
     TREString: string = ""
 
 
-    BuildTRE(TREString: string): string {
+    buildTRE(TREString: string): string {
         this.TREString = TREString;
 
         for (const TreParam of this.TREParams) {

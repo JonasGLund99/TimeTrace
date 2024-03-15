@@ -1,6 +1,6 @@
 import { MonaaZone } from './MonaaZone';
 import { TREBuilder } from './TREBuilder';
-import axios, { AxiosRequestConfig} from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import FormData from 'form-data';
 
 export class QueryHandler {
@@ -24,7 +24,7 @@ export class QueryHandler {
 
         let response: MonaaServerResponse | undefined;
         try {
-            response = await httpClient.request(this.config);            
+            response = await httpClient.request(this.config);
         } catch (error) {
             console.log(error);
         }
