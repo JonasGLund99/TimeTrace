@@ -13,27 +13,27 @@ import LogPage from './pages/LogPage';
 import Navbar from './components/Navbar';
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Navbar/>
-      <div className="p-5">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/create-mappings" element={<MappingsPage />} />
-          <Route path="/view-log" element={<LogPage />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-  )
+    return (
+        <BrowserRouter>
+            <Navbar />
+            <div className="p-5">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/create-mappings" element={<MappingsPage />} />
+                    <Route path="/view-log" element={<LogPage />} />
+                </Routes>
+            </div>
+        </BrowserRouter>
+    )
 }
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -2,10 +2,10 @@
 
 function LogPage() {
     return (
-		<h1>LogPage</h1>
-        
+        <h1>LogPage</h1>
+
     );
 }
-  
+
 
 export default LogPage;
