@@ -14,7 +14,7 @@ function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) 
     }
 
     return (
-        <div className="flex gap-5 mt-5">
+        <div className="flex gap-5">
             <input className="hidden"
                 type="file"
                 accept=".txt"
