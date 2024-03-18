@@ -4,6 +4,7 @@ import LogTable from "../components/LogTable";
 
 function MappingsPage() {
     const events: string[] = [];
+    const [filteredEvents, setFilteredEvents] = useState<string[]>(events);
     const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
@@ -11,6 +12,10 @@ function MappingsPage() {
     const handleFileChange = (file: File | null) => {
         setUploadedFile(file);
     };
+
+    function searchLog(query: string, ) {
+
+    }
 
     return (
       <div className="flex flex-row h-full mappings-page" >
