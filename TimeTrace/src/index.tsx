@@ -13,18 +13,18 @@ import LogPage from './pages/LogPage';
 import Navbar from './components/Navbar';
 
 export default function App() {
-    return (
-        <BrowserRouter>
-            <Navbar />
-            <div className="p-5">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/create-mappings" element={<MappingsPage />} />
-                    <Route path="/view-log" element={<LogPage />} />
-                </Routes>
-            </div>
-        </BrowserRouter>
-    )
+  return (
+    <BrowserRouter>
+      <Navbar/>
+      <div className="w-full h-full p-5">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create-mappings" element={<MappingsPage />} />
+          <Route path="/view-log" element={<LogPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  )
 }
 
 const root = ReactDOM.createRoot(
