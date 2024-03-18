@@ -13,6 +13,7 @@ function LogPage() {
     <div>
       <h1 className="flex justify-center pb-5 text-4xl ">Search logfile</h1>
       <SearchForm onSubmit={handleSearchSubmit} />
+      {/* <LogTable mappings={mappings} mappingsAreEditable={false} events={events}/> */}
     </div>
 
   );
