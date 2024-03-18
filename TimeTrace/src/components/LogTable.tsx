@@ -35,12 +35,15 @@ function LogTable(props: LogTableProps) {
 
     return (
         <div id="log-table" className="relative w-[60%] h-[92%] overflow-auto border-2 border-gray-300 p-5 rounded-md">
-            <div className="flex justify-between">
-                <h2>Event</h2>
-                <input type="text" className="border border-gray-600 " placeholder="Search for event" value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); props.searchLog(e.target.value) }}></input>
-                <h2>Mapped value</h2>
+            <div className="flex content-center justify-between">
+                <h2 className="font-bold text-md">Event</h2>
+                <div className="flex flex-col content-center w-[50%]">
+                    <h2 className="font-bold text-md">Search for event</h2>
+                    <input type="text" className="px-2 border border-gray-600 rounded-lg" placeholder="Search for event" value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); props.searchLog(e.target.value) }}></input>
+                </div>
+                <h2 className="font-bold text-md">Mapped value</h2>
             </div>
-            <div className="flex flex-col pt-3 overflow-auto log-table">
+            <div className="flex flex-col pt-3 log-table">
                 <div>
                 </div>
                 {props.events.length === 0 ? (<h3 className="self-center text-2xl font-medium text-center align">No events were found.</h3>) : null}
@@ -48,7 +51,7 @@ function LogTable(props: LogTableProps) {
                     return <pre className="w-full py-2">{`${i}: ` + event}      </pre>;
                 })}
 
-                <div className="absolute top-0 right-0 flex flex-col bg-white mt-14 mapping-container">
+                <div className="absolute top-0 right-0 flex flex-col mt-20 bg-white mapping-container">
                     {props.events.map((event: string, i: number) => {
                         return (
                             <div className="flex items-center justify-end gap-1 py-2 pr-1">
