@@ -7,7 +7,6 @@ function MappingsPage() {
     const events: string[] = [];
     const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-    const [mappings, updateMappings] = useState(() => setMappings())
 
     // Callback function to receive the file
     const handleFileChange = (file: File | null) => {
