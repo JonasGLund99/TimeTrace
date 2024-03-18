@@ -9,6 +9,7 @@ function LogPage() {
     queryHandler.TREBuilder.TREString = TRE;
     queryHandler.search(TRE);
   }
+
   return (
     <div>
       <h1 className="flex justify-center pb-5 text-4xl ">Search logfile</h1>
