@@ -17,7 +17,7 @@ function MappedItemsList(props: PropsType) {
                 {Array.from(mappings).map(([event, map]) => (
                     <div className="grid grid-cols-12 border-b last:border-none gap-1 mb-2">
                         <p className="col-span-2">{map}</p>
-                        <p className="col-span-9 truncate">{event} jonas er en rar as fuck motherfuck der er dejlig og alt muligt lololo. Dette er fandme et langt event</p>
+                        <p className="col-span-9 truncate">{event}</p>
                         <div className="col-span-1 flex justify-center">
                             <svg
                                 onClick={() => {
