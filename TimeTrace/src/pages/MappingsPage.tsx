@@ -4,8 +4,9 @@ import { useState } from "react";
 import LogTable from "../components/LogTable";
 
 function MappingsPage() {
-    const events: string[] = [];
-    const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
+    const events: string[] = ["login", "logout", "login", "logout", "login", "logout", "login", "logout"];
+    // const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
+    const [mappings, setMapping] = useState<Map<string, string>>(() => setMappings())
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
     // Callback function to receive the file
@@ -33,8 +34,8 @@ function MappingsPage() {
                         <p>Choose a file</p>
                     </div>
             }
-            <MappedItemsList mappings={mappings} />
             <FileUploadButton onFileChange={handleFileChange} />
+            <MappedItemsList mappings={mappings} setMappings={setMapping} />
 
         </div>
         <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events}/>
