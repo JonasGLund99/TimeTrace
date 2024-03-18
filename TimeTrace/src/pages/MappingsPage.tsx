@@ -2,24 +2,30 @@ import FileUploadButton from "../components/FileUploadButton";
 import MappedItemsList from "../components/MappedItemsList";
 import { useState } from "react";
 import LogTable from "../components/LogTable";
+import { getFileLines } from "../models/helpers/getFileLines";
+import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
 
 function MappingsPage() {
-    const events: string[] = ["login", "logout", "login", "logout", "login", "logout", "login", "logout"];
-    // const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
-    const [mappings, setMapping] = useState<Map<string, string>>(() => setMappings())
+    const [events, setEvents] = useState<string[]>([]);
+    const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const [fileLines, setFileLines] = useState<string[]>([]);
 
     // Callback function to receive the file
-    const handleFileChange = (file: File | null) => {
+    const handleFileChange = async (file: File | null) => {
         setUploadedFile(file);
+        if (file) {
+            let lines: string[] = await getFileLines(file);
+            setFileLines(lines);
+            setEvents(extractEventsFromFileLines(lines));
+            setMapping(new Map(events.map((event) => [event, ""])));
+        } else {
+            setFileLines([]);
+            setEvents([]);
+            setMapping(new Map(events.map((event) => [event, ""])));
+        }
     };
 
-    function setMappings() {
-        return new Map<string, string>([
-            ["login", "A"],
-            ["logout", "B"]
-        ]);
-    }
 
     return (
       <div className="flex flex-row h-full mappings-page" >
@@ -38,7 +44,7 @@ function MappingsPage() {
             <MappedItemsList mappings={mappings} setMappings={setMapping} />
 
         </div>
-        <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events}/>
+        <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events} fileLines={fileLines}/>
       </div>
         
     );

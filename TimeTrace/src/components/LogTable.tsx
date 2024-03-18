@@ -2,6 +2,7 @@ type LogTableProps = {
     mappingsAreEditable: boolean | undefined;
     events: string[];
     mappings: Map<string, string>;
+    fileLines: string[];
     setMappings: React.Dispatch<React.SetStateAction<Map<string, string>>> | undefined;
 };
 
@@ -30,21 +31,21 @@ function LogTable(props: LogTableProps) {
     return (
         <div className="relative w-[60%] h-[92%] overflow-auto border-2 border-gray-300 p-5 rounded-md">
             <div className="flex flex-col overflow-auto log-table">
-                {props.events.map((event: string, i: number) => {
+                {props.fileLines.map((event: string, i: number) => {
                     return <pre key={i} className="w-full py-2">{`Line ${i}: ` + event}      </pre>;
                 })}
 
                 <div className="absolute top-0 right-0 flex flex-col pt-5 bg-white mapping-container">
-                    {props.events.map((event: string, i: number) => {
+                    {props.fileLines.map((event: string, i: number) => {
                         return (
                             <div key={i} className="flex items-center justify-end gap-1 py-2 pr-1">
                                 <input
                                     className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                                     type="text"
                                     readOnly={props.mappingsAreEditable ? false : true}
-                                    value={props.mappings.get(event)}
+                                    value={props.mappings.get(props.events[i]) || ''}
                                     onChange={(event) => {
-                                        handleMappingChange(event.target.value, i);
+                                        handleMappingChange(props.events[i], i);
                                     }}
                                 />
                                 {props.mappingsAreEditable ? (
