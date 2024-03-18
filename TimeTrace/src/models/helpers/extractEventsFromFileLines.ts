@@ -1,7 +1,6 @@
 import { extractTimeStamp } from "./extractTimeStamp";
 export function extractEventsFromFileLines(fileLines: string[]): string[] {
 
-    console.log(fileLines)
     let newLines = fileLines.map((line) => {
         let timestamp: string = extractTimeStamp(line);
         line = line.replace(timestamp, "")
@@ -10,7 +9,6 @@ export function extractEventsFromFileLines(fileLines: string[]): string[] {
         line = line.replace(/\r/, "");
         return line;
     })
-    console.log(newLines)
     return newLines;
 }
 
