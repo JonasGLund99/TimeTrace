@@ -25,6 +25,7 @@ function MappingsPage() {
             setMapping(new Map(events.map((event) => [event, ""])));
         } else {
             setFileLines([]);
+            setFilteredFileLines([]);
             setEvents([]);
             setMapping(new Map(events.map((event) => [event, ""])));
         }
