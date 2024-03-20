@@ -53,17 +53,23 @@ function LogTable(props: LogTableProps) {
       </div>
       <div
         id="log-table"
-        className="relative h-[63%] overflow-auto border-2 border-gray-300 p-2 pt-0 rounded-md"
+        className="relative h-[63%] flex overflow-auto border-2 border-gray-300 p-2 pt-0 rounded-md"
       >
+        <div>
+        <div id="lineNumber" className="">
+            {props.events.map((event: string, i: number) => {
+                return <pre className="py-2 pl-2">{`${i}: `} </pre>;
+            })}
+            </div>
+        </div>
         <div className="flex flex-col log-table">
-          <div></div>
           {props.events.length === 0 ? (
             <h3 className="self-center text-2xl font-medium text-center align">
               No events were found.
             </h3>
           ) : null}
           {props.events.map((event: string, i: number) => {
-            return <pre className="w-full py-2">{`${i}: ` + event} </pre>;
+            return <pre className="w-full py-2">{event} </pre>;
           })}
 
           <div className="absolute top-0 right-0 flex flex-col bg-white mapping-container">

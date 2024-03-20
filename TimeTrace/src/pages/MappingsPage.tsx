@@ -3,7 +3,7 @@ import { useState } from "react";
 import LogTable from "../components/LogTable";
 
 function MappingsPage() {
-    const events: string[] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
+    const events: string[] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",];
     const [filteredEvents, setFilteredEvents] = useState<string[]>(events);
     const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -24,7 +24,7 @@ function MappingsPage() {
     }
 
     return (
-        <div className="flex flex-row h-full mappings-page" >
+        <div className="flex flex-row h-full mappings-page " >
             <div className="w-[40%]">
                 {
                     uploadedFile ?
