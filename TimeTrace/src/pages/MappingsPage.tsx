@@ -7,9 +7,11 @@ import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromF
 
 function MappingsPage() {
     const [events, setEvents] = useState<string[]>([]);
+    const [filteredEvents, setFilteredEvents] = useState<string[]>(events);
     const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [fileLines, setFileLines] = useState<string[]>([]);
+
 
     // Callback function to receive the file
     const handleFileChange = async (file: File | null) => {
@@ -27,26 +29,34 @@ function MappingsPage() {
     };
 
 
-    return (
-      <div className="flex flex-row h-full mappings-page" >
-        <div className="w-[40%]">
-        {
-                uploadedFile ?
-                    <div>
-                        <p>File uploaded: {uploadedFile.name}</p>
-                    </div>
-                    :
-                    <div>
-                        <p>Choose a file</p>
-                    </div>
-            }
-            <FileUploadButton onFileChange={handleFileChange} />
-            <MappedItemsList mappings={mappings} setMappings={setMapping} />
+    function searchLog(query: string) {
+        if (query === "") {
+            setFilteredEvents(events);
+            return;
+        };
+        const filteredEvents = events.filter((event) => event.toLowerCase().includes(query.toLowerCase()));
+        setFilteredEvents(filteredEvents);
+    }
 
+    return (
+        <div className="flex flex-row h-full mappings-page" >
+            <div className="w-[40%]">
+                {
+                    uploadedFile ?
+                        <div>
+                            <p>File uploaded: {uploadedFile.name}</p>
+                        </div>
+                        :
+                        <div>
+                            <p>Choose a file</p>
+                        </div>
+                }
+                <FileUploadButton onFileChange={handleFileChange} />
+                <MappedItemsList mappings={mappings} setMappings={setMapping} />
+
+            </div>
+            <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={filteredEvents} searchLog={searchLog} fileLines={fileLines} />
         </div>
-        <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events} fileLines={fileLines}/>
-      </div>
-        
     );
 }
 
