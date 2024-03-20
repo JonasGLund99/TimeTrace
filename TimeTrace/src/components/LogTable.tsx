@@ -4,6 +4,7 @@ type LogTableProps = {
     mappingsAreEditable: boolean;
     events: string[];
     mappings: Map<string, string>;
+    fileLines: string[];
     setMappings: React.Dispatch<React.SetStateAction<Map<string, string>>> | undefined;
     searchLog: (searchQuery: string) => void;
 };
@@ -43,20 +44,20 @@ function LogTable(props: LogTableProps) {
             <div className="flex flex-col pt-3 overflow-auto log-table">
                 <div>
                 </div>
-                {props.events.length === 0 ? (<h3 className="self-center text-2xl font-medium text-center align">No events were found.</h3>) : null}
-                {props.events.map((event: string, i: number) => {
-                    return <pre className="w-full py-2">{`${i}: ` + event}      </pre>;
+                {props.fileLines.length === 0 ? (<h3 className="self-center text-2xl font-medium text-center align">No events were found.</h3>) : null}
+                {props.fileLines.map((event: string, i: number) => {
+                    return <pre key={i} className="w-full py-2">{`${i}: ` + event}      </pre>;
                 })}
 
                 <div className="absolute top-0 right-0 flex flex-col bg-white mt-14 mapping-container">
-                    {props.events.map((event: string, i: number) => {
+                    {props.fileLines.map((event: string, i: number) => {
                         return (
-                            <div className="flex items-center justify-end gap-1 py-2 pr-1">
+                            <div key={i} className="flex items-center justify-end gap-1 py-2 pr-1">
                                 <input
                                     className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                                     type="text"
                                     readOnly={props.mappingsAreEditable ? false : true}
-                                    value={props.mappings.get(event)}
+                                    value={props.mappings.get(props.events[i]) || ''}
                                     onChange={(event) => {
                                         handleMappingChange(event.target.value, i);
                                     }}
