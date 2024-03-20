@@ -8,11 +8,13 @@ function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) 
         console.log(file);
         // Call the callback function with the file
         onFileChange(file);
+        if(target !== null) {
+            target.value = "";
+        }
     }
 
     function handleFileRemove() {
-        window.location.reload();
-        // onFileChange(null);
+        onFileChange(null);
     }
 
     return (
