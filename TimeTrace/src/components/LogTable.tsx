@@ -50,7 +50,7 @@ function LogTable(props: LogTableProps) {
                     return <pre key={i} className="w-full py-2">{`${i}: ` + event}      </pre>;
                 })}
 
-                <div className="absolute top-0 right-0 flex flex-col pt-5 bg-white mapping-container">
+                <div className="absolute top-0 right-0 flex flex-col bg-white mt-14 mapping-container">
                     {props.fileLines.map((event: string, i: number) => {
                         return (
                             <div key={i} className="flex items-center justify-end gap-1 py-2 pr-1">
