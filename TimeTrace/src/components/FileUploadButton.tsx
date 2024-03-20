@@ -5,7 +5,6 @@ function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) 
         const target = e.target as HTMLInputElement;
         const file: File = (target.files as FileList)[0];
 
-        console.log(file);
         // Call the callback function with the file
         onFileChange(file);
         if(target !== null) {

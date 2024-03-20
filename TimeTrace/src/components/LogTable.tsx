@@ -24,7 +24,6 @@ function LogTable(props: LogTableProps) {
         if (filteredValue === "" && eventText !== "") return;
         const mapKey = props.events[mappingIndex];
         props.mappings.set(mapKey, filteredValue);
-        console.log("props.mappings: ", props.mappings)
         const newMappings = new Map(props.mappings);
         if (props.setMappings) {
             props.setMappings(newMappings);

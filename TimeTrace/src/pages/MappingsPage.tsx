@@ -19,7 +19,6 @@ function MappingsPage() {
     // Callback function to receive the file
     const handleFileChange = async (file: File | null) => {
         setUploadedFile(file);
-        console.log(file);
         if (file) {
             let lines: string[] = await getFileLines(file);
             setFileLines(lines);
