@@ -33,12 +33,10 @@ function MappingsPage() {
 
     function searchLog(query: string) {
         if (query === "") {
-            console.log("filtered file lines = ", fileLines);
             setFilteredFileLines(fileLines);
             return;
         };
         const filteredFileLines = fileLines.filter((fileLine) => fileLine.toLowerCase().includes(query.toLowerCase()));
-        console.log("filtered file lines = ", filteredFileLines);
         setFilteredFileLines(filteredFileLines);
     }
 

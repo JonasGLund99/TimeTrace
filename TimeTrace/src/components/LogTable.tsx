@@ -24,6 +24,7 @@ function LogTable(props: LogTableProps) {
         if (filteredValue === "" && eventText !== "") return;
         const mapKey = props.events[mappingIndex];
         props.mappings.set(mapKey, filteredValue);
+        console.log("props.mappings: ", props.mappings)
         const newMappings = new Map(props.mappings);
         if (props.setMappings) {
             props.setMappings(newMappings);
@@ -59,7 +60,7 @@ function LogTable(props: LogTableProps) {
                                     readOnly={props.mappingsAreEditable ? false : true}
                                     value={props.mappings.get(props.events[i]) || ''}
                                     onChange={(event) => {
-                                        handleMappingChange(props.events[i], i);
+                                        handleMappingChange(event.target.value, i);
                                     }}
                                 />
                                 {props.mappingsAreEditable ? (
