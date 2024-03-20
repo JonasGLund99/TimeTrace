@@ -5,7 +5,6 @@ function LogPage() {
   const queryHandler: QueryHandler = new QueryHandler();
   function handleSearchSubmit(TRE: string): void {
 
-    console.log('Search TRE:', TRE);
     queryHandler.TREBuilder.TREString = TRE;
     queryHandler.search(TRE);
   }

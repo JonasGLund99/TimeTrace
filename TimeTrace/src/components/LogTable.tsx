@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 type LogTableProps = {
-  mappingsAreEditable?: boolean;
-  events: string[];
-  mappings: Map<string, string>;
-  setMappings?: React.Dispatch<React.SetStateAction<Map<string, string>>>;
-  searchLog?: (searchQuery: string) => void;
+    mappingsAreEditable: boolean;
+    events: string[];
+    mappings: Map<string, string>;
+    fileLines: string[];
+    setMappings: React.Dispatch<React.SetStateAction<Map<string, string>>> | undefined;
+    searchLog: (searchQuery: string) => void;
 };
 
 function LogTable(props: LogTableProps) {
@@ -19,8 +20,12 @@ function LogTable(props: LogTableProps) {
     const filteredValue = lastChar.search(/[a-yA-Y]/gi) === 0 ? lastChar : "";
 
     // EventText is empty when the user has removed the mapping.
+    // Todo der er et problem da mappingIndexet bliver ud fra fileLines og ikke events
     if (filteredValue === "" && eventText !== "") return;
     const mapKey = props.events[mappingIndex];
+    console.log("mapKey = ", mapKey);
+    console.log("events ", props.events, " fileLines ", props.fileLines, "index = ", mappingIndex);
+    console.log("mappings = ", props.mappings);
     props.mappings.set(mapKey, filteredValue);
     const newMappings = new Map(props.mappings);
     if (props.setMappings) {
@@ -34,9 +39,9 @@ function LogTable(props: LogTableProps) {
 
   return (
     <div id="fixed-container" className="flex flex-col content-center w-full">
-      <div className="flex p-1">
+      <div id="top-log-table-title-container" className="flex p-1">
         <h2 className="font-bold text-md w-[20%]">Event</h2>
-        <div className="flex flex-col content-center w-[60%]">
+        <div id="search-container" className="flex flex-col content-center w-[60%]">
             <h2 className="font-bold text-md">Search for event</h2>
             <input
             type="text"
@@ -57,30 +62,30 @@ function LogTable(props: LogTableProps) {
       >
         <div>
         <div id="lineNumber" className="">
-            {props.events.map((event: string, i: number) => {
+            {props.fileLines.map((event: string, i: number) => {
                 return <pre className="py-2 pl-2">{`${i}: `} </pre>;
             })}
             </div>
         </div>
         <div className="flex flex-col log-table">
-          {props.events.length === 0 ? (
+          {props.fileLines.length === 0 ? (
             <h3 className="self-center text-2xl font-medium text-center align">
               No events were found.
             </h3>
           ) : null}
-          {props.events.map((event: string, i: number) => {
+          {props.fileLines.map((event: string, i: number) => {
             return <pre className="w-full py-2">{event} </pre>;
           })}
 
-          <div className="absolute top-0 right-0 flex flex-col bg-white mapping-container">
-            {props.events.map((event: string, i: number) => {
+          <div id="mapping-container" className="absolute top-0 right-0 flex flex-col bg-white mapping-container">
+            {props.fileLines.map((event: string, i: number) => {
               return (
                 <div className="flex items-center justify-end gap-1 py-2 pr-1">
                   <input
                     className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                     type="text"
                     readOnly={props.mappingsAreEditable ? false : true}
-                    value={props.mappings.get(event)}
+                    value={props.mappings.get(props.events[i]) || ""}
                     onChange={(event) => {
                       handleMappingChange(event.target.value, i);
                     }}

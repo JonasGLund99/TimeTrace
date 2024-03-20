@@ -1,26 +1,49 @@
 import FileUploadButton from "../components/FileUploadButton";
-import { useState } from "react";
+import MappedItemsList from "../components/MappedItemsList";
+import { useEffect, useState } from "react";
 import LogTable from "../components/LogTable";
+import { getFileLines } from "../models/helpers/getFileLines";
+import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
 
 function MappingsPage() {
-    const events: string[] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",];
-    const [filteredEvents, setFilteredEvents] = useState<string[]>(events);
+    const [events, setEvents] = useState<string[]>([]);
     const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const [fileLines, setFileLines] = useState<string[]>([]);
+    const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
 
+    useEffect(() => {
+        setFilteredFileLines(fileLines);
+    }, [fileLines])
 
     // Callback function to receive the file
-    const handleFileChange = (file: File | null) => {
+    const handleFileChange = async (file: File | null) => {
         setUploadedFile(file);
+        if (file) {
+            let lines: string[] = await getFileLines(file);
+            setFileLines(lines);
+            setEvents(extractEventsFromFileLines(lines));
+            setMapping(new Map(events.map((event) => [event, ""])));
+        } else {
+            setFileLines([]);
+            setEvents([]);
+            setMapping(new Map());
+        }
     };
+
 
     function searchLog(query: string) {
         if (query === "") {
-            setFilteredEvents(events);
+            setFilteredFileLines(fileLines);
             return;
         };
-        const filteredEvents = events.filter((event) => event.toLowerCase().includes(query.toLowerCase()));
-        setFilteredEvents(filteredEvents);
+        const filteredFileLines = fileLines.filter((fileLine) => fileLine.toLowerCase().includes(query.toLowerCase()));
+        setFilteredFileLines(filteredFileLines);
+
+        // Todo this could probably be done more efficiently.
+        // This is necessary because LogTable uses the indexes of the filteredFileLines to update the mappings.
+        // A filteredFileLine cannot be mapped to its event text without doing this.
+        setEvents(extractEventsFromFileLines(filteredFileLines));
     }
 
     return (
@@ -37,11 +60,11 @@ function MappingsPage() {
                         </div>
                 }
                 <FileUploadButton onFileChange={handleFileChange} />
+                <MappedItemsList mappings={mappings} setMappings={setMapping} />
 
             </div>
-            <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={filteredEvents} searchLog={searchLog} />
+            <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
         </div>
-
     );
 }
 
