@@ -1,6 +1,6 @@
 import FileUploadButton from "../components/FileUploadButton";
 import MappedItemsList from "../components/MappedItemsList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LogTable from "../components/LogTable";
 import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
@@ -12,22 +12,23 @@ function MappingsPage() {
     const [fileLines, setFileLines] = useState<string[]>([]);
     const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
 
+    useEffect(() => {
+        setFilteredFileLines(fileLines);
+    }, [fileLines])
 
     // Callback function to receive the file
     const handleFileChange = async (file: File | null) => {
         setUploadedFile(file);
+        console.log(file);
         if (file) {
             let lines: string[] = await getFileLines(file);
             setFileLines(lines);
-            setFilteredFileLines(lines);
-            console.log("filteredFileLines: ", filteredFileLines);
             setEvents(extractEventsFromFileLines(lines));
             setMapping(new Map(events.map((event) => [event, ""])));
         } else {
             setFileLines([]);
-            setFilteredFileLines([]);
             setEvents([]);
-            setMapping(new Map(events.map((event) => [event, ""])));
+            setMapping(new Map());
         }
     };
 
