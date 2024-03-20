@@ -7,7 +7,7 @@ function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) 
 
         // Call the callback function with the file
         onFileChange(file);
-        if(target !== null) {
+        if (target !== null) {
             target.value = "";
         }
     }
