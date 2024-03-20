@@ -7,10 +7,10 @@ import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromF
 
 function MappingsPage() {
     const [events, setEvents] = useState<string[]>([]);
-    const [filteredEvents, setFilteredEvents] = useState<string[]>(events);
     const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [fileLines, setFileLines] = useState<string[]>([]);
+    const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
 
 
     // Callback function to receive the file
@@ -19,6 +19,8 @@ function MappingsPage() {
         if (file) {
             let lines: string[] = await getFileLines(file);
             setFileLines(lines);
+            setFilteredFileLines(lines);
+            console.log("filteredFileLines: ", filteredFileLines);
             setEvents(extractEventsFromFileLines(lines));
             setMapping(new Map(events.map((event) => [event, ""])));
         } else {
@@ -31,11 +33,13 @@ function MappingsPage() {
 
     function searchLog(query: string) {
         if (query === "") {
-            setFilteredEvents(events);
+            console.log("filtered file lines = ", fileLines);
+            setFilteredFileLines(fileLines);
             return;
         };
-        const filteredEvents = events.filter((event) => event.toLowerCase().includes(query.toLowerCase()));
-        setFilteredEvents(filteredEvents);
+        const filteredFileLines = fileLines.filter((fileLine) => fileLine.toLowerCase().includes(query.toLowerCase()));
+        console.log("filtered file lines = ", filteredFileLines);
+        setFilteredFileLines(filteredFileLines);
     }
 
     return (
@@ -55,7 +59,7 @@ function MappingsPage() {
                 <MappedItemsList mappings={mappings} setMappings={setMapping} />
 
             </div>
-            <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={filteredEvents} searchLog={searchLog} fileLines={fileLines} />
+            <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
         </div>
     );
 }
