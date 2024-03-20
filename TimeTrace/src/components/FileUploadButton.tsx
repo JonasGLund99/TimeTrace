@@ -25,8 +25,8 @@ function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) 
                 onChange={handleFileUpload}
             />
             <div className="flex gap-2">
-                <button className="px-5 py-2 border-2 rounded-md cursor-pointer border-black-100">
-                    <label htmlFor="contained-button-file" className="cursor-pointer">
+                <button className="py-2">
+                    <label htmlFor="contained-button-file" className="px-5 py-2 border-2 rounded-md cursor-pointer border-black-100">
                         Upload file
                     </label>
                 </button>
