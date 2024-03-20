@@ -11,7 +11,8 @@ function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) 
     }
 
     function handleFileRemove() {
-        onFileChange(null);
+        window.location.reload();
+        // onFileChange(null);
     }
 
     return (
