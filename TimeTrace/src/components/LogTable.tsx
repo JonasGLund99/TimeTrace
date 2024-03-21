@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
@@ -12,6 +12,33 @@ type LogTableProps = {
 function LogTable(props: LogTableProps) {
 
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const linesPerPage = 100;
+    const [shownLines, setShownLines] = useState<string[]>(props.fileLines.slice(0, linesPerPage));
+
+    useEffect(() => {
+        setShownLines(props.fileLines.slice(0, linesPerPage));
+    }, [props.fileLines]);
+
+    useEffect(() => {
+        setShownLines([...shownLines, ...props.fileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1))]);
+    }, [currentPage]);
+
+    const handleScroll = () => {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        if (scrollY + windowHeight >= documentHeight - 100) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [currentPage]);
 
     function handleMappingChange(eventText: string, mappingIndex: number): void {
         const inputValue = eventText;
@@ -45,12 +72,12 @@ function LogTable(props: LogTableProps) {
                 <div>
                 </div>
                 {props.fileLines.length === 0 ? (<h3 className="self-center text-2xl font-medium text-center align">No events were found.</h3>) : null}
-                {props.fileLines.map((event: string, i: number) => {
+                {shownLines.map((event: string, i: number) => {
                     return <pre key={i} className="w-full py-2">{`${i}: ` + event}      </pre>;
                 })}
 
                 <div className="absolute top-0 right-0 flex flex-col bg-white mt-14 mapping-container">
-                    {props.fileLines.map((event: string, i: number) => {
+                    {shownLines.map((event: string, i: number) => {
                         return (
                             <div key={i} className="flex items-center justify-end gap-1 py-2 pr-1">
                                 <input
