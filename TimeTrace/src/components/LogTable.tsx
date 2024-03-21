@@ -51,12 +51,8 @@ function LogTable(props: LogTableProps) {
         const filteredValue = lastChar.search(/[a-yA-Y]/gi) === 0 ? lastChar : "";
 
         // EventText is empty when the user has removed the mapping.
-        // Todo der er et problem da mappingIndexet bliver ud fra fileLines og ikke events
         if (filteredValue === "" && eventText !== "") return;
         const mapKey = props.events[mappingIndex];
-        console.log("mapKey = ", mapKey);
-        console.log("events ", props.events, " fileLines ", props.fileLines, "index = ", mappingIndex);
-        console.log("mappings = ", props.mappings);
         props.mappings.set(mapKey, filteredValue);
         const newMappings = new Map(props.mappings);
         if (props.setMappings) {
