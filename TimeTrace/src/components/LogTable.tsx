@@ -88,7 +88,7 @@ function LogTable(props: LogTableProps) {
                 <div>
                     <div id="lineNumber" className="">
                         {shownLines.map((event: string, i: number) => {
-                            return <pre className="py-2 pl-2">{`${i}: `} </pre>;
+                            return <pre key={i} className="py-2 pl-2">{`${i}: `} </pre>;
                         })}
                     </div>
                 </div>
@@ -99,7 +99,7 @@ function LogTable(props: LogTableProps) {
                         </h3>
                     ) : null}
                     {shownLines.map((event: string, i: number) => {
-                        return <pre className="w-full py-2">{event} </pre>;
+                        return <pre key={i} className="w-full py-2">{event} </pre>;
                     })}
 
                     <div className="absolute top-0 right-0 flex flex-col bg-white mapping-container">
