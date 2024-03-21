@@ -5,6 +5,7 @@ import { extractTimeStamp } from "./helpers/extractTimeStamp";
 export class LogSearcher {
 
     findZones(logFile: string[], SearchIntervals: SearchInterval[]): MonaaZone[] {
+        console.time("findZones");
         let MonaaZoneMatches: MonaaZone[] = [];
         for (let i = 0; i < SearchIntervals.length; i++) {
             let foundmatch = new MonaaZone();
@@ -17,6 +18,7 @@ export class LogSearcher {
             });
             MonaaZoneMatches.push(foundmatch);
         }
+        console.timeEnd("findZones");
         return MonaaZoneMatches
     };
 }
