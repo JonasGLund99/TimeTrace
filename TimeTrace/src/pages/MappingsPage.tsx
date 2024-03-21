@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import LogTable from "../components/LogTable";
 import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
+import { QueryHandler } from '../models/QueryHandler';
+import { LogFormatter } from '../models/LogFormatter';
 
 function MappingsPage() {
     const [events, setEvents] = useState<string[]>([]);
@@ -11,6 +13,8 @@ function MappingsPage() {
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [fileLines, setFileLines] = useState<string[]>([]);
     const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
+    const queryHandler = new QueryHandler();
+    const logFormatter = new LogFormatter();
 
     useEffect(() => {
         setFilteredFileLines(fileLines);
@@ -31,6 +35,16 @@ function MappingsPage() {
         }
     };
 
+    async function callMonaa() {
+        if(!uploadedFile) return;
+        const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
+
+        queryHandler.file = fileLines;
+        queryHandler.formattedFile = await getFileLines(formattedFile);
+        queryHandler.mappings = mappings;
+        queryHandler.search("ab$");
+    }
+
     function searchLog(query: string) {
         if (query === "") {
             setFilteredFileLines(fileLines);
@@ -47,6 +61,9 @@ function MappingsPage() {
 
     return (
         <div className="flex flex-row h-full gap-5 mappings-page" >
+            <div>
+                <button className="p-5 bg-slate-600" onClick={callMonaa}>Call Monaa</button>
+            </div>
             <div className="w-[40%]">
                 {
                     uploadedFile ?

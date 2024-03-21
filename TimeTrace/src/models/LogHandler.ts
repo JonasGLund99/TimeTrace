@@ -4,9 +4,9 @@ import { MonaaZone } from './MonaaZone';
 
 export class LogHandler{
      
-    MapMonaaOutputToEvent(MonaaOutput: string[], MappedFile: File, logFile: string[], mappings: Map<string,string> ): MonaaZone[]{
+    MapMonaaOutputToEvent(MonaaOutput: string[], MappedFile: string[], logFile: string[], mappings: Map<string,string> ): MonaaZone[]{
         let logSearcher = new LogSearcher();
-        return  logSearcher.findZones(logFile, this.extractSearchInterval(MonaaOutput))
+        return  logSearcher.findZones(logFile, this.extractSearchInterval(MonaaOutput));
     }
 
     extractSearchInterval(MonaaOutput: string[]): SearchInterval[]{
@@ -17,8 +17,8 @@ export class LogHandler{
         for (let i = 0; i < MonaaOutput.length; i++) {
            
          if (MonaaOutput[i].includes("=======") && foundStart !== -1 && foundEnd !== -1){ //RESET interval
-            let SearchInterval: SearchInterval = {start: foundStart, end: foundEnd}
-            foundIntervals.push(SearchInterval)
+            let SearchInterval: SearchInterval = {start: foundStart, end: foundEnd};
+            foundIntervals.push(SearchInterval);
 
             foundStart  = -1;
             foundEnd = -1;
@@ -32,7 +32,7 @@ export class LogHandler{
             foundEnd = parseFloat(MonaaOutput[i].split(/\s+/).filter(part => !isNaN(parseFloat(part))).shift() || '');
          }
         }
-        return foundIntervals
+        return foundIntervals;
     }
 }
 
