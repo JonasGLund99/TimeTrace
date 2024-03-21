@@ -3,7 +3,7 @@ import * as extractor from "../../../models/helpers/extractTimeStamp";
 
 test("extractEventsFromFileLines", () => {
     const timestamp = "2024-02-26T11:07:29.791645Z";
-    const mockExtractTimeStamp = jest.spyOn(extractor, 'extractTimeStamp').mockImplementation(() => timestamp);
+    const mockExtractTimeStamp = jest.spyOn(extractor, 'extractTimeStamp').mockReturnValue(timestamp);
     const fileLines = [
         `${timestamp} login from a cool user`,
         `${timestamp} login from an uncool user`
