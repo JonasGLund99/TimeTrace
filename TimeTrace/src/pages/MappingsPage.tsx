@@ -42,7 +42,18 @@ function MappingsPage() {
         queryHandler.file = fileLines;
         queryHandler.formattedFile = await getFileLines(formattedFile);
         queryHandler.mappings = mappings;
-        queryHandler.search("ab$");
+        const monaaZones = await queryHandler.search("ab$");
+        console.log(monaaZones);
+        const linesFromZones: string[] = [];
+        monaaZones.forEach((zone) => {
+            zone.match.forEach(match => {
+                linesFromZones.push(fileLines[match]);
+            });
+        });
+
+        setFilteredFileLines(linesFromZones);
+        setEvents(extractEventsFromFileLines(linesFromZones));
+        
     }
 
     function searchLog(query: string) {

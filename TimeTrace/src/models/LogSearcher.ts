@@ -15,6 +15,7 @@ export class LogSearcher {
                     foundmatch.match.push(lineIndex)
                 }
             });
+            MonaaZoneMatches.push(foundmatch);
         }
         return MonaaZoneMatches
     };
