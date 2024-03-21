@@ -22,9 +22,6 @@ function LogTable(props: LogTableProps) {
 
     useEffect(() => {
         setShownLines([...shownLines, ...props.fileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1))]);
-        console.log(shownLines)
-        console.log(linesPerPage * (currentPage - 1))
-        console.log(linesPerPage * (currentPage))
     }, [currentPage]);
 
     const handleScroll = () => {
