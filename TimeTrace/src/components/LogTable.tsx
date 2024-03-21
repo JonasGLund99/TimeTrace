@@ -77,6 +77,7 @@ function LogTable(props: LogTableProps) {
                         value={searchQuery}
                         onChange={(e) => {
                             setSearchQuery(e.target.value);
+                            setCurrentPage(1);
                             if (props.searchLog) props.searchLog(e.target.value);
                         }}
                     ></input>
