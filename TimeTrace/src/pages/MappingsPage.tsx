@@ -35,26 +35,27 @@ function MappingsPage() {
         }
     };
 
-    async function callMonaa() {
-        if(!uploadedFile) return;
-        const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
+    // async function callMonaa() {
+    //     if(!uploadedFile) return;
+    //     const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
 
-        queryHandler.file = fileLines;
-        queryHandler.formattedFile = await getFileLines(formattedFile);
-        queryHandler.mappings = mappings;
-        const monaaZones = await queryHandler.search("ab$");
-        console.log(monaaZones);
-        const linesFromZones: string[] = [];
-        monaaZones.forEach((zone) => {
-            zone.match.forEach(match => {
-                linesFromZones.push(fileLines[match]);
-            });
-        });
+    //     queryHandler.file = fileLines;
+    //     queryHandler.formattedFile = await getFileLines(formattedFile);
+    //     queryHandler.mappings = mappings;
+    //     const monaaZones = await queryHandler.search("ab$");
+    //     console.log(monaaZones);
+    //     const linesFromZones: string[] = [];
+    //     monaaZones.forEach((zone) => {
+    //         zone.match.forEach(match => {
+    //             linesFromZones.push(fileLines[match]);
+    //         });
+    //     });
 
-        setFilteredFileLines(linesFromZones);
-        setEvents(extractEventsFromFileLines(linesFromZones));
         
-    }
+    //     setFilteredFileLines(linesFromZones);
+    //     setEvents(extractEventsFromFileLines(linesFromZones));
+        
+    // }
 
     function searchLog(query: string) {
         if (query === "") {
@@ -72,9 +73,9 @@ function MappingsPage() {
 
     return (
         <div className="flex flex-row h-full gap-5 mappings-page" >
-            <div>
+            {/* <div>
                 <button className="p-5 bg-slate-600" onClick={callMonaa}>Call Monaa</button>
-            </div>
+            </div> */}
             <div className="w-[40%]">
                 {
                     uploadedFile ?
