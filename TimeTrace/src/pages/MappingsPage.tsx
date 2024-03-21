@@ -31,7 +31,6 @@ function MappingsPage() {
         }
     };
 
-
     function searchLog(query: string) {
         if (query === "") {
             setFilteredFileLines(fileLines);
@@ -39,10 +38,15 @@ function MappingsPage() {
         };
         const filteredFileLines = fileLines.filter((fileLine) => fileLine.toLowerCase().includes(query.toLowerCase()));
         setFilteredFileLines(filteredFileLines);
+
+        // Todo this could probably be done more efficiently.
+        // This is necessary because LogTable uses the indexes of the filteredFileLines to update the mappings.
+        // A filteredFileLine cannot be mapped to its event text without doing this.
+        setEvents(extractEventsFromFileLines(filteredFileLines));
     }
 
     return (
-        <div className="flex flex-row h-full mappings-page" >
+        <div className="flex flex-row h-full gap-5 mappings-page" >
             <div className="w-[40%]">
                 {
                     uploadedFile ?
@@ -55,7 +59,9 @@ function MappingsPage() {
                         </div>
                 }
                 <FileUploadButton onFileChange={handleFileChange} />
-                <MappedItemsList mappings={mappings} setMappings={setMapping} />
+                <div className="h-[90%]">
+                    <MappedItemsList mappings={mappings} setMappings={setMapping} />
+                </div>
 
             </div>
             <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
