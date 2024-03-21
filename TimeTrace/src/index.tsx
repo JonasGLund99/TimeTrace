@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import reportWebVitals from './reportWebVitals';
@@ -12,13 +12,13 @@ import LogPage from './pages/LogPage';
 
 //Components
 import Navbar from './components/Navbar';
-import { AppContext } from './context/AppContext';
+import AppdataProvider from './context/AppContext';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <AppContext.Provider value={{ mappingsAreEditable: false, events: [], mappings: new Map, fileLines: [] }}>
-        <Navbar />
+      <Navbar />
+      <AppdataProvider>
         <div className="w-full h-[94%] p-5">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -26,7 +26,7 @@ export default function App() {
             <Route path="/view-log" element={<LogPage />} />
           </Routes>
         </div>
-      </AppContext.Provider>
+      </AppdataProvider>
     </BrowserRouter>
   )
 }

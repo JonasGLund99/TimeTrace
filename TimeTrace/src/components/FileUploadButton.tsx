@@ -1,4 +1,3 @@
-
 function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) => void }) {
 
     async function handleFileUpload(e: React.SyntheticEvent) {
