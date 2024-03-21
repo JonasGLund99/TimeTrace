@@ -8,4 +8,4 @@ type AppData = {
     fileLines: string[];
 }
 
-const AppContext = createContext<AppData | null>(null);
+export const AppContext = createContext<AppData | null>(null);
