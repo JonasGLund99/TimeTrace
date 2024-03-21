@@ -5,7 +5,7 @@ type LogTableProps = {
     events: string[];
     mappings: Map<string, string>;
     fileLines: string[];
-    setMappings: React.Dispatch<React.SetStateAction<Map<string, string>>> | undefined;
+    setMappings?: React.Dispatch<React.SetStateAction<Map<string, string>>> | undefined;
     searchLog: (searchQuery: string) => void;
 };
 
