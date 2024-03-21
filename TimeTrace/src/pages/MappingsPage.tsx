@@ -46,7 +46,6 @@ function MappingsPage() {
         queryHandler.formattedFile = await getFileLines(formattedFile);
         queryHandler.mappings = mappings;
         const monaaZones = await queryHandler.search("ab$");
-        console.log(monaaZones);
         const linesFromZones: string[] = [];
         monaaZones.forEach((zone) => {
             zone.match.forEach(match => {
