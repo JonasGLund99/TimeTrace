@@ -1,5 +1,5 @@
 export function extractTimeStamp(line: string): string {
-    const timeStampRegex = /\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{1,5}(Z|[+-]\d{2}:\d{2})\b/g;
+    const timeStampRegex = /\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{1,6}(Z|[+-]\d{2}:\d{2})\b/g;
     let timestamp: string | undefined;
 
     let timestampMatch = line.match(timeStampRegex);

@@ -17,7 +17,7 @@ function MappedItemsList(props: PropsType) {
     }
 
     return (
-        <div id="mappings-container" className="border border-gray-400 w-full h-full rounded-lg">
+        <div id="mappings-container" className="w-full h-full border-2 border-gray-300 rounded-lg">
             <div className="px-4 pt-2">
                 <div className="grid grid-cols-12 gap-1 mb-2">
                     <p className="col-span-2 font-bold text-left">Map Value</p>
@@ -25,10 +25,10 @@ function MappedItemsList(props: PropsType) {
                     <p className="col-span-1 font-bold text-center">Del</p>
                 </div>
                 {Array.from(mappings).filter(([event, map]) => map !== "").map(([event, map]) => (
-                    <div key={event} className="grid grid-cols-12 border-b last:border-none gap-1 mb-2">
+                    <div key={event} className="grid grid-cols-12 gap-1 mb-2 border-b last:border-none">
                         <p className="col-span-2">{map}</p>
                         <p className="col-span-9 truncate">{event}</p>
-                        <div className="col-span-1 flex justify-center">
+                        <div className="flex justify-center col-span-1">
                             <svg
                                 onClick={() => {
                                     removeMapping(event)

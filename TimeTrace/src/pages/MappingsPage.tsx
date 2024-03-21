@@ -31,7 +31,6 @@ function MappingsPage() {
         }
     };
 
-
     function searchLog(query: string) {
         if (query === "") {
             setFilteredFileLines(fileLines);
@@ -47,7 +46,7 @@ function MappingsPage() {
     }
 
     return (
-        <div className="flex flex-row h-full mappings-page " >
+        <div className="flex flex-row h-full gap-5 mappings-page" >
             <div className="w-[40%]">
                 {
                     uploadedFile ?
@@ -60,7 +59,9 @@ function MappingsPage() {
                         </div>
                 }
                 <FileUploadButton onFileChange={handleFileChange} />
-                <MappedItemsList mappings={mappings} setMappings={setMapping} />
+                <div className="h-[90%]">
+                    <MappedItemsList mappings={mappings} setMappings={setMapping} />
+                </div>
 
             </div>
             <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
