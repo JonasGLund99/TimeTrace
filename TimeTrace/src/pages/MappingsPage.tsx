@@ -6,6 +6,7 @@ import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
 import { QueryHandler } from '../models/QueryHandler';
 import { LogFormatter } from '../models/LogFormatter';
+import Loader from "../components/Loader";
 
 function MappingsPage() {
     const [events, setEvents] = useState<string[]>([]);
@@ -13,6 +14,7 @@ function MappingsPage() {
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [fileLines, setFileLines] = useState<string[]>([]);
     const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
+    const [loading, setLoading] = useState<boolean>(false);
     const queryHandler = new QueryHandler();
     const logFormatter = new LogFormatter();
 
@@ -35,27 +37,28 @@ function MappingsPage() {
         }
     };
 
-    // async function callMonaa() {
-    //     if(!uploadedFile) return;
-    //     const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
+    async function callMonaa() {
+        setLoading(true);
+        if(!uploadedFile) return;
+        const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
 
-    //     queryHandler.file = fileLines;
-    //     queryHandler.formattedFile = await getFileLines(formattedFile);
-    //     queryHandler.mappings = mappings;
-    //     const monaaZones = await queryHandler.search("ab$");
-    //     console.log(monaaZones);
-    //     const linesFromZones: string[] = [];
-    //     monaaZones.forEach((zone) => {
-    //         zone.match.forEach(match => {
-    //             linesFromZones.push(fileLines[match]);
-    //         });
-    //     });
+        queryHandler.file = fileLines;
+        queryHandler.formattedFile = await getFileLines(formattedFile);
+        queryHandler.mappings = mappings;
+        const monaaZones = await queryHandler.search("ab$");
+        console.log(monaaZones);
+        const linesFromZones: string[] = [];
+        monaaZones.forEach((zone) => {
+            zone.match.forEach(match => {
+                linesFromZones.push(fileLines[match]);
+            });
+        });
 
         
-    //     setFilteredFileLines(linesFromZones);
-    //     setEvents(extractEventsFromFileLines(linesFromZones));
-        
-    // }
+        setFilteredFileLines(linesFromZones);
+        setEvents(extractEventsFromFileLines(linesFromZones));
+        setLoading(false);
+    }
 
     function searchLog(query: string) {
         if (query === "") {
@@ -73,9 +76,9 @@ function MappingsPage() {
 
     return (
         <div className="flex flex-row h-full gap-5 mappings-page" >
-            {/* <div>
+            <div>
                 <button className="p-5 bg-slate-600" onClick={callMonaa}>Call Monaa</button>
-            </div> */}
+            </div>
             <div className="w-[40%]">
                 {
                     uploadedFile ?
@@ -93,7 +96,9 @@ function MappingsPage() {
                 </div>
 
             </div>
-            <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
+            {loading ? <Loader /> : 
+                <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
+            }
         </div>
     );
 }

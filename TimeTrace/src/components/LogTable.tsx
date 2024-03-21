@@ -84,6 +84,7 @@ function LogTable(props: LogTableProps) {
                 <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
             <div id="log-table" className="relative flex h-full p-2 pt-0 overflow-auto border-2 border-gray-300 rounded-md">
+                
                 <div>
                     <div id="lineNumber" className="">
                         {shownLines.map((event: string, i: number) => {
