@@ -7,11 +7,10 @@ import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromF
 import { AppdataContext } from "../context/AppContext";
 
 function MappingsPage() {
-    const { events, setEvents } = useContext(AppdataContext)
-    const { mappings, setMappings } = useContext(AppdataContext)
-    const { fileLines, setFileLines } = useContext(AppdataContext)
-
-    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const { events, setEvents } = useContext(AppdataContext);
+    const { mappings, setMappings } = useContext(AppdataContext);
+    const { fileLines, setFileLines } = useContext(AppdataContext);
+    const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
     const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
 
     useEffect(() => {
