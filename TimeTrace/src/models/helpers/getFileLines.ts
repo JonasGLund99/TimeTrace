@@ -4,7 +4,8 @@ export async function getFileLines(originalLog: File): Promise<string[]> {
         let reader = new FileReader();
         reader.onload = async (event) => {
             let textLines = (reader.result as string).split("\n"); //split file on newlines
-            resolve([...textLines.map(txtLine => txtLine.replace(/[\r\n]+/g, ""))]); //all went well, return textLines
+            textLines = textLines.filter(line => line.replace(/(\r\n|\n|\r)/gm, "") !== '')
+            resolve(textLines); //all went well, return textLines
         };
         reader.onerror = async (e) => { //on error reject
             console.error("Unable to read file", originalLog.name, e);
