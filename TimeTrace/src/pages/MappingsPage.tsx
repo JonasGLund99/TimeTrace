@@ -39,7 +39,6 @@ function MappingsPage() {
     function searchLog(query: string) {
         if (query === "") {
             setFilteredFileLines(mapEventsToFileLine(events));
-
             return;
         };
 
