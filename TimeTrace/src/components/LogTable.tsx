@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AppdataContext } from "../context/AppContext";
+
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
-    events: string[];
     mappings: Map<string, string>;
+    events: string[];
     fileLines: string[];
-    setMappings: React.Dispatch<React.SetStateAction<Map<string, string>>> | undefined;
+    setMappings?: React.Dispatch<React.SetStateAction<Map<string, string>>> | undefined;
     searchLog: (searchQuery: string) => void;
 };
 
