@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
-import { FileLine, mapFileLineToEvents } from "../models/Types/FileLine";
+import { FileLine, mapFileLineToEvents } from '../models/Types/FileLine';
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
@@ -23,7 +23,11 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
     }, [filteredFileLines]);
 
     useEffect(() => {
-        setShownLines([...shownLines, ...(filteredFileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1)))]);
+        let prevLines: FileLine[] = shownLines;
+        if(currentPage === 0) {
+            prevLines = [];
+        }
+        setShownLines([...prevLines, ...(filteredFileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1)))]);
     }, [currentPage]);
 
     const handleScroll = () => {
@@ -34,7 +38,7 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
         const documentHeight = logTable.scrollHeight;
         if (scrollY + windowHeight >= documentHeight - 100) {
             setCurrentPage(currentPage + 1);
-        }
+        }   
     };
 
     useEffect(() => {
