@@ -7,12 +7,15 @@ import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromF
 import Loader from "../components/Loader";
 import { AppdataContext } from "../context/AppContext";
 
+
+
 function MappingsPage() {
     const { events, setEvents } = useContext(AppdataContext);
     const { mappings, setMappings } = useContext(AppdataContext);
     const { fileLines, setFileLines } = useContext(AppdataContext);
     const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
     const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
+    const { errorObj, setError } = useContext(AppdataContext);
 
     useEffect(() => {
         setFilteredFileLines(fileLines);
@@ -22,12 +25,26 @@ function MappingsPage() {
     const handleFileChange = async (file: File | null) => {
         setUploadedFile(file);
         if (file) {
-            let lines: string[] = await getFileLines(file);
-            setFileLines(lines);
-
-            setEvents(extractEventsFromFileLines(lines));
-
-            setMappings(new Map(events.map((event) => [event, ""])));
+            try {
+                let lines: string[] = await getFileLines(file);
+                setFileLines(lines);
+    
+                setEvents(extractEventsFromFileLines(lines));
+    
+                setMappings(new Map(events.map((event) => [event, ""])));
+            } catch(e) {
+                setError({
+                    title: "Error during file upload",
+                    errorString: "Error duing upload of file <br/> <br/>" + e,
+                    callback: null,
+                    callbackTitle: null,
+                    is_dismissible: true
+                })
+                setFileLines([]);
+                setEvents([]);
+                setMappings(new Map());
+                setUploadedFile(null);
+            }
 
         } else {
             setFileLines([]);

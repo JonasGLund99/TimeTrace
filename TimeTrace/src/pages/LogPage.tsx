@@ -53,7 +53,6 @@ function LogPage() {
                 errorString: "To be able to view the log and search, you must upload a file on the file upload page",
                 callback: () => {
                     window.location.href = 'http://localhost:3000' + navigation.filter(x => x.name === "Create mappings")[0].href;
-                    setError(null);
                 },
                 callbackTitle: "Go to Upload",
                 is_dismissible: false
