@@ -13,21 +13,17 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
     const { mappings, setMappings } = useContext(AppdataContext);
     const { fileLines, setFileLines } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
     const linesPerPage = 100;
 
     const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
 
     useEffect(() => {
-        console.log(`Filtered filelines ${filteredFileLines.slice(0, linesPerPage)}`)
-        setShownLines(filteredFileLines.slice(0, linesPerPage));
+        setShownLines(filteredFileLines.slice(currentPage, linesPerPage));
     }, [filteredFileLines]);
 
     useEffect(() => {
-
         const filteredFileLinesWithNewSlice = filteredFileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1));
-        console.log(`slice start: ${linesPerPage * (currentPage)} slice end ${linesPerPage * (currentPage + 1)}`)
-        console.log(`filtered filelines l27 ${filteredFileLinesWithNewSlice.map(fileLine => fileLine.text + ": " + fileLine.line)}`)
         setShownLines([...shownLines, ...(filteredFileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1)))]);
     }, [currentPage]);
 
