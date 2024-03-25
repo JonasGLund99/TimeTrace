@@ -77,6 +77,7 @@ function LogTable(props: LogTableProps) {
                         value={searchQuery}
                         onChange={(e) => {
                             setSearchQuery(e.target.value);
+                            setCurrentPage(1);
                             if (props.searchLog) props.searchLog(e.target.value);
                         }}
                     ></input>
@@ -84,10 +85,11 @@ function LogTable(props: LogTableProps) {
                 <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
             <div id="log-table" className="relative flex h-full p-2 pt-0 overflow-auto border-2 border-gray-300 rounded-md">
+                
                 <div>
                     <div id="lineNumber" className="">
                         {shownLines.map((event: string, i: number) => {
-                            return <pre className="py-2 pl-2">{`${i}: `} </pre>;
+                            return <pre key={i} className="py-2 pl-2">{`${i}: `} </pre>;
                         })}
                     </div>
                 </div>
@@ -98,7 +100,7 @@ function LogTable(props: LogTableProps) {
                         </h3>
                     ) : null}
                     {shownLines.map((event: string, i: number) => {
-                        return <pre className="w-full py-2">{event} </pre>;
+                        return <pre key={i} className="w-full py-2">{event} </pre>;
                     })}
 
                     <div className="absolute top-0 right-0 flex flex-col bg-white mapping-container">

@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import LogTable from "../components/LogTable";
 import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
+import Loader from "../components/Loader";
 import { AppdataContext } from "../context/AppContext";
 
 function MappingsPage() {
