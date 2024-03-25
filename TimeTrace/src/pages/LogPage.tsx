@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LogTable from "../components/LogTable";
 import SearchForm from "../components/SearchForm";
 import { QueryHandler } from "../models/QueryHandler";
@@ -6,6 +6,7 @@ import { AppdataContext } from "../context/AppContext";
 import { LogFormatter } from "../models/LogFormatter";
 import Loader from "../components/Loader";
 import { getFileLines } from "../models/helpers/getFileLines";
+import { FileLine, mapEventsToFileLine, mapFileLineToEvents } from "../models/Types/FileLine";
 
 function LogPage() {
   const { events, setEvents } = useContext(AppdataContext);
@@ -16,8 +17,25 @@ function LogPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const logFormatter = new LogFormatter();
 
-  function searchLog(searchQuery: string): void {
-    throw new Error("Function not implemented.");
+  const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
+  function searchLog(query: string) {
+    if (query === "") {
+      setFilteredFileLines(mapEventsToFileLine(events));
+
+      return;
+    };
+
+    let filteredFileLines: FileLine[] = [];
+
+    fileLines.filter((fileLine, index) => {
+      const isAMatch: boolean = fileLine.toLowerCase().includes(query.toLowerCase());
+      if (!isAMatch) return false;
+      filteredFileLines.push({ text: events[index], line: index });
+      return true;
+    });
+
+
+    setFilteredFileLines(filteredFileLines);
   }
 
   async function callMonaa() {
@@ -29,15 +47,15 @@ function LogPage() {
     queryHandler.formattedFile = await getFileLines(formattedFile);
     queryHandler.mappings = mappings;
     const monaaZones = await queryHandler.search("ab$");
-    const linesFromZones: string[] = [];
+    const linesFromZones: FileLine[] = [];
     monaaZones.forEach((zone) => {
       zone.match.forEach(match => {
-        linesFromZones.push(fileLines[match]);
+        linesFromZones.push({ text: events[match], line: match });
       });
     });
 
-    // setFilteredFileLines(linesFromZones);
-    // setEvents(extractEventsFromFileLines(linesFromZones));
+    setFilteredFileLines(linesFromZones);
+    setEvents(mapFileLineToEvents(linesFromZones));
     setLoading(false);
   }
 
@@ -46,7 +64,7 @@ function LogPage() {
       <h1 className="flex justify-center pb-5 text-4xl ">Search logfile {uploadedFile?.name}</h1>
       <SearchForm onSubmit={callMonaa} />
       {loading ? <Loader /> :
-        <LogTable setMappings={setMappings} mappingsAreEditable={false} searchLog={searchLog} />
+        <LogTable filteredFileLines={filteredFileLines} mappingsAreEditable={false} searchLog={searchLog} />
       }
     </div>
   );

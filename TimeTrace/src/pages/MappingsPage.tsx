@@ -4,18 +4,18 @@ import { useContext, useEffect, useState } from "react";
 import LogTable from "../components/LogTable";
 import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
-import Loader from "../components/Loader";
 import { AppdataContext } from "../context/AppContext";
+import { FileLine, mapEventsToFileLine } from "../models/Types/FileLine";
 
 function MappingsPage() {
     const { events, setEvents } = useContext(AppdataContext);
     const { mappings, setMappings } = useContext(AppdataContext);
     const { fileLines, setFileLines } = useContext(AppdataContext);
     const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
-    const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
+    const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
 
     useEffect(() => {
-        setFilteredFileLines(fileLines);
+        setEvents(extractEventsFromFileLines(fileLines));
     }, [fileLines])
 
     // Callback function to receive the file
@@ -25,31 +25,35 @@ function MappingsPage() {
             let lines: string[] = await getFileLines(file);
             setFileLines(lines);
 
-            setEvents(extractEventsFromFileLines(lines));
-
+            const events = extractEventsFromFileLines(lines);
+            setFilteredFileLines(mapEventsToFileLine(events));
             setMappings(new Map(events.map((event) => [event, ""])));
 
         } else {
             setFileLines([]);
-            setEvents([]);
+            setFilteredFileLines([]);
             setMappings(new Map());
         }
     };
 
     function searchLog(query: string) {
         if (query === "") {
-            setFilteredFileLines(fileLines);
+            setFilteredFileLines(mapEventsToFileLine(events));
 
             return;
         };
-        const filteredFileLines = fileLines.filter((fileLine) => fileLine.toLowerCase().includes(query.toLowerCase()));
+
+        let filteredFileLines: FileLine[] = [];
+
+        fileLines.filter((fileLine, index) => {
+            const isAMatch: boolean = fileLine.toLowerCase().includes(query.toLowerCase());
+            if (!isAMatch) return false;
+            filteredFileLines.push({ text: events[index], line: index });
+            return true;
+        });
+
+
         setFilteredFileLines(filteredFileLines);
-
-
-        // Todo this could probably be done more efficiently.
-        // This is necessary because LogTable uses the indexes of the filteredFileLines to update the mappings.
-        // A filteredFileLine cannot be mapped to its event text without doing this.
-        setEvents(extractEventsFromFileLines(filteredFileLines));
     }
 
     return (
@@ -71,7 +75,7 @@ function MappingsPage() {
                 </div>
 
             </div>
-            <LogTable setMappings={setMappings} mappingsAreEditable={true} searchLog={searchLog} />
+            <LogTable filteredFileLines={filteredFileLines} mappingsAreEditable={true} searchLog={searchLog} />
         </div>
     );
 }
