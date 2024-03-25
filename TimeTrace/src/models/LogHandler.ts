@@ -6,10 +6,10 @@ export class LogHandler{
      
     MapMonaaOutputToEvent(MonaaOutput: string[], MappedFile: string[], logFile: string[], mappings: Map<string,string> ): MonaaZone[]{
         let logSearcher = new LogSearcher();
-        return  logSearcher.findZones(logFile, this.extractSearchInterval(MonaaOutput));
+        return logSearcher.findZones(logFile, this.extractSearchIntervals(MonaaOutput));
     }
 
-    extractSearchInterval(MonaaOutput: string[]): SearchInterval[]{
+    extractSearchIntervals(MonaaOutput: string[]): SearchInterval[]{
         let foundStart: number = -1;
         let foundEnd: number = -1;
         let foundIntervals: SearchInterval[] = [];
