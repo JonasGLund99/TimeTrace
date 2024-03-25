@@ -4,8 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import LogTable from "../components/LogTable";
 import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
-import { QueryHandler } from '../models/QueryHandler';
-import { LogFormatter } from '../models/LogFormatter';
 import Loader from "../components/Loader";
 import { AppdataContext } from "../context/AppContext";
 
@@ -15,9 +13,6 @@ function MappingsPage() {
     const { fileLines, setFileLines } = useContext(AppdataContext);
     const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
     const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
-    const [loading, setLoading] = useState<boolean>(false);
-    const queryHandler = new QueryHandler();
-    const logFormatter = new LogFormatter();
 
     useEffect(() => {
         setFilteredFileLines(fileLines);
@@ -41,28 +36,6 @@ function MappingsPage() {
         }
     };
 
-    async function callMonaa() {
-        setLoading(true);
-        if(!uploadedFile) return;
-        const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
-
-        queryHandler.file = fileLines;
-        queryHandler.formattedFile = await getFileLines(formattedFile);
-        queryHandler.mappings = mappings;
-        const monaaZones = await queryHandler.search("ab$");
-        const linesFromZones: string[] = [];
-        monaaZones.forEach((zone) => {
-            zone.match.forEach(match => {
-                linesFromZones.push(fileLines[match]);
-            });
-        });
-
-        
-        setFilteredFileLines(linesFromZones);
-        setEvents(extractEventsFromFileLines(linesFromZones));
-        setLoading(false);
-    }
-
     function searchLog(query: string) {
         if (query === "") {
             setFilteredFileLines(fileLines);
@@ -81,9 +54,6 @@ function MappingsPage() {
 
     return (
         <div className="flex flex-row h-full gap-5 mappings-page" >
-            <div>
-                <button className="p-5 bg-slate-600" onClick={callMonaa}>Call Monaa</button>
-            </div>
             <div className="w-[40%]">
                 {
                     uploadedFile ?
@@ -101,9 +71,7 @@ function MappingsPage() {
                 </div>
 
             </div>
-            {loading ? <Loader /> : 
-                <LogTable mappings={mappings} setMappings={setMappings} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
-            }
+            <LogTable mappings={mappings} setMappings={setMappings} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
         </div>
     );
 }
