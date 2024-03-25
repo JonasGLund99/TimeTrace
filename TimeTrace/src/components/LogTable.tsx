@@ -19,11 +19,10 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
     const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
 
     useEffect(() => {
-        setShownLines(filteredFileLines.slice(currentPage, linesPerPage));
+        setShownLines(filteredFileLines.slice(0, linesPerPage));
     }, [filteredFileLines]);
 
     useEffect(() => {
-        const filteredFileLinesWithNewSlice = filteredFileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1));
         setShownLines([...shownLines, ...(filteredFileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1)))]);
     }, [currentPage]);
 
