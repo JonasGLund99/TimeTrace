@@ -29,9 +29,9 @@ type AppDataProvideProps = {
 }
 
 export default function AppdataProvider({ children }: AppDataProvideProps) {
-    const [events, setEvents] = useState<string[]>([""]);
+    const [events, setEvents] = useState<string[]>([]);
     const [mappings, setMappings] = useState<Map<string, string>>(new Map());
-    const [fileLines, setFileLines] = useState<string[]>([""]);
+    const [fileLines, setFileLines] = useState<string[]>([]);
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
     return (
