@@ -33,9 +33,9 @@ type AppDataProvideProps = {
 }
 
 export default function AppdataProvider({ children }: AppDataProvideProps) {
-    const [events, setEvents] = useState<string[]>(["login"]);
+    const [events, setEvents] = useState<string[]>([""]);
     const [mappings, setMappings] = useState<Map<string, string>>(new Map());
-    const [fileLines, setFileLines] = useState<string[]>(["321232 login"]);
+    const [fileLines, setFileLines] = useState<string[]>([""]);
     const [fileName, setFileName] = useState<string>("");
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 

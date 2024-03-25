@@ -3,7 +3,6 @@ function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) 
     async function handleFileUpload(e: React.SyntheticEvent) {
         const target = e.target as HTMLInputElement;
         const file: File = (target.files as FileList)[0];
-        console.log("tis")
         // Call the callback function with the file
         onFileChange(file);
         if (target !== null) {
@@ -12,7 +11,6 @@ function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) 
     }
 
     function handleFileRemove() {
-        console.log("pølse")
         onFileChange(null);
     }
 
