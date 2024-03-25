@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-const navigation = [
+export const navigation = [
     { name: "Home", href: "/" },
     { name: "Create mappings", href: "/create-mappings" },
     { name: "View log", href: "/view-log" },
