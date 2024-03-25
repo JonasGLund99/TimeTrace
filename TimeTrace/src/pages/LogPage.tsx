@@ -22,7 +22,7 @@ function LogPage() {
 
   async function callMonaa() {
     setLoading(true);
-    if(!uploadedFile) return;
+    if (!uploadedFile) return;
     const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
 
     queryHandler.file = fileLines;
@@ -31,22 +31,22 @@ function LogPage() {
     const monaaZones = await queryHandler.search("ab$");
     const linesFromZones: string[] = [];
     monaaZones.forEach((zone) => {
-        zone.match.forEach(match => {
-            linesFromZones.push(fileLines[match]);
-        });
+      zone.match.forEach(match => {
+        linesFromZones.push(fileLines[match]);
+      });
     });
 
     // setFilteredFileLines(linesFromZones);
     // setEvents(extractEventsFromFileLines(linesFromZones));
     setLoading(false);
   }
-  
+
   return (
     <div>
       <h1 className="flex justify-center pb-5 text-4xl ">Search logfile {uploadedFile?.name}</h1>
       <SearchForm onSubmit={callMonaa} />
       {loading ? <Loader /> :
-        <LogTable mappings={mappings} setMappings={setMappings} mappingsAreEditable={false} events={events} searchLog={searchLog} fileLines={fileLines} />
+        <LogTable setMappings={setMappings} mappingsAreEditable={false} searchLog={searchLog} />
       }
     </div>
   );

@@ -1,26 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AppdataContext } from "../context/AppContext";
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
-    mappings: Map<string, string>;
-    events: string[];
-    fileLines: string[];
     setMappings?: React.Dispatch<React.SetStateAction<Map<string, string>>>;
     searchLog: (searchQuery: string) => void;
 };
 
 function LogTable(props: LogTableProps) {
+    const { events, setEvents } = useContext(AppdataContext);
+    const { mappings, setMappings } = useContext(AppdataContext);
+    const { fileLines, setFileLines } = useContext(AppdataContext);
+
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [currentPage, setCurrentPage] = useState(1);
     const linesPerPage = 100;
-    const [shownLines, setShownLines] = useState<string[]>(props.fileLines.slice(0, linesPerPage));
+
+    const [shownLines, setShownLines] = useState<string[]>(fileLines.slice(0, linesPerPage));
 
     useEffect(() => {
-        setShownLines(props.fileLines.slice(0, linesPerPage));
-    }, [props.fileLines]);
+        setShownLines(fileLines.slice(0, linesPerPage));
+    }, [fileLines]);
 
     useEffect(() => {
-        setShownLines([...shownLines, ...props.fileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1))]);
+        setShownLines([...shownLines, ...fileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1))]);
     }, [currentPage]);
 
     const handleScroll = () => {
@@ -52,9 +55,9 @@ function LogTable(props: LogTableProps) {
 
         // EventText is empty when the user has removed the mapping.
         if (filteredValue === "" && eventText !== "") return;
-        const mapKey = props.events[mappingIndex];
-        props.mappings.set(mapKey, filteredValue);
-        const newMappings = new Map(props.mappings);
+        const mapKey = events[mappingIndex];
+        mappings.set(mapKey, filteredValue);
+        const newMappings = new Map(mappings);
         if (props.setMappings) {
             props.setMappings(newMappings);
         }
@@ -85,7 +88,7 @@ function LogTable(props: LogTableProps) {
                 <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
             <div id="log-table" className="relative flex h-full p-2 pt-0 overflow-auto border-2 border-gray-300 rounded-md">
-                
+
                 <div>
                     <div id="lineNumber" className="">
                         {shownLines.map((event: string, i: number) => {
@@ -94,7 +97,7 @@ function LogTable(props: LogTableProps) {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    {props.fileLines.length === 0 ? (
+                    {fileLines.length === 0 ? (
                         <h3 className="self-center text-2xl font-medium text-center align">
                             No events were found.
                         </h3>
@@ -111,7 +114,7 @@ function LogTable(props: LogTableProps) {
                                         className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                                         type="text"
                                         readOnly={props.mappingsAreEditable ? false : true}
-                                        value={props.mappings.get(props.events[i]) || ''}
+                                        value={mappings.get(events[i]) || ''}
                                         onChange={(event) => {
                                             handleMappingChange(event.target.value, i);
                                         }}

@@ -67,11 +67,11 @@ function MappingsPage() {
                 }
                 <FileUploadButton onFileChange={handleFileChange} />
                 <div className="h-[90%]">
-                    <MappedItemsList mappings={mappings} setMappings={setMappings} />
+                    <MappedItemsList />
                 </div>
 
             </div>
-            <LogTable mappings={mappings} setMappings={setMappings} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
+            <LogTable setMappings={setMappings} mappingsAreEditable={true} searchLog={searchLog} />
         </div>
     );
 }
