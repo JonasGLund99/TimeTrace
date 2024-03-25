@@ -1,18 +1,19 @@
 import FileUploadButton from "../components/FileUploadButton";
 import MappedItemsList from "../components/MappedItemsList";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LogTable from "../components/LogTable";
 import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
 import { QueryHandler } from '../models/QueryHandler';
 import { LogFormatter } from '../models/LogFormatter';
 import Loader from "../components/Loader";
+import { AppdataContext } from "../context/AppContext";
 
 function MappingsPage() {
-    const [events, setEvents] = useState<string[]>([]);
-    const [mappings, setMapping] = useState<Map<string, string>>(new Map(events.map((event) => [event, ""])))
-    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-    const [fileLines, setFileLines] = useState<string[]>([]);
+    const { events, setEvents } = useContext(AppdataContext);
+    const { mappings, setMappings } = useContext(AppdataContext);
+    const { fileLines, setFileLines } = useContext(AppdataContext);
+    const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
     const [filteredFileLines, setFilteredFileLines] = useState<string[]>(events);
     const [loading, setLoading] = useState<boolean>(false);
     const queryHandler = new QueryHandler();
@@ -28,12 +29,15 @@ function MappingsPage() {
         if (file) {
             let lines: string[] = await getFileLines(file);
             setFileLines(lines);
+
             setEvents(extractEventsFromFileLines(lines));
-            setMapping(new Map(events.map((event) => [event, ""])));
+
+            setMappings(new Map(events.map((event) => [event, ""])));
+
         } else {
             setFileLines([]);
             setEvents([]);
-            setMapping(new Map());
+            setMappings(new Map());
         }
     };
 
@@ -62,10 +66,12 @@ function MappingsPage() {
     function searchLog(query: string) {
         if (query === "") {
             setFilteredFileLines(fileLines);
+
             return;
         };
         const filteredFileLines = fileLines.filter((fileLine) => fileLine.toLowerCase().includes(query.toLowerCase()));
         setFilteredFileLines(filteredFileLines);
+
 
         // Todo this could probably be done more efficiently.
         // This is necessary because LogTable uses the indexes of the filteredFileLines to update the mappings.
@@ -91,12 +97,12 @@ function MappingsPage() {
                 }
                 <FileUploadButton onFileChange={handleFileChange} />
                 <div className="h-[90%]">
-                    <MappedItemsList mappings={mappings} setMappings={setMapping} />
+                    <MappedItemsList mappings={mappings} setMappings={setMappings} />
                 </div>
 
             </div>
             {loading ? <Loader /> : 
-                <LogTable mappings={mappings} setMappings={setMapping} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
+                <LogTable mappings={mappings} setMappings={setMappings} mappingsAreEditable={true} events={events} searchLog={searchLog} fileLines={filteredFileLines} />
             }
         </div>
     );

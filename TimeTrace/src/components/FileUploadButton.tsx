@@ -1,10 +1,8 @@
-
 function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) => void }) {
 
     async function handleFileUpload(e: React.SyntheticEvent) {
         const target = e.target as HTMLInputElement;
         const file: File = (target.files as FileList)[0];
-
         // Call the callback function with the file
         onFileChange(file);
         if (target !== null) {
@@ -18,10 +16,11 @@ function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) 
 
     return (
         <div className="flex gap-2 mb-4">
-            <input className="hidden"
+            <input
                 type="file"
                 accept=".txt"
                 id="contained-button-file"
+                className="hidden"
                 onChange={handleFileUpload}
             />
             <div className="flex gap-2">
