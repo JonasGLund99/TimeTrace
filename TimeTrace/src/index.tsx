@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import reportWebVitals from './reportWebVitals';
@@ -17,8 +17,8 @@ import AppdataProvider from './context/AppContext';
 export default function App() {
   return (
     <BrowserRouter>
-      <Navbar />
       <AppdataProvider>
+        <Navbar />
         <div className="w-full h-[94%] p-5">
           <Routes>
             <Route path="/" element={<Home />} />

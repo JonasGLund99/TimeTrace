@@ -24,7 +24,7 @@ function LogPage() {
     <div>
       <h1 className="flex justify-center pb-5 text-4xl ">Search logfile {uploadedFile?.name}</h1>
       <SearchForm onSubmit={handleSearchSubmit} />
-      <LogTable mappings={mappings} setMappings={setMappings} mappingsAreEditable={false} events={events} searchLog={searchLog} fileLines={fileLines} />
+      <LogTable mappings={mappings} mappingsAreEditable={false} events={events} searchLog={searchLog} fileLines={fileLines} />
     </div>
 
   );
