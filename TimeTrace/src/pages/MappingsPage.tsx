@@ -51,7 +51,7 @@ function MappingsPage() {
             return true;
         });
 
-
+        console.log("filteredFileLines ", filteredFileLines);
         setFilteredFileLines(filteredFileLines);
     }
 
