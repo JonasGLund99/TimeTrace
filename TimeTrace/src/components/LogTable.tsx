@@ -107,7 +107,7 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
                     })}
 
                     <div className="absolute top-0 right-0 flex flex-col bg-white mapping-container">
-                        {shownLines.map((fileLine: FileLine, index: number) => {
+                        {shownLines.map((fileLine: FileLine) => {
                             return (
                                 <div key={fileLine.line} className="flex items-center justify-end gap-1 py-2 pr-1">
                                     <input
@@ -116,13 +116,13 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
                                         readOnly={mappingsAreEditable ? false : true}
                                         value={mappings.get(fileLine.text) || ''}
                                         onChange={(event) => {
-                                            handleMappingChange(event.target.value, index);
+                                            handleMappingChange(event.target.value, fileLine.line);
                                         }}
                                     />
                                     {mappingsAreEditable ? (
                                         <svg
                                             onClick={() => {
-                                                removeMapping(index);
+                                                removeMapping(fileLine.line);
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
