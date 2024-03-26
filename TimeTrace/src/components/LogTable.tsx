@@ -1,14 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
-import { FileLine, mapFileLineToEvents } from '../models/Types/FileLine';
+import { FileLine } from '../models/Types/FileLine';
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
     searchLog: (searchQuery: string) => void;
-    filteredFileLines: FileLine[];
 };
 
-function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTableProps) {
+function LogTable({ mappingsAreEditable, searchLog }: LogTableProps) {
     const { events, setEvents } = useContext(AppdataContext);
     const { mappings, setMappings } = useContext(AppdataContext);
     const { fileLines, setFileLines } = useContext(AppdataContext);
