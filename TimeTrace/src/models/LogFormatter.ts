@@ -9,8 +9,7 @@ export class LogFormatter {
             let f: File = new File([mappedLines.join("\n")], "mapped.txt", {type: "text/plain"}) //return file object with mapped and formatted events
             return f;
         } catch (error) { //readfile might throw error
-            console.log("Error formatting the log.", error);
-            throw error;
+            throw new Error("Error formatting the log."+ error);
         } 
     }
 

@@ -1,5 +1,13 @@
 import { createContext, ReactNode, useState } from "react";
 
+export type ErrorObject = {
+    errorString: string,
+    title: string,
+    callback: (() => void) | null,
+    callbackTitle: string | null,
+    is_dismissible: boolean
+}
+
 export type AppdataContextInterface = {
     events: string[];
     setEvents: React.Dispatch<React.SetStateAction<string[]>>;
@@ -9,6 +17,8 @@ export type AppdataContextInterface = {
     setFileLines: React.Dispatch<React.SetStateAction<string[]>>;
     uploadedFile: File | null;
     setUploadedFile: React.Dispatch<React.SetStateAction<File | null>>;
+    errorObj: ErrorObject | null;
+    setError: React.Dispatch<React.SetStateAction<ErrorObject | null>>;
 }
 
 const defaultState = {
@@ -19,8 +29,10 @@ const defaultState = {
     fileLines: [],
     setFileLines: (lines: string[]) => { },
     uploadedFile: null,
-    setUploadedFile: (uploadedFile: File | null) => { }
-} as AppdataContextInterface
+    setUploadedFile: (uploadedFile: File | null) => { },
+    errorObj: null,
+    setError: (value: ErrorObject | null) => { }
+} as AppdataContextInterface;
 
 export const AppdataContext = createContext<AppdataContextInterface>(defaultState);
 
@@ -33,9 +45,10 @@ export default function AppdataProvider({ children }: AppDataProvideProps) {
     const [mappings, setMappings] = useState<Map<string, string>>(new Map());
     const [fileLines, setFileLines] = useState<string[]>([]);
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const [errorObj, setError] = useState<ErrorObject | null>(null);
 
     return (
-        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile }}>
+        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError }}>
             {children}
         </AppdataContext.Provider>
     );
