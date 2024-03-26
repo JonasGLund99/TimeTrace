@@ -20,14 +20,14 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
 
     useEffect(() => {
         setShownLines(filteredFileLines.slice(0, linesPerPage));
-    }, [filteredFileLines]);
+      }, [filteredFileLines]);
 
     useEffect(() => {
-        let prevLines: FileLine[] = shownLines;
-        if(currentPage === 0) {
-            prevLines = [];
-        }
-        setShownLines([...prevLines, ...(filteredFileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1)))]);
+        setCurrentPage(0);
+    }, [filteredFileLines]);
+    
+    useEffect(() => {
+        setShownLines(shownLines => [...shownLines, ...(filteredFileLines.slice(linesPerPage * currentPage, linesPerPage * (currentPage + 1)))]);
     }, [currentPage]);
 
     const handleScroll = () => {
@@ -84,7 +84,6 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
                         value={searchQuery}
                         onChange={(e) => {
                             setSearchQuery(e.target.value);
-                            setCurrentPage(1);
                             searchLog(e.target.value);
                         }}
                     ></input>
