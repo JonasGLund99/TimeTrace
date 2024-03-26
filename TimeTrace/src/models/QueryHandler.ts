@@ -28,7 +28,6 @@ export class QueryHandler {
         try {
             response = await httpClient.request(this.config);
         } catch (error) {
-            console.log(error);
         }
 
         console.timeEnd("Monaa");

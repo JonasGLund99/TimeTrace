@@ -1,26 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AppdataContext } from "../context/AppContext";
+import { FileLine, mapFileLineToEvents } from '../models/Types/FileLine';
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
-    mappings: Map<string, string>;
-    events: string[];
-    fileLines: string[];
-    setMappings?: React.Dispatch<React.SetStateAction<Map<string, string>>>;
     searchLog: (searchQuery: string) => void;
+    filteredFileLines: FileLine[];
 };
 
-function LogTable(props: LogTableProps) {
+function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTableProps) {
+    const { events, setEvents } = useContext(AppdataContext);
+    const { mappings, setMappings } = useContext(AppdataContext);
+    const { fileLines, setFileLines } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
     const linesPerPage = 100;
-    const [shownLines, setShownLines] = useState<string[]>(props.fileLines.slice(0, linesPerPage));
+
+    const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
 
     useEffect(() => {
-        setShownLines(props.fileLines.slice(0, linesPerPage));
-    }, [props.fileLines]);
+        setShownLines(filteredFileLines.slice(0, linesPerPage));
+    }, [filteredFileLines]);
 
     useEffect(() => {
-        setShownLines([...shownLines, ...props.fileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1))]);
+        let prevLines: FileLine[] = shownLines;
+        if(currentPage === 0) {
+            prevLines = [];
+        }
+        setShownLines([...prevLines, ...(filteredFileLines.slice(linesPerPage * (currentPage), linesPerPage * (currentPage + 1)))]);
     }, [currentPage]);
 
     const handleScroll = () => {
@@ -31,7 +38,7 @@ function LogTable(props: LogTableProps) {
         const documentHeight = logTable.scrollHeight;
         if (scrollY + windowHeight >= documentHeight - 100) {
             setCurrentPage(currentPage + 1);
-        }
+        }   
     };
 
     useEffect(() => {
@@ -52,11 +59,11 @@ function LogTable(props: LogTableProps) {
 
         // EventText is empty when the user has removed the mapping.
         if (filteredValue === "" && eventText !== "") return;
-        const mapKey = props.events[mappingIndex];
-        props.mappings.set(mapKey, filteredValue);
-        const newMappings = new Map(props.mappings);
-        if (props.setMappings) {
-            props.setMappings(newMappings);
+        const mapKey = events[mappingIndex];
+        mappings.set(mapKey, filteredValue);
+        const newMappings = new Map(mappings);
+        if (mappingsAreEditable) {
+            setMappings(newMappings);
         }
     }
 
@@ -78,48 +85,48 @@ function LogTable(props: LogTableProps) {
                         onChange={(e) => {
                             setSearchQuery(e.target.value);
                             setCurrentPage(1);
-                            if (props.searchLog) props.searchLog(e.target.value);
+                            searchLog(e.target.value);
                         }}
                     ></input>
                 </div>
                 <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
             <div id="log-table" className="relative flex h-full p-2 pt-0 overflow-auto border-2 border-gray-300 rounded-md">
-                
+
                 <div>
                     <div id="lineNumber" className="">
-                        {shownLines.map((event: string, i: number) => {
-                            return <pre key={i} className="py-2 pl-2">{`${i}: `} </pre>;
+                        {shownLines.map((fileLine: FileLine) => {
+                            return <pre key={fileLine.line} className="py-2 pl-2">{`${fileLine.line}: `} </pre>;
                         })}
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    {props.fileLines.length === 0 ? (
+                    {filteredFileLines.length === 0 ? (
                         <h3 className="self-center text-2xl font-medium text-center align">
                             No events were found.
                         </h3>
                     ) : null}
-                    {shownLines.map((event: string, i: number) => {
-                        return <pre key={i} className="w-full py-2">{event} </pre>;
+                    {shownLines.map((fileLine: FileLine, i: number) => {
+                        return <pre id="event-text" key={i} className="w-full py-2">{`${fileLines[fileLine.line]}`} </pre>;
                     })}
 
                     <div className="absolute top-0 right-0 flex flex-col bg-white mapping-container">
-                        {shownLines.map((event: string, i: number) => {
+                        {shownLines.map((fileLine: FileLine) => {
                             return (
-                                <div key={i} className="flex items-center justify-end gap-1 py-2 pr-1">
+                                <div key={fileLine.line} className="flex items-center justify-end gap-1 py-2 pr-1">
                                     <input
                                         className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                                         type="text"
-                                        readOnly={props.mappingsAreEditable ? false : true}
-                                        value={props.mappings.get(props.events[i]) || ''}
+                                        readOnly={mappingsAreEditable ? false : true}
+                                        value={mappings.get(fileLine.text) || ''}
                                         onChange={(event) => {
-                                            handleMappingChange(event.target.value, i);
+                                            handleMappingChange(event.target.value, fileLine.line);
                                         }}
                                     />
-                                    {props.mappingsAreEditable ? (
+                                    {mappingsAreEditable ? (
                                         <svg
                                             onClick={() => {
-                                                removeMapping(i);
+                                                removeMapping(fileLine.line);
                                             }}
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"

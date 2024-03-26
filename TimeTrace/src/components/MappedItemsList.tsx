@@ -1,12 +1,10 @@
-interface PropsType {
-    mappings: Map<string, string>;
-    setMappings: React.Dispatch<React.SetStateAction<Map<string, string>>> | undefined;
-}
+import { useContext } from "react";
+import { AppdataContext } from "../context/AppContext";
 
 
-function MappedItemsList(props: PropsType) {
-    const mappings: Map<string, string> = props.mappings;
-    const setMappings: React.Dispatch<React.SetStateAction<Map<string, string>>> | undefined = props.setMappings;
+
+function MappedItemsList() {
+    const { mappings, setMappings } = useContext(AppdataContext);
 
     function removeMapping(eventText: string): void {
         mappings.set(eventText, "")
