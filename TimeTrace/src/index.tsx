@@ -13,11 +13,13 @@ import LogPage from './pages/LogPage';
 //Components
 import Navbar from './components/Navbar';
 import AppdataProvider from './context/AppContext';
+import Warning from './components/Warning';
 
 export default function App() {
   return (
     <BrowserRouter>
       <AppdataProvider>
+        <Warning />
         <Navbar />
         <div className="w-full h-[94%] p-5">
           <Routes>
