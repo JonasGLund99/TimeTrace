@@ -1,22 +1,24 @@
 import { useState, useEffect, useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
-import { FileLine } from '../models/Types/FileLine';
+import { FileLine, mapEventsToFileLine } from '../models/Types/FileLine';
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
-    searchLog: (searchQuery: string) => void;
 };
 
-function LogTable({ mappingsAreEditable, searchLog }: LogTableProps) {
+function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { events, setEvents } = useContext(AppdataContext);
     const { mappings, setMappings } = useContext(AppdataContext);
     const { fileLines, setFileLines } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [currentPage, setCurrentPage] = useState(0);
+    const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
-
     const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
 
+    useEffect(() => {
+        setFilteredFileLines(mapEventsToFileLine(events));
+    }, [events]);
 
     useEffect(() => {
         setShownLines(filteredFileLines.slice(0, linesPerPage));
@@ -31,6 +33,33 @@ function LogTable({ mappingsAreEditable, searchLog }: LogTableProps) {
         }
     }, [currentPage]);
 
+    useEffect(() => {
+        const logTable = document.querySelector("#log-table");
+        if (!logTable) return;
+        logTable.addEventListener('scroll', handleScroll);
+        return () => {
+            logTable.removeEventListener('scroll', handleScroll);
+        };
+    }, [currentPage]);
+    
+    function searchLog(query: string) {
+        if (query === "") {
+            setFilteredFileLines(mapEventsToFileLine(events));
+            return;
+        };
+
+        let filteredFileLines: FileLine[] = [];
+
+        fileLines.filter((fileLine, index) => {
+            const isAMatch: boolean = fileLine.toLowerCase().includes(query.toLowerCase());
+            if (!isAMatch) return false;
+            filteredFileLines.push({ text: events[index], line: index });
+            return true;
+        });
+
+        setFilteredFileLines(filteredFileLines);
+    }
+
     const handleScroll = () => {
         const logTable = document.querySelector("#log-table");
         if (!logTable) return;
@@ -41,15 +70,6 @@ function LogTable({ mappingsAreEditable, searchLog }: LogTableProps) {
             setCurrentPage(currentPage + 1);
         }   
     };
-
-    useEffect(() => {
-        const logTable = document.querySelector("#log-table");
-        if (!logTable) return;
-        logTable.addEventListener('scroll', handleScroll);
-        return () => {
-            logTable.removeEventListener('scroll', handleScroll);
-        };
-    }, [currentPage]);
 
     function handleMappingChange(eventText: string, mappingIndex: number): void {
         const inputValue = eventText;

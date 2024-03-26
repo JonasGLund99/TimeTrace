@@ -80,7 +80,7 @@ function LogPage() {
             <h1 className="flex justify-center pb-5 text-4xl ">Search logfile {uploadedFile?.name}</h1>
             <SearchForm onSubmit={callMonaa} />
             {loading ? <Loader /> :
-                <LogTable filteredFileLines={filteredFileLines} mappingsAreEditable={false} searchLog={searchLog} />
+                <LogTable mappingsAreEditable={false} />
             }
         </div>
     );
