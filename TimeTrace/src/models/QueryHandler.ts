@@ -28,7 +28,6 @@ export class QueryHandler {
         try {
             response = await httpClient.request(this.config);
         } catch (error) {
-            console.log(error);
         }
 
         console.timeEnd("Monaa");
@@ -38,8 +37,8 @@ export class QueryHandler {
         }
         
         console.time("MapMonaaOutputToEvent")
-
-        const monaaZones: MonaaZone[] = this.logHandler.MapMonaaOutputToEvent(response.data.monaa_result.lines, this.formattedFile, this.file, this.mappings);
+        const monaaOutput = response.data.monaa_result.lines;
+        const monaaZones: MonaaZone[] = this.logHandler.MapMonaaOutputToEvent(monaaOutput, this.file);
         console.timeEnd("MapMonaaOutputToEvent")
         
         return monaaZones;
