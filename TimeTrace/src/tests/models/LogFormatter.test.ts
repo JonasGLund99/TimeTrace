@@ -1,25 +1,74 @@
-import { LogFormatter } from "../../models/LogFormatter";
+import { LogFormatter } from '../../models/LogFormatter';
 
 
 describe('LogFormatter', () => {
     describe('formatLog', () => {
-        test('something', () => {
-            //TODO: Implement test
+        test('Should return file object with mapped and formatted events', () => {
+            // Arrange
+            // Act
+            // Assert
+            
         });
     });
     describe('convertLines', () => {
         test('something', () => {
-            //TODO: Implement test
+            // Arrange
+            // Act
+            // Assert
         });
     });
     describe('getMappedValue', () => {
-        test('something', () => {
-            //TODO: Implement test
+        test('Given an event A and mappings, return the mapped value', () => {
+            // Arrange
+            const logFormatter = new LogFormatter();
+            const event: string = "Edit";
+
+            const mappings: Map<string, string> = new Map<string, string>();
+            mappings.set('Login', 'B').set('Logout', 'C').set('Update', '').set('Update', '').set('Login', 'B').set('Logout', 'C').set('Edit', 'A');
+            
+            const ExpectedMapValue: string = "A";
+            // Act
+            const mappedValue = logFormatter.getMappedValue(event, mappings);
+            // Assert
+            expect(mappedValue).toEqual(ExpectedMapValue);
+        });
+        test('Non mapped events should map to Z', () => {
+            // Arrange
+            const logFormatter = new LogFormatter();
+            const event: string = "Logout";
+
+            const mappings: Map<string, string> = new Map<string, string>();
+            mappings.set('Login', 'B').set('Logout', '').set('Update', 'C').set('Update', 'C').set('Login', 'B').set('Logout', '').set('Edit', 'A');
+            
+            const ExpectedMapValue: string = "Z";
+            // Act
+            const mappedValue = logFormatter.getMappedValue(event, mappings);
+            // Assert
+            expect(mappedValue).toEqual(ExpectedMapValue);
         });
     });
     describe('convertDateformat', () => {
-        test('something', () => {
-            //TODO: Implement test
+        test('Should take a timstamp as string and convert it into EPOK time in string ', () => {
+            // Arrange
+            const logFormatter = new LogFormatter();
+            const timestamp: string = "2024-02-26T08:22:36.677645Z";
+
+            const expectedEPOKTime: string = "1708935756677";
+            // Act
+            const timestampInMiliseconds = logFormatter.convertDateformat(timestamp);
+            // Assert
+            expect(timestampInMiliseconds).toEqual(expectedEPOKTime);
+        });
+        test('Expect not equal, assert a wrong expected EPOK time', () => {
+            // Arrange
+            const logFormatter = new LogFormatter();
+            const timestamp: string = "2024-02-26T08:22:36.677645Z";
+
+            const expectedEPOKTime: string = "1708935756678";
+            // Act
+            const timestampInMiliseconds = logFormatter.convertDateformat(timestamp);
+            // Assert
+            expect(timestampInMiliseconds).not.toEqual(expectedEPOKTime);
         });
     });
 
