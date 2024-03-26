@@ -1,10 +1,49 @@
 import { LogHandler } from "../../models/LogHandler";
 import { SearchInterval } from "../../models/SearchInterval";
+import { MonaaZone } from "../../models/MonaaZone";
 
 describe('LogHandler', () => {
     describe('mapMonaaOutputToSearchIntervals', () => {
         test('should return an array of MonaaZones', () => {
-            //TODO: Implement test
+            // Arrange
+            const logHandler = new LogHandler();
+            const logFile = [
+                "2024-02-26T08:22:34.000645Z login", 
+                "2024-02-26T08:22:34.504645Z login", 
+                "2024-02-26T08:22:35.082645Z delete",
+                "2024-02-26T08:22:36.034645Z login",
+                "2024-02-26T08:22:36.612645Z login",
+                "2024-02-26T08:22:36.677645Z logout"
+            ];
+            // Converted to Monaa format:
+            // A 1708935754000
+            // A 1708935754504
+            // Z 1708935755082
+            // A 1708935756034
+            // A 1708935756612
+            // B 1708935756677
+
+            //TRE: '(A(Z|A)*B)%(2400,2700)$'
+            const monaaOutput = [
+                "1708935753977.000000        < t < 1708935754000.000000",
+                "1708935756677.000000        < t' <=        inf",
+                "2677.000000        < t' - t <        inf",
+                "=============================",
+                "1708935754000.000000       <= t < 1708935754277.000000",
+                "1708935756677.000000        < t' <=        inf",
+                "2400.000000        < t' - t <=        inf",
+                "============================="
+            ];
+            const expectedZones: MonaaZone[] = [
+                {match: [0, 1, 2, 3, 4, 5]},
+                {match: [1, 2, 3, 4, 5]}
+            ]
+
+            // Act
+            const result = logHandler.mapMonaaOutputToEvent(monaaOutput, logFile);
+
+            // Assert
+            expect(result).toEqual(expectedZones);
         });
     });
 

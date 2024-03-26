@@ -36,10 +36,10 @@ export class QueryHandler {
             throw new Error("Response from Monaa was undefined.");
         }
         
-        console.time("MapMonaaOutputToEvent")
+        console.time("mapMonaaOutputToEvent")
         const monaaOutput = response.data.monaa_result.lines;
-        const monaaZones: MonaaZone[] = this.logHandler.MapMonaaOutputToEvent(monaaOutput, this.file);
-        console.timeEnd("MapMonaaOutputToEvent")
+        const monaaZones: MonaaZone[] = this.logHandler.mapMonaaOutputToEvent(monaaOutput, this.file);
+        console.timeEnd("mapMonaaOutputToEvent")
         
         return monaaZones;
     }
