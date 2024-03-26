@@ -72,7 +72,7 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
     }
 
     return (
-        <div id="fixed-container" className="flex flex-col content-center w-[60%]">
+        <div id="fixed-container" className="flex flex-col content-center w-full h-full">
             <div id="top-log-table-title-container" className="flex p-1">
                 <h2 className="font-bold text-md w-[20%]">Event</h2>
                 <div id="search-container" className="flex flex-col content-center w-[60%]">
@@ -91,27 +91,27 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
                 </div>
                 <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
-            <div id="log-table" className="relative flex h-full p-2 pt-0 overflow-auto border-2 border-gray-300 rounded-md">
+            <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">
                 <div id="lineNumber-container" className="sticky left-0">
                     {/* Display line numbers here */}
                     {shownLines.map((fileLine: FileLine) => {
-                        return <pre key={fileLine.line} className="py-2 pl-1 bg-white">{`${fileLine.line}: `} </pre>;
+                        return <pre key={fileLine.line} className="py-2 pl-3 even:bg-white odd:bg-gray-100">{`${fileLine.line}: `} </pre>;
                     })}
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col grow">
                     {filteredFileLines.length === 0 ? (
                         <h3 className="self-center text-2xl font-medium text-center align">
                             No events were found.
                         </h3>
                     ) : null}
                     {shownLines.map((fileLine: FileLine, i: number) => {
-                        return <pre id="event-text" key={i} className="w-full py-2">{`${fileLines[fileLine.line]}`} </pre>;
+                        return <pre id="event-text" key={i} className="w-full py-2 even:bg-white odd:bg-gray-100">{`${fileLines[fileLine.line]}`} </pre>;
                     })}
                 </div>
                 <div className="sticky right-0 flex flex-col mapping-container">
                         {shownLines.map((fileLine: FileLine) => {
                             return (
-                                <div key={fileLine.line} className="flex items-center justify-end gap-1 py-2 pl-2 pr-1 bg-white">
+                                <div key={fileLine.line} className="flex items-center justify-end gap-1 py-2 pl-2 pr-1 even:bg-white odd:bg-gray-100">
                                     <input
                                         className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                                         type="text"

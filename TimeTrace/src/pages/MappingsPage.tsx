@@ -72,7 +72,7 @@ function MappingsPage() {
     }
 
     return (
-        <div className="flex flex-row h-full gap-5 mappings-page" >
+        <div id="mappings-page" className="flex flex-row h-full gap-5" >
             <div className="w-[40%]">
                 {
                     uploadedFile ?
@@ -90,7 +90,9 @@ function MappingsPage() {
                 </div>
 
             </div>
-            <LogTable filteredFileLines={filteredFileLines} mappingsAreEditable={true} searchLog={searchLog} />
+            <div className="w-[60%] h-full">
+                <LogTable filteredFileLines={filteredFileLines} mappingsAreEditable={true} searchLog={searchLog} />
+            </div>
         </div>
     );
 }
