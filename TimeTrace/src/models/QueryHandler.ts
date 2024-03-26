@@ -28,6 +28,7 @@ export class QueryHandler {
         try {
             response = await httpClient.request(this.config);
         } catch (error) {
+            throw new Error("Error in communication with Monaa: " + error)
         }
 
         console.timeEnd("Monaa");

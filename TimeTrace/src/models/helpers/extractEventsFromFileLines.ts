@@ -9,6 +9,7 @@ export function extractEventsFromFileLines(fileLines: string[]): string[] {
         line = line.replace(/\r/, "");
         return line;
     })
+    
     return newLines;
 }
 
