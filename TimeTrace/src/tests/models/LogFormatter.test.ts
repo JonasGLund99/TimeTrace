@@ -11,10 +11,42 @@ describe('LogFormatter', () => {
         });
     });
     describe('convertLines', () => {
-        test('something', () => {
+        test('Take lines from log file and mapping and return mapped rows', () => {
             // Arrange
+            const logFormatter = new LogFormatter();
+            const lines: string[] = [
+                "2024-02-26T08:22:34.000645Z login", 
+                "2024-02-26T08:22:34.504645Z login", 
+                "2024-02-26T08:22:36.034645Z login",
+                "2024-02-26T08:22:36.612645Z login",
+                "2024-02-26T08:22:36.677645Z logout", 
+                "2024-02-26T08:22:36.898645Z login",
+                "2024-02-26T08:22:36.943645Z logout",
+                "2024-02-26T08:22:37.801645Z login",
+                "2024-02-26T08:22:38.584645Z edited",
+                "2024-02-26T08:22:39.473645Z updated",
+            ] 
+            const mappings: Map<string, string> = new Map<string, string>();
+            mappings.set('login', 'B').set('logout', 'C').set('updated', '').set('updated', '').set('login', 'B').set('logout', 'C').set('edited', 'A');
+
+            const expectedMappedRows: string[] = [
+                "B 1708935754000", 
+                "B 1708935754504", 
+                "B 1708935756034",
+                "B 1708935756612",
+                "C 1708935756677", 
+                "B 1708935756898",
+                "C 1708935756943",
+                "B 1708935757801",
+                "A 1708935758584",
+                "Z 1708935759473",
+            ] 
+            
             // Act
+            const actualMappeRows = logFormatter.convertLines(lines, mappings);
             // Assert
+
+            expect(actualMappeRows).toEqual(expectedMappedRows);
         });
     });
     describe('getMappedValue', () => {
@@ -70,32 +102,5 @@ describe('LogFormatter', () => {
             // Assert
             expect(timestampInMiliseconds).not.toEqual(expectedEPOKTime);
         });
-    });
-
-    // describe('extractSearchIntervals', () => {
-    //     test('should return an array of searchIntervals', () => {
-    //         // Arrange
-    //         const logHandler = new LogHandler();
-    //         const monaaOutput = [
-    //             "-0.000000      <= t <   0.500000 ",
-    //             "0.800000        < t' <=   1.500000 ",
-    //             "0.300000        < t' - t <=   1.500000 ",
-    //             "=========================== ",
-    //             "1.500000       <= t <   2.000000 ",
-    //             "3.200000        < t' <=   3.500000 ",
-    //             "1.200000        < t' - t <=   2.000000 ",
-    //             "==========================="
-    //         ];
-    //         const expectedSearchIntervals : SearchInterval[] = [
-    //             {start: 0.5, end: 0.8},
-    //             {start: 2.0, end: 3.2}
-    //         ]
-
-    //         // Act
-    //         const searchIntervals = logHandler.extractSearchIntervals(monaaOutput);
-            
-    //         // Assert
-    //         expect(searchIntervals).toEqual(expectedSearchIntervals);
-    //     });
-    // });
+    }); 
 });
