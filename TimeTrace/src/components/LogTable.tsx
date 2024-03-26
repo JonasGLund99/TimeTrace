@@ -105,7 +105,7 @@ function LogTable({ mappingsAreEditable, searchLog, filteredFileLines }: LogTabl
                         </h3>
                     ) : null}
                     {shownLines.map((fileLine: FileLine, i: number) => {
-                        return <pre id="event-text" key={i} className="w-full py-2 even:bg-white odd:bg-gray-100">{`${fileLines[fileLine.line]}`} </pre>;
+                        return <pre key={i} className="w-full py-2 even:bg-white odd:bg-gray-100">{`${fileLines[fileLine.line]}`} </pre>;
                     })}
                 </div>
                 <div className="sticky right-0 flex flex-col mapping-container">
