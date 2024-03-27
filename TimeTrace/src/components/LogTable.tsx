@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
 import { FileLine, mapEventsToFileLine } from '../models/Types/FileLine';
-import { log } from "console";
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
