@@ -25,7 +25,7 @@ export default function Warning() {
                     </svg>
                     <h3 className="text-lg font-medium">{errorObj.title}</h3>
                 </div>
-                <div className="mt-2 mb-4 text-sm max-h-60 overflow-y-auto" dangerouslySetInnerHTML={{ __html: errorObj.errorString }}>
+                <div className="mt-2 mb-4 overflow-y-auto text-sm max-h-60" dangerouslySetInnerHTML={{ __html: errorObj.errorString }}>
                 </div>
                 <div className="flex">
                     {errorObj.callback !== null && 

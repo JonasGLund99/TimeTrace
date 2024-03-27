@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import { AppdataContext } from "../context/AppContext";
+import { useContext } from "react";
 
 export const navigation = [
     { name: "Home", href: "/" },
@@ -11,6 +13,7 @@ function classNames(...classes: String[]) {
 }
 
 function Navbar() {
+    const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
     const { pathname } = useLocation();
 
     return (
@@ -30,6 +33,7 @@ function Navbar() {
                     {item.name}
                 </Link>
             ))}
+            <p className="px-6 py-2 !ml-auto text-white">{uploadedFile?.name}</p>
         </nav>
     );
 }

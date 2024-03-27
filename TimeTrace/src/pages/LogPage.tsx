@@ -87,12 +87,16 @@ function LogPage() {
     }
 
     return (
-        <div>
-            <h1 className="flex justify-center pb-5 text-4xl ">Search logfile {uploadedFile?.name}</h1>
-            <SearchForm onSubmit={callMonaa} />
-            {loading ? <Loader /> :
-                <LogTable mappingsAreEditable={false} />
-            }
+        <div id="log-page" className="h-full gap-5">
+            <div className="h-[15%]">
+                <h1 className="flex justify-center pb-5 text-4xl ">Search logfile {uploadedFile?.name}</h1>
+                <SearchForm onSubmit={callMonaa} />
+            </div>
+            <div className="w-full h-[85%]">
+                {loading ? <Loader /> :
+                    <LogTable mappingsAreEditable={false} />
+                }
+            </div>
         </div>
     );
 }
