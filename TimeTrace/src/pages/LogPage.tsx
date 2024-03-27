@@ -56,23 +56,34 @@ function LogPage() {
 
     async function callMonaa() {
         setLoading(true);
-        if (!uploadedFile) return;
-        const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
+        if (!uploadedFile) return; //should never happen
+        try {
+            const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
 
-        queryHandler.file = fileLines;
-        queryHandler.formattedFile = await getFileLines(formattedFile);
-        queryHandler.mappings = mappings;
-        const monaaZones = await queryHandler.search("ab$");
-        const linesFromZones: FileLine[] = [];
-        monaaZones.forEach((zone) => {
-            zone.match.forEach(match => {
-                linesFromZones.push({ text: events[match], line: match });
+            queryHandler.file = fileLines;
+            queryHandler.formattedFile = await getFileLines(formattedFile);
+            queryHandler.mappings = mappings;
+            const monaaZones = await queryHandler.search("ab$");
+            const linesFromZones: FileLine[] = [];
+            monaaZones.forEach((zone) => {
+                zone.match.forEach(match => {
+                    linesFromZones.push({ text: events[match], line: match });
+                });
             });
-        });
 
-        setFilteredFileLines(linesFromZones);
-        setEvents(mapFileLineToEvents(linesFromZones));
-        setLoading(false);
+            setFilteredFileLines(linesFromZones);
+            setEvents(mapFileLineToEvents(linesFromZones));
+            setLoading(false);
+        } catch (e) {
+            setLoading(false)
+            setError({
+                title: "Error during regex search in file! Try searching again...",
+                errorString: "An error occured during the timed regex search in the file <br /> <br />" + e,
+                callback: null,
+                callbackTitle: null,
+                is_dismissible: true
+            })
+        }
     }
 
     return (
