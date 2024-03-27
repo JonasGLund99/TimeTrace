@@ -10,7 +10,6 @@ describe('LogFormatter', () => {
             const filePath = './src/tests/exampleLogFile.txt'
             const fileContents: string = fs.readFileSync(filePath, 'utf-8');
             const logfile = new File([fileContents], 'file.txt', { type: 'text/plain' });
-            console.log(logfile);
             const mappings: Map<string, string> = new Map<string, string>();
             mappings.set('login', 'A').set('login', 'A').set('delete', 'Z').set('login', 'A').set('login', 'A').set('logout', 'B'); 
             const expfilePath = './src/tests/exampleMonaaFormatLogFile.txt'
