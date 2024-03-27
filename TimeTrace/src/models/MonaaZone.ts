@@ -4,9 +4,5 @@
    * file lines that represent the event that was a part of the match.  
    */
 export class MonaaZone {
-      /**
-   * @description  
-   * The title of the book.
-   */
     public match: number[] = []
 }
