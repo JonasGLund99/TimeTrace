@@ -14,7 +14,7 @@ Run Project
 Headwind
 
 
-# Guide til at SSH ind på vores Ubuntu serer
+### Guide til at SSH ind på vores Ubuntu serer
 Blogpost: https://www.combell.com/en/help/kb/create-an-openstack-linux-instance-and-connect-to-it-via-internet/
 
 Ubuntu server: https://strato-new.claaudia.aau.dk/project/instances/
