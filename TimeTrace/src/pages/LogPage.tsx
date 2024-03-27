@@ -65,7 +65,7 @@ function LogPage() {
             queryHandler.file = fileLines;
             queryHandler.formattedFile = await getFileLines(formattedFile);
             queryHandler.mappings = mappings;
-            const monaaZones = await queryHandler.search(tre);
+            const monaaZones = await queryHandler.search(tre + "$");
 
             setMatches(monaaZones);
             setLoading(false);
