@@ -14,7 +14,6 @@ function MappingsPage() {
     const { mappings, setMappings } = useContext(AppdataContext);
     const { fileLines, setFileLines } = useContext(AppdataContext);
     const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
-    const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const { errorObj, setError } = useContext(AppdataContext);
 
     useEffect(() => {
@@ -28,9 +27,7 @@ function MappingsPage() {
             try {
                 let lines: string[] = await getFileLines(file);
                 setFileLines(lines);
-
                 const events = extractEventsFromFileLines(lines);
-                setFilteredFileLines(mapEventsToFileLine(events));
                 setMappings(new Map(events.map((event) => [event, ""])));
             } catch (e) {
                 setError({
@@ -48,28 +45,9 @@ function MappingsPage() {
 
         } else {
             setFileLines([]);
-            setFilteredFileLines([]);
             setMappings(new Map());
         }
     };
-
-    function searchLog(query: string) {
-        if (query === "") {
-            setFilteredFileLines(mapEventsToFileLine(events));
-            return;
-        };
-
-        let filteredFileLines: FileLine[] = [];
-
-        fileLines.filter((fileLine, index) => {
-            const isAMatch: boolean = fileLine.toLowerCase().includes(query.toLowerCase());
-            if (!isAMatch) return false;
-            filteredFileLines.push({ text: events[index], line: index });
-            return true;
-        });
-
-        setFilteredFileLines(filteredFileLines);
-    }
 
     return (
         <div id="mappings-page" className="flex flex-row h-full gap-5" >
@@ -91,7 +69,7 @@ function MappingsPage() {
 
             </div>
             <div className="w-[60%] h-full">
-                <LogTable filteredFileLines={filteredFileLines} mappingsAreEditable={true} searchLog={searchLog} />
+                <LogTable mappingsAreEditable={true} />
             </div>
         </div>
     );
