@@ -29,19 +29,19 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const logTable = document.querySelector("#log-table");
         if (logTable) logTable.scrollTop = 0;
     }, [filteredFileLines]);
-    
+
     useEffect(() => {
         const logTable = document.querySelector("#log-table");
         if (!logTable) return;
-        
+
         const firstLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
         if (!firstLineMatched) return;
-        
-        if (firstLineMatched) logTable.scrollTop = firstLineMatched.offsetTop;    
+
+        if (firstLineMatched) logTable.scrollTop = firstLineMatched.offsetTop;
     }, [monaaMatchIndex]);
 
     useEffect(() => {
-        if (currentPage !==0) {
+        if (currentPage !== 0) {
             setShownLines(shownLines => [...shownLines, ...(filteredFileLines.slice(linesPerPage * currentPage, linesPerPage * (currentPage + 1)))]);
         }
     }, [currentPage]);
@@ -54,7 +54,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             logTable.removeEventListener('scroll', handleScroll);
         };
     }, [currentPage]);
-    
+
     function searchLog(query: string) {
         if (query === "") {
             setFilteredFileLines(mapEventsToFileLine(events));
@@ -81,7 +81,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const documentHeight = logTable.scrollHeight;
         if (scrollY + windowHeight >= documentHeight - 100) {
             setCurrentPage(currentPage + 1);
-        }   
+        }
     };
 
     function handleMappingChange(eventText: string, mappingIndex: number): void {
@@ -112,7 +112,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     function lineIsHighlighted(line: number): boolean {
         if (mappingsAreEditable || !matches[monaaMatchIndex]) return false;
         let highlightLine = false;
-        
+
         matches[monaaMatchIndex].lineMatches.forEach(match => {
             if (match === line) highlightLine = true;
         });
@@ -146,7 +146,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                             lineIsHighlighted(fileLine.line)
                                 ? "bg-yellow-200"
                                 : "even:bg-white odd:bg-gray-100",
-                                "py-2 pl-3"
+                            "py-2 pl-3"
                         )}>{`${fileLine.line}: `}  </pre>;
                     })}
                 </div>
@@ -161,57 +161,57 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                             lineIsHighlighted(fileLine.line)
                                 ? "bg-yellow-200"
                                 : "even:bg-white odd:bg-gray-100",
-                                "w-full py-2 "
+                            "w-full py-2 "
                         )}>{`${fileLines[fileLine.line]}`} </pre>;
                     })}
                 </div>
                 <div className="sticky right-0 flex flex-col mapping-container">
-                        {shownLines.map((fileLine: FileLine) => {
-                            return (
-                                <div key={fileLine.line} className={classNames(
-                                    lineIsHighlighted(fileLine.line)
-                                        ? "bg-yellow-200"
-                                        : "even:bg-white odd:bg-gray-100",
-                                        "flex items-center justify-end gap-1 py-2 pl-2 pr-1")}>
-                                    <input
-                                        className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
-                                        type="text"
-                                        readOnly={mappingsAreEditable ? false : true}
-                                        value={mappings.get(fileLine.text) || ''}
-                                        onChange={(event) => {
-                                            handleMappingChange(event.target.value, fileLine.line);
+                    {shownLines.map((fileLine: FileLine) => {
+                        return (
+                            <div key={fileLine.line} className={classNames(
+                                lineIsHighlighted(fileLine.line)
+                                    ? "bg-yellow-200"
+                                    : "even:bg-white odd:bg-gray-100",
+                                "flex items-center justify-end gap-1 py-2 pl-2 pr-1")}>
+                                <input
+                                    className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
+                                    type="text"
+                                    readOnly={mappingsAreEditable ? false : true}
+                                    value={mappings.get(fileLine.text) || ''}
+                                    onChange={(event) => {
+                                        handleMappingChange(event.target.value, fileLine.line);
+                                    }}
+                                />
+                                {mappingsAreEditable ? (
+                                    <svg
+                                        onClick={() => {
+                                            removeMapping(fileLine.line);
                                         }}
-                                    />
-                                    {mappingsAreEditable ? (
-                                        <svg
-                                            onClick={() => {
-                                                removeMapping(fileLine.line);
-                                            }}
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth={1.5}
-                                            stroke="currentColor"
-                                            className="w-5 h-5 cursor-pointer"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                                            />
-                                        </svg>
-                                    ) : null}
-                                </div>
-                            );
-                        })}
-                    </div>
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={1.5}
+                                        stroke="currentColor"
+                                        className="w-5 h-5 cursor-pointer"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                                        />
+                                    </svg>
+                                ) : null}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
-            { !mappingsAreEditable && matches.length > 0 && (
+            {!mappingsAreEditable && matches.length > 0 && (
                 <div id="matches-buttons" className="w-full h-[10%] flex flex-row justify-center gap-20">
-                    <button onClick={() => {setMonaaMatchIndex(monaaMatchIndex === 0 ? 0 : monaaMatchIndex - 1)}}>
+                    <button onClick={() => { setMonaaMatchIndex(monaaMatchIndex === 0 ? 0 : monaaMatchIndex - 1) }}>
                         Previous match
                     </button>
-                    <button onClick={() => {setMonaaMatchIndex(monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1)}}>
+                    <button onClick={() => { setMonaaMatchIndex(monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1) }}>
                         Next match
                     </button>
                 </div>
