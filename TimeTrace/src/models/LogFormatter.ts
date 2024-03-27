@@ -29,8 +29,9 @@ export class LogFormatter {
     }
 
     getMappedValue(event: string, mappings: Map<string, string>): string {
+        event = event.replace(/(\r\n|\n|\r)/gm, "") //remove carriage returns
         let mappedValue: string | undefined = mappings.get(event) //try to map value
-        if (mappedValue === undefined) { //if value was not mapped then map to Z
+        if (mappedValue === undefined || mappedValue === "") { //if value was not mapped then map to Z
             mappedValue = "Z"
         }
         return mappedValue

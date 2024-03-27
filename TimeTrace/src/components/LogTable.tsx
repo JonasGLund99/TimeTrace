@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
 import { FileLine, mapEventsToFileLine } from '../models/Types/FileLine';
+import { log } from "console";
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
@@ -10,8 +11,10 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { events, setEvents } = useContext(AppdataContext);
     const { mappings, setMappings } = useContext(AppdataContext);
     const { fileLines, setFileLines } = useContext(AppdataContext);
+    const { matches, setMatches } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [currentPage, setCurrentPage] = useState(0);
+    const [monaaMatchIndex, setMonaaMatchIndex] = useState<number>(0);
     const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
     const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
@@ -27,6 +30,16 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         if (logTable) logTable.scrollTop = 0;
     }, [filteredFileLines]);
     
+    useEffect(() => {
+        const logTable = document.querySelector("#log-table");
+        if (!logTable) return;
+        
+        const firstLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
+        if (!firstLineMatched) return;
+        
+        if (firstLineMatched) logTable.scrollTop = firstLineMatched.offsetTop;    
+    }, [monaaMatchIndex]);
+
     useEffect(() => {
         if (currentPage !==0) {
             setShownLines(shownLines => [...shownLines, ...(filteredFileLines.slice(linesPerPage * currentPage, linesPerPage * (currentPage + 1)))]);
@@ -92,6 +105,20 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         handleMappingChange("", eventIndex);
     }
 
+    function classNames(...classes: String[]) {
+        return classes.filter(Boolean).join(" ");
+    }
+
+    function lineIsHighlighted(line: number): boolean {
+        if (mappingsAreEditable || !matches[monaaMatchIndex]) return false;
+        let highlightLine = false;
+        
+        matches[monaaMatchIndex].lineMatches.forEach(match => {
+            if (match === line) highlightLine = true;
+        });
+        return highlightLine;
+    }
+
     return (
         <div id="fixed-container" className="flex flex-col content-center w-full h-full">
             <div id="top-log-table-title-container" className="flex p-1">
@@ -115,7 +142,12 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 <div id="lineNumber-container" className="sticky left-0">
                     {/* Display line numbers here */}
                     {shownLines.map((fileLine: FileLine) => {
-                        return <pre key={fileLine.line} className="py-2 pl-3 even:bg-white odd:bg-gray-100">{`${fileLine.line}: `} </pre>;
+                        return <pre key={fileLine.line} className={classNames(
+                            lineIsHighlighted(fileLine.line)
+                                ? "bg-yellow-200"
+                                : "even:bg-white odd:bg-gray-100",
+                                "py-2 pl-3"
+                        )}>{`${fileLine.line}: `}  </pre>;
                     })}
                 </div>
                 <div className="flex flex-col grow">
@@ -125,13 +157,22 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                         </h3>
                     ) : null}
                     {shownLines.map((fileLine: FileLine, i: number) => {
-                        return <pre key={i} className="w-full py-2 even:bg-white odd:bg-gray-100">{`${fileLines[fileLine.line]}`} </pre>;
+                        return <pre key={i} className={classNames(
+                            lineIsHighlighted(fileLine.line)
+                                ? "bg-yellow-200"
+                                : "even:bg-white odd:bg-gray-100",
+                                "w-full py-2 "
+                        )}>{`${fileLines[fileLine.line]}`} </pre>;
                     })}
                 </div>
                 <div className="sticky right-0 flex flex-col mapping-container">
                         {shownLines.map((fileLine: FileLine) => {
                             return (
-                                <div key={fileLine.line} className="flex items-center justify-end gap-1 py-2 pl-2 pr-1 even:bg-white odd:bg-gray-100">
+                                <div key={fileLine.line} className={classNames(
+                                    lineIsHighlighted(fileLine.line)
+                                        ? "bg-yellow-200"
+                                        : "even:bg-white odd:bg-gray-100",
+                                        "flex items-center justify-end gap-1 py-2 pl-2 pr-1")}>
                                     <input
                                         className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                                         type="text"
@@ -165,6 +206,16 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                         })}
                     </div>
             </div>
+            { !mappingsAreEditable && matches.length > 0 && (
+                <div id="matches-buttons" className="w-full h-[10%] flex flex-row justify-center gap-20">
+                    <button onClick={() => {setMonaaMatchIndex(monaaMatchIndex === 0 ? 0 : monaaMatchIndex - 1)}}>
+                        Previous match
+                    </button>
+                    <button onClick={() => {setMonaaMatchIndex(monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1)}}>
+                        Next match
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

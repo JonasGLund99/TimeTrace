@@ -38,7 +38,7 @@ export class QueryHandler {
         }
         
         console.time("MapMonaaOutputToEvent")
-
+        
         const monaaZones: MonaaZone[] = this.logHandler.MapMonaaOutputToEvent(response.data.monaa_result.lines, this.formattedFile, this.file, this.mappings);
         console.timeEnd("MapMonaaOutputToEvent")
         

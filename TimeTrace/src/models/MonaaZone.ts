@@ -8,5 +8,5 @@ export class MonaaZone {
    * @description  
    * The title of the book.
    */
-    public match: number[] = []
+    public lineMatches: number[] = []
 }
