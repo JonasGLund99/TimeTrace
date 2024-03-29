@@ -35,27 +35,6 @@ function LogPage() {
         }
     }, [uploadedFile, setError]);
 
-
-    const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
-    function searchLog(query: string) {
-        if (query === "") {
-            setFilteredFileLines(mapEventsToFileLine(events));
-
-            return;
-        };
-
-        let filteredFileLines: FileLine[] = [];
-
-        fileLines.filter((fileLine, index) => {
-            const isAMatch: boolean = fileLine.toLowerCase().includes(query.toLowerCase());
-            if (!isAMatch) return false;
-            filteredFileLines.push({ text: events[index], line: index });
-            return true;
-        });
-
-        setFilteredFileLines(filteredFileLines);
-    }
-
     async function callMonaa(tre: string) {
         setLoading(true);
         if (!uploadedFile) return; //should never happen
