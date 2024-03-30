@@ -10,7 +10,7 @@ export class LogSearcher {
     let averageTimegrowth: number = 0;
     let prevLineTime: number = 0;
 
-    logFile.forEach((line: string, lineIndex: number) => {
+    logFile.forEach((line: string) => {
       const timestampISO: string = extractTimeStamp(line);
       const eventTimeStamp = new Date(timestampISO).getTime();
       timestamps.push(eventTimeStamp);
@@ -30,14 +30,14 @@ export class LogSearcher {
       }
 
       for (let j = startingIndex; j < timestamps.length; j++) {
-        const element = timestamps[j];
+        const timestamp = timestamps[j];
 
         if (
-          element >= SearchIntervals[i].start &&
-          element <= SearchIntervals[i].end
+          timestamp >= SearchIntervals[i].start &&
+          timestamp <= SearchIntervals[i].end
         ) {
           foundmatch.lineMatches.push(j);
-        } else if (element > SearchIntervals[i].end) {
+        } else if (timestamp > SearchIntervals[i].end) {
           break;
         }
       }
