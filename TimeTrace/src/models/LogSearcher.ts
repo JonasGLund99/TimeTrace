@@ -1,4 +1,3 @@
-import { time } from "console";
 import { extractTimeStamp } from "./helpers/extractTimeStamp";
 import { MonaaZone } from "./MonaaZone";
 import { SearchInterval } from "./SearchInterval";
@@ -7,7 +6,7 @@ export class LogSearcher {
   findZones(logFile: string[], SearchIntervals: SearchInterval[]): MonaaZone[] {
     console.time("findZones");
     const MonaaZoneMatches: MonaaZone[] = [];
-    const [timestamps, averageTimegrowth] = this.extractTimestamps(logFile);
+    const [timestamps, averageTimegrowth] = this.getTimestampInfo(logFile);
 
     for (let i = 0; i < SearchIntervals.length; i++) {
       let foundmatch = new MonaaZone();
@@ -35,7 +34,7 @@ export class LogSearcher {
     return MonaaZoneMatches;
   }
 
-  extractTimestamps(logFile: string[]): [number[], number] {
+  getTimestampInfo(logFile: string[]): [number[], number] {
     let prevLineTime: number = 0;
     let averageTimegrowth: number = 0;
     const timestamps: number[] = [];
@@ -66,10 +65,36 @@ export class LogSearcher {
       startingIndex--;
     }
 
-    while (timestamps[startingIndex] < searchInterval.start) {
-      startingIndex++;
-    }
+    // Using binary search to find the correct starting index
+    startingIndex = this.binarySearch(
+      timestamps,
+      searchInterval.start,
+      startingIndex
+    );
 
     return startingIndex;
+  }
+
+  // Binary search function to find the first index in the log to search from
+  binarySearch(
+    timestamps: number[],
+    target: number,
+    startingIndex: number
+  ): number {
+    let left = startingIndex;
+    let right = timestamps.length - 1;
+    let resultIndex = -1;
+
+    while (left <= right) {
+      const mid = Math.floor((left + right) / 2);
+      if (timestamps[mid] >= target) {
+        resultIndex = mid; // Update result index, as we found an element greater than or equal to the target
+        right = mid - 1; // Continue searching in the left half
+      } else {
+        left = mid + 1; // Continue searching in the right half
+      }
+    }
+
+    return resultIndex;
   }
 }
