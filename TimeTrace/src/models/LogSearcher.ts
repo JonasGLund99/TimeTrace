@@ -1,6 +1,6 @@
+import { extractTimeStamp } from "./helpers/extractTimeStamp";
 import { MonaaZone } from "./MonaaZone";
 import { SearchInterval } from "./SearchInterval";
-import { extractTimeStamp } from "./helpers/extractTimeStamp";
 
 export class LogSearcher {
   findZones(logFile: string[], SearchIntervals: SearchInterval[]): MonaaZone[] {
@@ -25,9 +25,18 @@ export class LogSearcher {
       const difference = SearchIntervals[i].start - firstTimestamp;
       const multiplum = difference / averageTimegrowth;
       let startingIndex = Math.floor(multiplum);
+
       while (timestamps[startingIndex] > SearchIntervals[i].start) {
         startingIndex--;
       }
+
+      // Using binary search to find the correct starting index
+      const binarySearchResult = this.binarySearch(
+        timestamps,
+        SearchIntervals[i].start
+      );
+      startingIndex =
+        binarySearchResult >= 0 ? binarySearchResult : startingIndex;
 
       for (let j = startingIndex; j < timestamps.length; j++) {
         const timestamp = timestamps[j];
@@ -44,7 +53,29 @@ export class LogSearcher {
       MonaaZoneMatches.push(foundmatch);
     }
     console.timeEnd("findZones");
-    console.log("MonaaZoneMatches", MonaaZoneMatches);
+    console.log("MonaaZoneMatches ", MonaaZoneMatches.length);
     return MonaaZoneMatches;
   }
+
+  // Binary search function to find the starting index
+  binarySearch = (arr: number[], target: number): number => {
+    let left = 0;
+    let right = arr.length - 1;
+
+    while (left <= right) {
+      const mid = Math.floor((left + right) / 2);
+
+      if (arr[mid] === target) {
+        return mid;
+      } else if (arr[mid] < target) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+
+    console.log(right);
+
+    return right; // Returns the index of the element just before the target
+  };
 }
