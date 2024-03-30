@@ -146,7 +146,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                                 ? "bg-yellow-200"
                                 : "even:bg-white odd:bg-gray-100",
                             "py-2 pl-3"
-                        )}>{`${fileLine.line}: `}  </pre>;
+                        )}>{`${fileLine.line + 1}: `}  </pre>;
                     })}
                 </div>
                 <div className="flex flex-col grow">
