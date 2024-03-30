@@ -1,3 +1,4 @@
+import { time } from "console";
 import { extractTimeStamp } from "./helpers/extractTimeStamp";
 import { MonaaZone } from "./MonaaZone";
 import { SearchInterval } from "./SearchInterval";
@@ -6,37 +7,15 @@ export class LogSearcher {
   findZones(logFile: string[], SearchIntervals: SearchInterval[]): MonaaZone[] {
     console.time("findZones");
     const MonaaZoneMatches: MonaaZone[] = [];
-    const timestamps: number[] = [];
-    let averageTimegrowth: number = 0;
-    let prevLineTime: number = 0;
-
-    logFile.forEach((line: string) => {
-      const timestampISO: string = extractTimeStamp(line);
-      const eventTimeStamp = new Date(timestampISO).getTime();
-      timestamps.push(eventTimeStamp);
-      averageTimegrowth =
-        (averageTimegrowth + (eventTimeStamp - prevLineTime)) / 2;
-      prevLineTime = eventTimeStamp;
-    });
+    const [timestamps, averageTimegrowth] = this.extractTimestamps(logFile);
 
     for (let i = 0; i < SearchIntervals.length; i++) {
       let foundmatch = new MonaaZone();
-      const firstTimestamp = timestamps[0];
-      const difference = SearchIntervals[i].start - firstTimestamp;
-      const multiplum = difference / averageTimegrowth;
-      let startingIndex = Math.floor(multiplum);
-
-      while (timestamps[startingIndex] > SearchIntervals[i].start) {
-        startingIndex--;
-      }
-
-      // Using binary search to find the correct starting index
-      const binarySearchResult = this.binarySearch(
+      let startingIndex = this.findStartingIndex(
         timestamps,
-        SearchIntervals[i].start
+        SearchIntervals[i],
+        averageTimegrowth
       );
-      startingIndex =
-        binarySearchResult >= 0 ? binarySearchResult : startingIndex;
 
       for (let j = startingIndex; j < timestamps.length; j++) {
         const timestamp = timestamps[j];
@@ -57,25 +36,41 @@ export class LogSearcher {
     return MonaaZoneMatches;
   }
 
-  // Binary search function to find the starting index
-  binarySearch = (arr: number[], target: number): number => {
-    let left = 0;
-    let right = arr.length - 1;
+  extractTimestamps(logFile: string[]): [number[], number] {
+    let prevLineTime: number = 0;
+    let averageTimegrowth: number = 0;
+    const timestamps: number[] = [];
 
-    while (left <= right) {
-      const mid = Math.floor((left + right) / 2);
+    logFile.forEach((line: string) => {
+      const timestampISO: string = extractTimeStamp(line);
+      const eventTimeStamp = new Date(timestampISO).getTime();
+      timestamps.push(eventTimeStamp);
+      averageTimegrowth =
+        (averageTimegrowth + (eventTimeStamp - prevLineTime)) / 2;
+      prevLineTime = eventTimeStamp;
+    });
 
-      if (arr[mid] === target) {
-        return mid;
-      } else if (arr[mid] < target) {
-        left = mid + 1;
-      } else {
-        right = mid - 1;
-      }
+    return [timestamps, averageTimegrowth];
+  }
+
+  findStartingIndex(
+    timestamps: number[],
+    searchInterval: SearchInterval,
+    averageTimegrowth: number
+  ): number {
+    const firstTimestamp = timestamps[0];
+    const difference = searchInterval.start - firstTimestamp;
+    const multiplum = difference / averageTimegrowth;
+    let startingIndex = Math.floor(multiplum);
+
+    while (timestamps[startingIndex] > searchInterval.start) {
+      startingIndex--;
     }
 
-    console.log(right);
+    while (timestamps[startingIndex] < searchInterval.start) {
+      startingIndex++;
+    }
 
-    return right; // Returns the index of the element just before the target
-  };
+    return startingIndex;
+  }
 }
