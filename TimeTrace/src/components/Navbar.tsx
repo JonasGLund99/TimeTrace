@@ -13,7 +13,7 @@ function classNames(...classes: String[]) {
 }
 
 function Navbar() {
-    const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
+    const { uploadedFile } = useContext(AppdataContext);
     const { pathname } = useLocation();
 
     return (
