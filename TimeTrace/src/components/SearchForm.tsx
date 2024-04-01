@@ -1,16 +1,49 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AppdataContext } from '../context/AppContext';
+import { QueryHandler } from '../models/QueryHandler';
+import { LogFormatter } from '../models/LogFormatter';
+import { getFileLines } from "../models/helpers/getFileLines";
 
-interface SearchProps {
-    onSubmit: (query: string) => void;
-}
-
-export default function Search({ onSubmit }: SearchProps) {
+export default function SearchForm() {
     const [tre, setTre] = useState('');
+    const { mappings } = useContext(AppdataContext);
+    const { fileLines } = useContext(AppdataContext);
+    const { uploadedFile } = useContext(AppdataContext);
+    const { setMatches } = useContext(AppdataContext);
+    const { setError } = useContext(AppdataContext);
+    const { setLoading } = useContext(AppdataContext);
+    const queryHandler: QueryHandler = new QueryHandler();
+    const logFormatter = new LogFormatter();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        onSubmit(tre);
+        callMonaa(tre);
     };
+
+    async function callMonaa(tre: string) {
+        setLoading(true);
+        if (!uploadedFile) return; //should never happen
+        try {
+            const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
+
+            queryHandler.file = fileLines;
+            queryHandler.formattedFile = await getFileLines(formattedFile);
+            queryHandler.mappings = mappings;
+            const monaaZones = await queryHandler.search(tre + "$");
+
+            setMatches(monaaZones);
+            setLoading(false);
+        } catch (e) {
+            setLoading(false)
+            setError({
+                title: "Error during regex search in file! Try searching again...",
+                errorString: "An error occured during the timed regex search in the file <br /> <br />" + e,
+                callback: null,
+                callbackTitle: null,
+                is_dismissible: true
+            })
+        }
+    }
 
     return (
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
