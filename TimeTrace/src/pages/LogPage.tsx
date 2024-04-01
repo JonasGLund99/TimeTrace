@@ -8,16 +8,18 @@ import Loader from "../components/Loader";
 import { getFileLines } from "../models/helpers/getFileLines";
 import { FileLine, mapEventsToFileLine, mapFileLineToEvents } from "../models/Types/FileLine";
 import { navigation } from "../components/Navbar";
+import { MonaaZone } from "../models/MonaaZone";
 
 function LogPage() {
-    const { events, setEvents } = useContext(AppdataContext);
-    const { mappings, setMappings } = useContext(AppdataContext);
-    const { fileLines, setFileLines } = useContext(AppdataContext);
-    const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
+    const { events } = useContext(AppdataContext);
+    const { mappings } = useContext(AppdataContext);
+    const { fileLines } = useContext(AppdataContext);
+    const { uploadedFile } = useContext(AppdataContext);
+    const { matches, setMatches } = useContext(AppdataContext);
+    const { errorObj, setError } = useContext(AppdataContext);
     const queryHandler: QueryHandler = new QueryHandler();
     const [loading, setLoading] = useState<boolean>(false);
     const logFormatter = new LogFormatter();
-    const { errorObj, setError } = useContext(AppdataContext);
 
     useEffect(() => {
         if (uploadedFile === null) {
@@ -33,28 +35,7 @@ function LogPage() {
         }
     }, [uploadedFile, setError]);
 
-
-    const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
-    function searchLog(query: string) {
-        if (query === "") {
-            setFilteredFileLines(mapEventsToFileLine(events));
-
-            return;
-        };
-
-        let filteredFileLines: FileLine[] = [];
-
-        fileLines.filter((fileLine, index) => {
-            const isAMatch: boolean = fileLine.toLowerCase().includes(query.toLowerCase());
-            if (!isAMatch) return false;
-            filteredFileLines.push({ text: events[index], line: index });
-            return true;
-        });
-
-        setFilteredFileLines(filteredFileLines);
-    }
-
-    async function callMonaa() {
+    async function callMonaa(tre: string) {
         setLoading(true);
         if (!uploadedFile) return; //should never happen
         try {
@@ -63,16 +44,9 @@ function LogPage() {
             queryHandler.file = fileLines;
             queryHandler.formattedFile = await getFileLines(formattedFile);
             queryHandler.mappings = mappings;
-            const monaaZones = await queryHandler.search("ab$");
-            const linesFromZones: FileLine[] = [];
-            monaaZones.forEach((zone) => {
-                zone.match.forEach(match => {
-                    linesFromZones.push({ text: events[match], line: match });
-                });
-            });
+            const monaaZones = await queryHandler.search(tre + "$");
 
-            setFilteredFileLines(linesFromZones);
-            setEvents(mapFileLineToEvents(linesFromZones));
+            setMatches(monaaZones);
             setLoading(false);
         } catch (e) {
             setLoading(false)

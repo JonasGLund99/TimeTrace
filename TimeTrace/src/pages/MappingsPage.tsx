@@ -6,7 +6,7 @@ import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
 import { AppdataContext } from "../context/AppContext";
 import { FileLine, mapEventsToFileLine } from "../models/Types/FileLine";
-
+import { fileLinesAreValid } from "../models/helpers/validation";
 
 
 function MappingsPage() {
@@ -26,6 +26,11 @@ function MappingsPage() {
         if (file) {
             try {
                 let lines: string[] = await getFileLines(file);
+                //validate file content
+                let error: string | null = fileLinesAreValid(lines)
+                if (error !== null) {
+                    throw new Error(error)
+                }
                 setFileLines(lines);
                 const events = extractEventsFromFileLines(lines);
                 setMappings(new Map(events.map((event) => [event, ""])));

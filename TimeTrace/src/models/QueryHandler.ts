@@ -23,7 +23,7 @@ export class QueryHandler {
             'regex': this.TREBuilder.buildTRE(TRE)
         };
     
-        console.time("Monaa");
+        // console.time("Monaa");
         let response: MonaaServerResponse | undefined;
         try {
             response = await httpClient.request(this.config);
@@ -31,16 +31,16 @@ export class QueryHandler {
             throw new Error("Error in communication with Monaa: " + error)
         }
 
-        console.timeEnd("Monaa");
+        // console.timeEnd("Monaa");
         
         if(!response){
             throw new Error("Response from Monaa was undefined.");
         }
         
-        console.time("mapMonaaOutputToEvent")
+        // console.time("mapMonaaOutputToEvent")
         const monaaOutput = response.data.monaa_result.lines;
         const monaaZones: MonaaZone[] = this.logHandler.mapMonaaOutputToEvent(monaaOutput, this.file);
-        console.timeEnd("mapMonaaOutputToEvent")
+        // console.timeEnd("mapMonaaOutputToEvent")
         
         return monaaZones;
     }

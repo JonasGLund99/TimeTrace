@@ -1,5 +1,5 @@
 
-export async function getFileLines(originalLog: File): Promise<string[]> {
+export async function getFileLines(file: File): Promise<string[]> {
     return new Promise<string[]>((resolve, reject) => { //must return promise because reader is async
         let reader = new FileReader();
         reader.onload = async (event) => {
@@ -8,9 +8,9 @@ export async function getFileLines(originalLog: File): Promise<string[]> {
             resolve(textLines); //all went well, return textLines
         };
         reader.onerror = async (e) => { //on error reject
-            console.error("Unable to read file", originalLog.name, e);
+            console.error("Unable to read file", file.name, e);
             reject(e);
         };
-        reader.readAsText(originalLog); //call reader
+        reader.readAsText(file); //call reader
     });
 }
