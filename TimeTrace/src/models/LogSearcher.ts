@@ -24,6 +24,7 @@ export class LogSearcher {
             MonaaZoneMatches.push(foundmatch);
         }
         console.timeEnd("findZones");
+        console.log(MonaaZoneMatches);
         return MonaaZoneMatches;
     }
 
@@ -48,6 +49,7 @@ export class LogSearcher {
         const difference = searchInterval.start - firstTimestamp;
         const multiplum = difference / averageTimegrowth;
         let startingIndex = Math.floor(multiplum);
+
         // Binary search to correct an overshot starting index due to mulitplum calculation
         startingIndex = this.binarySearch(timestamps, searchInterval.start, startingIndex, true);
 
