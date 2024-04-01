@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
 import { FileLine, mapEventsToFileLine } from '../models/Types/FileLine';
+import { MonaaZone } from "../models/MonaaZone";
 
 type LogTableProps = {
     mappingsAreEditable: boolean;
@@ -108,6 +109,22 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         return classes.filter(Boolean).join(" ");
     }
 
+    function handeNextMatchClick() {
+        const nextIndex: number = monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1;
+        const endOfMatchIndex: number | undefined = matches[nextIndex]?.lineMatches[matches[nextIndex]?.lineMatches.length - 1];
+
+        if (endOfMatchIndex !== undefined && endOfMatchIndex > currentPage * linesPerPage) {
+            // If the end of the match is outside the currently shown lines
+            const necessaryPages: number = Math.ceil(endOfMatchIndex / linesPerPage);
+            const missingPages: number = necessaryPages - currentPage;
+            // Render missing pages until necessary pages are loaded
+            for (let i = 0; i < missingPages; i++) {
+                setCurrentPage(currentPage + 1);
+            }
+        }
+        setMonaaMatchIndex(nextIndex);
+    }
+
     function lineIsHighlighted(line: number): boolean {
         if (mappingsAreEditable || !matches[monaaMatchIndex]) return false;
         let highlightLine = false;
@@ -210,7 +227,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                     <button onClick={() => { setMonaaMatchIndex(monaaMatchIndex === 0 ? 0 : monaaMatchIndex - 1) }}>
                         Previous match
                     </button>
-                    <button onClick={() => { setMonaaMatchIndex(monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1) }}>
+                    <button onClick={() => handeNextMatchClick()}>
                         Next match
                     </button>
                 </div>
