@@ -14,6 +14,7 @@ import LogPage from './pages/LogPage';
 import Navbar from './components/Navbar';
 import AppdataProvider from './context/AppContext';
 import Warning from './components/Warning';
+import Loader from './components/Loader';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Warning />
         <Navbar />
         <div className="w-full h-[94%] p-5">
+          <Loader />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/create-mappings" element={<MappingsPage />} />
