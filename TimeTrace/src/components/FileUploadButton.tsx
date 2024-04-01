@@ -10,6 +10,8 @@ function FileUploadButton() {
     const { setMappings } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
     const { setEvents } = useContext(AppdataContext);
+    const { setLoading } = useContext(AppdataContext);
+
 
     async function handleFileUpload(e: React.SyntheticEvent) {
         const target = e.target as HTMLInputElement;
@@ -29,6 +31,7 @@ function FileUploadButton() {
         setUploadedFile(file);
         if (file) {
             try {
+                setLoading(true);
                 let lines: string[] = await getFileLines(file);
                 //validate file content
                 let error: string | null = fileLinesAreValid(lines)
@@ -58,6 +61,7 @@ function FileUploadButton() {
             setMappings(new Map());
             setUploadedFile(null);
         }
+        setLoading(false);
     };
 
     return (
