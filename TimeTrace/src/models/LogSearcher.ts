@@ -4,6 +4,7 @@ import { SearchInterval } from "./SearchInterval";
 
 export class LogSearcher {
     findZones(logFile: string[], searchIntervals: SearchInterval[]): MonaaZone[] {
+        console.time("findZones");
         const MonaaZoneMatches: MonaaZone[] = [];
         const [timestamps, averageTimegrowth] = this.getTimestampInfo(logFile);
 
@@ -22,6 +23,7 @@ export class LogSearcher {
             }
             MonaaZoneMatches.push(foundmatch);
         }
+        console.timeEnd("findZones");
         return MonaaZoneMatches;
     }
 
@@ -46,17 +48,19 @@ export class LogSearcher {
         const difference = searchInterval.start - firstTimestamp;
         const multiplum = difference / averageTimegrowth;
         let startingIndex = Math.floor(multiplum);
+        // Binary search to correct an overshot starting index due to mulitplum calculation
+        startingIndex = this.binarySearch(timestamps, searchInterval.start, startingIndex, true);
 
-        // Using binary search to find the correct starting index
-        startingIndex = this.binarySearch(timestamps, searchInterval.start, startingIndex);
+        // The starting index may be greater than what was found within the [0] - [Math.floor(multiplum)] range
+        startingIndex = this.binarySearch(timestamps, searchInterval.start, startingIndex, false);
 
         return startingIndex;
     }
 
     // Binary search function to find the first index in the log to search from
-    binarySearch(timestamps: number[], target: number, startingIndex: number): number {
-        let left = startingIndex;
-        let right = timestamps.length - 1;
+    binarySearch(timestamps: number[], target: number, startingIndex: number, isOvershot: boolean): number {
+        let left = isOvershot ? 0 : startingIndex;
+        let right = isOvershot ? startingIndex: timestamps.length - 1;
         let resultIndex = -1;
 
         while (left <= right) {
