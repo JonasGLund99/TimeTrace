@@ -29,4 +29,4 @@ def generate_log_examples(num_examples):
     print("Log examples generated and written to log")
 
 # Generate 10 log examples with random events and timestamps
-generate_log_examples(100000)
+generate_log_examples(1000000)
