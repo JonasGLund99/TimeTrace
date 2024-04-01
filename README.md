@@ -39,6 +39,10 @@ Eller denne:
 (`git pull`)
 `nohup python3 -m flask --app server run`
 
+`pgrep python 3`
+`sudo kill <process-id>`
+(https://medium.com/analytics-vidhya/deploy-a-flask-app-on-amazon-aws-ec2-and-keep-it-running-while-you-are-offline-38d22571e2c5)
+
 **Step 4 - Postman**
 Import `P6.postman_collection.json` i din Postman App.
 
