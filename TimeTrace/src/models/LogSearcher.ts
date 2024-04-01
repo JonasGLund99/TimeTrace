@@ -3,28 +3,22 @@ import { MonaaZone } from "./MonaaZone";
 import { SearchInterval } from "./SearchInterval";
 
 export class LogSearcher {
-  findZones(logFile: string[], SearchIntervals: SearchInterval[]): MonaaZone[] {
+  findZones(logFile: string[], searchIntervals: SearchInterval[]): MonaaZone[] {
     console.time("findZones");
     const MonaaZoneMatches: MonaaZone[] = [];
     const [timestamps, averageTimegrowth] = this.getTimestampInfo(logFile);
 
-    for (let i = 0; i < SearchIntervals.length; i++) {
+    for (let i = 0; i < searchIntervals.length; i++) {
       let foundmatch = new MonaaZone();
-      let startingIndex = this.findStartingIndex(
-        timestamps,
-        SearchIntervals[i],
-        averageTimegrowth
+      let startingIndex = this.findStartingIndex(timestamps, searchIntervals[i], averageTimegrowth
       );
 
       for (let j = startingIndex; j < timestamps.length; j++) {
         const timestamp = timestamps[j];
 
-        if (
-          timestamp >= SearchIntervals[i].start &&
-          timestamp <= SearchIntervals[i].end
-        ) {
+        if (timestamp >= searchIntervals[i].start && timestamp <= searchIntervals[i].end) {
           foundmatch.lineMatches.push(j);
-        } else if (timestamp > SearchIntervals[i].end) {
+        } else if (timestamp > searchIntervals[i].end) {
           break;
         }
       }
@@ -51,11 +45,7 @@ export class LogSearcher {
     return [timestamps, averageTimegrowth];
   }
 
-  findStartingIndex(
-    timestamps: number[],
-    searchInterval: SearchInterval,
-    averageTimegrowth: number
-  ): number {
+  findStartingIndex(timestamps: number[], searchInterval: SearchInterval, averageTimegrowth: number): number {
     const firstTimestamp = timestamps[0];
     const difference = searchInterval.start - firstTimestamp;
     const multiplum = difference / averageTimegrowth;
@@ -76,11 +66,7 @@ export class LogSearcher {
   }
 
   // Binary search function to find the first index in the log to search from
-  binarySearch(
-    timestamps: number[],
-    target: number,
-    startingIndex: number
-  ): number {
+  binarySearch(timestamps: number[], target: number, startingIndex: number): number {
     let left = startingIndex;
     let right = timestamps.length - 1;
     let resultIndex = -1;
