@@ -6,7 +6,7 @@ import { fileLinesAreValid } from "../models/helpers/validation";
 
 function FileUploadButton() {
     const { setFileLines } = useContext(AppdataContext);
-    const { setUploadedFile } = useContext(AppdataContext);
+    const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
     const { setMappings } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
     const { setEvents } = useContext(AppdataContext);
@@ -72,7 +72,9 @@ function FileUploadButton() {
             <div className="flex gap-2">
                 <button className="py-2">
                     <label htmlFor="contained-button-file" className="px-5 py-2 border-2 rounded-md cursor-pointer border-black-100">
-                        Upload file
+                        {
+                            uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
+                        }
                     </label>
                 </button>
             </div>
