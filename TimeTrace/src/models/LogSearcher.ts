@@ -24,7 +24,6 @@ export class LogSearcher {
             MonaaZoneMatches.push(foundmatch);
         }
         console.timeEnd("findZones");
-        console.log(MonaaZoneMatches);
         return MonaaZoneMatches;
     }
 
