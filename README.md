@@ -37,7 +37,7 @@ Eller denne:
 **Step 3 - Run monaa-backend Flask server**
 `cd monaa-backend` 
 (`git pull`)
-`python3 -m flask --app server run`
+`nohup python3 -m flask --app server run`
 
 **Step 4 - Postman**
 Import `P6.postman_collection.json` i din Postman App.
