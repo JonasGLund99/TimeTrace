@@ -1,18 +1,64 @@
-function FileUploadButton({ onFileChange }: { onFileChange: (file: File | null) => void }) {
+import { useContext } from "react";
+import { AppdataContext } from "../context/AppContext";
+import { getFileLines } from "../models/helpers/getFileLines";
+import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
+import { fileLinesAreValid } from "../models/helpers/validation";
+
+function FileUploadButton() {
+    const { setFileLines } = useContext(AppdataContext);
+    const { setUploadedFile } = useContext(AppdataContext);
+    const { setMappings } = useContext(AppdataContext);
+    const { setError } = useContext(AppdataContext);
+    const { setEvents } = useContext(AppdataContext);
 
     async function handleFileUpload(e: React.SyntheticEvent) {
         const target = e.target as HTMLInputElement;
         const file: File = (target.files as FileList)[0];
         // Call the callback function with the file
-        onFileChange(file);
+        handleFileChange(file);
         if (target !== null) {
             target.value = "";
         }
     }
 
     function handleFileRemove() {
-        onFileChange(null);
+        handleFileChange(null);
     }
+
+    async function handleFileChange(file: File | null) {
+        setUploadedFile(file);
+        if (file) {
+            try {
+                let lines: string[] = await getFileLines(file);
+                //validate file content
+                let error: string | null = fileLinesAreValid(lines)
+                if (error !== null) {
+                    throw new Error(error)
+                }
+                setFileLines(lines);
+                const events = extractEventsFromFileLines(lines);
+                setEvents(events);
+                setMappings(new Map(events.map((event) => [event, ""])));
+            } catch (e) {
+                setError({
+                    title: "Error during file upload",
+                    errorString: "Error duing upload of file <br/> <br/>" + e,
+                    callback: null,
+                    callbackTitle: null,
+                    is_dismissible: true
+                })
+                setFileLines([]);
+                setEvents([]);
+                setMappings(new Map());
+                setUploadedFile(null);
+            }
+        } else {
+            setFileLines([]);
+            setEvents([]);
+            setMappings(new Map());
+            setUploadedFile(null);
+        }
+    };
 
     return (
         <div className="flex gap-2 mb-4">
