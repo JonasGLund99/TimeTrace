@@ -134,6 +134,15 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         return highlightLine;
     }
 
+    function eventIsMapped(eventText: string) {
+        let isMapped = false;
+
+        if (mappings.get(eventText)) {
+            isMapped = true;
+        }
+        return isMapped;
+    }
+
     return (
         <div id="fixed-container" className="flex flex-col content-center w-full h-full">
             <div id="top-log-table-title-container" className="flex p-1">
@@ -159,7 +168,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                     {shownLines.map((fileLine: FileLine) => {
                         return <pre key={fileLine.line} className={classNames(
                             lineIsHighlighted(fileLine.line)
-                                ? "bg-yellow-200"
+                                ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
                                 : "even:bg-white odd:bg-gray-100",
                             "py-2 pl-3"
                         )}>{`${fileLine.line + 1}: `}  </pre>;
@@ -174,7 +183,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                     {shownLines.map((fileLine: FileLine, i: number) => {
                         return <pre key={i} className={classNames(
                             lineIsHighlighted(fileLine.line)
-                                ? "bg-yellow-200"
+                                ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
                                 : "even:bg-white odd:bg-gray-100",
                             "w-full py-2 "
                         )}>{`${fileLines[fileLine.line]}`} </pre>;
@@ -185,7 +194,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                         return (
                             <div key={fileLine.line} className={classNames(
                                 lineIsHighlighted(fileLine.line)
-                                    ? "bg-yellow-200"
+                                    ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
                                     : "even:bg-white odd:bg-gray-100",
                                 "flex items-center justify-end gap-1 py-2 pl-2 pr-1")}>
                                 <input
@@ -222,11 +231,16 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 </div>
             </div>
             {!mappingsAreEditable && matches.length > 0 && (
-                <div id="matches-buttons" className="w-full h-[10%] flex flex-row justify-center gap-20">
-                    <button onClick={() => { setMonaaMatchIndex(monaaMatchIndex === 0 ? 0 : monaaMatchIndex - 1) }}>
+                <div id="matches-buttons" className="mt-4 w-full h-[10%] flex flex-row justify-center items-center gap-20 ">
+                    <button className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 "
+                        onClick={() => { setMonaaMatchIndex(monaaMatchIndex === 0 ? 0 : monaaMatchIndex - 1) }}>
                         Previous match
                     </button>
-                    <button onClick={() => handeNextMatchClick()}>
+                    <div className="text-gray-800 ">
+                        {monaaMatchIndex + 1} / {matches.length}
+                    </div>
+                    <button className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 "
+                        onClick={() => handeNextMatchClick()}>
                         Next match
                     </button>
                 </div>
