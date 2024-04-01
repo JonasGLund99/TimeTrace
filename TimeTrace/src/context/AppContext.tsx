@@ -22,6 +22,8 @@ export type AppdataContextInterface = {
     setError: React.Dispatch<React.SetStateAction<ErrorObject | null>>;
     matches: MonaaZone[];
     setMatches: React.Dispatch<React.SetStateAction<MonaaZone[]>>;
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const defaultState = {
@@ -36,7 +38,9 @@ const defaultState = {
     errorObj: null,
     setError: (value: ErrorObject | null) => { },
     matches: [],
-    setMatches: (value: MonaaZone[]) => { }
+    setMatches: (value: MonaaZone[]) => { },
+    loading: false,
+    setLoading: (loading: boolean) => { },
 } as AppdataContextInterface;
 
 export const AppdataContext = createContext<AppdataContextInterface>(defaultState);
@@ -52,9 +56,10 @@ export default function AppdataProvider({ children }: AppDataProvideProps) {
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [errorObj, setError] = useState<ErrorObject | null>(null);
     const [matches, setMatches] = useState<MonaaZone[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     return (
-        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches}}>
+        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading }}>
             {children}
         </AppdataContext.Provider>
     );

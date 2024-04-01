@@ -8,10 +8,10 @@ type LogTableProps = {
 };
 
 function LogTable({ mappingsAreEditable }: LogTableProps) {
-    const { events, setEvents } = useContext(AppdataContext);
+    const { events } = useContext(AppdataContext);
     const { mappings, setMappings } = useContext(AppdataContext);
-    const { fileLines, setFileLines } = useContext(AppdataContext);
-    const { matches, setMatches } = useContext(AppdataContext);
+    const { fileLines } = useContext(AppdataContext);
+    const { matches } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [currentPage, setCurrentPage] = useState(0);
     const [monaaMatchIndex, setMonaaMatchIndex] = useState<number>(0);
