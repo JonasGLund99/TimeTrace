@@ -58,9 +58,9 @@ export class LogSearcher {
     }
 
     // Binary search function to find the first index in the log to search from
-    binarySearch(timestamps: number[], target: number, startingIndex: number, findingLeftStart: boolean): number {
-        let left = findingLeftStart ? 0 : startingIndex;
-        let right = findingLeftStart ? startingIndex: timestamps.length - 1;
+    binarySearch(timestamps: number[], target: number, startingIndex: number, isOvershot: boolean): number {
+        let left = isOvershot ? 0 : startingIndex;
+        let right = isOvershot ? startingIndex: timestamps.length - 1;
         let resultIndex = -1;
 
         while (left <= right) {
