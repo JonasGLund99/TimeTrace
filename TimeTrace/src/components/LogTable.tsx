@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
 import { FileLine, mapEventsToFileLine } from '../models/Types/FileLine';
+import { LogTableContext } from "../context/LogTableContext";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -12,11 +13,12 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { fileLines } = useContext(AppdataContext);
     const { matches } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [currentPage, setCurrentPage] = useState(0);
-    const [monaaMatchIndex, setMonaaMatchIndex] = useState<number>(0);
+    const { currentPage, setCurrentPage } = useContext(LogTableContext);
+    const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
     const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
     const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
+    const { loading } = useContext(AppdataContext);
 
     useEffect(() => {
         setFilteredFileLines(mapEventsToFileLine(events));

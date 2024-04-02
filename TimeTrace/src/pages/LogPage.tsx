@@ -3,6 +3,7 @@ import LogTable from "../components/LogTable";
 import SearchForm from "../components/SearchForm";
 import { AppdataContext } from "../context/AppContext";
 import { navigation } from "../components/Navbar";
+import LogTableProvider from '../context/LogTableContext';
 
 function LogPage() {
     const { uploadedFile } = useContext(AppdataContext);
@@ -24,12 +25,14 @@ function LogPage() {
 
     return (
         <div id="log-page" className="h-full gap-5">
-            <div className="h-[15%]">
-                <SearchForm />
-            </div>
-            <div className="w-full h-[85%]">
-                <LogTable mappingsAreEditable={false} />
-            </div>
+            <LogTableProvider>
+                <div className="h-[15%]">
+                    <SearchForm />
+                </div>
+                <div className="w-full h-[85%]">
+                    <LogTable mappingsAreEditable={false} />
+                </div>
+            </LogTableProvider>
         </div>
     );
 }
