@@ -4,6 +4,7 @@ import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
 import { fileLinesAreValid } from "../models/helpers/validation";
 
+
 function FileUploadButton() {
     const { setFileLines } = useContext(AppdataContext);
     const { uploadedFile, setUploadedFile } = useContext(AppdataContext);
@@ -11,7 +12,7 @@ function FileUploadButton() {
     const { setError } = useContext(AppdataContext);
     const { setEvents } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
-
+    const { setMatches } = useContext(AppdataContext);
 
     async function handleFileUpload(e: React.SyntheticEvent) {
         const target = e.target as HTMLInputElement;
@@ -50,16 +51,20 @@ function FileUploadButton() {
                     callbackTitle: null,
                     is_dismissible: true
                 })
+                //reset
                 setFileLines([]);
                 setEvents([]);
                 setMappings(new Map());
                 setUploadedFile(null);
+                setMatches([]);
             }
         } else {
+            //reset
             setFileLines([]);
             setEvents([]);
             setMappings(new Map());
             setUploadedFile(null);
+            setMatches([])
         }
         setLoading(false);
     };
