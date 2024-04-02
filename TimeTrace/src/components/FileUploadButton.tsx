@@ -74,12 +74,15 @@ function FileUploadButton() {
                 onChange={handleFileUpload}
             />
             <div className="flex gap-2">
-                <button className="py-2">
+                <button className="py-2 inline-block relative">
                     <label htmlFor="contained-button-file" className="px-5 py-2 border-2 rounded-md cursor-pointer border-black-100">
-                        {
-                            uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
-                        }
+                        {uploadedFile ? "Current file: " + uploadedFile.name : "Upload file" }
                     </label>
+                    {
+                        uploadedFile === null && (
+                            <span className="animate-ping absolute top-0 right-0 block h-3 w-3 rounded-full ring-1 ring-blue-400 bg-blue-400" style={{ animationDuration: '2s', animationTimingFunction: 'ease-out' }}></span>
+                        )
+                    }
                 </button>
             </div>
             <button onClick={handleFileRemove} data-testid="remove-button">
