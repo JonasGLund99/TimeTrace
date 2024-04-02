@@ -18,7 +18,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
     const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
-    const { loading } = useContext(AppdataContext);
 
     useEffect(() => {
         setFilteredFileLines(mapEventsToFileLine(events));
@@ -30,6 +29,10 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const logTable = document.querySelector("#log-table");
         if (logTable) logTable.scrollTop = 0;
     }, [filteredFileLines]);
+
+    useEffect(() => {
+        setMonaaMatchIndex(0);
+    }, [matches])
 
     useEffect(() => {
         const logTable = document.querySelector("#log-table");
