@@ -253,7 +253,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                             }} /> */}
                         {monaaMatchIndex + 1} / {matches.length}
                     </div>
-                    <button className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 "
+                    <button className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700"
                         onClick={() => handeNextMatchClick()}>
                         Next match
                     </button>

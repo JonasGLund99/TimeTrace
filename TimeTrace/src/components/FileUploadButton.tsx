@@ -74,8 +74,8 @@ function FileUploadButton() {
                 onChange={handleFileUpload}
             />
             <div className="flex gap-2">
-                <button className="py-2">
-                    <label htmlFor="contained-button-file" className="px-5 py-2 border-2 rounded-md cursor-pointer border-black-100">
+                <button className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700">
+                    <label htmlFor="contained-button-file" className="px-5 py-2 rounded-md cursor-pointer">
                         {
                             uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
                         }
