@@ -1,13 +1,10 @@
-interface Props {
+interface SearcherProps {
     searchQuery: string;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
     searchLog: (qry: string) => void;
 }
 
-function Searcher(props: Props) {
-    const searchQuery = props.searchQuery;
-    const setSearchQuery = props.setSearchQuery;
-    const searchLog = props.searchLog;
+function Searcher({searchQuery, setSearchQuery, searchLog}: SearcherProps) {
 
     return (
         <input

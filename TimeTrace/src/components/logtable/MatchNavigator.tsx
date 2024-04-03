@@ -2,15 +2,14 @@ import { useContext } from "react";
 import { AppdataContext } from "../../context/AppContext";
 import { LogTableContext } from "../../context/LogTableContext";
 
-interface Props {
+interface MatchNavigatorProps {
     linesPerPage: number;
 }
 
-function MatchNavigator(props: Props) {
+function MatchNavigator({linesPerPage}: MatchNavigatorProps) {
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
     const { currentPage, setCurrentPage } = useContext(LogTableContext);
     const { matches } = useContext(AppdataContext);
-    const linesPerPage = props.linesPerPage;
 
     function handeNextMatchClick() {
         const nextIndex: number = monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1;
