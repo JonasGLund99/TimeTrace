@@ -12,7 +12,7 @@ interface Props {
     shownLines: FileLine[];
 }
 
-function MappingInput(props: Props) {
+function MappingInputs(props: Props) {
     const { mappings, setMappings } = useContext(AppdataContext);
     const lineIsHighlighted = props.lineIsHighlighted;
     const eventIsMapped = props.eventIsMapped;
@@ -84,4 +84,4 @@ function MappingInput(props: Props) {
     );
 }
 
-export default MappingInput;
+export default MappingInputs;
