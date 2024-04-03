@@ -16,7 +16,6 @@ function Navbar() {
 
     return (
         <nav className="w-full h-[6%] p-2 bg-gray-800 flex items-center space-x-4">
-
             {navigation.map((item) => (
                 <Link
                     key={item.name}
