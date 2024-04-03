@@ -45,7 +45,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
 
         const firstLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
         if (!firstLineMatched) return;
-
         if (firstLineMatched) logTable.scrollTo({top: firstLineMatched.offsetTop, behavior: 'smooth'});
     }, [monaaMatchIndex]);
 

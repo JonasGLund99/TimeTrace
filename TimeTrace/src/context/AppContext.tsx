@@ -24,6 +24,8 @@ export type AppdataContextInterface = {
     setMatches: React.Dispatch<React.SetStateAction<MonaaZone[]>>;
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    tre: string;
+    setTre: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const defaultState = {
@@ -41,6 +43,8 @@ const defaultState = {
     setMatches: (value: MonaaZone[]) => { },
     loading: false,
     setLoading: (loading: boolean) => { },
+    tre: "",
+    setTre: (tre: string) => { },
 } as AppdataContextInterface;
 
 export const AppdataContext = createContext<AppdataContextInterface>(defaultState);
@@ -57,9 +61,10 @@ export default function AppdataProvider({ children }: AppDataProvideProps) {
     const [errorObj, setError] = useState<ErrorObject | null>(null);
     const [matches, setMatches] = useState<MonaaZone[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [tre, setTre] = useState<string>("");
 
     return (
-        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading }}>
+        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading, tre, setTre }}>
             {children}
         </AppdataContext.Provider>
     );
