@@ -56,7 +56,7 @@ export default function SearchForm() {
                 </div>
                 <input
                     className="block w-full p-4 text-sm text-gray-900 bg-white border border-gray-600 rounded-lg ps-10 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder='Enter TRE string'
+                    placeholder='Enter TRE...'
                     name="TRE"
                     value={tre}
                     onChange={(e) => setTre(e.target.value)}

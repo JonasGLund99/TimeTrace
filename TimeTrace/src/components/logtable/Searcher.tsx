@@ -10,7 +10,7 @@ function Searcher({searchQuery, setSearchQuery, searchLog}: SearcherProps) {
         <input
             type="text"
             className="px-2 border-2 border-gray-300 rounded-lg"
-            placeholder="Search for event"
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => {
                 setSearchQuery(e.target.value);

@@ -114,12 +114,10 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     return (
         <div id="fixed-container" className="flex flex-col content-center w-full h-full">
             <div id="top-log-table-title-container" className="flex p-1">
-                <h2 className="font-bold text-md w-[20%]">Event</h2>
-                <div id="search-container" className="flex flex-col content-center w-[60%]">
-                    <h2 className="font-bold text-md">Search for event</h2>
+                <div id="search-container" className="flex flex-col content-center w-full">
+                    <h2 className="font-bold text-md">Search in file</h2>
                     <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} />
                 </div>
-                <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
             <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">
                 <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} />
