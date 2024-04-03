@@ -24,13 +24,9 @@ export default function SearchForm() {
         setLoading(true);
         if (!uploadedFile) return; //should never happen
         try {
-            const formattedFile = await LogFormatter.formatLog(uploadedFile, mappings);
-            
-            QueryHandler.file = fileLines;
-            QueryHandler.formattedFile = await getFileLines(formattedFile);
-            QueryHandler.mappings = mappings;
-            const monaaZones = await QueryHandler.search(tre + "$");
-            
+            const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings);
+            const formattedFile = await getFileLines(formattedLog);
+            const monaaZones = await QueryHandler.search(tre + "$", formattedFile, fileLines);
             setMonaaMatchIndex(-1);
             setMatches(monaaZones);
             setLoading(false);

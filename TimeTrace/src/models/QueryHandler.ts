@@ -8,19 +8,16 @@ export abstract class QueryHandler {
         throw new Error(`${typeof this} is a static class`);
     }
 
-    public static file: string[] = [];
-    public static formattedFile: string[] = [];
     private static config: AxiosRequestConfig<any> = {
         method: 'post',
         maxBodyLength: Infinity,
         url: "http://localhost:5000/monaa/",
     }
-    public static mappings: Map<string, string> = new Map<string, string>();
 
-    public static async search(TRE: string): Promise<MonaaZone[]> {
+    public static async search(TRE: string, formattedFile: string[], file: string[]): Promise<MonaaZone[]> {
         const httpClient = axios.create();
         this.config.data = {
-            'lines': this.formattedFile,
+            'lines': formattedFile,
             'regex': TREBuilder.buildTRE(TRE)
         };
     
@@ -38,7 +35,7 @@ export abstract class QueryHandler {
         }
         
         const monaaOutput = response.data.monaa_result.lines;
-        const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, this.file);
+        const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, file);
         
         return monaaZones;
     }

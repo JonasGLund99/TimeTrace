@@ -78,19 +78,17 @@ function FileUploadButton() {
                 className="hidden"
                 onChange={handleFileUpload}
             />
-            <div className="flex gap-2">
-                <button className="relative px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700">
-                    <label htmlFor="contained-button-file" className="px-5 py-2 rounded-md cursor-pointer">
-                        {
-                            uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
-                        }
-                    </label>
+            <button className="relative py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700">
+                <label htmlFor="contained-button-file" className="px-6 py-2 rounded-md cursor-pointer">
                     {
-                        uploadedFile === null && 
-                            <span id="ping" className="absolute top-[-3px] right-[-3px] block w-3 h-3 bg-yellow-200 rounded-full animate-ping ring-1 ring-yellow-200" style={{ animationDuration: '2s', animationTimingFunction: 'ease-out' }}></span>
+                        uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
                     }
-                </button>
-            </div>
+                </label>
+                {
+                    uploadedFile === null && 
+                        <span id="ping" className="absolute top-[-3px] right-[-3px] block w-3 h-3 bg-yellow-200 rounded-full animate-ping ring-1 ring-yellow-200" style={{ animationDuration: '2s', animationTimingFunction: 'ease-out' }}></span>
+                }
+            </button>
             { uploadedFile && 
                 <button onClick={handleFileRemove} data-testid="remove-button">
                     <Trashcan />
