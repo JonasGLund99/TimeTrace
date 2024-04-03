@@ -3,21 +3,16 @@ import { AppdataContext } from "../../context/AppContext";
 import { FileLine } from '../../models/Types/FileLine';
 import { cn } from "../../models/helpers/cn";
 
-interface Props {
-    lineIsHighlighted:(line: number) => boolean;
-    eventIsMapped:(event: string) => boolean;
-    linesPerPage: number;
+interface MappingInputsProps {
+    lineIsHighlighted: (line: number) => boolean;
+    eventIsMapped: (event: string) => boolean;
     mappingsAreEditable: boolean;
     shownLines: FileLine[];
 }
 
-function MappingInputs(props: Props) {
+function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, shownLines }: MappingInputsProps) {
     const { mappings, setMappings } = useContext(AppdataContext);
-    const lineIsHighlighted = props.lineIsHighlighted;
-    const eventIsMapped = props.eventIsMapped;
-    const mappingsAreEditable = props.mappingsAreEditable
     const { events } = useContext(AppdataContext);
-    const shownLines = props.shownLines;
 
     function handleMappingChange(eventText: string, mappingIndex: number): void {
         const inputValue = eventText;

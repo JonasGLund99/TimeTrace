@@ -1,22 +1,15 @@
 import { FileLine } from '../../models/Types/FileLine';
 import { cn } from '../../models/helpers/cn';
 
-interface Props {
-    lineIsHighlighted:(line: number) => boolean;
-    eventIsMapped:(event: string) => boolean;
-    mappingsAreEditable: boolean;
+interface LineContentsProps {
+    lineIsHighlighted: (line: number) => boolean;
+    eventIsMapped: (event: string) => boolean;
     shownLines: FileLine[];
     filteredFileLines: FileLine[];
     fileLines: string[];
 }
 
-function LineContents(props: Props) {
-    const lineIsHighlighted = props.lineIsHighlighted;
-    const eventIsMapped = props.eventIsMapped;
-    const shownLines = props.shownLines;
-    const filteredFileLines = props.filteredFileLines;
-    const fileLines = props.fileLines;
-
+function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFileLines, fileLines }: LineContentsProps) {
     return (
         <div className="flex flex-col grow">
             {filteredFileLines.length === 0 ? (
