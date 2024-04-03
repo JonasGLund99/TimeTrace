@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 import os
 CURRENT_DIR = os.getcwd()
-FILE_TO_COPY = CURRENT_DIR + "/experiments/logfiles/log1Col_20000.txt"
-OUTPUT_FILENAME = CURRENT_DIR + '/experiments/logfiles/log1Col_1000000.txt'
+FILE_TO_COPY = CURRENT_DIR + "/experiments/logfiles/log1Col_1000000.txt"
+OUTPUT_FILENAME = CURRENT_DIR + '/experiments/logfiles/log1Col_10000000.txt'
 
 def update_timestamp(line, last_timestamp):
     timestamp_str, event = line.split(' ', 1)
@@ -42,6 +42,6 @@ def write_file_lines(filename, lines):
 
 if __name__ == '__main__':
     lines = read_file_lines(FILE_TO_COPY)
-    repeated_lines = repeat_log_lines(lines, num_repeats=49)  # Change num_repeats as needed
+    repeated_lines = repeat_log_lines(lines, num_repeats=9)  # Change num_repeats as needed
     write_file_lines(OUTPUT_FILENAME, repeated_lines)
     print(f"Repeated lines written to {OUTPUT_FILENAME}.")
