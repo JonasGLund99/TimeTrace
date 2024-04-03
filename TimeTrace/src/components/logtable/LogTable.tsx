@@ -32,7 +32,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         setShownLines(filteredFileLines.slice(0, linesPerPage));
         setCurrentPage(0);
         const logTable = document.querySelector("#log-table");
-        if (logTable) logTable.scrollTop = 0;
+        if (logTable) logTable.scrollTo({top: 0, behavior: 'smooth'});
     }, [filteredFileLines]);
 
     useEffect(() => {
@@ -46,7 +46,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const firstLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
         if (!firstLineMatched) return;
 
-        if (firstLineMatched) logTable.scrollTop = firstLineMatched.offsetTop;
+        if (firstLineMatched) logTable.scrollTo({top: firstLineMatched.offsetTop, behavior: 'smooth'});
     }, [monaaMatchIndex]);
 
     useEffect(() => {
