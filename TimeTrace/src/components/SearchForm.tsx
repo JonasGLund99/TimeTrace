@@ -3,15 +3,17 @@ import { AppdataContext } from '../context/AppContext';
 import { QueryHandler } from '../models/QueryHandler';
 import { LogFormatter } from '../models/LogFormatter';
 import { getFileLines } from "../models/helpers/getFileLines";
+import { LogTableContext } from '../context/LogTableContext';
 
 export default function SearchForm() {
-    const [tre, setTre] = useState('');
+    const { tre, setTre } = useContext(AppdataContext);
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { uploadedFile } = useContext(AppdataContext);
     const { setMatches } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
+    const { setMonaaMatchIndex } = useContext(LogTableContext);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -25,7 +27,7 @@ export default function SearchForm() {
             const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings);
             const formattedFile = await getFileLines(formattedLog);
             const monaaZones = await QueryHandler.search(tre + "$", formattedFile, fileLines);
-
+            setMonaaMatchIndex(-1);
             setMatches(monaaZones);
             setLoading(false);
         } catch (e) {
@@ -50,7 +52,7 @@ export default function SearchForm() {
                 </div>
                 <input
                     className="block w-full p-4 text-sm text-gray-900 bg-white border border-gray-600 rounded-lg ps-10 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder='Enter TRE string'
+                    placeholder='Enter TRE...'
                     name="TRE"
                     value={tre}
                     onChange={(e) => setTre(e.target.value)}

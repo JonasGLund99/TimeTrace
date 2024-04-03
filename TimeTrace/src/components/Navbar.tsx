@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AppdataContext } from "../context/AppContext";
 import { useContext } from "react";
 import { cn } from "../models/helpers/cn";
+import TimeTraceLogo from "./svgs/TimeTraceLogo";
 
 export const navigation = [
     { name: "Home", href: "/" },
@@ -31,6 +32,7 @@ function Navbar() {
                 </Link>
             ))}
             <p className="px-6 py-2 !ml-auto text-white">{uploadedFile?.name}</p>
+            <TimeTraceLogo />
         </nav>
     );
 }

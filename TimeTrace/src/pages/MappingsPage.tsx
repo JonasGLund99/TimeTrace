@@ -1,6 +1,6 @@
 import FileUploadButton from "../components/FileUploadButton";
 import MappedItemsList from "../components/MappedItemsList";
-import LogTable from "../components/LogTable";
+import LogTable from "../components/logtable/LogTable";
 import LogTableProvider from '../context/LogTableContext';
 
 function MappingsPage() {
@@ -9,7 +9,7 @@ function MappingsPage() {
             <LogTableProvider>
                 <div className="w-[40%]">
                     <FileUploadButton />
-                    <div className="h-[90%]">
+                    <div className="h-[95%]">
                         <MappedItemsList />
                     </div>
                 </div>
