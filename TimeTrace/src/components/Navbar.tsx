@@ -1,16 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { AppdataContext } from "../context/AppContext";
 import { useContext } from "react";
+import { cn } from "../models/helpers/cn";
 
 export const navigation = [
     { name: "Home", href: "/" },
     { name: "Create mappings", href: "/create-mappings" },
     { name: "View log", href: "/view-log" },
 ];
-
-function classNames(...classes: String[]) {
-    return classes.filter(Boolean).join(" ");
-}
 
 function Navbar() {
     const { uploadedFile } = useContext(AppdataContext);
@@ -22,7 +19,7 @@ function Navbar() {
                 <Link
                     key={item.name}
                     to={item.href}
-                    className={classNames(
+                    className={cn(
                         pathname === item.href
                             ? "bg-gray-900 text-white"
                             : "text-gray-300 hover:bg-gray-700 hover:text-white",

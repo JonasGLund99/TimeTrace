@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
 import { FileLine, mapEventsToFileLine } from '../models/Types/FileLine';
 import { LogTableContext } from "../context/LogTableContext";
+import { cn } from "../models/helpers/cn";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -109,10 +110,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         handleMappingChange("", eventIndex);
     }
 
-    function classNames(...classes: String[]) {
-        return classes.filter(Boolean).join(" ");
-    }
-
     function handeNextMatchClick() {
         const nextIndex: number = monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1;
         const endOfMatchIndex: number | undefined = matches[nextIndex]?.lineMatches[matches[nextIndex]?.lineMatches.length - 1];
@@ -171,7 +168,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 <div id="lineNumber-container" className="sticky left-0">
                     {/* Display line numbers here */}
                     {shownLines.map((fileLine: FileLine) => {
-                        return <pre key={fileLine.line} className={classNames(
+                        return <pre key={fileLine.line} className={cn(
                             lineIsHighlighted(fileLine.line)
                                 ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
                                 : "even:bg-white odd:bg-gray-100",
@@ -186,7 +183,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                         </h3>
                     ) : null}
                     {shownLines.map((fileLine: FileLine, i: number) => {
-                        return <pre key={i} className={classNames(
+                        return <pre key={i} className={cn(
                             lineIsHighlighted(fileLine.line)
                                 ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
                                 : "even:bg-white odd:bg-gray-100",
@@ -197,7 +194,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 <div className="sticky right-0 flex flex-col mapping-container">
                     {shownLines.map((fileLine: FileLine) => {
                         return (
-                            <div key={fileLine.line} className={classNames(
+                            <div key={fileLine.line} className={cn(
                                 lineIsHighlighted(fileLine.line)
                                     ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
                                     : "even:bg-white odd:bg-gray-100",
