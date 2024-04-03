@@ -2,8 +2,12 @@ import { extractTimeStamp } from "./helpers/extractTimeStamp";
 import { MonaaZone } from "./MonaaZone";
 import { SearchInterval } from "./SearchInterval";
 
-export class LogSearcher {
-    findZones(logFile: string[], searchIntervals: SearchInterval[]): MonaaZone[] {
+export abstract class LogSearcher {
+    constructor() {
+        throw new Error(`${typeof this} is a static class`);
+    }
+
+    public static findZones(logFile: string[], searchIntervals: SearchInterval[]): MonaaZone[] {
         console.time("findZones");
         const MonaaZoneMatches: MonaaZone[] = [];
         const [timestamps, averageTimegrowth] = this.getTimestampInfo(logFile);
@@ -27,7 +31,7 @@ export class LogSearcher {
         return MonaaZoneMatches;
     }
 
-    getTimestampInfo(logFile: string[]): [number[], number] {
+    private static getTimestampInfo(logFile: string[]): [number[], number] {
         let prevLineTime: number = 0;
         let averageTimegrowth: number = 0;
         const timestamps: number[] = [];
@@ -43,7 +47,7 @@ export class LogSearcher {
         return [timestamps, averageTimegrowth];
     }
 
-    findStartingIndex(timestamps: number[], searchInterval: SearchInterval, averageTimegrowth: number): number {
+    private static findStartingIndex(timestamps: number[], searchInterval: SearchInterval, averageTimegrowth: number): number {
         const firstTimestamp = timestamps[0];
         const difference = searchInterval.start - firstTimestamp;
         const multiplum = difference / averageTimegrowth;
@@ -59,7 +63,7 @@ export class LogSearcher {
     }
 
     // Binary search function to find the first index in the log to search from
-    binarySearch(timestamps: number[], target: number, startingIndex: number, isOvershot: boolean): number {
+    private static binarySearch(timestamps: number[], target: number, startingIndex: number, isOvershot: boolean): number {
         let left = isOvershot ? 0 : startingIndex;
         let right = isOvershot ? startingIndex: timestamps.length - 1;
         let resultIndex = -1;

@@ -3,44 +3,43 @@ import { TREBuilder } from './TREBuilder';
 import axios, { AxiosRequestConfig } from 'axios';
 import { LogHandler } from './LogHandler';
 
-export class QueryHandler {
-    public file: string[] = [];
-    public formattedFile: string[] = [];
-    public config: AxiosRequestConfig<any> = {
+export abstract class QueryHandler {
+    constructor() {
+        throw new Error(`${typeof this} is a static class`);
+    }
+
+    public static file: string[] = [];
+    public static formattedFile: string[] = [];
+    private static config: AxiosRequestConfig<any> = {
         method: 'post',
         maxBodyLength: Infinity,
         url: "http://localhost:5000/monaa/",
     }
-    public TREBuilder: TREBuilder = new TREBuilder();
-    public logHandler: LogHandler = new LogHandler();
-    public mappings: Map<string, string> = new Map<string, string>();
+    public static mappings: Map<string, string> = new Map<string, string>();
 
 
-    public async search(TRE: string): Promise<MonaaZone[]> {
+    public static async search(TRE: string): Promise<MonaaZone[]> {
         const httpClient = axios.create();
         this.config.data = {
             'lines': this.formattedFile,
-            'regex': this.TREBuilder.buildTRE(TRE)
+            'regex': TREBuilder.buildTRE(TRE)
         };
     
-        // console.time("Monaa");
+        console.time("Monaa");
         let response: MonaaServerResponse | undefined;
         try {
             response = await httpClient.request(this.config);
         } catch (error) {
             throw new Error("Error in communication with Monaa: " + error)
         }
-
-        // console.timeEnd("Monaa");
+        console.timeEnd("Monaa");
         
         if(!response){
             throw new Error("Response from Monaa was undefined.");
         }
         
-        // console.time("mapMonaaOutputToEvent")
         const monaaOutput = response.data.monaa_result.lines;
-        const monaaZones: MonaaZone[] = this.logHandler.mapMonaaOutputToEvent(monaaOutput, this.file);
-        // console.timeEnd("mapMonaaOutputToEvent")
+        const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, this.file);
         
         return monaaZones;
     }

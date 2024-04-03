@@ -6,7 +6,6 @@ describe('LogFormatter', () => {
     describe('formatLog', () => {
         test('Should return file object with mapped and formatted events', async () => {
             // Arrange
-            const logFormatter = new LogFormatter();
             const filePath = './src/tests/exampleLogFile.txt'
             const fileContents: string = fs.readFileSync(filePath, 'utf-8');
             const logfile = new File([fileContents], 'file.txt', { type: 'text/plain' });
@@ -17,7 +16,7 @@ describe('LogFormatter', () => {
             const expectedlogfile = new File([expfileContents], 'file.txt', { type: 'text/plain' });
     
             // Act
-            const acutalFormattedLogFile =  await logFormatter.formatLog(logfile, mappings)
+            const acutalFormattedLogFile =  await LogFormatter.formatLog(logfile, mappings)
             // Assert
             expect(acutalFormattedLogFile).toEqual(expectedlogfile);
             
@@ -26,7 +25,6 @@ describe('LogFormatter', () => {
     describe('convertLines', () => {
         test('Take lines from log file and mapping and return mapped rows', () => {
             // Arrange
-            const logFormatter = new LogFormatter();
             const lines: string[] = [
                 "2024-02-26T08:22:34.000645Z login", 
                 "2024-02-26T08:22:34.504645Z login", 
@@ -56,7 +54,7 @@ describe('LogFormatter', () => {
             ] 
             
             // Act
-            const actualMappeRows = logFormatter.convertLines(lines, mappings);
+            const actualMappeRows = LogFormatter.convertLines(lines, mappings);
             // Assert
 
             expect(actualMappeRows).toEqual(expectedMappedRows);
@@ -65,7 +63,6 @@ describe('LogFormatter', () => {
     describe('getMappedValue', () => {
         test('Given an event A and mappings, return the mapped value', () => {
             // Arrange
-            const logFormatter = new LogFormatter();
             const event: string = "Edit";
 
             const mappings: Map<string, string> = new Map<string, string>();
@@ -73,13 +70,12 @@ describe('LogFormatter', () => {
             
             const ExpectedMapValue: string = "A";
             // Act
-            const mappedValue = logFormatter.getMappedValue(event, mappings);
+            const mappedValue = LogFormatter.getMappedValue(event, mappings);
             // Assert
             expect(mappedValue).toEqual(ExpectedMapValue);
         });
         test('Non mapped events should map to Z', () => {
             // Arrange
-            const logFormatter = new LogFormatter();
             const event: string = "Logout";
 
             const mappings: Map<string, string> = new Map<string, string>();
@@ -87,7 +83,7 @@ describe('LogFormatter', () => {
             
             const ExpectedMapValue: string = "Z";
             // Act
-            const mappedValue = logFormatter.getMappedValue(event, mappings);
+            const mappedValue = LogFormatter.getMappedValue(event, mappings);
             // Assert
             expect(mappedValue).toEqual(ExpectedMapValue);
         });
@@ -95,23 +91,21 @@ describe('LogFormatter', () => {
     describe('convertDateformat', () => {
         test('Should take a timstamp as string and convert it into EPOCH time in string ', () => {
             // Arrange
-            const logFormatter = new LogFormatter();
             const timestamp: string = "2024-02-26T08:22:36.677645Z";
 
             const expectedEPOCHTime: string = "1708935756677";
             // Act
-            const timestampInMiliseconds = logFormatter.convertDateformat(timestamp);
+            const timestampInMiliseconds = LogFormatter.convertDateformat(timestamp);
             // Assert
             expect(timestampInMiliseconds).toEqual(expectedEPOCHTime);
         });
         test('Expect not equal, assert a wrong expected EPOCH time', () => {
             // Arrange
-            const logFormatter = new LogFormatter();
             const timestamp: string = "2024-02-26T08:22:36.677645Z";
 
             const expectedEPOCHTime: string = "1708935756678";
             // Act
-            const timestampInMiliseconds = logFormatter.convertDateformat(timestamp);
+            const timestampInMiliseconds = LogFormatter.convertDateformat(timestamp);
             // Assert
             expect(timestampInMiliseconds).not.toEqual(expectedEPOCHTime);
         });

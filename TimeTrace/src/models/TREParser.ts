@@ -1,3 +1,3 @@
-export class TREParser{
+export abstract class TREParser{
     
 }

@@ -6,7 +6,6 @@ describe('LogSearcher', () => {
     describe('findZones', () => {
         test('should return an array of zones', () => {
             // Arrange
-            const logSearcher = new LogSearcher();
             const logFile = [
                 "2024-02-26T08:22:34.000645Z login", // equals 1708935754000
                 "2024-02-26T08:22:34.504645Z login", // equals 1708935754504
@@ -35,7 +34,7 @@ describe('LogSearcher', () => {
             ]
 
             // Act
-            const zones = logSearcher.findZones(logFile, searchIntervals);
+            const zones = LogSearcher.findZones(logFile, searchIntervals);
             
             // Assert
             expect(zones).toEqual(expectedZones);

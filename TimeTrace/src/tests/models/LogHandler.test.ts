@@ -6,7 +6,6 @@ describe('LogHandler', () => {
     describe('mapMonaaOutputToSearchIntervals', () => {
         test('should return an array of MonaaZones', () => {
             // Arrange
-            const logHandler = new LogHandler();
             const logFile = [
                 "2024-02-26T08:22:34.000645Z login", 
                 "2024-02-26T08:22:34.504645Z login", 
@@ -40,7 +39,7 @@ describe('LogHandler', () => {
             ]
 
             // Act
-            const result = logHandler.mapMonaaOutputToEvent(monaaOutput, logFile);
+            const result = LogHandler.mapMonaaOutputToEvent(monaaOutput, logFile);
 
             // Assert
             expect(result).toEqual(expectedZones);
@@ -50,7 +49,6 @@ describe('LogHandler', () => {
     describe('extractSearchIntervals', () => {
         test('should return an array of searchIntervals', () => {
             // Arrange
-            const logHandler = new LogHandler();
             const monaaOutput = [
                 "-0.000000      <= t <   0.500000 ",
                 "0.800000        < t' <=   1.500000 ",
@@ -67,7 +65,7 @@ describe('LogHandler', () => {
             ]
 
             // Act
-            const searchIntervals = logHandler.extractSearchIntervals(monaaOutput);
+            const searchIntervals = LogHandler.extractSearchIntervals(monaaOutput);
             
             // Assert
             expect(searchIntervals).toEqual(expectedSearchIntervals);
