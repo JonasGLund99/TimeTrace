@@ -32,7 +32,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         setShownLines(filteredFileLines.slice(0, linesPerPage));
         setCurrentPage(0);
         const logTable = document.querySelector("#log-table");
-        if (logTable) logTable.scrollTo({top: 0, behavior: 'smooth'});
+        if (logTable) logTable.scrollTo({ top: 0, behavior: 'smooth' });
     }, [filteredFileLines]);
 
     useEffect(() => {
@@ -45,7 +45,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
 
         const firstLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
         if (!firstLineMatched) return;
-        if (firstLineMatched) logTable.scrollTo({top: firstLineMatched.offsetTop, behavior: 'smooth'});
+        if (firstLineMatched) logTable.scrollTo({ top: firstLineMatched.offsetTop, behavior: 'smooth' });
     }, [monaaMatchIndex]);
 
     useEffect(() => {
@@ -117,17 +117,17 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 <h2 className="font-bold text-md w-[20%]">Event</h2>
                 <div id="search-container" className="flex flex-col content-center w-[60%]">
                     <h2 className="font-bold text-md">Search for event</h2>
-                    <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog}/>
+                    <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} />
                 </div>
                 <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
             <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">
-                <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable}/>
-                <LineContents lineIsHighlighted={lineIsHighlighted} fileLines={fileLines} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} filteredFileLines={filteredFileLines}/>
-                <MappingInputs lineIsHighlighted={lineIsHighlighted} linesPerPage={linesPerPage} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable}/>
+                <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} />
+                <LineContents lineIsHighlighted={lineIsHighlighted} fileLines={fileLines} shownLines={shownLines} eventIsMapped={eventIsMapped} filteredFileLines={filteredFileLines} />
+                <MappingInputs lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} />
             </div>
-            {!mappingsAreEditable && matches.length > 0 && 
-                <MatchNavigator linesPerPage={linesPerPage}/>
+            {!mappingsAreEditable && matches.length > 0 &&
+                <MatchNavigator linesPerPage={linesPerPage} />
             }
         </div>
     );
