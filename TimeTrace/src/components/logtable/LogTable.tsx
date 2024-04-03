@@ -6,6 +6,7 @@ import MatchNavigator from "./MatchNavigator";
 import MappingInputs from "./MappingInputs";
 import LineContents from "./LineContents";
 import LineNumbers from "./LineNumbers";
+import Searcher from "./Searcher";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -93,8 +94,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     };
 
     
-
-
     function classNames(...classes: String[]): string {
         return classes.filter(Boolean).join(" ");
     }
@@ -124,16 +123,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 <h2 className="font-bold text-md w-[20%]">Event</h2>
                 <div id="search-container" className="flex flex-col content-center w-[60%]">
                     <h2 className="font-bold text-md">Search for event</h2>
-                    <input
-                        type="text"
-                        className="px-2 border-2 border-gray-300 rounded-lg"
-                        placeholder="Search for event"
-                        value={searchQuery}
-                        onChange={(e) => {
-                            setSearchQuery(e.target.value);
-                            searchLog(e.target.value);
-                        }}
-                    ></input>
+                    <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog}/>
                 </div>
                 <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
