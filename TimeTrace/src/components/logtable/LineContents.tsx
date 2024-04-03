@@ -11,12 +11,21 @@ interface LineContentsProps {
 
 function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFileLines, fileLines }: LineContentsProps) {
     return (
-        <div className="flex flex-col grow">
-            {filteredFileLines.length === 0 ? (
-                <h3 className="self-center text-2xl font-medium text-center align">
-                    No events were found.
-                </h3>
-            ) : null}
+        <div className={cn(
+            filteredFileLines.length === 0 
+                ? "items-center justify-center"
+                : "",
+            "flex flex-col grow"
+            )}
+        >
+            {filteredFileLines.length === 0 && 
+                <div className="text-2xl font-medium text-center align">
+                    {!fileLines.length ? 
+                        "Upload a file to get started!"
+                        : "No events found! Try searching again..."
+                    }
+                </div>
+            }
             {shownLines.map((fileLine: FileLine, i: number) => {
                 return <pre key={i} className={cn(
                     lineIsHighlighted(fileLine.line)
