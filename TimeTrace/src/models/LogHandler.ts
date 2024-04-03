@@ -2,14 +2,16 @@ import { SearchInterval } from './SearchInterval';
 import { LogSearcher } from './LogSearcher';
 import { MonaaZone } from './MonaaZone';
 
-export class LogHandler {
-
-    mapMonaaOutputToEvent(MonaaOutput: string[], logFile: string[]): MonaaZone[] {
-        let logSearcher = new LogSearcher();
-        return logSearcher.findZones(logFile, this.extractSearchIntervals(MonaaOutput));
+export abstract class LogHandler {
+    constructor() {
+        throw new Error(`${typeof this} is a static class`);
     }
 
-    extractSearchIntervals(MonaaOutput: string[]): SearchInterval[] {
+    public static mapMonaaOutputToEvent(MonaaOutput: string[], logFile: string[]): MonaaZone[] {
+        return LogSearcher.findZones(logFile, this.extractSearchIntervals(MonaaOutput));
+    }
+
+    public static extractSearchIntervals(MonaaOutput: string[]): SearchInterval[] {
         let foundStart: number = -1;
         let foundEnd: number = -1;
         let foundIntervals: SearchInterval[] = [];

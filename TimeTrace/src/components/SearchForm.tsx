@@ -12,8 +12,6 @@ export default function SearchForm() {
     const { setMatches } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
-    const queryHandler: QueryHandler = new QueryHandler();
-    const logFormatter = new LogFormatter();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -24,12 +22,12 @@ export default function SearchForm() {
         setLoading(true);
         if (!uploadedFile) return; //should never happen
         try {
-            const formattedFile = await logFormatter.formatLog(uploadedFile, mappings);
+            const formattedFile = await LogFormatter.formatLog(uploadedFile, mappings);
 
-            queryHandler.file = fileLines;
-            queryHandler.formattedFile = await getFileLines(formattedFile);
-            queryHandler.mappings = mappings;
-            const monaaZones = await queryHandler.search(tre + "$");
+            QueryHandler.file = fileLines;
+            QueryHandler.formattedFile = await getFileLines(formattedFile);
+            QueryHandler.mappings = mappings;
+            const monaaZones = await QueryHandler.search(tre + "$");
 
             setMatches(monaaZones);
             setLoading(false);
