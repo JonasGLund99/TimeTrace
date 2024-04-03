@@ -1,5 +1,6 @@
 import { FileLine } from '../../models/Types/FileLine';
 import { cn } from '../../models/helpers/cn';
+
 interface Props {
     lineIsHighlighted:(line: number) => boolean;
     eventIsMapped:(event: string) => boolean;
@@ -15,8 +16,6 @@ function LineContents(props: Props) {
     const shownLines = props.shownLines;
     const filteredFileLines = props.filteredFileLines;
     const fileLines = props.fileLines;
-
-
 
     return (
         <div className="flex flex-col grow">

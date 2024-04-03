@@ -10,7 +10,7 @@ import Searcher from "./Searcher";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
-};
+}
 
 function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { events } = useContext(AppdataContext);

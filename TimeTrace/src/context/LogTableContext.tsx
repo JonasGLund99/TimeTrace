@@ -5,8 +5,6 @@ export type LogTableContextInterface = {
     setMonaaMatchIndex: React.Dispatch<React.SetStateAction<number>>;
     currentPage: number;
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-
-
 }
 const defaultState = {
     monaaMatchIndex: 0,

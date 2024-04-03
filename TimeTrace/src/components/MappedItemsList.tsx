@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
 
-
-
 function MappedItemsList() {
     const { mappings, setMappings } = useContext(AppdataContext);
 

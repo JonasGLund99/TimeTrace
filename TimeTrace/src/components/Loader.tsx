@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
 
 function Loader() {
-
     const { loading } = useContext(AppdataContext);
 
     if (!loading) return null;

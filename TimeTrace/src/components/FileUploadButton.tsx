@@ -4,7 +4,6 @@ import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
 import { fileLinesAreValid } from "../models/helpers/validation";
 
-
 function FileUploadButton() {
     const { setFileLines } = useContext(AppdataContext);
     const { uploadedFile, setUploadedFile } = useContext(AppdataContext);

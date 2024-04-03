@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { AppdataContext } from "../../context/AppContext";
 import { FileLine } from '../../models/Types/FileLine';
 import { cn } from "../../models/helpers/cn";
+
 interface Props {
     lineIsHighlighted:(line: number) => boolean;
     eventIsMapped:(event: string) => boolean;
