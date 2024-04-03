@@ -5,6 +5,7 @@ import { LogTableContext } from "../../context/LogTableContext";
 import MatchNavigator from "./MatchNavigator";
 import MappingInputs from "./MappingInputs";
 import LineContents from "./LineContents";
+import LineNumbers from "./LineNumbers";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -137,17 +138,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
             <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">
-                <div id="lineNumber-container" className="sticky left-0">
-                    {/* Display line numbers here */}
-                    {shownLines.map((fileLine: FileLine) => {
-                        return <pre key={fileLine.line} className={classNames(
-                            lineIsHighlighted(fileLine.line)
-                                ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
-                                : "even:bg-white odd:bg-gray-100",
-                            "py-2 pl-3"
-                        )}>{`${fileLine.line + 1}: `}  </pre>;
-                    })}
-                </div>
+                <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} classNames={classNames}/>
                 <LineContents lineIsHighlighted={lineIsHighlighted} fileLines={fileLines} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} classNames={classNames} filteredFileLines={filteredFileLines}/>
                 <MappingInputs lineIsHighlighted={lineIsHighlighted} linesPerPage={linesPerPage} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} classNames={classNames}/>
             </div>
