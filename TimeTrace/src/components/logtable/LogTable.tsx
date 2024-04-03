@@ -93,11 +93,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         }
     };
 
-    
-    function classNames(...classes: String[]): string {
-        return classes.filter(Boolean).join(" ");
-    }
-
     function lineIsHighlighted(line: number): boolean {
         if (mappingsAreEditable || !matches[monaaMatchIndex]) return false;
         let highlightLine = false;
@@ -128,9 +123,9 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 <h2 className="font-bold justify-self-end text-end text-md w-[20%]">Mapped value</h2>
             </div>
             <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">
-                <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} classNames={classNames}/>
-                <LineContents lineIsHighlighted={lineIsHighlighted} fileLines={fileLines} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} classNames={classNames} filteredFileLines={filteredFileLines}/>
-                <MappingInputs lineIsHighlighted={lineIsHighlighted} linesPerPage={linesPerPage} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} classNames={classNames}/>
+                <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable}/>
+                <LineContents lineIsHighlighted={lineIsHighlighted} fileLines={fileLines} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} filteredFileLines={filteredFileLines}/>
+                <MappingInputs lineIsHighlighted={lineIsHighlighted} linesPerPage={linesPerPage} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable}/>
             </div>
             {!mappingsAreEditable && matches.length > 0 && 
                 <MatchNavigator linesPerPage={linesPerPage}/>

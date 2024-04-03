@@ -1,9 +1,8 @@
 import { FileLine } from '../../models/Types/FileLine';
-
+import { cn } from '../../models/helpers/cn';
 interface Props {
     lineIsHighlighted:(line: number) => boolean;
     eventIsMapped:(event: string) => boolean;
-    classNames:(...classes: String[]) => string;
     mappingsAreEditable: boolean;
     shownLines: FileLine[];
     filteredFileLines: FileLine[];
@@ -13,7 +12,6 @@ interface Props {
 function LineContents(props: Props) {
     const lineIsHighlighted = props.lineIsHighlighted;
     const eventIsMapped = props.eventIsMapped;
-    const classNames = props.classNames
     const shownLines = props.shownLines;
     const filteredFileLines = props.filteredFileLines;
     const fileLines = props.fileLines;
@@ -28,7 +26,7 @@ function LineContents(props: Props) {
                 </h3>
             ) : null}
             {shownLines.map((fileLine: FileLine, i: number) => {
-                return <pre key={i} className={classNames(
+                return <pre key={i} className={cn(
                     lineIsHighlighted(fileLine.line)
                         ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
                         : "even:bg-white odd:bg-gray-100",

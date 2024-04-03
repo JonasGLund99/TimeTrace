@@ -1,13 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { AppdataContext } from "../../context/AppContext";
-import { LogTableContext } from "../../context/LogTableContext";
 import { FileLine } from '../../models/Types/FileLine';
-
+import { cn } from "../../models/helpers/cn";
 interface Props {
     lineIsHighlighted:(line: number) => boolean;
     eventIsMapped:(event: string) => boolean;
     linesPerPage: number;
-    classNames:(...classes: String[]) => string;
     mappingsAreEditable: boolean;
     shownLines: FileLine[];
 }
@@ -17,7 +15,6 @@ function MappingInputs(props: Props) {
     const lineIsHighlighted = props.lineIsHighlighted;
     const eventIsMapped = props.eventIsMapped;
     const mappingsAreEditable = props.mappingsAreEditable
-    const classNames = props.classNames
     const { events } = useContext(AppdataContext);
     const shownLines = props.shownLines;
 
@@ -45,7 +42,7 @@ function MappingInputs(props: Props) {
     return (
         <div className="sticky right-0 flex flex-col mapping-container">
             {shownLines.map((fileLine: FileLine) => (
-                <div key={fileLine.line} className={classNames(
+                <div key={fileLine.line} className={cn(
                     lineIsHighlighted(fileLine.line)
                         ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
                         : "even:bg-white odd:bg-gray-100",
