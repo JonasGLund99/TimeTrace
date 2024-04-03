@@ -3,15 +3,17 @@ import { AppdataContext } from '../context/AppContext';
 import { QueryHandler } from '../models/QueryHandler';
 import { LogFormatter } from '../models/LogFormatter';
 import { getFileLines } from "../models/helpers/getFileLines";
+import { LogTableContext } from '../context/LogTableContext';
 
 export default function SearchForm() {
-    const [tre, setTre] = useState('');
+    const { tre, setTre } = useContext(AppdataContext);
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { uploadedFile } = useContext(AppdataContext);
     const { setMatches } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
+    const { setMonaaMatchIndex } = useContext(LogTableContext);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -23,12 +25,13 @@ export default function SearchForm() {
         if (!uploadedFile) return; //should never happen
         try {
             const formattedFile = await LogFormatter.formatLog(uploadedFile, mappings);
-
+            
             QueryHandler.file = fileLines;
             QueryHandler.formattedFile = await getFileLines(formattedFile);
             QueryHandler.mappings = mappings;
             const monaaZones = await QueryHandler.search(tre + "$");
-
+            
+            setMonaaMatchIndex(-1);
             setMatches(monaaZones);
             setLoading(false);
         } catch (e) {

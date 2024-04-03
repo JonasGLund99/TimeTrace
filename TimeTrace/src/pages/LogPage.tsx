@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import LogTable from "../components/LogTable";
+import LogTable from "../components/logtable/LogTable";
 import SearchForm from "../components/SearchForm";
 import { AppdataContext } from "../context/AppContext";
 import { navigation } from "../components/Navbar";

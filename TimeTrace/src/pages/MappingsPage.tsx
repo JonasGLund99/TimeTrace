@@ -1,6 +1,6 @@
 import FileUploadButton from "../components/FileUploadButton";
 import MappedItemsList from "../components/MappedItemsList";
-import LogTable from "../components/LogTable";
+import LogTable from "../components/logtable/LogTable";
 import LogTableProvider from '../context/LogTableContext';
 
 function MappingsPage() {
