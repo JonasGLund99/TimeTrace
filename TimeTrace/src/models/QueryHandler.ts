@@ -17,7 +17,6 @@ export abstract class QueryHandler {
     }
     public static mappings: Map<string, string> = new Map<string, string>();
 
-
     public static async search(TRE: string): Promise<MonaaZone[]> {
         const httpClient = axios.create();
         this.config.data = {
