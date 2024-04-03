@@ -2,13 +2,12 @@ import { useContext, useEffect } from "react";
 import LogTable from "../components/LogTable";
 import SearchForm from "../components/SearchForm";
 import { AppdataContext } from "../context/AppContext";
-import Loader from "../components/Loader";
 import { navigation } from "../components/Navbar";
+import LogTableProvider from '../context/LogTableContext';
 
 function LogPage() {
     const { uploadedFile } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
-    const { loading } = useContext(AppdataContext);
 
     useEffect(() => {
         if (uploadedFile === null) {
@@ -26,15 +25,14 @@ function LogPage() {
 
     return (
         <div id="log-page" className="h-full gap-5">
-            <div className="h-[15%]">
-                <h1 className="flex justify-center pb-5 text-4xl ">Search logfile {uploadedFile?.name}</h1>
-                <SearchForm />
-            </div>
-            <div className="w-full h-[85%]">
-                {loading ? <Loader /> :
+            <LogTableProvider>
+                <div className="h-[15%]">
+                    <SearchForm />
+                </div>
+                <div className="w-full h-[85%]">
                     <LogTable mappingsAreEditable={false} />
-                }
-            </div>
+                </div>
+            </LogTableProvider>
         </div>
     );
 }

@@ -59,8 +59,9 @@ export default function SearchForm() {
                     onChange={(e) => setTre(e.target.value)}
                     required
                 />
-                <button
-                    className="text-white absolute end-2.5 bottom-2.5 bg-gray-800 hover:bg-gray-700  font-medium rounded-lg text-sm px-4 py-2 " type="submit">Search</button>
+                <button className="text-white absolute end-2.5 bottom-2.5 bg-gray-800 hover:bg-gray-700  font-medium rounded-lg text-sm px-4 py-2 " type="submit">
+                    Search
+                </button>
             </div>
         </form>
     );
