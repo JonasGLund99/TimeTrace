@@ -6,7 +6,8 @@ import { getFileLines } from "../models/helpers/getFileLines";
 import { LogTableContext } from '../context/LogTableContext';
 
 export default function SearchForm() {
-    const [tre, setTre] = useState('');
+    const { tre } = useContext(AppdataContext);
+    const { setTre } = useContext(AppdataContext);
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { uploadedFile } = useContext(AppdataContext);
