@@ -14,7 +14,7 @@ interface LogTableProps {
 
 function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { events } = useContext(AppdataContext);
-    const { mappings, setMappings } = useContext(AppdataContext);
+    const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { matches } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");

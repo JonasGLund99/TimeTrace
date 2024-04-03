@@ -7,12 +7,10 @@ interface Props {
 }
 
 function MatchNavigator(props: Props) {
-    const { mappings, setMappings } = useContext(AppdataContext);
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
     const { currentPage, setCurrentPage } = useContext(LogTableContext);
     const { matches } = useContext(AppdataContext);
     const linesPerPage = props.linesPerPage;
-
 
     function handeNextMatchClick() {
         const nextIndex: number = monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1;
