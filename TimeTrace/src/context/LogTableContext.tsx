@@ -9,7 +9,7 @@ export type LogTableContextInterface = {
 
 }
 const defaultState = {
-    monaaMatchIndex: 0,
+    monaaMatchIndex: -1,
     setMonaaMatchIndex: (monaaMatchIndex: number) => { },
     currentPage: 0,
     setCurrentPage: (currentPage: number) => { },
@@ -23,7 +23,7 @@ type LogTableProviderProps = {
 }
 
 export default function LogTableProvider({ children }: LogTableProviderProps) {
-    const [monaaMatchIndex, setMonaaMatchIndex] = useState<number>(0);
+    const [monaaMatchIndex, setMonaaMatchIndex] = useState<number>(-1);
     const [currentPage, setCurrentPage] = useState(0);
 
     return (
