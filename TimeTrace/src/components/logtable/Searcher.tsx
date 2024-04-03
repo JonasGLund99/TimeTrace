@@ -1,4 +1,3 @@
-import { FileLine } from '../../models/Types/FileLine';
 interface Props {
     searchQuery: string;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
