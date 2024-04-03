@@ -1,5 +1,6 @@
 import { FileLine } from '../../models/Types/FileLine';
 import { cn } from '../../models/helpers/cn';
+import FileUploadButton from '../FileUploadButton';
 
 interface LineContentsProps {
     lineIsHighlighted: (line: number) => boolean;
@@ -21,7 +22,10 @@ function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFi
             {filteredFileLines.length === 0 && 
                 <div className="text-2xl font-medium text-center align">
                     {!fileLines.length ? 
-                        "Upload a file to get started!"
+                        <div className="flex flex-col items-center justify-center gap-4">
+                            Upload a file to get started!
+                            <FileUploadButton/>
+                        </div>
                         : "No events found! Try searching again..."
                     }
                 </div>
