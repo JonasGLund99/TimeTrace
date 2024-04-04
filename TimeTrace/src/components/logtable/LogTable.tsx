@@ -18,6 +18,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { matches } = useContext(AppdataContext);
+    const { setError } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const { currentPage, setCurrentPage } = useContext(LogTableContext);
     const { advancedSearchMode, setAdvancedSearchMode } = useContext(LogTableContext);
@@ -93,8 +94,20 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     }
 
     function searchUsingRegex(query: string) {
-        const regex: RegExp = new RegExp(query); 
-        console.log(regex)
+        let regex: RegExp
+        try {
+            regex = new RegExp(query); 
+        } catch(e) {
+            setError({
+                title: "Error trying to interpret regex",
+                errorString: "Regex error <br/><br/>" + e,
+                callback: null,
+                callbackTitle: null,
+                is_dismissible: true
+            })
+            return
+        }
+        
         let filteredFileLines: FileLine[] = [];
         fileLines.forEach((fileLine, index) => {
             if (regex.test(fileLine)) {
