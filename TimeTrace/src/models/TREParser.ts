@@ -16,6 +16,15 @@ export abstract class TREParser {
       );
     }
 
+    // Regular expression to match groups with digits not preceded by '%' and no '%' before the first parenthesis
+    const invalidGroup = /(?<!%)\([^%]*\d+[^%]*\)/g;
+    const invalidGroups = tre.match(invalidGroup);
+    if (invalidGroups && invalidGroups.length > 0) {
+      throw new Error(
+        "Groups with digits not preceded by '%' before the first parenthesis are not allowed."
+      );
+    }
+
     for (const char of tre) {
       if (char === "(") {
         opened++;
