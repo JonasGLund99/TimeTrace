@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { LogTableContext } from "../../../context/LogTableContext";
 
 interface SearcherProps {
     searchQuery: string;
@@ -8,8 +6,6 @@ interface SearcherProps {
 }
 
 function StandardSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps) {
-
-    const { advancedSearchMode, setAdvancedSearchMode } = useContext(LogTableContext);
 
     return (
         <div>

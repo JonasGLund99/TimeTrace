@@ -7,6 +7,7 @@ import MappingInputs from "./MappingInputs";
 import LineContents from "./LineContents";
 import LineNumbers from "./LineNumbers";
 import Searcher from "./searcher/Searcher";
+import AdvancedSearch from "./searcher/AdvancedSearch";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -19,6 +20,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { matches } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const { currentPage, setCurrentPage } = useContext(LogTableContext);
+    const { advancedSearchMode, setAdvancedSearchMode } = useContext(LogTableContext);
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
     const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
@@ -69,6 +71,15 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             return;
         };
 
+        if (advancedSearchMode) {
+            searchUsingRegex(query)
+        } else {
+            searchStandard(query)
+        }
+
+    }
+
+    function searchStandard(query: string) {
         let filteredFileLines: FileLine[] = [];
 
         fileLines.filter((fileLine, index) => {
@@ -76,6 +87,20 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             if (!isAMatch) return false;
             filteredFileLines.push({ text: events[index], line: index });
             return true;
+        });
+
+        setFilteredFileLines(filteredFileLines);
+    }
+
+    function searchUsingRegex(query: string) {
+        const regex: RegExp = new RegExp(query); 
+        console.log(regex)
+        let filteredFileLines: FileLine[] = [];
+        fileLines.forEach((fileLine, index) => {
+            if (regex.test(fileLine)) {
+                console.log(`match ${fileLine}`)
+                filteredFileLines.push({ text: events[index], line: index });
+            }
         });
 
         setFilteredFileLines(filteredFileLines);
