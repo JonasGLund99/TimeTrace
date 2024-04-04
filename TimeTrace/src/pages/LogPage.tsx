@@ -9,9 +9,9 @@ function LogPage() {
     const { uploadedFile } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
 
-    function handleOnBeforeUnload(event: BeforeUnloadEvent) {
-        event.preventDefault();
-        return (event.returnValue = '');
+    function handleOnBeforeUnload(e: BeforeUnloadEvent) {
+        e.preventDefault();
+        return (e.returnValue = '');
     }
 
     useEffect(() => {
