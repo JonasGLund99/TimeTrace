@@ -9,7 +9,7 @@ function MappingsPage() {
             <LogTableProvider>
                 <div className="w-[40%]">
                     <FileUploadButton />
-                    <div className="h-[95%]">
+                    <div className="pt-2 h-[94%]">
                         <MappedItemsList />
                     </div>
                 </div>

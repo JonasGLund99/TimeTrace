@@ -1,6 +1,8 @@
+import { useContext } from 'react';
 import { FileLine } from '../../models/Types/FileLine';
 import { cn } from '../../models/helpers/cn';
-import FileUploadButton from '../FileUploadButton';
+import DragAndDropZone from '../DragAndDropFile';
+import { AppdataContext } from '../../context/AppContext';
 
 interface LineContentsProps {
     lineIsHighlighted: (line: number) => boolean;
@@ -11,25 +13,25 @@ interface LineContentsProps {
 }
 
 function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFileLines, fileLines }: LineContentsProps) {
+    const { uploadedFile } = useContext(AppdataContext);
     return (
         <div className={cn(
-            filteredFileLines.length === 0 
+            filteredFileLines.length === 0
                 ? "items-center justify-center"
                 : "",
             "flex flex-col grow"
-            )}
+        )}
         >
-            {filteredFileLines.length === 0 && 
-                <div className="text-2xl font-medium text-center align">
-                    {!fileLines.length ? 
-                        <div className="flex flex-col items-center justify-center gap-4">
-                            Upload a file to get started!
-                            <FileUploadButton/>
-                        </div>
-                        : "No events found! Try searching again..."
-                    }
+            {uploadedFile === null && (
+                <div className="w-4/5 h-4/5 ">
+                    <DragAndDropZone />
                 </div>
-            }
+            )}
+            {filteredFileLines.length === 0 && fileLines.length === 0 && uploadedFile !== null && (
+                <div className="p-10 text-2xl font-medium text-center align">
+                    No events found! Try searching again...
+                </div>
+            )}
             {shownLines.map((fileLine: FileLine, i: number) => {
                 return <pre key={i} className={cn(
                     lineIsHighlighted(fileLine.line)
