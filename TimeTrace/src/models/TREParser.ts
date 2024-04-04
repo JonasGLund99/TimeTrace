@@ -9,6 +9,12 @@ export abstract class TREParser {
 
   public static validateGroups(tre: string): void {
     let opened = 0;
+    const emptyGroups = tre.match(/\(\)/g);
+    if (emptyGroups && emptyGroups.length > 0) {
+      throw new Error(
+        "Empty groups are not allowed. An open parenthesis should contain symbols inside it when closed."
+      );
+    }
 
     for (const char of tre) {
       if (char === "(") {
@@ -64,6 +70,14 @@ export abstract class TREParser {
 
   public static validateSymbols(tre: string): void {
     const symbolsAreValid = /^[a-zA-Z()%\s\d+,.]+$/.test(tre);
+    const symbolBeforeTimeConstraint =
+      /(?<![a-zA-Z])%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
+
+    const invalidTimeConstraint = tre.match(symbolBeforeTimeConstraint);
+    if (invalidTimeConstraint && invalidTimeConstraint.length > 0) {
+      throw new Error("Time constraints must be preceded by a mapped symbol.");
+    }
+
     if (!symbolsAreValid) {
       throw new Error(
         "TRE contains invalid symbols. Only a-z, A-Z, %, parentheses, . , and whitespace are allowed."
@@ -75,8 +89,14 @@ export abstract class TREParser {
     tre: string,
     mappings: Map<string, string>
   ): void {
+    // Remove all time constraints from the TRE. We do not wish for these to be mapped
+    const regex = /%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
+    const treNoTimeConstraints = tre.replace(regex, "");
+
     // Extract all symbols from the TRE
-    const symbols = tre.match(/[a-zA-Z]?/g)?.filter((symbol) => symbol !== "");
+    const symbols = treNoTimeConstraints
+      .match(/[a-zA-Z]/g)
+      ?.filter((symbol) => symbol !== "");
     if (!symbols) {
       return;
     }

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AppdataContext } from '../context/AppContext';
 import { QueryHandler } from '../models/QueryHandler';
 import { LogFormatter } from '../models/LogFormatter';
