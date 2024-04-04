@@ -6,7 +6,7 @@ import MatchNavigator from "./MatchNavigator";
 import MappingInputs from "./MappingInputs";
 import LineContents from "./LineContents";
 import LineNumbers from "./LineNumbers";
-import Searcher from "./Searcher";
+import Searcher from "./searcher/Searcher";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -115,7 +115,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         <div id="fixed-container" className="flex flex-col content-center w-full h-full">
             <div id="top-log-table-title-container" className="flex p-1">
                 <div id="search-container" className="flex flex-col content-center w-full">
-                    <h2 className="font-bold text-md">Search in file</h2>
                     <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} />
                 </div>
             </div>
