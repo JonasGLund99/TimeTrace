@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppdataContext } from "../context/AppContext";
 import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
@@ -13,6 +13,31 @@ function FileUploadButton() {
     const { setEvents } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
     const { setMatches } = useContext(AppdataContext);
+    const [dragging, setDragging] = useState(false);
+
+
+    const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDragging(true);
+    };
+
+    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDragging(false);
+    };
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+    };
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDragging(false);
+        const droppedFile: File | null = e.dataTransfer.files[0] || null;
+        if (droppedFile) {
+            handleFileChange(droppedFile);
+        }
+    };
 
     async function handleFileUpload(e: React.SyntheticEvent) {
         const target = e.target as HTMLInputElement;
@@ -52,6 +77,7 @@ function FileUploadButton() {
                     is_dismissible: true
                 })
                 //reset
+
                 setFileLines([]);
                 setEvents([]);
                 setMappings(new Map());
@@ -70,7 +96,13 @@ function FileUploadButton() {
     };
 
     return (
-        <div className="flex gap-2 mb-4">
+        <div className={`flex gap-2 mb-4 ${dragging ? 'border border-blue-800 ' : ''}`}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}>
+
+
             <input
                 type="file"
                 accept=".txt"
@@ -85,11 +117,11 @@ function FileUploadButton() {
                     }
                 </label>
                 {
-                    uploadedFile === null && 
-                        <span id="ping" className="absolute top-[-3px] right-[-3px] block w-3 h-3 bg-yellow-200 rounded-full animate-ping ring-1 ring-yellow-200" style={{ animationDuration: '2s', animationTimingFunction: 'ease-out' }}></span>
+                    uploadedFile === null &&
+                    <span id="ping" className="absolute top-[-3px] right-[-3px] block w-3 h-3 bg-yellow-200 rounded-full animate-ping ring-1 ring-yellow-200" style={{ animationDuration: '2s', animationTimingFunction: 'ease-out' }}></span>
                 }
             </button>
-            { uploadedFile && 
+            {uploadedFile &&
                 <button onClick={handleFileRemove} data-testid="remove-button">
                     <Trashcan />
                 </button>
