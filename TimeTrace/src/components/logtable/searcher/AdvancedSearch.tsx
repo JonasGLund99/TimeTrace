@@ -12,7 +12,6 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
 
     return (
         <div>
-            <h2 className="font-bold text-md">Advanced Mode!</h2>    
             <div className="flex">
                 <input
                     type="text"
@@ -31,7 +30,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                 />
                 <button className="relative py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700">
                 <label htmlFor="" className="px-6 py-2 rounded-md cursor-pointer">
-                    Save
+                    Confirm
                 </label>
             </button>
             </div>

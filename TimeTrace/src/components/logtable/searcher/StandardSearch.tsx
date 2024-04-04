@@ -13,7 +13,6 @@ function StandardSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
 
     return (
         <div>
-            <h2 className="font-bold text-md">Normal Search</h2>    
             <input
                 type="text"
                 className="px-2 border-2 border-gray-300 rounded-lg w-full"

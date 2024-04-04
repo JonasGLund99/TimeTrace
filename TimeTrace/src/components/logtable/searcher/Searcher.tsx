@@ -13,18 +13,24 @@ function Searcher({searchQuery, setSearchQuery, searchLog}: SearcherProps) {
 
     const { advancedSearchMode, setAdvancedSearchMode } = useContext(LogTableContext);
 
-    const handleCheckboxChange = () => {
-        setAdvancedSearchMode(prevMode => !prevMode); // Toggle the mode
+    const handleSearchModeChange = () => {
+        setAdvancedSearchMode(prevMode => !prevMode); 
     };
 
     return (
         <div>
-            <div>
-                <label className="inline-flex items-center cursor-pointer">
-                    <input type="checkbox" value="" className="sr-only peer" onChange={handleCheckboxChange} checked={advancedSearchMode} />
-                    <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                    <span className="ms-3 text-m font-medium text-gray-900 dark:text-gray-300">{advancedSearchMode ? "Searching using regex mode" : "Standard searching"}</span>
-                </label>
+            <div className="relative w-full mb-2 rounded-md border h-10 p-1 bg-gray-200">
+                <div className="relative w-full h-full flex items-center">
+                    <div  className="w-full flex justify-center text-gray-400 cursor-pointer">
+                        <button onClick={handleSearchModeChange}>Standard Search Mode</button>
+                    </div>
+                    <div className="w-full flex justify-center text-gray-400 cursor-pointer">
+                        <button onClick={handleSearchModeChange}>Advanced Search Mode</button>
+                    </div>
+                </div>
+                <span className={`bg-white shadow text-sm flex items-center justify-center w-1/2 rounded h-[1.88rem] transition-all duration-150 ease-linear top-[4px] absolute ${!advancedSearchMode ? 'left-1 font-semibold' : 'left-1/2 -ml-1 font-semibold'}`}
+                    children={!advancedSearchMode ? 'Standard Searching...' : 'Searching using regex...'}
+                ></span>
             </div>
             {advancedSearchMode 
                 ? <AdvancedSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog}/>
