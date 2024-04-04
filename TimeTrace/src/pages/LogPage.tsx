@@ -9,12 +9,22 @@ function LogPage() {
     const { uploadedFile } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
 
+    function handleOnBeforeUnload(event: BeforeUnloadEvent) {
+        event.preventDefault();
+        return (event.returnValue = '');
+    }
+
+    useEffect(() => {
+        window.addEventListener('beforeunload', handleOnBeforeUnload, { capture: true })
+    }, [])
+
     useEffect(() => {
         if (uploadedFile === null) {
             setError({
                 title: "No file uploaded",
                 errorString: "To be able to view the log and search, you must upload a file on the file upload page",
                 callback: () => {
+                    window.removeEventListener('beforeunload', handleOnBeforeUnload, { capture: true }); // Remove event listener
                     window.location.href = navigation.filter(x => x.name === "Create mappings")[0].href;
                 },
                 callbackTitle: "Go to Upload",
