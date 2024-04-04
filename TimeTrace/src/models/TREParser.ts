@@ -87,6 +87,14 @@ export abstract class TREParser {
       throw new Error("Time constraints must be preceded by a mapped symbol.");
     }
 
+    const expressionWithoutSymbol = /(?<![a-zA-Z)])([-+*/&|]+)/g;
+    const invalidExpression = tre.match(expressionWithoutSymbol);
+    if (invalidExpression && invalidExpression.length > 0) {
+      throw new Error(
+        `Expression ${invalidExpression[0]} must be preceded by a mapped symbol.`
+      );
+    }
+
     if (!symbolsAreValid) {
       throw new Error(
         "TRE contains invalid symbols. Only a-z, A-Z, %, parentheses, . , and whitespace are allowed."
