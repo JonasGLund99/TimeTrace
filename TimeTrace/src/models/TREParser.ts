@@ -78,7 +78,7 @@ export abstract class TREParser {
   }
 
   public static validateSymbols(tre: string): void {
-    const symbolsAreValid = /^[a-zA-Z()%\s\d+,.]+$/.test(tre);
+    const symbolsAreValid = /^[a-zA-Z()%\s\d+*|&,.]+$/.test(tre);
     const symbolBeforeTimeConstraint =
       /(?<![a-zA-Z])%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
 
@@ -112,7 +112,15 @@ export abstract class TREParser {
 
     for (const symbol of symbols) {
       // Skip special symbols
-      if (symbol === "z" || symbol === "Z") continue;
+      if (
+        symbol === "z" ||
+        symbol === "Z" ||
+        symbol === "|" ||
+        symbol === "+" ||
+        symbol === "*" ||
+        symbol === "&"
+      )
+        continue;
       if (!Array.from(mappings.values()).includes(symbol)) {
         throw new Error(
           `Symbol '${symbol}' does not have an event mapped to it.`
