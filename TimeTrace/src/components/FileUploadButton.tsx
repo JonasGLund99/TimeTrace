@@ -4,6 +4,7 @@ import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
 import { fileLinesAreValid } from "../models/helpers/validation";
 import Trashcan from "./svgs/Trashcan";
+import { Store } from 'react-notifications-component';
 
 function FileUploadButton() {
     const { setFileLines } = useContext(AppdataContext);
@@ -22,9 +23,35 @@ function FileUploadButton() {
         if (target !== null) {
             target.value = "";
         }
+        Store.addNotification({
+            title: "Uploaded file!",
+            message: `File Uploaded: ${file.name}, size of uploaded file: ${(file.size / (1024 * 1024)).toFixed(2)} MB`,
+            type: "success",
+            insert: "top",
+            container: "bottom-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 5000,
+                onScreen: true
+            }
+        });
     }
 
     function handleFileRemove() {
+        Store.addNotification({
+            title: "Deleted file!",
+            message: `File deleted: ${uploadedFile?.name}. Add a new log file before continuing`,
+            type: "warning",
+            insert: "top",
+            container: "bottom-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 5000,
+                onScreen: true
+            }
+        });
         handleFileChange(null);
     }
 
@@ -85,11 +112,11 @@ function FileUploadButton() {
                     }
                 </label>
                 {
-                    uploadedFile === null && 
-                        <span id="ping" className="absolute top-[-3px] right-[-3px] block w-3 h-3 bg-yellow-200 rounded-full animate-ping ring-1 ring-yellow-200" style={{ animationDuration: '2s', animationTimingFunction: 'ease-out' }}></span>
+                    uploadedFile === null &&
+                    <span id="ping" className="absolute top-[-3px] right-[-3px] block w-3 h-3 bg-yellow-200 rounded-full animate-ping ring-1 ring-yellow-200" style={{ animationDuration: '2s', animationTimingFunction: 'ease-out' }}></span>
                 }
             </button>
-            { uploadedFile && 
+            {uploadedFile &&
                 <button onClick={handleFileRemove} data-testid="remove-button">
                     <Trashcan />
                 </button>
