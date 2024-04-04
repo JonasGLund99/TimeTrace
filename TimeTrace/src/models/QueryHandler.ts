@@ -14,7 +14,7 @@ export abstract class QueryHandler {
         url: "http://localhost:5000/monaa/",
     }
 
-    public static async search(TRE: string, formattedFile: string[], file: string[]): Promise<MonaaZone[]> {
+    public static async search(TRE: string, formattedFile: string[], file: string[], timeStampRegex: RegExp): Promise<MonaaZone[]> {
         const httpClient = axios.create();
         this.config.data = {
             'lines': formattedFile,
@@ -35,7 +35,7 @@ export abstract class QueryHandler {
         }
         
         const monaaOutput = response.data.monaa_result.lines;
-        const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, file);
+        const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, file, timeStampRegex);
         
         return monaaZones;
     }

@@ -8,7 +8,7 @@ function MappingsPage() {
         <div id="mappings-page" className="flex flex-row h-full gap-5" >
             <LogTableProvider>
                 <div className="w-[40%]">
-                    <FileUploadButton />
+                    <FileUploadButton showDateFormatChooser={true} />    
                     <div className="h-[95%]">
                         <MappedItemsList />
                     </div>

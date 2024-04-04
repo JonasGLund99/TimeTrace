@@ -7,10 +7,10 @@ export abstract class LogSearcher {
         throw new Error(`${typeof this} is a static class`);
     }
 
-    public static findZones(logFile: string[], searchIntervals: SearchInterval[]): MonaaZone[] {
+    public static findZones(logFile: string[], searchIntervals: SearchInterval[], timeStampRegex: RegExp): MonaaZone[] {
         console.time("findZones");
         const MonaaZoneMatches: MonaaZone[] = [];
-        const [timestamps, averageTimegrowth] = this.getTimestampInfo(logFile);
+        const [timestamps, averageTimegrowth] = this.getTimestampInfo(logFile, timeStampRegex);
 
         for (let i = 0; i < searchIntervals.length; i++) {
             let foundmatch = new MonaaZone();
@@ -31,13 +31,13 @@ export abstract class LogSearcher {
         return MonaaZoneMatches;
     }
 
-    private static getTimestampInfo(logFile: string[]): [number[], number] {
+    private static getTimestampInfo(logFile: string[], timeStampRegex: RegExp): [number[], number] {
         let prevLineTime: number = 0;
         let averageTimegrowth: number = 0;
         const timestamps: number[] = [];
 
         logFile.forEach((line: string) => {
-            const timestampISO: string = extractTimeStamp(line);
+            const timestampISO: string = extractTimeStamp(line, timeStampRegex);
             const eventTimeStamp = new Date(timestampISO).getTime();
             timestamps.push(eventTimeStamp);
             averageTimegrowth = (averageTimegrowth + (eventTimeStamp - prevLineTime)) / 2;
@@ -65,7 +65,7 @@ export abstract class LogSearcher {
     // Binary search function to find the first index in the log to search from
     private static binarySearch(timestamps: number[], target: number, startingIndex: number, isOvershot: boolean): number {
         let left = isOvershot ? 0 : startingIndex;
-        let right = isOvershot ? startingIndex: timestamps.length - 1;
+        let right = isOvershot ? startingIndex : timestamps.length - 1;
         let resultIndex = -1;
 
         while (left <= right) {

@@ -23,6 +23,8 @@ describe('LogSearcher', () => {
                 "2024-02-26T08:22:41.764645Z delete",
                 "2024-02-26T08:22:42.169645Z logout"
             ];
+            const timeStampRegex = /\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{1,6}(Z|[+-]\d{2}:\d{2})\b/g;
+
             // https://codechi.com/dev-tools/date-to-millisecond-calculators/
             const searchIntervals : SearchInterval[] = [
                 {start: 1708935754000, end: 1708935756677},
@@ -34,7 +36,7 @@ describe('LogSearcher', () => {
             ]
 
             // Act
-            const zones = LogSearcher.findZones(logFile, searchIntervals);
+            const zones = LogSearcher.findZones(logFile, searchIntervals, timeStampRegex);
             
             // Assert
             expect(zones).toEqual(expectedZones);

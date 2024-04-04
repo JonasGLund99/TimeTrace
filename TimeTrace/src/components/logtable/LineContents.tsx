@@ -24,7 +24,7 @@ function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFi
                     {!fileLines.length ? 
                         <div className="flex flex-col items-center justify-center gap-4">
                             Upload a file to get started!
-                            <FileUploadButton/>
+                            <FileUploadButton />
                         </div>
                         : "No events found! Try searching again..."
                     }
