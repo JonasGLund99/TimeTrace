@@ -38,7 +38,7 @@ export default function SearchForm() {
             setLoading(false);
             Store.addNotification({
                 title: `Monaa searh for pattern: ${tre}`,
-                message: `Found ${matches.length} matches in ${(duration / 1000).toFixed(1)} seconds`,
+                message: `Found ${monaaZones.length} matches in ${(duration / 1000).toFixed(1)} seconds`,
                 type: "success",
                 insert: "top",
                 container: "bottom-right",
