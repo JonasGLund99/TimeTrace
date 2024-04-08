@@ -16,11 +16,15 @@ import AppdataProvider from './context/AppContext';
 import Warning from './components/Warning';
 import Loader from './components/Loader';
 
+import { ReactNotifications } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+
 export default function App() {
   return (
     <BrowserRouter>
       <AppdataProvider>
         <Warning />
+        <ReactNotifications />
         <Navbar />
         <div className="w-full h-[94%] p-5">
           <Loader />

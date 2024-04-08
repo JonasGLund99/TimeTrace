@@ -18,6 +18,7 @@ function MappingsPage() {
                 </div>
             </LogTableProvider>
         </div>
+
     );
 }
 
