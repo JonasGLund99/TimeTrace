@@ -5,7 +5,6 @@ import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromF
 import { fileLinesAreValid } from "../models/helpers/validation";
 import Trashcan from "./svgs/Trashcan";
 import DateFormatChooser from "./DateFormatChooser";
-import { dateFormats } from "../utils/dateFormats";
 
 interface FileUploadButtonProps {
     showDateFormatChooser?: boolean;
@@ -19,12 +18,11 @@ function FileUploadButton({ showDateFormatChooser }: FileUploadButtonProps) {
     const { setEvents } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
     const { setMatches } = useContext(AppdataContext);
-    const { timeStampRegex, setTimeStampRegex } = useContext(AppdataContext);
+    const { timeStampRegex } = useContext(AppdataContext);
 
     async function handleFileUpload(e: React.SyntheticEvent) {
         const target = e.target as HTMLInputElement;
         const file: File = (target.files as FileList)[0];
-        // Call the callback function with the file
         handleFileChange(file);
         if (target !== null) {
             target.value = "";
@@ -71,7 +69,7 @@ function FileUploadButton({ showDateFormatChooser }: FileUploadButtonProps) {
             setEvents([]);
             setMappings(new Map());
             setUploadedFile(null);
-            setMatches([])
+            setMatches([]);
         }
         setLoading(false);
     };

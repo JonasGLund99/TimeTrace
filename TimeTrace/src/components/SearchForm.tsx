@@ -25,7 +25,7 @@ export default function SearchForm() {
         setLoading(true);
         if (!uploadedFile) return; //should never happen
         try {
-            const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings);
+            const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings, timeStampRegex);
             const formattedFile = await getFileLines(formattedLog);
             const monaaZones = await QueryHandler.search(tre + "$", formattedFile, fileLines, timeStampRegex);
             setMonaaMatchIndex(-1);

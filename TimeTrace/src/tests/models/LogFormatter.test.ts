@@ -1,8 +1,10 @@
+import { dateFormats } from '../../models/helpers/dateFormats';
 import { LogFormatter } from '../../models/LogFormatter';
 import * as fs from 'fs';
 
-
 describe('LogFormatter', () => {
+    const timeStampRegex = dateFormats["ISO 8601"];
+
     describe('formatLog', () => {
         test('Should return file object with mapped and formatted events', async () => {
             // Arrange
@@ -16,7 +18,8 @@ describe('LogFormatter', () => {
             const expectedlogfile = new File([expfileContents], 'file.txt', { type: 'text/plain' });
     
             // Act
-            const acutalFormattedLogFile =  await LogFormatter.formatLog(logfile, mappings)
+            const acutalFormattedLogFile =  await LogFormatter.formatLog(logfile, mappings, timeStampRegex);
+            
             // Assert
             expect(acutalFormattedLogFile).toEqual(expectedlogfile);
             
@@ -54,10 +57,10 @@ describe('LogFormatter', () => {
             ] 
             
             // Act
-            const actualMappeRows = LogFormatter.convertLines(lines, mappings);
-            // Assert
+            const actualMappedRows = LogFormatter.convertLines(lines, mappings, timeStampRegex);
 
-            expect(actualMappeRows).toEqual(expectedMappedRows);
+            // Assert
+            expect(actualMappedRows).toEqual(expectedMappedRows);
         });
     });
     describe('getMappedValue', () => {
@@ -88,14 +91,14 @@ describe('LogFormatter', () => {
             expect(mappedValue).toEqual(ExpectedMapValue);
         });
     });
-    describe('convertDateformat', () => {
-        test('Should take a timstamp as string and convert it into EPOCH time in string ', () => {
+    describe('convertDateToMs', () => {
+        test('Should take a timestamp as string and convert it into EPOCH time in string', () => {
             // Arrange
             const timestamp: string = "2024-02-26T08:22:36.677645Z";
 
             const expectedEPOCHTime: string = "1708935756677";
             // Act
-            const timestampInMiliseconds = LogFormatter.convertDateformat(timestamp);
+            const timestampInMiliseconds = LogFormatter.convertDateToMs(timestamp);
             // Assert
             expect(timestampInMiliseconds).toEqual(expectedEPOCHTime);
         });
@@ -105,7 +108,7 @@ describe('LogFormatter', () => {
 
             const expectedEPOCHTime: string = "1708935756678";
             // Act
-            const timestampInMiliseconds = LogFormatter.convertDateformat(timestamp);
+            const timestampInMiliseconds = LogFormatter.convertDateToMs(timestamp);
             // Assert
             expect(timestampInMiliseconds).not.toEqual(expectedEPOCHTime);
         });

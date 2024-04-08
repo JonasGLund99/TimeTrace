@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
-import { dateFormats } from "../utils/dateFormats";
+import { dateFormats } from "../models/helpers/dateFormats";
 
 function DateFormatChooser() {
     const { setTimeStampRegex } = useContext(AppdataContext);
@@ -20,7 +20,7 @@ function DateFormatChooser() {
                             break;
                         }
                         case "1": {
-                            regex = dateFormats["DDMMYY HH.MM.SS"];
+                            regex = dateFormats["YYMMDD HH.MM.SS"];
                             break;
                         }
                         case "2": {
@@ -33,7 +33,7 @@ function DateFormatChooser() {
                 }}
             >
                 <option value="0">ISO 8601</option>
-                <option value="1">DDMMYY HH.MM.SS - FMD</option>
+                <option value="1">YYMMDD HH.MM.SS - FMD</option>
                 <option value="2">DD/MM/YYYY HH:MM:SS - SMS</option>
             </select>
         </form>
