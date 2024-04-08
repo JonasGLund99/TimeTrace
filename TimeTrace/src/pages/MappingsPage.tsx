@@ -1,4 +1,4 @@
-import FileUploadButton from "../components/FileUploadButton";
+import FileUploadButton from "../components/FileUpload";
 import MappedItemsList from "../components/MappedItemsList";
 import LogTable from "../components/logtable/LogTable";
 import LogTableProvider from '../context/LogTableContext';
@@ -8,7 +8,7 @@ function MappingsPage() {
         <div id="mappings-page" className="flex flex-row h-full gap-5" >
             <LogTableProvider>
                 <div className="w-[40%]">
-                    <FileUploadButton />
+                    <FileUploadButton asDragAndDrop={false} />
                     <div className="pt-2 h-[94%]">
                         <MappedItemsList />
                     </div>

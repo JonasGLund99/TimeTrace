@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { FileLine } from '../../models/Types/FileLine';
 import { cn } from '../../models/helpers/cn';
-import DragAndDropZone from '../DragAndDropFile';
 import { AppdataContext } from '../../context/AppContext';
+import FileUpload from '../FileUpload';
 
 interface LineContentsProps {
     lineIsHighlighted: (line: number) => boolean;
@@ -23,8 +23,8 @@ function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFi
         )}
         >
             {uploadedFile === null && (
-                <div className="w-4/5 h-4/5 ">
-                    <DragAndDropZone />
+                <div className="flex items-center justify-center w-4/5 h-4/5 ">
+                    <FileUpload asDragAndDrop={true} />
                 </div>
             )}
             {filteredFileLines.length === 0 && fileLines.length === 0 && uploadedFile !== null && (
