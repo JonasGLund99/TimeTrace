@@ -14,12 +14,7 @@ export abstract class QueryHandler {
     url: "http://localhost:5000/monaa/",
   };
 
-  public static async search(
-    TRE: string,
-    formattedFile: string[],
-    file: string[],
-    mappings: Map<string, string>
-  ): Promise<MonaaZone[]> {
+  public static async search(TRE: string, formattedFile: string[], file: string[], mappings: Map<string, string>): Promise<MonaaZone[]> {
     const httpClient = axios.create();
     this.config.data = {
       lines: formattedFile,
