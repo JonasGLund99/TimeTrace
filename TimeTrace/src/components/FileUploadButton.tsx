@@ -43,8 +43,7 @@ function FileUploadButton() {
                 setFileLines(lines);
                 const events = extractEventsFromFileLines(lines);
                 setEvents(events);
-                setMappings(new Map(events.map((event) => [event, ""])));
-            } catch (e) {
+                setMappings(new CustomMap(events.map((event) => [{ key: event, isRegex: false }, ""])));            } catch (e) {
                 setError({
                     title: "Error during file upload",
                     errorString: "Error duing upload of file <br/> <br/>" + e,
@@ -55,7 +54,7 @@ function FileUploadButton() {
                 //reset
                 setFileLines([]);
                 setEvents([]);
-                setMappings(new Map());
+                setMappings(new CustomMap());
                 setUploadedFile(null);
                 setMatches([]);
             }
@@ -63,7 +62,7 @@ function FileUploadButton() {
             //reset
             setFileLines([]);
             setEvents([]);
-            setMappings(new Map());
+            setMappings(new CustomMap());
             setUploadedFile(null);
             setMatches([])
         }

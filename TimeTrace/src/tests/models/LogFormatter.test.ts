@@ -1,5 +1,6 @@
 import { LogFormatter } from '../../models/LogFormatter';
 import * as fs from 'fs';
+import { CustomMap } from '../../models/Types/EventMapping';
 
 
 describe('LogFormatter', () => {
@@ -9,8 +10,13 @@ describe('LogFormatter', () => {
             const filePath = './src/tests/exampleLogFile.txt'
             const fileContents: string = fs.readFileSync(filePath, 'utf-8');
             const logfile = new File([fileContents], 'file.txt', { type: 'text/plain' });
-            const mappings: Map<string, string> = new Map<string, string>();
-            mappings.set('login', 'A').set('login', 'A').set('delete', 'Z').set('login', 'A').set('login', 'A').set('logout', 'B'); 
+            const mappings: CustomMap = new CustomMap();
+            mappings.set({key: 'login', isRegex: false}, 'A')
+            mappings.set({key: 'login', isRegex: false}, 'A')
+            mappings.set({key: 'delete', isRegex: false}, 'Z')
+            mappings.set({key: 'login', isRegex: false}, 'A')
+            mappings.set({key: 'login', isRegex: false}, 'A')
+            mappings.set({key: 'logout', isRegex: false}, 'B'); 
             const expfilePath = './src/tests/exampleMonaaFormatLogFile.txt'
             const expfileContents: string = fs.readFileSync(expfilePath, 'utf-8');
             const expectedlogfile = new File([expfileContents], 'file.txt', { type: 'text/plain' });
@@ -37,8 +43,14 @@ describe('LogFormatter', () => {
                 "2024-02-26T08:22:38.584645Z edited",
                 "2024-02-26T08:22:39.473645Z updated",
             ] 
-            const mappings: Map<string, string> = new Map<string, string>();
-            mappings.set('login', 'B').set('logout', 'C').set('updated', '').set('updated', '').set('login', 'B').set('logout', 'C').set('edited', 'A');
+            const mappings: CustomMap = new CustomMap();
+            mappings.set({key: 'login', isRegex: false}, 'B')
+            mappings.set({key: 'logout', isRegex: false}, 'C')
+            mappings.set({key: 'updated', isRegex: false}, '')
+            mappings.set({key: 'udated', isRegex: false}, '')
+            mappings.set({key: 'login', isRegex: false}, 'B')
+            mappings.set({key: 'logout', isRegex: false}, 'C')
+            mappings.set({key: 'edited', isRegex: false}, 'A');
 
             const expectedMappedRows: string[] = [
                 "B 1708935754000", 
@@ -65,8 +77,11 @@ describe('LogFormatter', () => {
             // Arrange
             const event: string = "Edit";
 
-            const mappings: Map<string, string> = new Map<string, string>();
-            mappings.set('Login', 'B').set('Logout', 'C').set('Update', '').set('Update', '').set('Login', 'B').set('Logout', 'C').set('Edit', 'A');
+            const mappings: CustomMap = new CustomMap();
+            mappings.set({key: 'Login', isRegex: false}, 'B')
+            mappings.set({key: 'Logout', isRegex: false}, 'C')
+            mappings.set({key: 'Update', isRegex: false}, '')
+            mappings.set({key: 'Edit', isRegex: false}, 'A');
             
             const ExpectedMapValue: string = "A";
             // Act
@@ -78,9 +93,12 @@ describe('LogFormatter', () => {
             // Arrange
             const event: string = "Logout";
 
-            const mappings: Map<string, string> = new Map<string, string>();
-            mappings.set('Login', 'B').set('Logout', '').set('Update', 'C').set('Update', 'C').set('Login', 'B').set('Logout', '').set('Edit', 'A');
-            
+            const mappings: CustomMap = new CustomMap();
+            mappings.set({key: 'Login', isRegex: false}, 'B')
+            mappings.set({key: 'Logout', isRegex: false}, '')
+            mappings.set({key: 'Update', isRegex: false}, 'C')
+            mappings.set({key: 'Edit', isRegex: false}, 'A');
+
             const ExpectedMapValue: string = "Z";
             // Act
             const mappedValue = LogFormatter.getMappedValue(event, mappings);

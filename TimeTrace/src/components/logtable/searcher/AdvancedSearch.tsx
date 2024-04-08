@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { LogTableContext } from "../../../context/LogTableContext";
 import { AppdataContext } from "../../../context/AppContext";
-
+import { CustomMap } from "../../../models/Types/EventMapping";
 interface SearcherProps {
     searchQuery: string;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -9,10 +9,33 @@ interface SearcherProps {
 }
 
 function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps) {
-    const {mappings, setMappings} = useContext(AppdataContext)
-    
+    const {mappings, setMappings} = useContext(AppdataContext);
+    const [regexMapValue, setRegexMapValue] = useState('');
+    const { setError } = useContext(AppdataContext)
+
     function mapEventsUsingRegex() {
-        console.log("mapEventsUsingRegex")
+        const regex = searchQuery;
+        const mapValue = regexMapValue;
+        let errorStr: string = "";
+        if (regex === "") 
+            errorStr = "Write regex before mapping events or goto standard search";
+        else if(mapValue ==="")
+            errorStr = "Make sure to input a map value that the matches of the regex should be mapped"
+        
+        if (errorStr !== "") {
+            setError({
+                title: "Error during mapping",
+                errorString: errorStr,
+                callback: null,
+                callbackTitle: null,
+                is_dismissible: true
+            })
+            return
+        }
+            
+        mappings.setRegex(regex, mapValue)
+        const newMappings = new CustomMap(mappings)
+        setMappings(newMappings)
     }
 
     return (
@@ -20,6 +43,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
             <div className="flex">
                 <div className="relative w-full">
                     <input
+                        id="regex-input"
                         type="text"
                         className="pl-10 pr-2 border-2 border-gray-300 rounded-lg w-full"
                         placeholder="Search using regex... e.g. gr(a|e)y"
@@ -53,10 +77,13 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                     </button>
                 </div>
                 <input
+                    id="map-regex-to-value"
                     className="w-20 px-2 border-2 border-gray-300 rounded-lg text-center mx-2"
                     type="text"
                     placeholder="map to..."
                     maxLength={1}
+                    value={regexMapValue}
+                    onChange={(e) => setRegexMapValue(e.target.value)}
                 />
                 <button onClick={mapEventsUsingRegex} className="relative h-7 text-sm text-white bg-gray-800 rounded-lg hover:bg-gray-700">
                     <label htmlFor="" className="px-6 rounded-md cursor-pointer">
@@ -64,7 +91,6 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                     </label>
                 </button>
             </div>
-            
         </div>
     );
 }

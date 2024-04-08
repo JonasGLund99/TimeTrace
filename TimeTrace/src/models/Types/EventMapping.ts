@@ -4,28 +4,35 @@ interface MapKey {
 }
 
 export class CustomMap {
-    private stringMap: Map<string, string>;
-    private regexMap: Map<string, string>;
+    public stringMap: Map<string, string>;
+    public regexMap: Map<string, string>;
 
-    constructor(entries?: readonly (readonly [MapKey, string])[] | null) {
+    constructor(entries?: ([MapKey, string])[] | CustomMap | null) {
         this.stringMap = new Map<string, string>();
         this.regexMap = new Map<string, string>();
 
         if (entries) {
-            for (const [key, value] of entries) {
-                if (typeof key === 'string') {
-                    this.setString(key, value);
-                } else {
-                    throw new TypeError('Keys must be strings or regular expressions.');
+            if (entries instanceof CustomMap) {
+                let oldInstance: CustomMap = entries;
+                entries = []
+                for (const [regex, val] of Array.from(oldInstance.regexMap.entries())) {
+                    entries.push([{key: regex, isRegex: true}, val]);
                 }
+                for (const [str, val] of Array.from(oldInstance.stringMap.entries())) {
+                    entries.push([{key: str, isRegex: false}, val]);
+                }
+            }
+
+            for (const [key, value] of entries) {
+                this.set(key, value)
             }
         }
     }
 
-    set(key:MapKey, value:string) {
-        if (key.isRegex) 
+    set(key: MapKey, value: string) {
+        if (key.isRegex)
             this.setRegex(key.key, value)
-        else 
+        else
             this.setString(key.key, value)
     }
 
@@ -39,14 +46,19 @@ export class CustomMap {
         return this;
     }
 
-    get(key: string): string | undefined {
-        let value = this.stringMap.get(key);
-        if (value !== undefined) {
+    get(subString: string, fullString: string): string | undefined {
+        let value = this.stringMap.get(subString);
+        if (value !== undefined && value!=="") {
             return value;
         }
 
+        value = this.stringMap.get(fullString);
+        if (value !== undefined && value!=="") {
+            return value;
+        }
+        
         for (const [regex, val] of Array.from(this.regexMap.entries())) {
-            if (new RegExp(regex).test(key)) {
+            if (new RegExp(regex).test(fullString)) { //only search in regex on full string
                 return val;
             }
         }
@@ -64,5 +76,18 @@ export class CustomMap {
             this.regexMap.delete(key);
             return;
         }
+    }
+
+    allMappings(): [string, string][] {
+        let mappings: [string, string][] = [];
+        for (const [regex, val] of Array.from(this.regexMap.entries())) {
+            mappings.push([regex, val])
+        }
+        for (const [str, val] of Array.from(this.stringMap.entries())) {
+            if (val !== "")
+                mappings.push([str, val])
+        }
+
+        return mappings
     }
 }

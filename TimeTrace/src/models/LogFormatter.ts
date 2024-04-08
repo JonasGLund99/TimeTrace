@@ -1,11 +1,11 @@
 import { getFileLines } from "./helpers/getFileLines";
-
+import { CustomMap } from "./Types/EventMapping";
 export abstract class LogFormatter {
     constructor() {
         throw new Error(`${typeof this} is a static class`);
     }
     
-    public static async formatLog(originalLog: File, mappings: Map<string, string>): Promise<File> {
+    public static async formatLog(originalLog: File, mappings: CustomMap): Promise<File> {
         try {
             let lines: string[] = await getFileLines(originalLog); //convert file to array of strings. Has format <time> <event>
             let mappedLines: string[] = this.convertLines(lines, mappings) //map all events and format to <event> <time>
@@ -16,7 +16,7 @@ export abstract class LogFormatter {
         } 
     }
 
-    public static convertLines(lines: string[], mappings: Map<string, string>): string[] {
+    public static convertLines(lines: string[], mappings: CustomMap): string[] {
         let mappedRows: string[] = [];
         let mappedValue: string;
         lines.forEach(line => {
@@ -31,10 +31,10 @@ export abstract class LogFormatter {
         return mappedRows;
     }
 
-    public static getMappedValue(event: string, mappings: Map<string, string>): string {
+    public static getMappedValue(event: string, mappings: CustomMap): string {
         event = event.replace(/(\r\n|\n|\r)/gm, "") //remove carriage returns
         let mappedValue: string = "Z" //Mapped value is always Z if not found in mappings
-        const foundMapValue = mappings.get(event)
+        const foundMapValue = mappings.get(event, event)
         if (foundMapValue !== undefined && foundMapValue !== "") {  
             mappedValue = foundMapValue;
         }

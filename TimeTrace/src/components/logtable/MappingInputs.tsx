@@ -3,15 +3,17 @@ import { AppdataContext } from "../../context/AppContext";
 import { FileLine } from '../../models/Types/FileLine';
 import { cn } from "../../models/helpers/cn";
 import Trashcan from "../svgs/Trashcan";
+import { CustomMap } from "../../models/Types/EventMapping";
 
 interface MappingInputsProps {
     lineIsHighlighted: (line: number) => boolean;
     eventIsMapped: (event: string) => boolean;
     mappingsAreEditable: boolean;
     shownLines: FileLine[];
+    fileLines: string[];
 }
 
-function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, shownLines }: MappingInputsProps) {
+function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, shownLines, fileLines }: MappingInputsProps) {
     const { mappings, setMappings } = useContext(AppdataContext);
     const { events } = useContext(AppdataContext);
 
@@ -25,8 +27,8 @@ function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, 
         // EventText is empty when the user has removed the mapping.
         if (filteredValue === "" && eventText !== "") return;
         const mapKey = events[mappingIndex];
-        mappings.set(mapKey, filteredValue);
-        const newMappings = new Map(mappings);
+        mappings.setString(mapKey, filteredValue);
+        const newMappings = new CustomMap(mappings);
         if (mappingsAreEditable) {
             setMappings(newMappings);
         }
@@ -48,7 +50,7 @@ function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, 
                         className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                         type="text"
                         readOnly={mappingsAreEditable ? false : true}
-                        value={mappings.get(fileLine.text) || ''}
+                        value={mappings.get(fileLine.text, fileLines[fileLine.line]) || ''}
                         onChange={(event) => {
                             handleMappingChange(event.target.value, fileLine.line);
                         }}

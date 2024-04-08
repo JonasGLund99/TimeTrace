@@ -143,7 +143,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     function eventIsMapped(eventText: string) {
         let isMapped = false;
 
-        if (mappings.get(eventText)) {
+        if (mappings.get(eventText, eventText)) {
             isMapped = true;
         }
         return isMapped;
@@ -159,7 +159,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">
                 <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} />
                 <LineContents lineIsHighlighted={lineIsHighlighted} fileLines={fileLines} shownLines={shownLines} eventIsMapped={eventIsMapped} filteredFileLines={filteredFileLines} />
-                <MappingInputs lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} />
+                <MappingInputs lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} fileLines={fileLines}/>
             </div>
             {!mappingsAreEditable && matches.length > 0 &&
                 <MatchNavigator linesPerPage={linesPerPage} />
