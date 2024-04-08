@@ -14,3 +14,4 @@ mapZonesToLogEvents(logFile, searchIntervals)
             else if timeStamps[j] > end
                 break
         monaaZoneMatches.push(eventIndices)
+    return monaaZoneMatches
