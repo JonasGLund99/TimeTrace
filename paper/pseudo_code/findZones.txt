@@ -6,7 +6,8 @@ mapZonesToLogEvents(logFile, searchIntervals)
         eventIndices = Ø
         start = searchIntervals[i].start
         end = searchIntervals[i].end
-        startingIndex = findStartingIndex(timeStamps, duration, searchIntervals[i])
+        startingIndex = findStartingIndex(timeStamps, 
+                        duration, searchIntervals[i])
 
         for j = startingIndex to timeStamps
             if timeStamps[j] >= start and timeStamps[j] <= end
