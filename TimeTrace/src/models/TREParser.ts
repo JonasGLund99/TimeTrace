@@ -11,9 +11,7 @@ export abstract class TREParser {
     let opened = 0;
     const emptyGroups = tre.match(/\(\)/g);
     if (emptyGroups && emptyGroups.length > 0) {
-      throw new Error(
-        "Empty groups are not allowed. An open parenthesis should contain symbols inside it when closed e.g. (A) or (A|B)"
-      );
+      throw new Error("Empty groups are not allowed. An open parenthesis should contain symbols inside it when closed e.g. (A) or (A|B)");
     }
 
     for (const char of tre) {
@@ -28,9 +26,7 @@ export abstract class TREParser {
     }
 
     if (opened < 0) {
-      throw new Error(
-        "An additional parenthesis is being closed without it having been opened."
-      );
+      throw new Error("An additional parenthesis is being closed without it having been opened.");
     }
   }
 
@@ -39,7 +35,7 @@ export abstract class TREParser {
     // match time constraints = /\d+(\.\d+)?/;
     // Regular expression to match and extract time constraints along with their time units
     const regex = /%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
-    let match;
+    let match: RegExpExecArray | null;
     let timeConstraintCount = tre.split("%").length - 1;
     let matchCount = 0;
 
@@ -55,16 +51,12 @@ export abstract class TREParser {
 
       // Check if the first number is greater than or equal to the second number
       if (firstNumber >= secondNumber) {
-        throw new Error(
-          "First number in time constraint must be smaller than the second number e.g. a%(1ms,1s) or a%(1s,2s) etc."
-        );
+        throw new Error("First number in time constraint must be smaller than the second number e.g. a%(1ms,1s) or a%(1s,2s) etc.");
       }
     }
 
     if (matchCount !== timeConstraintCount) {
-      throw new Error(
-        "Something is wrong in your time constraints. Look after white space after the comma, an extra parenthesis or an invalid time unit. A valid time constraint could be a%(1ms,1s)"
-      );
+      throw new Error("Something is wrong in your time constraints. Look after white space after the comma, an extra parenthesis or an invalid time unit. A valid time constraint could be a%(1ms,1s)");
     }
 
     // Regular expression to match time constraints that are not preceded by a mapped symbol
@@ -83,16 +75,13 @@ export abstract class TREParser {
 	this.validateSpecialChars(tre);
 
     if (!symbolsAreValid) {
-      throw new Error(
-        "TRE contains invalid symbols. Only a-z, A-Z, %, parentheses, . , and whitespace are allowed."
-      );
+      throw new Error("TRE contains invalid symbols. Only a-z, A-Z, %, parentheses, . , and whitespace are allowed.");
     }
   }
 
   public static validateNumbers(tre: string): void {
     // Remove all time constraints from tre. This is the only place numbers should be allowed.
-    const timeConstraintRegex =
-      /%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
+    const timeConstraintRegex = /%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
     const treWithoutTimeConstraints = tre.replace(timeConstraintRegex, "");
     //Check if there are numbers that are not inside time constraints
     const invalidNumbers = treWithoutTimeConstraints.match(/\d+/g);
@@ -105,9 +94,7 @@ export abstract class TREParser {
     const expressionWithoutSymbol = /(?<![a-zA-Z)])([-+*/&|]+)/g;
     const invalidExpression = tre.match(expressionWithoutSymbol);
     if (invalidExpression && invalidExpression.length > 0) {
-      throw new Error(
-        `Expression ${invalidExpression[0]} must be preceded by a mapped symbol.`
-      );
+      throw new Error(`Expression ${invalidExpression[0]} must be preceded by a mapped symbol.`);
     }
   }
 
@@ -135,9 +122,7 @@ export abstract class TREParser {
         continue;
       }
       if (!Array.from(mappings.values()).includes(symbol)) {
-        throw new Error(
-          `Symbol '${symbol}' does not have an event mapped to it.`
-        );
+        throw new Error(`Symbol '${symbol}' does not have an event mapped to it.`);
       }
     }
   }
