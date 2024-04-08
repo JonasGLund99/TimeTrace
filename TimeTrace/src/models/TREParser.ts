@@ -1,8 +1,8 @@
 export abstract class TREParser {
   public static parseTRE(tre: string, mappings: Map<string, string>) {
-    this.validateSymbols(tre);
     this.validateGroups(tre);
     this.validateTimeConstraints(tre);
+    this.validateSymbols(tre);
     this.validateSymbolMappings(tre, mappings);
     return tre;
   }
@@ -12,16 +12,7 @@ export abstract class TREParser {
     const emptyGroups = tre.match(/\(\)/g);
     if (emptyGroups && emptyGroups.length > 0) {
       throw new Error(
-        "Empty groups are not allowed. An open parenthesis should contain symbols inside it when closed."
-      );
-    }
-
-    // Regular expression to match groups with digits not preceded by '%' and no '%' before the first parenthesis
-    const invalidGroup = /(?<!%)\([^%]*\d+[^%]*\)/g;
-    const invalidGroups = tre.match(invalidGroup);
-    if (invalidGroups && invalidGroups.length > 0) {
-      throw new Error(
-        "Groups with digits not preceded by '%' before the first parenthesis are not allowed."
+        "Empty groups are not allowed. An open parenthesis should contain symbols inside it when closed e.g. (A) or (A|B)"
       );
     }
 
@@ -65,35 +56,31 @@ export abstract class TREParser {
       // Check if the first number is greater than or equal to the second number
       if (firstNumber >= secondNumber) {
         throw new Error(
-          "First number in time constraint must be smaller than the second number"
+          "First number in time constraint must be smaller than the second number e.g. a%(1ms,1s) or a%(1s,2s) etc."
         );
       }
     }
 
     if (matchCount !== timeConstraintCount) {
       throw new Error(
-        "Something is wrong in your time constraints. Look after white space after the comma, an extra parenthesis or an invalid time unit."
+        "Something is wrong in your time constraints. Look after white space after the comma, an extra parenthesis or an invalid time unit. A valid time constraint could be a%(1ms,1s)"
       );
     }
-  }
 
-  public static validateSymbols(tre: string): void {
-    const symbolsAreValid = /^[a-zA-Z()%\s\d+*|&,.]+$/.test(tre);
-    const symbolBeforeTimeConstraint =
-      /(?<![a-zA-Z])%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
+    // Regular expression to match time constraints that are not preceded by a mapped symbol
+    const symbolBeforeTimeConstraint = /(?<![a-zA-Z])%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
 
     const invalidTimeConstraint = tre.match(symbolBeforeTimeConstraint);
     if (invalidTimeConstraint && invalidTimeConstraint.length > 0) {
       throw new Error("Time constraints must be preceded by a mapped symbol.");
     }
+  }
 
-    const expressionWithoutSymbol = /(?<![a-zA-Z)])([-+*/&|]+)/g;
-    const invalidExpression = tre.match(expressionWithoutSymbol);
-    if (invalidExpression && invalidExpression.length > 0) {
-      throw new Error(
-        `Expression ${invalidExpression[0]} must be preceded by a mapped symbol.`
-      );
-    }
+  public static validateSymbols(tre: string): void {
+    const symbolsAreValid = /^[a-zA-Z()%\s\d+*|&,.]+$/.test(tre);
+
+    this.validateNumbers(tre);
+	this.validateSpecialChars(tre);
 
     if (!symbolsAreValid) {
       throw new Error(
@@ -102,10 +89,29 @@ export abstract class TREParser {
     }
   }
 
-  public static validateSymbolMappings(
-    tre: string,
-    mappings: Map<string, string>
-  ): void {
+  public static validateNumbers(tre: string): void {
+    // Remove all time constraints from tre. This is the only place numbers should be allowed.
+    const timeConstraintRegex =
+      /%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
+    const treWithoutTimeConstraints = tre.replace(timeConstraintRegex, "");
+    //Check if there are numbers that are not inside time constraints
+    const invalidNumbers = treWithoutTimeConstraints.match(/\d+/g);
+    if (invalidNumbers && invalidNumbers.length > 0) {
+      throw new Error(`Numbers are only allowed inside time constraints.`);
+    }
+  }
+
+  public static validateSpecialChars(tre: string): void {
+    const expressionWithoutSymbol = /(?<![a-zA-Z)])([-+*/&|]+)/g;
+    const invalidExpression = tre.match(expressionWithoutSymbol);
+    if (invalidExpression && invalidExpression.length > 0) {
+      throw new Error(
+        `Expression ${invalidExpression[0]} must be preceded by a mapped symbol.`
+      );
+    }
+  }
+
+  public static validateSymbolMappings(tre: string, mappings: Map<string, string> ): void {
     // Remove all time constraints from the TRE. We do not wish for these to be mapped
     const regex = /%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
     const treNoTimeConstraints = tre.replace(regex, "");
@@ -127,8 +133,9 @@ export abstract class TREParser {
         symbol === "+" ||
         symbol === "*" ||
         symbol === "&"
-      )
+      ) {
         continue;
+      }
       if (!Array.from(mappings.values()).includes(symbol)) {
         throw new Error(
           `Symbol '${symbol}' does not have an event mapped to it.`
@@ -137,10 +144,7 @@ export abstract class TREParser {
     }
   }
 
-  public static convertTimeToms(
-    timeConstraint: number,
-    timeUnit: string
-  ): number {
+  public static convertTimeToms(timeConstraint: number, timeUnit: string): number {
     switch (timeUnit) {
       case "s":
         return timeConstraint * 1000;
