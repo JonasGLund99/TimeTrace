@@ -117,9 +117,7 @@ export abstract class TREParser {
     const treNoTimeConstraints = tre.replace(regex, "");
 
     // Extract all symbols from the TRE
-    const symbols = treNoTimeConstraints
-      .match(/[a-zA-Z]/g)
-      ?.filter((symbol) => symbol !== "");
+    const symbols = treNoTimeConstraints.match(/[a-zA-Z]/g)?.filter((symbol) => symbol !== "");
     if (!symbols) {
       return;
     }
