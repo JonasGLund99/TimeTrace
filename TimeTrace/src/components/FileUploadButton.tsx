@@ -3,6 +3,7 @@ import { AppdataContext } from "../context/AppContext";
 import { getFileLines } from "../models/helpers/getFileLines";
 import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromFileLines";
 import { fileLinesAreValid } from "../models/helpers/validation";
+import { CustomMap } from "../models/Types/EventMapping";
 import Trashcan from "./svgs/Trashcan";
 
 function FileUploadButton() {

@@ -1,17 +1,20 @@
-class CustomMap {
-    private stringMap: Map<string, string>;
-    private regexMap: Map<RegExp, string>;
+interface MapKey {
+    key: string;
+    isRegex: boolean;
+}
 
-    constructor(entries?: readonly (readonly [string | RegExp, string])[] | null) {
+export class CustomMap {
+    private stringMap: Map<string, string>;
+    private regexMap: Map<string, string>;
+
+    constructor(entries?: readonly (readonly [MapKey, string])[] | null) {
         this.stringMap = new Map<string, string>();
-        this.regexMap = new Map<RegExp, string>();
+        this.regexMap = new Map<string, string>();
 
         if (entries) {
             for (const [key, value] of entries) {
                 if (typeof key === 'string') {
-                    this.set(key, value);
-                } else if (key instanceof RegExp) {
-                    this.setRegex(key, value);
+                    this.setString(key, value);
                 } else {
                     throw new TypeError('Keys must be strings or regular expressions.');
                 }
@@ -19,12 +22,19 @@ class CustomMap {
         }
     }
 
-    set(key: string, value: string): this {
+    set(key:MapKey, value:string) {
+        if (key.isRegex) 
+            this.setRegex(key.key, value)
+        else 
+            this.setString(key.key, value)
+    }
+
+    setString(key: string, value: string): this {
         this.stringMap.set(key, value);
         return this;
     }
 
-    setRegex(key: RegExp, value: string): this {
+    setRegex(key: string, value: string): this {
         this.regexMap.set(key, value);
         return this;
     }
@@ -35,9 +45,8 @@ class CustomMap {
             return value;
         }
 
-        // Check for matching regex keys
         for (const [regex, val] of Array.from(this.regexMap.entries())) {
-            if (regex.test(key)) {
+            if (new RegExp(regex).test(key)) {
                 return val;
             }
         }
@@ -45,11 +54,15 @@ class CustomMap {
         return undefined;
     }
 
-    // Other methods similar to Map can be added here
-}
+    remove(key: string): void {
+        if (this.stringMap.has(key)) {
+            this.stringMap.delete(key);
+            return;
+        }
 
-// Example usage:
-const customMap = new CustomMap([
-    ["test", "Value for test"],
-    [/pattern\d+/, "Value for pattern"]
-]);
+        if (this.regexMap.has(key)) {
+            this.regexMap.delete(key);
+            return;
+        }
+    }
+}
