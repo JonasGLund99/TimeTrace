@@ -5,15 +5,13 @@ import { LogFormatter } from '../models/LogFormatter';
 import { getFileLines } from "../models/helpers/getFileLines";
 import { LogTableContext } from '../context/LogTableContext';
 import { Store } from 'react-notifications-component';
-import { match } from 'assert';
-
 
 export default function SearchForm() {
     const { tre, setTre } = useContext(AppdataContext);
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { uploadedFile } = useContext(AppdataContext);
-    const { setMatches, matches } = useContext(AppdataContext);
+    const { setMatches } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
     const { setMonaaMatchIndex } = useContext(LogTableContext);
