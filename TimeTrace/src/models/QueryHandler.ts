@@ -35,6 +35,7 @@ export abstract class QueryHandler {
         }
         
         const monaaOutput = response.data.monaa_result.lines;
+        console.log(monaaOutput);
         const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, file);
         
         return monaaZones;
