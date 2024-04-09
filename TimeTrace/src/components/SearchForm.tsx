@@ -13,7 +13,6 @@ export default function SearchForm() {
     const { setMatches } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
-    const { timeStampRegex } = useContext(AppdataContext);
     const { setMonaaMatchIndex } = useContext(LogTableContext);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -25,9 +24,9 @@ export default function SearchForm() {
         setLoading(true);
         if (!uploadedFile) return; //should never happen
         try {
-            const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings, timeStampRegex);
+            const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings);
             const formattedFile = await getFileLines(formattedLog);
-            const monaaZones = await QueryHandler.search(tre + "$", formattedFile, fileLines, timeStampRegex);
+            const monaaZones = await QueryHandler.search(tre + "$", formattedFile, fileLines);
             setMonaaMatchIndex(-1);
             setMatches(monaaZones);
             setLoading(false);

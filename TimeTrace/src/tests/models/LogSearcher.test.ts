@@ -36,7 +36,7 @@ describe('LogSearcher', () => {
             ]
 
             // Act
-            const zones = LogSearcher.findZones(logFile, searchIntervals, timeStampRegex);
+            const zones = LogSearcher.findZones(logFile, searchIntervals);
             
             // Assert
             expect(zones).toEqual(expectedZones);

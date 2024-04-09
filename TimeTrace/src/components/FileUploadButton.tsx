@@ -18,7 +18,6 @@ function FileUploadButton({ showDateFormatChooser }: FileUploadButtonProps) {
     const { setEvents } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
     const { setMatches } = useContext(AppdataContext);
-    const { timeStampRegex } = useContext(AppdataContext);
 
     async function handleFileUpload(e: React.SyntheticEvent) {
         const target = e.target as HTMLInputElement;
@@ -40,12 +39,12 @@ function FileUploadButton({ showDateFormatChooser }: FileUploadButtonProps) {
             try {
                 let lines: string[] = await getFileLines(file);
                 //validate file content
-                let error: string | null = fileLinesAreValid(lines, timeStampRegex)
+                let error: string | null = fileLinesAreValid(lines)
                 if (error !== null) {
                     throw new Error(error)
                 }
                 setFileLines(lines);
-                const events = extractEventsFromFileLines(lines, timeStampRegex);
+                const events = extractEventsFromFileLines(lines);
                 setEvents(events);
                 setMappings(new Map(events.map((event) => [event, ""])));
             } catch (e) {

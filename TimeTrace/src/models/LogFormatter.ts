@@ -1,6 +1,5 @@
-import { timeStamp } from "console";
 import { extractEventFromLine } from "./helpers/extractEventFromLine";
-import { dateFormats } from "./helpers/dateFormats";
+import { DateFormat, dateFormats } from "./helpers/dateFormats";
 import { extractTimeStamp } from "./helpers/extractTimeStamp";
 import { getFileLines } from "./helpers/getFileLines";
 
@@ -9,10 +8,12 @@ export abstract class LogFormatter {
         throw new Error(`${typeof this} is a static class`);
     }
 
-    public static async formatLog(originalLog: File, mappings: Map<string, string>, timeStampRegex: RegExp): Promise<File> {
+    public static dateFormat = DateFormat.ISO_8601;
+
+    public static async formatLog(originalLog: File, mappings: Map<string, string>): Promise<File> {
         try {
             let lines: string[] = await getFileLines(originalLog); //convert file to array of strings. Has format <time> <event>
-            let mappedLines: string[] = this.convertLines(lines, mappings, timeStampRegex) //map all events and format to <event> <time>
+            let mappedLines: string[] = this.convertLines(lines, mappings) //map all events and format to <event> <time>
             let f: File = new File([mappedLines.join("\n")], "mapped.txt", { type: "text/plain" }) //return file object with mapped and formatted events
             return f;
         } catch (error) { //readfile might throw error
@@ -20,11 +21,11 @@ export abstract class LogFormatter {
         }
     }
 
-    public static convertLines(lines: string[], mappings: Map<string, string>, timeStampRegex: RegExp): string[] {
+    public static convertLines(lines: string[], mappings: Map<string, string>): string[] {
         let mappedRows: string[] = [];
         let mappedValue: string;
         lines.forEach(line => {
-            let timestamp: string = extractTimeStamp(line, timeStampRegex);
+            let timestamp: string = extractTimeStamp(line);
             let event = extractEventFromLine(line, timestamp);
 
             mappedValue = this.getMappedValue(event, mappings)
@@ -85,6 +86,19 @@ export abstract class LogFormatter {
             const [hours, minutes, seconds] = timePart.split(':').map(part => parseInt(part));
 
             date = new Date(year, month - 1, day, hours, minutes, seconds);
+        }
+        else if (dateFormats["YYYY-DD-MM HH:MM:SS.MMM"].test(dateString)) {
+            const [datePart, timePart] = dateString.split(' ');
+
+            // Extract day, month, year from the date part
+            const [day, month, year] = datePart.split('-').map(part => parseInt(part));
+
+            // Extract hours, minutes, seconds from the time part
+            const [hours, minutes, secondsAndMilliseconds] = timePart.split(':');
+            
+            const [seconds, milliseconds] = secondsAndMilliseconds.split('.').map(part => parseInt(part));
+
+            date = new Date(year, month - 1, day, parseInt(hours), parseInt(minutes), seconds, milliseconds);
         } else {
             throw new Error('Unsupported date format');
         }

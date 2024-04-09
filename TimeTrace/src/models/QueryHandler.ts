@@ -2,6 +2,7 @@ import { MonaaZone } from './MonaaZone';
 import { TREBuilder } from './TREBuilder';
 import axios, { AxiosRequestConfig } from 'axios';
 import { LogHandler } from './LogHandler';
+import { DateFormat } from './helpers/dateFormats';
 
 export abstract class QueryHandler {
     constructor() {
@@ -14,7 +15,7 @@ export abstract class QueryHandler {
         url: "http://localhost:5000/monaa/",
     }
 
-    public static async search(TRE: string, formattedFile: string[], file: string[], timeStampRegex: RegExp): Promise<MonaaZone[]> {
+    public static async search(TRE: string, formattedFile: string[], file: string[]): Promise<MonaaZone[]> {
         const httpClient = axios.create();
         this.config.data = {
             'lines': formattedFile,
@@ -35,7 +36,7 @@ export abstract class QueryHandler {
         }
         
         const monaaOutput = response.data.monaa_result.lines;
-        const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, file, timeStampRegex);
+        const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, file);
         
         return monaaZones;
     }

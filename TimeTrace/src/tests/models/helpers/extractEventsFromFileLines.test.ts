@@ -5,7 +5,6 @@ describe("extractEventsFromFileLines", () => {
     test("with default ISO 8601 timeStampRegex (Z)", () => {
         //Arrange
         const timestamp = "2024-02-26T11:07:29.791645Z";
-        const timeStampRegex = /\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{1,6}(Z|[+-]\d{2}:\d{2})\b/g;
     
         const mockExtractTimeStamp = jest.spyOn(extractor, 'extractTimeStamp').mockReturnValue(timestamp);
         const fileLines = [
@@ -18,7 +17,7 @@ describe("extractEventsFromFileLines", () => {
         ];
     
         //Act
-        const result = extractEventsFromFileLines(fileLines, timeStampRegex);
+        const result = extractEventsFromFileLines(fileLines);
         
         //Assert
         expect(result).toEqual(expected);
@@ -27,7 +26,6 @@ describe("extractEventsFromFileLines", () => {
     test("with default ISO 8601 timeStampRegex (+)", () => {
         //Arrange
         const timestamp = "2024-04-04T12:30:45.123456+05:30";
-        const timeStampRegex = /\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{1,6}(Z|[+-]\d{2}:\d{2})\b/g;
     
         const mockExtractTimeStamp = jest.spyOn(extractor, 'extractTimeStamp').mockReturnValue(timestamp);
         const fileLines = [
@@ -40,7 +38,7 @@ describe("extractEventsFromFileLines", () => {
         ];
     
         //Act
-        const result = extractEventsFromFileLines(fileLines, timeStampRegex);
+        const result = extractEventsFromFileLines(fileLines);
         
         //Assert
         expect(result).toEqual(expected);

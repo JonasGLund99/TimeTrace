@@ -1,9 +1,9 @@
 import { extractTimeStamp } from "./extractTimeStamp";
 
-export function fileLinesAreValid(lines: string[], timeStampRegex: RegExp): string | null {
+export function fileLinesAreValid(lines: string[]): string | null {
     try {
-        FileIsInAscendingOrder(lines, timeStampRegex); //throws errors if not valid
-        DuplicateEventsAtSameTimestampCheck(lines, timeStampRegex); //throws errors if not valid
+        FileIsInAscendingOrder(lines); //throws errors if not valid
+        DuplicateEventsAtSameTimestampCheck(lines); //throws errors if not valid
     } catch (e) {
         if (typeof e === 'string') { //typescript needs to be sure it is a string
             return e;
@@ -13,12 +13,12 @@ export function fileLinesAreValid(lines: string[], timeStampRegex: RegExp): stri
     return null
 }
 
-function DuplicateEventsAtSameTimestampCheck(lines: string[], timeStampRegex: RegExp): void {
+function DuplicateEventsAtSameTimestampCheck(lines: string[]): void {
     //loops throgh file once. for each line, compare with the lines after until timestamp changes.
     for (let i = 0; i < lines.length - 1; i++) {
         let j = i + 1;
         //check lines in file until timestamp canges or eof
-        while (j < lines.length && extractTimeStamp(lines[i], timeStampRegex) === extractTimeStamp(lines[j], timeStampRegex)) {
+        while (j < lines.length && extractTimeStamp(lines[i]) === extractTimeStamp(lines[j])) {
             let line1: string = lines[i];
             let line2: string = lines[j];
             let lineContents = `<br /><br /><pre>Line ${i + 1}: ${line1}\nLine ${j + 1}: ${line2}</pre>`
@@ -30,7 +30,7 @@ function DuplicateEventsAtSameTimestampCheck(lines: string[], timeStampRegex: Re
     }
 }
 
-function FileIsInAscendingOrder(lines: string[], timeStampRegex: RegExp): void {
+function FileIsInAscendingOrder(lines: string[]): void {
     //compare timestamp of current line with next line. if next >= current, then all good
     for (let i = 0; i < lines.length - 1; i++) {
         let line1: string = lines[i];
@@ -39,13 +39,13 @@ function FileIsInAscendingOrder(lines: string[], timeStampRegex: RegExp): void {
         let date2 = new Date();
         let lineContents = `<br /><br /><pre>Line ${i + 1}: ${line1}\nLine ${i + 2}: ${line2}</pre>`
         try {
-            date1 = new Date(extractTimeStamp(line1, timeStampRegex));
-            date2 = new Date(extractTimeStamp(line2, timeStampRegex));
+            date1 = new Date(extractTimeStamp(line1));
+            date2 = new Date(extractTimeStamp(line2));
         } catch (e) {
             throw new Error(`Could not parse timestamp in line ${i + 1} or ${i + 2}.${lineContents}`);
         }
         
-        if (date1 > date2) //if line1 > than line2 it is not sorted
-            throw new Error(`File is not in ascending order. Ordering failed at:${lineContents}`);
+        if (date1 >= date2) //if line1 >= than line2 it is not sorted
+            throw new Error(`File must be in strictly ascending order. Ordering failed at:${lineContents}`);
     }
 }

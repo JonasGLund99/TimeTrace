@@ -1,4 +1,5 @@
 import { extractTimeStamp } from "./helpers/extractTimeStamp";
+import { LogFormatter } from "./LogFormatter";
 import { MonaaZone } from "./MonaaZone";
 import { SearchInterval } from "./SearchInterval";
 
@@ -7,10 +8,10 @@ export abstract class LogSearcher {
         throw new Error(`${typeof this} is a static class`);
     }
 
-    public static findZones(logFile: string[], searchIntervals: SearchInterval[], timeStampRegex: RegExp): MonaaZone[] {
+    public static findZones(logFile: string[], searchIntervals: SearchInterval[]): MonaaZone[] {
         console.time("findZones");
         const MonaaZoneMatches: MonaaZone[] = [];
-        const [timestamps, averageTimegrowth] = this.getTimestampInfo(logFile, timeStampRegex);
+        const [timestamps, averageTimegrowth] = this.getTimestampInfo(logFile);
 
         for (let i = 0; i < searchIntervals.length; i++) {
             let foundmatch = new MonaaZone();
@@ -31,14 +32,13 @@ export abstract class LogSearcher {
         return MonaaZoneMatches;
     }
 
-    private static getTimestampInfo(logFile: string[], timeStampRegex: RegExp): [number[], number] {
+    private static getTimestampInfo(logFile: string[]): [number[], number] {
         let prevLineTime: number = 0;
         let averageTimegrowth: number = 0;
         const timestamps: number[] = [];
 
         logFile.forEach((line: string) => {
-            const timestampISO: string = extractTimeStamp(line, timeStampRegex);
-            const eventTimeStamp = new Date(timestampISO).getTime();
+            const eventTimeStamp = parseInt(LogFormatter.convertDateToMs(extractTimeStamp(line)));
             timestamps.push(eventTimeStamp);
             averageTimegrowth = (averageTimegrowth + (eventTimeStamp - prevLineTime)) / 2;
             prevLineTime = eventTimeStamp;

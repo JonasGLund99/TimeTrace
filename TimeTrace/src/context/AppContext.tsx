@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { MonaaZone } from "../models/MonaaZone";
+import { DateFormat } from "../models/helpers/dateFormats";
 
 export type ErrorObject = {
     errorString: string,
@@ -25,11 +26,9 @@ export type AppdataContextInterface = {
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     tre: string;
-    dateFormatIndex: string,
-    setDateFormatIndex: React.Dispatch<React.SetStateAction<string>>;
+    dateFormat: string,
+    setDateFormat: React.Dispatch<React.SetStateAction<string>>;
     setTre: React.Dispatch<React.SetStateAction<string>>;
-    timeStampRegex: RegExp;
-    setTimeStampRegex: React.Dispatch<React.SetStateAction<RegExp>>;
 }
 
 const defaultState = {
@@ -49,10 +48,8 @@ const defaultState = {
     setLoading: (loading: boolean) => { },
     tre: "",
     setTre: (tre: string) => { },
-    dateFormatIndex: "0",
-    setDateFormatIndex: (dateFormatIndex: string) => { },
-    timeStampRegex: /\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{1,6}(Z|[+-]\d{2}:\d{2})\b/g,
-    setTimeStampRegex: (timeStampRegex: RegExp) => { },
+    dateFormat: DateFormat.ISO_8601,
+    setDateFormat: (dateFormat: string) => { },
 } as AppdataContextInterface;
 
 export const AppdataContext = createContext<AppdataContextInterface>(defaultState);
@@ -70,11 +67,10 @@ export default function AppdataProvider({ children }: AppDataProvideProps) {
     const [matches, setMatches] = useState<MonaaZone[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [tre, setTre] = useState<string>("");
-    const [dateFormatIndex, setDateFormatIndex] = useState<string>("0");
-    const [timeStampRegex, setTimeStampRegex] = useState<RegExp>(/\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{1,6}(Z|[+-]\d{2}:\d{2})\b/g);
+    const [dateFormat, setDateFormat] = useState<string>(DateFormat.ISO_8601);
 
     return (
-        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading, tre, setTre, dateFormatIndex, setDateFormatIndex, timeStampRegex, setTimeStampRegex }}>
+        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading, tre, setTre, dateFormat, setDateFormat }}>
             {children}
         </AppdataContext.Provider>
     );

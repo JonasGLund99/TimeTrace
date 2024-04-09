@@ -1,8 +1,12 @@
 import { LogHandler } from "../../models/LogHandler";
 import { SearchInterval } from "../../models/SearchInterval";
 import { MonaaZone } from "../../models/MonaaZone";
+import { DateFormat } from "../../models/helpers/dateFormats";
+import { LogFormatter } from "../../models/LogFormatter";
 
 describe('LogHandler', () => {
+    LogFormatter.dateFormat = DateFormat.ISO_8601;
+
     describe('mapMonaaOutputToSearchIntervals', () => {
         test('should return an array of MonaaZones', () => {
             // Arrange
@@ -14,7 +18,6 @@ describe('LogHandler', () => {
                 "2024-02-26T08:22:36.612645Z login",
                 "2024-02-26T08:22:36.677645Z logout"
             ];
-            const timeStampRegex = /\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{1,6}(Z|[+-]\d{2}:\d{2})\b/g;
 
             // Converted to Monaa format:
             // A 1708935754000
@@ -41,7 +44,7 @@ describe('LogHandler', () => {
             ]
 
             // Act
-            const result = LogHandler.mapMonaaOutputToEvent(monaaOutput, logFile, timeStampRegex);
+            const result = LogHandler.mapMonaaOutputToEvent(monaaOutput, logFile);
 
             // Assert
             expect(result).toEqual(expectedZones);

@@ -1,9 +1,9 @@
-import { dateFormats } from '../../models/helpers/dateFormats';
+import { DateFormat } from '../../models/helpers/dateFormats';
 import { LogFormatter } from '../../models/LogFormatter';
 import * as fs from 'fs';
 
 describe('LogFormatter', () => {
-    const timeStampRegex = dateFormats["ISO 8601"];
+    LogFormatter.dateFormat = DateFormat.ISO_8601;
 
     describe('formatLog', () => {
         test('Should return file object with mapped and formatted events', async () => {
@@ -16,9 +16,9 @@ describe('LogFormatter', () => {
             const expfilePath = './src/tests/exampleMonaaFormatLogFile.txt'
             const expfileContents: string = fs.readFileSync(expfilePath, 'utf-8');
             const expectedlogfile = new File([expfileContents], 'file.txt', { type: 'text/plain' });
-    
+
             // Act
-            const acutalFormattedLogFile =  await LogFormatter.formatLog(logfile, mappings, timeStampRegex);
+            const acutalFormattedLogFile =  await LogFormatter.formatLog(logfile, mappings);
             
             // Assert
             expect(acutalFormattedLogFile).toEqual(expectedlogfile);
@@ -57,7 +57,7 @@ describe('LogFormatter', () => {
             ] 
             
             // Act
-            const actualMappedRows = LogFormatter.convertLines(lines, mappings, timeStampRegex);
+            const actualMappedRows = LogFormatter.convertLines(lines, mappings);
 
             // Assert
             expect(actualMappedRows).toEqual(expectedMappedRows);
