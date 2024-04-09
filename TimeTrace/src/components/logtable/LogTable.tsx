@@ -140,10 +140,10 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         return highlightLine;
     }
 
-    function eventIsMapped(eventText: string) {
+    function eventIsMapped(fileLine: FileLine) {
         let isMapped = false;
 
-        if (mappings.get(eventText, eventText)) {
+        if (mappings.get(fileLine.text, fileLines[fileLine.line])) {
             isMapped = true;
         }
         return isMapped;
@@ -153,7 +153,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         <div id="fixed-container" className="flex flex-col content-center w-full h-full">
             <div id="top-log-table-title-container" className="flex p-1">
                 <div id="search-container" className="flex flex-col content-center w-full">
-                    <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} />
+                    <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} mappingsAreEditable={mappingsAreEditable} />
                 </div>
             </div>
             <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">

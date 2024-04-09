@@ -85,7 +85,7 @@ describe('LogFormatter', () => {
             
             const ExpectedMapValue: string = "A";
             // Act
-            const mappedValue = LogFormatter.getMappedValue(event, mappings);
+            const mappedValue = LogFormatter.getMappedValue(event, mappings, event);
             // Assert
             expect(mappedValue).toEqual(ExpectedMapValue);
         });
@@ -101,7 +101,7 @@ describe('LogFormatter', () => {
 
             const ExpectedMapValue: string = "Z";
             // Act
-            const mappedValue = LogFormatter.getMappedValue(event, mappings);
+            const mappedValue = LogFormatter.getMappedValue(event, mappings, event);
             // Assert
             expect(mappedValue).toEqual(ExpectedMapValue);
         });

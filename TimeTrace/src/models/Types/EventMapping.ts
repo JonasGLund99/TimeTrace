@@ -46,20 +46,22 @@ export class CustomMap {
         return this;
     }
 
-    get(subString: string, fullString: string): string | undefined {
-        let value = this.stringMap.get(subString);
+    get(eventString: string, fullString?: string): string | undefined {
+        let value = this.stringMap.get(eventString);
         if (value !== undefined && value!=="") {
             return value;
         }
 
-        value = this.stringMap.get(fullString);
-        if (value !== undefined && value!=="") {
-            return value;
-        }
-        
-        for (const [regex, val] of Array.from(this.regexMap.entries())) {
-            if (new RegExp(regex).test(fullString)) { //only search in regex on full string
-                return val;
+        if (fullString !== undefined) {
+            value = this.stringMap.get(fullString);
+            if (value !== undefined && value!=="") {
+                return value;
+            }
+            
+            for (const [regex, val] of Array.from(this.regexMap.entries())) {
+                if (new RegExp(regex).test(fullString)) { //only search in regex on full string
+                    return val;
+                }
             }
         }
 
