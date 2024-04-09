@@ -20,7 +20,7 @@ export abstract class QueryHandler {
             'lines': formattedFile,
             'regex': TREBuilder.buildTRE(TRE)
         };
-    
+
         console.time("Monaa");
         let response: MonaaServerResponse | undefined;
         try {
@@ -36,7 +36,7 @@ export abstract class QueryHandler {
         
         const monaaOutput = response.data.monaa_result.lines;
         const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, file);
-        
+        console.log(monaaZones);
         return monaaZones;
     }
 }
