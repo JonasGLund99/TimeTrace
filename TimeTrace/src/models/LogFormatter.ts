@@ -93,9 +93,10 @@ export abstract class LogFormatter {
             // Extract day, month, year from the date part
             const [day, month, year] = datePart.split('-').map(part => parseInt(part));
 
-            // Extract hours, minutes, seconds from the time part
+            // Extract hours, minutes, seconds and milliseconds from the time part
             const [hours, minutes, secondsAndMilliseconds] = timePart.split(':');
             
+            // Extract seconds and milliseconds
             const [seconds, milliseconds] = secondsAndMilliseconds.split('.').map(part => parseInt(part));
 
             date = new Date(year, month - 1, day, parseInt(hours), parseInt(minutes), seconds, milliseconds);

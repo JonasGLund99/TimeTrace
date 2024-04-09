@@ -92,6 +92,8 @@ describe('LogFormatter', () => {
         });
     });
     describe('convertDateToMs', () => {
+        LogFormatter.dateFormat = DateFormat.ISO_8601;
+
         test('Should take a timestamp as string and convert it into EPOCH time in string', () => {
             // Arrange
             const timestamp: string = "2024-02-26T08:22:36.677645Z";
