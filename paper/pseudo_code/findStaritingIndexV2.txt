@@ -10,5 +10,5 @@ Output: Intersecting events for each zone.
 findStartingIndex(timeStamps, duration, searchInterval)
     start = searchInterval.start
     difference = start - timeStamps[0]
-    estimatedIndex = floor(difference / averageTimegrowth)
+    estimatedIndex = floor(difference / duration)
     return binarySearch(timeStamps, start)
