@@ -1,19 +1,17 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AppdataContext } from '../context/AppContext';
 import { QueryHandler } from '../models/QueryHandler';
 import { LogFormatter } from '../models/LogFormatter';
 import { getFileLines } from "../models/helpers/getFileLines";
 import { LogTableContext } from '../context/LogTableContext';
 import { Store } from 'react-notifications-component';
-import { match } from 'assert';
-
 
 export default function SearchForm() {
     const { tre, setTre } = useContext(AppdataContext);
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { uploadedFile } = useContext(AppdataContext);
-    const { setMatches, matches } = useContext(AppdataContext);
+    const { setMatches } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
     const { setMonaaMatchIndex } = useContext(LogTableContext);
@@ -30,7 +28,7 @@ export default function SearchForm() {
             const startTime = performance.now(); //start Monaa call
             const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings);
             const formattedFile = await getFileLines(formattedLog);
-            const monaaZones = await QueryHandler.search(tre + "$", formattedFile, fileLines);
+            const monaaZones = await QueryHandler.search(tre, formattedFile, fileLines, mappings);
             setMonaaMatchIndex(-1);
             setMatches(monaaZones);
             const endTime = performance.now(); //End of Monaa call
