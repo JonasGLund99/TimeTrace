@@ -36,11 +36,7 @@ export abstract class QueryHandler {
         }
 
         const monaaOutput = response.data.monaa_result.lines;
-        const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(
-            monaaOutput,
-            file
-        );
-
+        const monaaZones: MonaaZone[] = LogHandler.mapMonaaOutputToEvent(monaaOutput, file);
         return monaaZones;
     }
 }
