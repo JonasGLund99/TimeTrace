@@ -111,7 +111,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         let filteredFileLines: FileLine[] = [];
         fileLines.forEach((fileLine, index) => {
             if (regex.test(fileLine)) {
-                console.log(`match ${fileLine}`)
                 filteredFileLines.push({ text: events[index], line: index });
             }
         });

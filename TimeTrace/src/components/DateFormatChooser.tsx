@@ -19,7 +19,6 @@ function DateFormatChooser() {
             >
                 <option value={DateFormat.ISO_8601}>{DateFormat.ISO_8601}</option>
                 <option value={DateFormat.YYMMDD_HH_MM_SS}>{DateFormat.YYMMDD_HH_MM_SS} - FMD</option>
-                {/* <option value={DateFormat.YYMMDD_HH_MM_SS_MMM}>{DateFormat.YYMMDD_HH_MM_SS_MMM} - FMD_ms</option> */}
                 <option value={DateFormat.DD_MM_YYYY_HH_MM_SS}>{DateFormat.DD_MM_YYYY_HH_MM_SS} - SMS</option>
                 <option value={DateFormat.YYYY_MM_DD_HH_MM_SS_MMM}>{DateFormat.YYYY_MM_DD_HH_MM_SS_MMM} - SMS_ms</option>
             </select>
