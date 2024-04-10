@@ -92,4 +92,8 @@ export class CustomMap {
 
         return mappings
     }
+
+    values(): string[] {
+        return Array.from(this.regexMap.values()).concat(Array.from(this.stringMap.values()));
+    }
 }
