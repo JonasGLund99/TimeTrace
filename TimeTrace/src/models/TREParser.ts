@@ -1,5 +1,7 @@
+import { CustomMap } from "./Types/EventMapping";
+
 export abstract class TREParser {
-    public static parseTRE(tre: string, mappings: Map<string, string>) {
+    public static parseTRE(tre: string, mappings: CustomMap) {
         this.validateGroups(tre);
         this.validateTimeConstraints(tre);
         this.validateSymbols(tre);
@@ -98,7 +100,7 @@ export abstract class TREParser {
         }
     }
 
-    public static validateSymbolMappings(tre: string, mappings: Map<string, string>): void {
+    public static validateSymbolMappings(tre: string, mappings: CustomMap): void {
         // Remove all time constraints from the TRE. We do not wish for these to be mapped
         const regex = /%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
         const treNoTimeConstraints = tre.replace(regex, "");

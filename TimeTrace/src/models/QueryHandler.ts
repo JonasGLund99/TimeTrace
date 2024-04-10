@@ -2,6 +2,7 @@ import { MonaaZone } from "./MonaaZone";
 import { TREBuilder } from "./TREBuilder";
 import axios, { AxiosRequestConfig } from "axios";
 import { LogHandler } from "./LogHandler";
+import { CustomMap } from "./Types/EventMapping";
 
 export abstract class QueryHandler {
     constructor() {
@@ -14,7 +15,7 @@ export abstract class QueryHandler {
         url: "http://localhost:5000/monaa/",
     };
 
-    public static async search(TRE: string, formattedFile: string[], file: string[], mappings: Map<string, string>): Promise<MonaaZone[]> {
+    public static async search(TRE: string, formattedFile: string[], file: string[], mappings: CustomMap): Promise<MonaaZone[]> {
         const httpClient = axios.create();
         this.config.data = {
             lines: formattedFile,
