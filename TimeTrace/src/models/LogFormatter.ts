@@ -25,7 +25,7 @@ export abstract class LogFormatter {
                 let timestamp: string = lineElements.shift() || "";
                 let event: string = lineElements.join(" ");
                 mappedValue = this.getMappedValue(event, mappings, line)
-                mappedRows.push(mappedValue + " " + this.convertDateformat(timestamp.replaceAll(" ", ""))) //format data <mapped_event> <timestamp>
+                mappedRows.push(mappedValue + " " + this.convertDateformat(timestamp.replace(" ", ""))) //format data <mapped_event> <timestamp>
             }
         });
         return mappedRows;
