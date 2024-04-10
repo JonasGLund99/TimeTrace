@@ -5,6 +5,7 @@ import { extractEventsFromFileLines } from "../models/helpers/extractEventsFromF
 import { fileLinesAreValid } from "../models/helpers/validation";
 import Trashcan from "./svgs/Trashcan";
 import FileUploadLogo from "./svgs/FileUploadLogo";
+import { Store } from 'react-notifications-component';
 
 interface FileUploadProps {
     showDateFormatChooser?: boolean;
@@ -52,9 +53,35 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
         if (target !== null) {
             target.value = "";
         }
+        Store.addNotification({
+            title: "Uploaded file!",
+            message: `File Uploaded: ${file.name}, size of uploaded file: ${(file.size / (1024 * 1024)).toFixed(2)} MB`,
+            type: "success",
+            insert: "top",
+            container: "bottom-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 5000,
+                onScreen: true
+            }
+        });
     }
 
     function handleFileRemove() {
+        Store.addNotification({
+            title: "Deleted file!",
+            message: `File deleted: ${uploadedFile?.name}. Add a new log file before continuing`,
+            type: "warning",
+            insert: "top",
+            container: "bottom-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 5000,
+                onScreen: true
+            }
+        });
         handleFileChange(null);
     }
 
