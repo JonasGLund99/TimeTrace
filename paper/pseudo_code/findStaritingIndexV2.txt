@@ -1,0 +1,14 @@
+Input: Timestamps converted to ms since 1970: 
+       timeStamps,
+       average duration between events:
+       duration
+       Zones with constraints:
+       searchIntervals,
+
+Output: Intersecting events for each zone.
+
+findStartingIndex(timeStamps, duration, searchInterval)
+    start = searchInterval.start
+    difference = start - timeStamps[0]
+    estimatedIndex = floor(difference / duration)
+    return binarySearch(timeStamps, start)
