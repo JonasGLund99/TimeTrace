@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import FileUploadButton from "../components/FileUploadButton";
+import FileUpload from "../components/FileUpload";
 import MappedItemsList from "../components/MappedItemsList";
 import LogTable from "../components/logtable/LogTable";
 import LogTableProvider from '../context/LogTableContext';
@@ -22,8 +22,8 @@ function MappingsPage() {
         <div id="mappings-page" className="flex flex-row h-full gap-5" >
             <LogTableProvider>
                 <div className="w-[40%]">
-                    <FileUploadButton />
-                    <div className="h-[95%]">
+                    <FileUpload asDragAndDrop={false} />
+                    <div className="pt-2 h-[94%]">
                         <MappedItemsList />
                     </div>
                 </div>

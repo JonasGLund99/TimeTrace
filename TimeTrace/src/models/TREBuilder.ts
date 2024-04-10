@@ -1,11 +1,14 @@
-export abstract class TREBuilder {
-    public static TREString: string = ""
+import { TREParser } from "./TREParser";
+import { CustomMap } from "./Types/EventMapping";
 
-    public static buildTRE(rawTRE: string): string {
-        this.TREString = rawTRE;
+export abstract class TREBuilder {
+
+    public static buildTRE(rawTRE: string, mappings: CustomMap): string {
+        const trimmedTRE = rawTRE.trim();
+        TREParser.parseTRE(trimmedTRE, mappings);
         const converted_tre = this.convertTimeConstraint(rawTRE);
         
-        return converted_tre;
+        return converted_tre + "$";
     }
 
     public static convertTimeConstraint(tre: string) : string{
@@ -35,4 +38,3 @@ export abstract class TREBuilder {
         });
     }
 }
-

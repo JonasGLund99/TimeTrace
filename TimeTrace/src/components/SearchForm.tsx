@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AppdataContext } from '../context/AppContext';
 import { QueryHandler } from '../models/QueryHandler';
 import { LogFormatter } from '../models/LogFormatter';
@@ -28,7 +28,7 @@ export default function SearchForm() {
             const startTime = performance.now(); //start Monaa call
             const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings);
             const formattedFile = await getFileLines(formattedLog);
-            const monaaZones = await QueryHandler.search(tre + "$", formattedFile, fileLines);
+            const monaaZones = await QueryHandler.search(tre, formattedFile, fileLines, mappings);
             setMonaaMatchIndex(-1);
             setMatches(monaaZones);
             const endTime = performance.now(); //End of Monaa call
