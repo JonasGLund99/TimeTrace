@@ -4,9 +4,9 @@ import { CustomMap } from "./Types/EventMapping";
 export abstract class TREBuilder {
 
     public static buildTRE(rawTRE: string, mappings: CustomMap): string {
-        const trimmedTRE = rawTRE.trim();
+        const trimmedTRE = rawTRE.replace(" ", "").trim();
         TREParser.parseTRE(trimmedTRE, mappings);
-        const converted_tre = this.convertTimeConstraint(rawTRE);
+        const converted_tre = this.convertTimeConstraint(trimmedTRE);
         
         return converted_tre + "$";
     }
