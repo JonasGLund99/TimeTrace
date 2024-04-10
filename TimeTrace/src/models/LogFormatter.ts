@@ -38,7 +38,7 @@ export abstract class LogFormatter {
     public static getMappedValue(event: string, mappings: CustomMap, line:string): string {
         event = event.replace(/(\r\n|\n|\r)/gm, "") //remove carriage returns
         let mappedValue: string = "Z" //Mapped value is always Z if not found in mappings
-        const foundMapValue = mappings.get(event)
+        const foundMapValue = mappings.get(event, line)
         if (foundMapValue !== undefined && foundMapValue !== "") {
             mappedValue = foundMapValue;
         }
@@ -92,7 +92,7 @@ export abstract class LogFormatter {
             const [datePart, timePart] = dateString.split(' ');
 
             // Extract day, month, year from the date part
-            const [day, month, year] = datePart.split('-').map(part => parseInt(part));
+            const [year, day, month] = datePart.split('-').map(part => parseInt(part));
 
             // Extract hours, minutes, seconds and milliseconds from the time part
             const [hours, minutes, secondsAndMilliseconds] = timePart.split(':');

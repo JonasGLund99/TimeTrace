@@ -1,3 +1,4 @@
+import { LogFormatter } from "../LogFormatter";
 import { extractTimeStamp } from "./extractTimeStamp";
 
 export function fileLinesAreValid(lines: string[]): string | null {
@@ -39,8 +40,8 @@ function FileIsInAscendingOrder(lines: string[]): void {
         let date2 = new Date();
         let lineContents = `<br /><br /><pre>Line ${i + 1}: ${line1}\nLine ${i + 2}: ${line2}</pre>`
         try {
-            date1 = new Date(extractTimeStamp(line1));
-            date2 = new Date(extractTimeStamp(line2));
+            date1 = LogFormatter.convertToDate(extractTimeStamp(line1));
+            date2 = LogFormatter.convertToDate(extractTimeStamp(line2));
         } catch (e) {
             throw new Error(`Could not parse timestamp in line ${i + 1} or ${i + 2}.${lineContents}`);
         }
