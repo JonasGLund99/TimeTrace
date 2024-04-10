@@ -1,18 +1,18 @@
 mapZonesToLogEvents(logFile, searchIntervals)
-    monaaZoneMatches = Ø
-    timeStamps = extractTimeStamps(logFile)
-    duration = estimateDurationBetweenEvents(logFile)
-    for i = 0 to searchIntervals
-        eventIndices = Ø
-        start = searchIntervals[i].start
-        end = searchIntervals[i].end
-        startingIndex = findStartingIndex(timeStamps, 
-                        duration, searchIntervals[i])
+  monaaZoneMatches = Ø
+  timeStamps = extractTimeStamps(logFile)
+  duration = estimateDurationBetweenEvents(logFile)
+  for i = 0 to searchIntervals
+      eventIndices = Ø
+      start = searchIntervals[i].start
+      end = searchIntervals[i].end
+      startingIndex = findStartingIndex(timeStamps, 
+                      duration, searchIntervals[i])
 
-        for j = startingIndex to timeStamps
-            if timeStamps[j] >= start and timeStamps[j] <= end
-                eventIndices.push(j)
-            else if timeStamps[j] > end
-                break
-        monaaZoneMatches.push(eventIndices)
-    return monaaZoneMatches
+      for j = startingIndex to timeStamps
+          if timeStamps[j] >= start and timeStamps[j] <= end
+              eventIndices.push(j)
+          else if timeStamps[j] > end
+              break
+      monaaZoneMatches.push(eventIndices)
+  return monaaZoneMatches
