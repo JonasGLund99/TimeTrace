@@ -6,7 +6,7 @@ import FileUpload from '../FileUpload';
 
 interface LineContentsProps {
     lineIsHighlighted: (line: number) => boolean;
-    eventIsMapped: (event: string) => boolean;
+    eventIsMapped: (fileLine: FileLine) => boolean;
     shownLines: FileLine[];
     filteredFileLines: FileLine[];
     fileLines: string[];
@@ -35,7 +35,7 @@ function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFi
             {shownLines.map((fileLine: FileLine, i: number) => {
                 return <pre key={i} className={cn(
                     lineIsHighlighted(fileLine.line)
-                        ? eventIsMapped(fileLine.text) ? "bg-yellow-200" : "bg-yellow-100"
+                        ? eventIsMapped(fileLine) ? "bg-yellow-200" : "bg-yellow-100"
                         : "even:bg-white odd:bg-gray-100",
                     "w-full py-2 "
                 )}>{`${fileLines[fileLine.line]}`} </pre>;
