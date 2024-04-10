@@ -62,7 +62,7 @@ export abstract class TREParser {
         }
 
         // Regular expression to match time constraints that are not preceded by a mapped symbol
-        const symbolBeforeTimeConstraint = /(?<![a-zA-Z])%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
+        const symbolBeforeTimeConstraint = /(?<![a-zA-Z]|\)|\*)%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
 
         const invalidTimeConstraint = tre.match(symbolBeforeTimeConstraint);
         if (invalidTimeConstraint && invalidTimeConstraint.length > 0) {

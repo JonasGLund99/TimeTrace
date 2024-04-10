@@ -6,7 +6,7 @@ export abstract class TREBuilder {
     public static buildTRE(rawTRE: string, mappings: CustomMap): string {
         const trimmedTRE = rawTRE.trim();
         TREParser.parseTRE(trimmedTRE, mappings);
-        const converted_tre = this.convertTimeConstraint(trimmedTRE);
+        const converted_tre = this.convertTimeConstraint(rawTRE);
         
         return converted_tre + "$";
     }
@@ -14,8 +14,8 @@ export abstract class TREBuilder {
     public static convertTimeConstraint(tre: string) : string{
     const regex = /(\d+(.\d+)*)(ms|s|m|h|d)/g;
 
-        return tre.replace(regex, (match, value, unit) => {
-            const numericValue = parseInt(value);
+        return tre.replace(regex, (match, value, decimal, unit) => {
+            const numericValue = parseFloat(value + (decimal || ''));
             let milliseconds = numericValue;
             switch (unit) {
                 case 'ms':
@@ -33,8 +33,10 @@ export abstract class TREBuilder {
                 case 'd':
                     milliseconds = numericValue * 86400000;
                     break;
+                default:
+                    throw new Error(`Unknown unit: ${unit}`);
             }
-            return milliseconds.toString();
+            return Math.floor(milliseconds).toString();
         });
     }
 }
