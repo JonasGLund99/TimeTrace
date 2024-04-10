@@ -1,17 +1,16 @@
-import { TREParam } from './TREParam';
+import { TREParam } from "./TREParam";
+import { TREParser } from "./TREParser";
 export abstract class TREBuilder {
     public static TREParams: TREParam[] = [];
-    public static TREString: string = ""
 
-
-    public static buildTRE(TREString: string): string {
-        this.TREString = TREString;
+    //TODO figure out what Anders does with regex mappings.
+    public static buildTRE(TREString: string, mappings: Map<string, string>): string {
+        TREParser.parseTRE(TREString, mappings);
 
         for (const TreParam of this.TREParams) {
-            this.TREString += TreParam.convertToTre();
+            TREString += TreParam.convertToTre();
         }
 
-        return this.TREString;
+        return TREString + "$";
     }
 }
-
