@@ -6,7 +6,8 @@ import MatchNavigator from "./MatchNavigator";
 import MappingInputs from "./MappingInputs";
 import LineContents from "./LineContents";
 import LineNumbers from "./LineNumbers";
-import Searcher from "./Searcher";
+import Searcher from "./searcher/Searcher";
+import AdvancedSearch from "./searcher/AdvancedSearch";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -17,8 +18,10 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { matches } = useContext(AppdataContext);
+    const { setError } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const { currentPage, setCurrentPage } = useContext(LogTableContext);
+    const { advancedSearchMode, setAdvancedSearchMode } = useContext(LogTableContext);
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
     const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
@@ -69,6 +72,15 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             return;
         };
 
+        if (advancedSearchMode) {
+            searchUsingRegex(query)
+        } else {
+            searchStandard(query)
+        }
+
+    }
+
+    function searchStandard(query: string) {
         let filteredFileLines: FileLine[] = [];
 
         fileLines.filter((fileLine, index) => {
@@ -76,6 +88,32 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             if (!isAMatch) return false;
             filteredFileLines.push({ text: events[index], line: index });
             return true;
+        });
+
+        setFilteredFileLines(filteredFileLines);
+    }
+
+    function searchUsingRegex(query: string) {
+        let regex: RegExp
+        try {
+            regex = new RegExp(query); 
+        } catch(e) {
+            setError({
+                title: "Error trying to interpret regex",
+                errorString: "Regex error <br/><br/>" + e,
+                callback: null,
+                callbackTitle: null,
+                is_dismissible: true
+            })
+            return
+        }
+        
+        let filteredFileLines: FileLine[] = [];
+        fileLines.forEach((fileLine, index) => {
+            if (regex.test(fileLine)) {
+                console.log(`match ${fileLine}`)
+                filteredFileLines.push({ text: events[index], line: index });
+            }
         });
 
         setFilteredFileLines(filteredFileLines);
@@ -102,10 +140,10 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         return highlightLine;
     }
 
-    function eventIsMapped(eventText: string) {
+    function eventIsMapped(fileLine: FileLine) {
         let isMapped = false;
 
-        if (mappings.get(eventText)) {
+        if (mappings.get(fileLine.text, fileLines[fileLine.line])) {
             isMapped = true;
         }
         return isMapped;
@@ -115,14 +153,13 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         <div id="fixed-container" className="flex flex-col content-center w-full h-full">
             <div id="top-log-table-title-container" className="flex p-1">
                 <div id="search-container" className="flex flex-col content-center w-full">
-                    <h2 className="font-bold text-md">Search in file</h2>
-                    <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} />
+                    <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} mappingsAreEditable={mappingsAreEditable} />
                 </div>
             </div>
             <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">
                 <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} />
                 <LineContents lineIsHighlighted={lineIsHighlighted} fileLines={fileLines} shownLines={shownLines} eventIsMapped={eventIsMapped} filteredFileLines={filteredFileLines} />
-                <MappingInputs lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} />
+                <MappingInputs lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} fileLines={fileLines}/>
             </div>
             {!mappingsAreEditable && matches.length > 0 &&
                 <MatchNavigator linesPerPage={linesPerPage} />
