@@ -1,9 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AppdataContext } from '../context/AppContext';
 import { QueryHandler } from '../models/QueryHandler';
 import { LogFormatter } from '../models/LogFormatter';
 import { getFileLines } from "../models/helpers/getFileLines";
 import { LogTableContext } from '../context/LogTableContext';
+import { Store } from 'react-notifications-component';
 
 export default function SearchForm() {
     const { tre, setTre } = useContext(AppdataContext);
@@ -24,12 +25,28 @@ export default function SearchForm() {
         setLoading(true);
         if (!uploadedFile) return; //should never happen
         try {
+            const startTime = performance.now(); //start Monaa call
             const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings);
             const formattedFile = await getFileLines(formattedLog);
-            const monaaZones = await QueryHandler.search(tre + "$", formattedFile, fileLines);
+            const monaaZones = await QueryHandler.search(tre, formattedFile, fileLines, mappings);
             setMonaaMatchIndex(-1);
             setMatches(monaaZones);
+            const endTime = performance.now(); //End of Monaa call
+            const duration = endTime - startTime;
             setLoading(false);
+            Store.addNotification({
+                title: `Monaa searh for pattern: ${tre}`,
+                message: `Found ${monaaZones.length} matches in ${(duration / 1000).toFixed(1)} seconds`,
+                type: "success",
+                insert: "top",
+                container: "bottom-right",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
         } catch (e) {
             setLoading(false)
             setError({

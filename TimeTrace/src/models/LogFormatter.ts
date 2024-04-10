@@ -2,15 +2,14 @@ import { extractEventFromLine } from "./helpers/extractEventFromLine";
 import { DateFormat, dateFormats } from "./helpers/dateFormats";
 import { extractTimeStamp } from "./helpers/extractTimeStamp";
 import { getFileLines } from "./helpers/getFileLines";
+import { CustomMap } from "./Types/EventMapping";
 
 export abstract class LogFormatter {
     constructor() {
         throw new Error(`${typeof this} is a static class`);
     }
 
-    public static dateFormat = DateFormat.ISO_8601;
-
-    public static async formatLog(originalLog: File, mappings: Map<string, string>): Promise<File> {
+    public static async formatLog(originalLog: File, mappings: CustomMap): Promise<File> {
         try {
             let lines: string[] = await getFileLines(originalLog); //convert file to array of strings. Has format <time> <event>
             let mappedLines: string[] = this.convertLines(lines, mappings) //map all events and format to <event> <time>
@@ -21,20 +20,20 @@ export abstract class LogFormatter {
         }
     }
 
-    public static convertLines(lines: string[], mappings: Map<string, string>): string[] {
+    public static convertLines(lines: string[], mappings: CustomMap): string[] {
         let mappedRows: string[] = [];
         let mappedValue: string;
         lines.forEach(line => {
             let timestamp: string = extractTimeStamp(line);
             let event = extractEventFromLine(line, timestamp);
 
-            mappedValue = this.getMappedValue(event, mappings)
+            mappedValue = this.getMappedValue(event, mappings, line)
             mappedRows.push(mappedValue + " " + this.convertDateToMs(timestamp)) //format data for MONAA <mapped_event> <timestamp>
         });
         return mappedRows;
     }
 
-    public static getMappedValue(event: string, mappings: Map<string, string>): string {
+    public static getMappedValue(event: string, mappings: CustomMap, line:string): string {
         event = event.replace(/(\r\n|\n|\r)/gm, "") //remove carriage returns
         let mappedValue: string = "Z" //Mapped value is always Z if not found in mappings
         const foundMapValue = mappings.get(event)

@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { MonaaZone } from "../models/MonaaZone";
 import { DateFormat } from "../models/helpers/dateFormats";
+import { CustomMap } from "../models/Types/EventMapping";
 
 export type ErrorObject = {
     errorString: string,
@@ -13,8 +14,8 @@ export type ErrorObject = {
 export type AppdataContextInterface = {
     events: string[];
     setEvents: React.Dispatch<React.SetStateAction<string[]>>;
-    mappings: Map<string, string>;
-    setMappings: React.Dispatch<React.SetStateAction<Map<string, string>>>;
+    mappings: CustomMap;
+    setMappings: React.Dispatch<React.SetStateAction<CustomMap>>;
     fileLines: string[];
     setFileLines: React.Dispatch<React.SetStateAction<string[]>>;
     uploadedFile: File | null;
@@ -34,8 +35,8 @@ export type AppdataContextInterface = {
 const defaultState = {
     events: [],
     setEvents: (events: string[]) => { },
-    mappings: new Map(),
-    setMappings: (mappings: Map<string, string>) => { },
+    mappings: new CustomMap(),
+    setMappings: (mappings: CustomMap) => { },
     fileLines: [],
     setFileLines: (lines: string[]) => { },
     uploadedFile: null,
@@ -60,7 +61,7 @@ type AppDataProvideProps = {
 
 export default function AppdataProvider({ children }: AppDataProvideProps) {
     const [events, setEvents] = useState<string[]>([]);
-    const [mappings, setMappings] = useState<Map<string, string>>(new Map());
+    const [mappings, setMappings] = useState<CustomMap>(new CustomMap());
     const [fileLines, setFileLines] = useState<string[]>([]);
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [errorObj, setError] = useState<ErrorObject | null>(null);
