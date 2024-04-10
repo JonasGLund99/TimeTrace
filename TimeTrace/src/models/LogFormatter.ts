@@ -1,9 +1,15 @@
+import { extractEventFromLine } from "./helpers/extractEventFromLine";
+import { DateFormat } from "./helpers/dateFormats";
+import { extractTimeStamp } from "./helpers/extractTimeStamp";
 import { getFileLines } from "./helpers/getFileLines";
 import { CustomMap } from "./Types/EventMapping";
+
 export abstract class LogFormatter {
     constructor() {
         throw new Error(`${typeof this} is a static class`);
     }
+
+    public static dateFormat = DateFormat.ISO_8601;
 
     public static async formatLog(originalLog: File, mappings: CustomMap): Promise<File> {
         try {
@@ -20,13 +26,11 @@ export abstract class LogFormatter {
         let mappedRows: string[] = [];
         let mappedValue: string;
         lines.forEach(line => {
-            let lineElements: string[] = line.split(" ")
-            if (lineElements.length >= 2) { //only map rows that has two elements (ignore newlines at bottom etc)
-                let timestamp: string = lineElements.shift() || "";
-                let event: string = lineElements.join(" ");
-                mappedValue = this.getMappedValue(event, mappings, line)
-                mappedRows.push(mappedValue + " " + this.convertDateformat(timestamp.replace(" ", ""))) //format data <mapped_event> <timestamp>
-            }
+            let timestamp: string = extractTimeStamp(line);
+            let event = extractEventFromLine(line, timestamp);
+
+            mappedValue = this.getMappedValue(event, mappings, line)
+            mappedRows.push(mappedValue + " " + this.convertDateToMs(timestamp)) //format data for MONAA <mapped_event> <timestamp>
         });
         return mappedRows;
     }
@@ -41,8 +45,66 @@ export abstract class LogFormatter {
         return mappedValue
     }
 
-    public static convertDateformat(timestamp: string): string {
-        let miliseconds: number = Date.parse(timestamp)
+    public static convertDateToMs(timestamp: string): string {
+        let date: Date;
+        
+        if (timestamp === "") {
+            throw new Error("Timestamp is empty")
+        }
+
+        date = this.convertToDate(timestamp);
+
+        let miliseconds = date.getTime();
         return miliseconds.toString()
+    }
+
+    public static convertToDate(dateString: string): Date {
+        let date: Date;
+
+        if (this.dateFormat === DateFormat.ISO_8601) {
+            date = new Date(dateString);
+        }
+        else if (this.dateFormat === DateFormat.YYMMDD_HH_MM_SS) {
+            const [datePart, timePart] = dateString.split(' ');
+
+            // Extract year, month, day from the date part
+            const year = parseInt(datePart.substring(0, 2)) + 2000; // Assuming 2000 is the base year
+            const month = parseInt(datePart.substring(2, 4));
+            const day = parseInt(datePart.substring(4, 6));
+
+            // Extract hours, minutes, seconds from the time part
+            const [hours, minutes, seconds] = timePart.split('.').map(part => parseInt(part));
+
+            date = new Date(year, month - 1, day, hours, minutes, seconds);
+        }
+        else if (this.dateFormat === DateFormat.DD_MM_YYYY_HH_MM_SS) {
+            const [datePart, timePart] = dateString.split(' ');
+
+            // Extract day, month, year from the date part
+            const [day, month, year] = datePart.split('/').map(part => parseInt(part));
+
+            // Extract hours, minutes, seconds from the time part
+            const [hours, minutes, seconds] = timePart.split(':').map(part => parseInt(part));
+
+            date = new Date(year, month - 1, day, hours, minutes, seconds);
+        }
+        else if (this.dateFormat === DateFormat.YYYY_MM_DD_HH_MM_SS_MMM) {
+            const [datePart, timePart] = dateString.split(' ');
+
+            // Extract day, month, year from the date part
+            const [year, day, month] = datePart.split('-').map(part => parseInt(part));
+
+            // Extract hours, minutes, seconds and milliseconds from the time part
+            const [hours, minutes, secondsAndMilliseconds] = timePart.split(':');
+            
+            // Extract seconds and milliseconds
+            const [seconds, milliseconds] = secondsAndMilliseconds.split('.').map(part => parseInt(part));
+
+            date = new Date(year, month - 1, day, parseInt(hours), parseInt(minutes), seconds, milliseconds);
+        } else {
+            throw new Error('Unsupported date format');
+        }
+
+        return date;
     }
 }

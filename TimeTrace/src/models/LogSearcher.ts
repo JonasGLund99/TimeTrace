@@ -1,4 +1,5 @@
 import { extractTimeStamp } from "./helpers/extractTimeStamp";
+import { LogFormatter } from "./LogFormatter";
 import { MonaaZone } from "./MonaaZone";
 import { SearchInterval } from "./SearchInterval";
 
@@ -37,8 +38,7 @@ export abstract class LogSearcher {
         const timestamps: number[] = [];
 
         logFile.forEach((line: string) => {
-            const timestampISO: string = extractTimeStamp(line);
-            const eventTimeStamp = new Date(timestampISO).getTime();
+            const eventTimeStamp = parseInt(LogFormatter.convertDateToMs(extractTimeStamp(line)));
             timestamps.push(eventTimeStamp);
             averageTimegrowth = (averageTimegrowth + (eventTimeStamp - prevLineTime)) / 2;
             prevLineTime = eventTimeStamp;
@@ -65,7 +65,7 @@ export abstract class LogSearcher {
     // Binary search function to find the first index in the log to search from
     private static binarySearch(timestamps: number[], target: number, startingIndex: number, isOvershot: boolean): number {
         let left = isOvershot ? 0 : startingIndex;
-        let right = isOvershot ? startingIndex: timestamps.length - 1;
+        let right = isOvershot ? startingIndex : timestamps.length - 1;
         let resultIndex = -1;
 
         while (left <= right) {

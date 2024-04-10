@@ -46,9 +46,22 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const logTable = document.querySelector("#log-table");
         if (!logTable) return;
 
-        const firstLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
-        if (!firstLineMatched) return;
-        if (firstLineMatched) logTable.scrollTo({ top: firstLineMatched.offsetTop, behavior: 'smooth' });
+        const firstMappedLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
+        const firstUnmappedLineMatched = document.querySelector(".bg-yellow-100") as HTMLElement;
+
+        let lineToScrollTo : HTMLElement;
+        if (!firstMappedLineMatched && !firstUnmappedLineMatched) return;
+        
+        if (!firstMappedLineMatched) {
+            lineToScrollTo = firstUnmappedLineMatched;
+        }
+        else if (!firstUnmappedLineMatched) {
+            lineToScrollTo = firstMappedLineMatched;
+        }
+        else {
+            lineToScrollTo = firstMappedLineMatched.offsetTop < firstUnmappedLineMatched.offsetTop ? firstMappedLineMatched : firstUnmappedLineMatched;
+        }
+        logTable.scrollTo({ top: lineToScrollTo.offsetTop, behavior: 'smooth' });
     }, [monaaMatchIndex]);
 
     useEffect(() => {
@@ -111,7 +124,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         let filteredFileLines: FileLine[] = [];
         fileLines.forEach((fileLine, index) => {
             if (regex.test(fileLine)) {
-                console.log(`match ${fileLine}`)
                 filteredFileLines.push({ text: events[index], line: index });
             }
         });

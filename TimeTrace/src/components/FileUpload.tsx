@@ -7,6 +7,7 @@ import Trashcan from "./svgs/Trashcan";
 import FileUploadLogo from "./svgs/FileUploadLogo";
 import { Store } from 'react-notifications-component';
 import { CustomMap } from "../models/Types/EventMapping";
+import DateFormatChooser from "./DateFormatChooser";
 
 interface FileUploadProps {
     showDateFormatChooser?: boolean;
@@ -110,7 +111,6 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                     is_dismissible: true
                 })
                 //reset
-
                 setFileLines([]);
                 setEvents([]);
                 setMappings(new CustomMap());
@@ -137,8 +137,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         Drag and drop your file here to get started!
                     </div>
                     <div className="pb-4 text-base">
-                        Limit ??? GB per file <br />
-                        Supported files: .txt, .log
+                        Supported file formats: .txt, .log
                     </div>
                     <div className="absolute inset-0"
                         onDragEnter={handleDragEnter}
@@ -153,7 +152,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                 <div className="flex gap-2 mb-4">
                     <input
                         type="file"
-                        accept=".txt"
+                        accept=".txt,.log"
                         id="contained-button-file"
                         className="hidden"
                         onChange={handleFileUpload}
@@ -169,6 +168,9 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                             <span id="ping" className="absolute top-[-3px] right-[-3px] block w-3 h-3 bg-yellow-200 rounded-full animate-ping ring-1 ring-yellow-200" style={{ animationDuration: '2s', animationTimingFunction: 'ease-out' }}></span>
                         }
                     </button>
+                    {!uploadedFile && showDateFormatChooser &&
+                        <DateFormatChooser />
+                    }
                     {uploadedFile &&
                         <button onClick={handleFileRemove} data-testid="remove-button">
                             <Trashcan />

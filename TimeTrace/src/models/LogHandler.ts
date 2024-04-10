@@ -24,11 +24,11 @@ export abstract class LogHandler {
                 foundStart = -1;
                 foundEnd = -1;
             }
-            else if (MonaaOutput[i].includes("<= t <") || MonaaOutput[i].includes("< t <")) {  //FIND Start
+            else if (MonaaOutput[i].includes("<= t <") || MonaaOutput[i].includes("< t <") || MonaaOutput[i].includes("< t <=") || MonaaOutput[i].includes("<= t <=")) {  //FIND Start
 
                 foundStart = parseFloat(MonaaOutput[i].split(/\s+/).filter(part => !isNaN(parseFloat(part))).pop() || '');
             }
-            else if (MonaaOutput[i].includes("< t' <=")) { //FIND End
+            else if (MonaaOutput[i].includes("<= t' <") || MonaaOutput[i].includes("< t' <") || MonaaOutput[i].includes("< t' <=") || MonaaOutput[i].includes("<= t' <=")) { //FIND End
 
                 foundEnd = parseFloat(MonaaOutput[i].split(/\s+/).filter(part => !isNaN(parseFloat(part))).shift() || '');
             }
@@ -36,4 +36,3 @@ export abstract class LogHandler {
         return foundIntervals;
     }
 }
-
