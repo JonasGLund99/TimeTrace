@@ -61,10 +61,10 @@ export abstract class LogFormatter {
     public static convertToDate(dateString: string): Date {
         let date: Date;
 
-        if (dateFormats["ISO 8601"].test(dateString)) {
+        if (this.dateFormat === DateFormat.ISO_8601) {
             date = new Date(dateString);
         }
-        else if (dateFormats["YYMMDD HH.MM.SS"].test(dateString)) {
+        else if (this.dateFormat === DateFormat.YYMMDD_HH_MM_SS) {
             const [datePart, timePart] = dateString.split(' ');
 
             // Extract year, month, day from the date part
@@ -77,7 +77,7 @@ export abstract class LogFormatter {
 
             date = new Date(year, month - 1, day, hours, minutes, seconds);
         }
-        else if (dateFormats["DD/MM/YYYY HH:MM:SS"].test(dateString)) {
+        else if (this.dateFormat === DateFormat.DD_MM_YYYY_HH_MM_SS) {
             const [datePart, timePart] = dateString.split(' ');
 
             // Extract day, month, year from the date part
@@ -88,7 +88,7 @@ export abstract class LogFormatter {
 
             date = new Date(year, month - 1, day, hours, minutes, seconds);
         }
-        else if (dateFormats["YYYY-DD-MM HH:MM:SS.MMM"].test(dateString)) {
+        else if (this.dateFormat === DateFormat.YYYY_MM_DD_HH_MM_SS_MMM) {
             const [datePart, timePart] = dateString.split(' ');
 
             // Extract day, month, year from the date part
