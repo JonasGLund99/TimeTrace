@@ -6,10 +6,11 @@ import { fileLinesAreValid } from "../models/helpers/validation";
 import Trashcan from "./svgs/Trashcan";
 import FileUploadLogo from "./svgs/FileUploadLogo";
 import { Store } from 'react-notifications-component';
+import { CustomMap } from "../models/Types/EventMapping";
 
 interface FileUploadProps {
     showDateFormatChooser?: boolean;
-    asDragAndDrop: boolean;
+    asDragAndDrop?: boolean;
 }
 
 function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
@@ -99,7 +100,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                 setFileLines(lines);
                 const events = extractEventsFromFileLines(lines);
                 setEvents(events);
-                setMappings(new Map(events.map((event) => [event, ""])));
+                setMappings(new CustomMap(events.map((event) => [{ key: event, isRegex: false }, ""])));
             } catch (e) {
                 setError({
                     title: "Error during file upload",
@@ -112,7 +113,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
 
                 setFileLines([]);
                 setEvents([]);
-                setMappings(new Map());
+                setMappings(new CustomMap());
                 setUploadedFile(null);
                 setMatches([]);
             }
@@ -120,7 +121,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
             //reset
             setFileLines([]);
             setEvents([]);
-            setMappings(new Map());
+            setMappings(new CustomMap());
             setUploadedFile(null);
             setMatches([])
         }
@@ -145,7 +146,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         onDragOver={handleDragOver}
                         onDrop={handleDrop}>
                     </div>
-                    <FileUpload asDragAndDrop={false} />
+                    <FileUpload />
                 </div>
             }
             {!asDragAndDrop &&
