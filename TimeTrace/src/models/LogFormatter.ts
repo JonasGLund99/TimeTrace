@@ -1,5 +1,5 @@
 import { extractEventFromLine } from "./helpers/extractEventFromLine";
-import { DateFormat, dateFormats } from "./helpers/dateFormats";
+import { dateFormats } from "./helpers/dateFormats";
 import { extractTimeStamp } from "./helpers/extractTimeStamp";
 import { getFileLines } from "./helpers/getFileLines";
 import { CustomMap } from "./Types/EventMapping";
