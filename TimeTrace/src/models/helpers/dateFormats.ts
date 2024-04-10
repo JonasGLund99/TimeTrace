@@ -11,7 +11,6 @@ interface DateFormats {
     [DateFormat.DD_MM_YYYY_HH_MM_SS]: RegExp;
     [DateFormat.YYYY_MM_DD_HH_MM_SS_MMM]: RegExp;
 }
-export type DateFormatKey = { [value in DateFormat]: string };
 
 export const dateFormats : DateFormats = {
     [DateFormat.ISO_8601]: /\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{1,6}(Z|[+-]\d{2}:\d{2})\b/g,
