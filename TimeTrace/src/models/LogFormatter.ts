@@ -1,5 +1,5 @@
 import { extractEventFromLine } from "./helpers/extractEventFromLine";
-import { dateFormats } from "./helpers/dateFormats";
+import { DateFormat, dateFormats } from "./helpers/dateFormats";
 import { extractTimeStamp } from "./helpers/extractTimeStamp";
 import { getFileLines } from "./helpers/getFileLines";
 import { CustomMap } from "./Types/EventMapping";
@@ -8,6 +8,8 @@ export abstract class LogFormatter {
     constructor() {
         throw new Error(`${typeof this} is a static class`);
     }
+
+    public static dateFormat = DateFormat.ISO_8601;
 
     public static async formatLog(originalLog: File, mappings: CustomMap): Promise<File> {
         try {
