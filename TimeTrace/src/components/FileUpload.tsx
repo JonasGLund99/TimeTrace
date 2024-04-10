@@ -139,13 +139,13 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         Limit ??? GB per file <br />
                         Supported files: .txt, .log
                     </div>
-                    <FileUpload asDragAndDrop={false} />
                     <div className="absolute inset-0"
                         onDragEnter={handleDragEnter}
                         onDragLeave={handleDragLeave}
                         onDragOver={handleDragOver}
                         onDrop={handleDrop}>
                     </div>
+                    <FileUpload asDragAndDrop={false} />
                 </div>
             }
             {!asDragAndDrop &&
