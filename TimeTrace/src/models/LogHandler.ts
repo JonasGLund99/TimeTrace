@@ -40,6 +40,10 @@ export abstract class LogHandler {
             else if (line.includes("<= t' <") || line.includes("< t' <") || line.includes("< t' <=")) { //FIND End
                 foundEnd = parseFloat(line.split(/\s+/).filter(part => !isNaN(parseFloat(part))).shift() || '');
             }
+            if (!line.includes("t' - t") && numbersInLine[0] === numbersInPreviousLine[1] && numbersInLine[0] !== numbersInPreviousLine[0]) {
+                let SearchInterval: SearchInterval = { start: parseFloat(numbersInPreviousLine[0]), end: parseFloat(numbersInPreviousLine[0]) };
+                foundIntervals.push(SearchInterval);
+            }
         }
         return foundIntervals;
     }
