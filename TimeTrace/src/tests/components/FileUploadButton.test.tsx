@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import FileUploadButton from '../../components/FileUploadButton';
+import FileUploadButton from '../../components/FileUpload';
 
 // Mocking useContext hook
 // jest.mock('react', () => ({
