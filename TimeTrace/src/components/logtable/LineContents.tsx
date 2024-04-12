@@ -35,7 +35,7 @@ function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFi
             {shownLines.map((fileLine: FileLine, i: number) => {
                 return <pre key={i} className={cn(
                     lineIsHighlighted(fileLine.line)
-                        ? eventIsMapped(fileLine) ? "bg-yellow-200" : "bg-yellow-100"
+                        ? eventIsMapped(fileLine) ? "mapped-line bg-yellow-200" : "unmapped-line bg-yellow-100"
                         : "even:bg-white odd:bg-gray-100",
                     "w-full py-2 "
                 )}>{`${fileLines[fileLine.line]}`} </pre>;

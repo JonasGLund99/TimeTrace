@@ -7,7 +7,6 @@ import MappingInputs from "./MappingInputs";
 import LineContents from "./LineContents";
 import LineNumbers from "./LineNumbers";
 import Searcher from "./searcher/Searcher";
-import AdvancedSearch from "./searcher/AdvancedSearch";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -21,7 +20,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { setError } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const { currentPage, setCurrentPage } = useContext(LogTableContext);
-    const { advancedSearchMode, setAdvancedSearchMode } = useContext(LogTableContext);
+    const { advancedSearchMode } = useContext(LogTableContext);
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
     const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
@@ -46,8 +45,8 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const logTable = document.querySelector("#log-table");
         if (!logTable) return;
 
-        const firstMappedLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
-        const firstUnmappedLineMatched = document.querySelector(".bg-yellow-100") as HTMLElement;
+        const firstMappedLineMatched = document.querySelector(".mapped-line") as HTMLElement;
+        const firstUnmappedLineMatched = document.querySelector(".unmapped-line") as HTMLElement;
 
         let lineToScrollTo : HTMLElement;
         if (!firstMappedLineMatched && !firstUnmappedLineMatched) return;
@@ -90,7 +89,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         } else {
             searchStandard(query)
         }
-
     }
 
     function searchStandard(query: string) {
