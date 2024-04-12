@@ -1,5 +1,5 @@
+import { LogFormatter } from "../LogFormatter";
 import { extractTimeStamp } from "./extractTimeStamp";
-
 
 export function fileLinesAreValid(lines: string[]): string | null {
     try {
@@ -22,8 +22,11 @@ function DuplicateEventsAtSameTimestampCheck(lines: string[]): void {
         while (j < lines.length && extractTimeStamp(lines[i]) === extractTimeStamp(lines[j])) {
             let line1: string = lines[i];
             let line2: string = lines[j];
+            let lineContents = `<br /><br /><pre>Line ${i + 1}: ${line1}\nLine ${j + 1}: ${line2}</pre>`
+
             if (line1 === line2)
-                throw new Error(`Duplicate events at same timestamp.<br />Line ${i} ${line1}<br/>Line ${j} ${line1}`);
+                throw new Error(`Duplicate events at same timestamp.${lineContents}`);
+            j++;
         }
     }
 }
@@ -33,7 +36,17 @@ function FileIsInAscendingOrder(lines: string[]): void {
     for (let i = 0; i < lines.length - 1; i++) {
         let line1: string = lines[i];
         let line2: string = lines[i + 1];
-        if (new Date(extractTimeStamp(line1)) > new Date(extractTimeStamp(line2))) //if line1 > than line2 it is not sorted
-            throw new Error(`File is not in ascending order. Ordering failed at:<br />Line ${i} ${line1}<br/>Line ${i + 1} ${line1}`);
+        let date1 = new Date();
+        let date2 = new Date();
+        let lineContents = `<br /><br /><pre>Line ${i + 1}: ${line1}\nLine ${i + 2}: ${line2}</pre>`
+        try {
+            date1 = LogFormatter.convertToDate(extractTimeStamp(line1));
+            date2 = LogFormatter.convertToDate(extractTimeStamp(line2));
+        } catch (e) {
+            throw new Error(`Could not parse timestamp in line ${i + 1} or ${i + 2}.${lineContents}`);
+        }
+        
+        if (date1 >= date2) //if line1 >= than line2 it is not sorted
+            throw new Error(`File must be in strictly ascending order. Ordering failed at:${lineContents}`);
     }
 }

@@ -22,8 +22,8 @@ function MappingsPage() {
         <div id="mappings-page" className="flex flex-row h-full gap-5" >
             <LogTableProvider>
                 <div className="w-[40%]">
-                    <FileUpload asDragAndDrop={false} />
-                    <div className="pt-2 h-[94%]">
+                    <FileUpload asDragAndDrop={false} showDateFormatChooser={true} />
+                    <div className="h-[95%]">
                         <MappedItemsList />
                     </div>
                 </div>

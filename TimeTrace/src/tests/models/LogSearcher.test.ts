@@ -23,6 +23,7 @@ describe('LogSearcher', () => {
                 "2024-02-26T08:22:41.764645Z delete",
                 "2024-02-26T08:22:42.169645Z logout"
             ];
+
             // https://codechi.com/dev-tools/date-to-millisecond-calculators/
             const searchIntervals : SearchInterval[] = [
                 {start: 1708935754000, end: 1708935756677},

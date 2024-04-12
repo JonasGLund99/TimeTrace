@@ -1,8 +1,12 @@
 import { LogHandler } from "../../models/LogHandler";
 import { SearchInterval } from "../../models/SearchInterval";
 import { MonaaZone } from "../../models/MonaaZone";
+import { DateFormat } from "../../models/helpers/dateFormats";
+import { LogFormatter } from "../../models/LogFormatter";
 
 describe('LogHandler', () => {
+    LogFormatter.dateFormat = DateFormat.ISO_8601;
+
     describe('mapMonaaOutputToSearchIntervals', () => {
         test('should return an array of MonaaZones', () => {
             // Arrange
@@ -14,6 +18,7 @@ describe('LogHandler', () => {
                 "2024-02-26T08:22:36.612645Z login",
                 "2024-02-26T08:22:36.677645Z logout"
             ];
+
             // Converted to Monaa format:
             // A 1708935754000
             // A 1708935754504
@@ -59,6 +64,7 @@ describe('LogHandler', () => {
                 "1.200000        < t' - t <=   2.000000 ",
                 "==========================="
             ];
+            
             const expectedSearchIntervals : SearchInterval[] = [
                 {start: 0.5, end: 0.8},
                 {start: 2.0, end: 3.2}

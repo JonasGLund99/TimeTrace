@@ -18,9 +18,6 @@ export abstract class LogHandler {
 
         for (let i = 0; i < MonaaOutput.length; i++) {
             const line = MonaaOutput[i]; 
-            // const numbersInLine = line.split(/\s+/).filter(part => !isNaN(parseFloat(part)));
-            // const previousLine = MonaaOutput[i - 1] || undefined;
-            // const numbersInPreviousLine: string[] = previousLine? previousLine.split(/\s+/).filter(part => !isNaN(parseFloat(part))) : [];
             if (line.includes("=======") && foundStart !== -1 && foundEnd !== -1) { //RESET interval
                 let SearchInterval: SearchInterval = { start: foundStart, end: foundEnd };
                 foundIntervals.push(SearchInterval);
@@ -28,20 +25,15 @@ export abstract class LogHandler {
                 foundStart = -1;
                 foundEnd = -1;
             }
-            else if ((line.includes("<= t <") || line.includes("< t <" ) || line.includes("< t <=") || line.includes("<= t <="))) {  //FIND Start
-                foundStart = parseFloat(line.split(/\s+/).filter(part => !isNaN(parseFloat(part))).pop() || '');
+            else if (MonaaOutput[i].includes("<= t <") || MonaaOutput[i].includes("< t <") || MonaaOutput[i].includes("< t <=") || MonaaOutput[i].includes("<= t <=")) {  //FIND Start
+
+                foundStart = parseFloat(MonaaOutput[i].split(/\s+/).filter(part => !isNaN(parseFloat(part))).pop() || '');
             }
-            else if (line.includes("<= t' <=")) {
-                foundEnd = parseFloat(line.split(/\s+/).filter(part => !isNaN(parseFloat(part))).pop() || '');
-            }
-            // else if (!line.includes("t' - t") && numbersInLine[1] === numbersInPreviousLine[1]) {
-            //     foundEnd = parseFloat(numbersInLine[1]);
-            // }
-            else if (line.includes("<= t' <") || line.includes("< t' <") || line.includes("< t' <=")) { //FIND End
-                foundEnd = parseFloat(line.split(/\s+/).filter(part => !isNaN(parseFloat(part))).shift() || '');
+            else if (MonaaOutput[i].includes("<= t' <") || MonaaOutput[i].includes("< t' <") || MonaaOutput[i].includes("< t' <=") || MonaaOutput[i].includes("<= t' <=")) { //FIND End
+
+                foundEnd = parseFloat(MonaaOutput[i].split(/\s+/).filter(part => !isNaN(parseFloat(part))).shift() || '');
             }
         }
         return foundIntervals;
     }
 }
-

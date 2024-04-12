@@ -1,0 +1,24 @@
+Input: Timestamps converted to ms since 1970: 
+       timeStamps,
+       Zones with constraints:
+       searchIntervals.
+
+Output: Intersecting events for each zone.
+
+mapZonesToLogEvents(timeStamps, searchIntervals)
+  monaaZoneMatches = Ø
+  duration = estimateDurationBetweenEvents(logFile)
+  for i = 0 to searchIntervals
+      intersectingEvents = Ø
+      start = searchIntervals[i].start
+      end = searchIntervals[i].end
+      startingIndex = findStartingIndex(timeStamps, 
+                      duration, searchIntervals[i])
+
+      for j = startingIndex to timeStamps
+          if timeStamps[j] >= start and timeStamps[j] <= end
+              intersectingEvents.push(j)
+          else if timeStamps[j] > end
+              break
+      monaaZoneMatches.push(intersectingEvents)
+  return monaaZoneMatches

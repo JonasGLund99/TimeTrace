@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { MonaaZone } from "../models/MonaaZone";
+import { DateFormat } from "../models/helpers/dateFormats";
 import { CustomMap } from "../models/Types/EventMapping";
 
 export type ErrorObject = {
@@ -26,6 +27,8 @@ export type AppdataContextInterface = {
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     tre: string;
+    dateFormat: string,
+    setDateFormat: React.Dispatch<React.SetStateAction<string>>;
     setTre: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -46,6 +49,8 @@ const defaultState = {
     setLoading: (loading: boolean) => { },
     tre: "",
     setTre: (tre: string) => { },
+    dateFormat: DateFormat.ISO_8601,
+    setDateFormat: (dateFormat: string) => { },
 } as AppdataContextInterface;
 
 export const AppdataContext = createContext<AppdataContextInterface>(defaultState);
@@ -56,16 +61,17 @@ type AppDataProvideProps = {
 
 export default function AppdataProvider({ children }: AppDataProvideProps) {
     const [events, setEvents] = useState<string[]>([]);
-    const [mappings, setMappings] = useState<CustomMap>(new CustomMap);
+    const [mappings, setMappings] = useState<CustomMap>(new CustomMap());
     const [fileLines, setFileLines] = useState<string[]>([]);
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [errorObj, setError] = useState<ErrorObject | null>(null);
     const [matches, setMatches] = useState<MonaaZone[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [tre, setTre] = useState<string>("");
+    const [dateFormat, setDateFormat] = useState<string>(DateFormat.ISO_8601);
 
     return (
-        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading, tre, setTre }}>
+        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading, tre, setTre, dateFormat, setDateFormat }}>
             {children}
         </AppdataContext.Provider>
     );

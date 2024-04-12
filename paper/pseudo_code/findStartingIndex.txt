@@ -1,0 +1,5 @@
+findStartingIndex(timeStamps, duration, searchInterval)
+  start = searchInterval.start
+  difference = start - timeStamps[0]
+  estimatedIndex = floor(difference / duration)
+  return binarySearch(timeStamps, estimatedIndex, start)
