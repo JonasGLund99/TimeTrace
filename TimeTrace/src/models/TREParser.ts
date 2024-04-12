@@ -93,7 +93,7 @@ export abstract class TREParser {
     }
 
     public static validateSpecialChars(tre: string): void {
-        const expressionWithoutSymbol = /(?<![a-zA-Z)])([-+*/&|]+)/g;
+        const expressionWithoutSymbol = /(?<![a-zA-Z)*+])([+*&|]+)/g;
         const invalidExpression = tre.match(expressionWithoutSymbol);
         if (invalidExpression && invalidExpression.length > 0) {
             throw new Error(`Expression ${invalidExpression[0]} must be preceded by a mapped symbol.`);
