@@ -30,7 +30,7 @@ Jeg har lagt min fil følgende sted: `"C:\Users\jonas\.ssh\private-key-jonas.pem
 (tunneling af port 5000 på serveren til localhost:5000)
 
 `ssh -i "C:\Users\jonas\.ssh\private-key-jonas.pem" ubuntu@130.225.37.239 -L 5000:localhost:5000`
-
+`ssh -i "C:\Users\atoft\.ssh\anders.pem" ubuntu@130.225.37.239 -L 5000:localhost:5000`
 Eller denne:
 `ssh -i "path/to/filename.pem" ubuntu@130.225.37.239` 
 (port 22 er standard for SSH)

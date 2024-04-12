@@ -6,9 +6,11 @@ export abstract class TREBuilder {
     public static buildTRE(rawTRE: string, mappings: CustomMap): string {
         const trimmedTRE = rawTRE.replaceAll(" ", "").trim();
         TREParser.parseTRE(trimmedTRE, mappings);
-        const converted_tre = this.convertTimeConstraint(trimmedTRE);
+        let convertedTre: string = this.convertTimeConstraint(trimmedTRE);
+        convertedTre = this.convertz(convertedTre, mappings)
+
         
-        return "("+ converted_tre + ")$";
+        return "("+ convertedTre + ")$";
     }
 
     public static convertTimeConstraint(tre: string) : string{
@@ -38,5 +40,17 @@ export abstract class TREBuilder {
             }
             return Math.floor(milliseconds).toString();
         });
+    }
+
+    public static convertz(tre: string, mappings: CustomMap): string {
+        let mapValues: string[] = Array.from(new Set(mappings.values())).filter(e => e!== "")
+        let convertion: string = "((";
+        mapValues.forEach(map => {
+            convertion += `${map}*`
+        });
+        convertion += "Z*)*)"
+        let newTre: string = tre.replaceAll("z", convertion)
+        console.log(newTre)
+        return newTre
     }
 }
