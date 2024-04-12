@@ -32,7 +32,6 @@ export abstract class LogSearcher {
             }
         }
         console.timeEnd("findZones");
-        console.log(MonaaZoneMatches);
         return MonaaZoneMatches;
     }
 
