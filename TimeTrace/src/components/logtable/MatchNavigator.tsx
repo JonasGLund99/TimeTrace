@@ -6,30 +6,41 @@ interface MatchNavigatorProps {
     linesPerPage: number;
 }
 
-function MatchNavigator({linesPerPage}: MatchNavigatorProps) {
+function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
     const { currentPage, setCurrentPage } = useContext(LogTableContext);
     const { setShownLines } = useContext(LogTableContext);
     const { filteredFileLines } = useContext(LogTableContext);
     const { matches } = useContext(AppdataContext);
-    
 
     function handlePreviousMatchClick() {
         const prevIndex = monaaMatchIndex === 0 ? 0 : monaaMatchIndex - 1;
+        const startOfMatchIndex: number = matches[prevIndex].lineMatches[0];
+        const endOfMatchIndex: number = matches[prevIndex].lineMatches[matches[prevIndex].lineMatches.length - 1];
+
+        if (startOfMatchIndex < (currentPage - 1) * linesPerPage) {
+            const endOfRender = Math.ceil(endOfMatchIndex / linesPerPage);
+            const startOfRender = Math.floor(startOfMatchIndex / linesPerPage); 
+            setShownLines([...(filteredFileLines.slice(linesPerPage * startOfRender, linesPerPage * endOfRender))]);
+            setCurrentPage(endOfRender);
+        }
+
         setMonaaMatchIndex(prevIndex)
     }
 
     function handeNextMatchClick() {
         const nextIndex: number = monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1;
+        const startOfMatchIndex: number = matches[nextIndex].lineMatches[0];
         const endOfMatchIndex: number = matches[nextIndex].lineMatches[matches[nextIndex].lineMatches.length - 1];
 
         if (endOfMatchIndex > currentPage * linesPerPage) {
             // If the end of the match is outside the currently shown lines
-            const necessaryPages: number = Math.ceil(endOfMatchIndex / linesPerPage);
-            
-            // Render necessary pages
-            setShownLines(shownLines => [...shownLines, ...(filteredFileLines.slice(linesPerPage * currentPage, linesPerPage * necessaryPages))]);
-            setCurrentPage(necessaryPages);
+            const endOfRender = Math.ceil(endOfMatchIndex / linesPerPage);
+            const startOfRender = Math.floor(startOfMatchIndex / linesPerPage); 
+
+            // Only render necessary pages
+            setShownLines([...(filteredFileLines.slice(linesPerPage * startOfRender, linesPerPage * endOfRender))]);
+            setCurrentPage(endOfRender);
         }
         setMonaaMatchIndex(nextIndex);
     }

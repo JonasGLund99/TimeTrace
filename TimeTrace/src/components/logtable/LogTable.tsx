@@ -23,7 +23,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
     const { filteredFileLines, setFilteredFileLines } = useContext(LogTableContext);
     const { shownLines, setShownLines } = useContext(LogTableContext);
-    const { linesPerPage } = useContext(LogTableContext)
+    const { linesPerPage } = useContext(LogTableContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
     useEffect(() => {
@@ -60,7 +60,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         else {
             lineToScrollTo = firstMappedLineMatched.offsetTop < firstUnmappedLineMatched.offsetTop ? firstMappedLineMatched : firstUnmappedLineMatched;
         }
-        logTable.scrollTo({ top: lineToScrollTo.offsetTop, behavior: 'smooth' });
+        logTable.scrollTo({ top: lineToScrollTo.offsetTop });
     }, [monaaMatchIndex]);
 
     useEffect(() => {
@@ -137,7 +137,11 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const fullHeight = logTable.scrollHeight;
         if (scrollY + windowHeight >= fullHeight - 100) {
             setCurrentPage(currentPage + 1);
-        }
+        } 
+        // else if (scrollY <= 100) {
+        //     if (currentPage === 0) return;
+        //     setCurrentPage(currentPage - 1);
+        // }
     };
 
     function lineIsHighlighted(line: number): boolean {
