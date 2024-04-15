@@ -1,21 +1,32 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState, Dispatch, SetStateAction } from "react";
+
+export enum ShowLinesMode {
+    ALL = "all",
+    MAPPED = "mapped",
+    UNMAPPED = "unmapped",
+}
 
 export type LogTableContextInterface = {
     monaaMatchIndex: number;
-    setMonaaMatchIndex: React.Dispatch<React.SetStateAction<number>>;
+    setMonaaMatchIndex: Dispatch<SetStateAction<number>>;
     currentPage: number;
-    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+    setCurrentPage: Dispatch<SetStateAction<number>>;
     advancedSearchMode: boolean;
-    setAdvancedSearchMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setAdvancedSearchMode: Dispatch<SetStateAction<boolean>>;
+    shownLinesMode: ShowLinesMode;
+    setShownLinesMode: Dispatch<SetStateAction<ShowLinesMode>>;
 }
-const defaultState = {
+
+const defaultState: LogTableContextInterface = {
     monaaMatchIndex: -1,
-    setMonaaMatchIndex: (monaaMatchIndex: number) => { },
+    setMonaaMatchIndex: () => { },
     currentPage: 0,
-    setCurrentPage: (currentPage: number) => { },
+    setCurrentPage: () => { }, 
     advancedSearchMode: false,
-    setAdvancedSearchMode: (advancedMode: boolean) => { }
-} as LogTableContextInterface;
+    setAdvancedSearchMode: () => { }, 
+    shownLinesMode: ShowLinesMode.ALL,
+    setShownLinesMode: () => { } 
+};
 
 export const LogTableContext = createContext<LogTableContextInterface>(defaultState);
 
@@ -25,12 +36,13 @@ type LogTableProviderProps = {
 
 export default function LogTableProvider({ children }: LogTableProviderProps) {
     const [monaaMatchIndex, setMonaaMatchIndex] = useState<number>(-1);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [advancedSearchMode, setAdvancedSearchMode] = useState(false);
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [advancedSearchMode, setAdvancedSearchMode] = useState<boolean>(false);
+    const [shownLinesMode, setShownLinesMode] = useState<ShowLinesMode>(ShowLinesMode.ALL);
 
     return (
-        < LogTableContext.Provider value={{ monaaMatchIndex, setMonaaMatchIndex, currentPage, setCurrentPage, advancedSearchMode, setAdvancedSearchMode }}>
+        <LogTableContext.Provider value={{ monaaMatchIndex, setMonaaMatchIndex, currentPage, setCurrentPage, advancedSearchMode, setAdvancedSearchMode, shownLinesMode, setShownLinesMode }}>
             {children}
-        </ LogTableContext.Provider>
+        </LogTableContext.Provider>
     );
 }
