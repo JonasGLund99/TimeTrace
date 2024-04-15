@@ -11,6 +11,16 @@ export type ErrorObject = {
     is_dismissible: boolean
 }
 
+export type ModalObject = {
+    text: string,
+    title: string,
+    submit: (() => void) | null,
+    closeCallback?: (() => void),
+    submitTitle: string | null,
+    is_dismissible: boolean,
+    children?: ReactNode,
+}
+
 export type AppdataContextInterface = {
     events: string[];
     setEvents: React.Dispatch<React.SetStateAction<string[]>>;
@@ -22,6 +32,8 @@ export type AppdataContextInterface = {
     setUploadedFile: React.Dispatch<React.SetStateAction<File | null>>;
     errorObj: ErrorObject | null;
     setError: React.Dispatch<React.SetStateAction<ErrorObject | null>>;
+    modalObj: ModalObject | null;
+    setModal: React.Dispatch<React.SetStateAction<ModalObject | null>>;
     matches: MonaaZone[];
     setMatches: React.Dispatch<React.SetStateAction<MonaaZone[]>>;
     loading: boolean;
@@ -43,6 +55,8 @@ const defaultState = {
     setUploadedFile: (uploadedFile: File | null) => { },
     errorObj: null,
     setError: (value: ErrorObject | null) => { },
+    modalObj: null,
+    setModal: (value: ModalObject | null) => { },
     matches: [],
     setMatches: (value: MonaaZone[]) => { },
     loading: false,
@@ -69,9 +83,10 @@ export default function AppdataProvider({ children }: AppDataProvideProps) {
     const [loading, setLoading] = useState<boolean>(false);
     const [tre, setTre] = useState<string>("");
     const [dateFormat, setDateFormat] = useState<string>(DateFormat.ISO_8601);
+    const [modalObj, setModal] = useState<ModalObject | null>(null);
 
     return (
-        <AppdataContext.Provider value={{ events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading, tre, setTre, dateFormat, setDateFormat }}>
+        <AppdataContext.Provider value={{ modalObj, setModal, events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading, tre, setTre, dateFormat, setDateFormat }}>
             {children}
         </AppdataContext.Provider>
     );

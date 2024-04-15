@@ -5,6 +5,8 @@ import { LogFormatter } from '../models/LogFormatter';
 import { getFileLines } from "../models/helpers/getFileLines";
 import { LogTableContext } from '../context/LogTableContext';
 import { Store } from 'react-notifications-component';
+import Button from './button/Button';
+import { ButtonType } from './button/IButtonProps';
 
 export default function SearchForm() {
     const { tre, setTre } = useContext(AppdataContext);
@@ -75,9 +77,7 @@ export default function SearchForm() {
                     onChange={(e) => setTre(e.target.value)}
                     required
                 />
-                <button className="text-white absolute end-2.5 bottom-2.5 bg-gray-800 hover:bg-gray-700  font-medium rounded-lg text-sm px-4 py-2 " type="submit">
-                    Search
-                </button>
+                <Button style={{style: 'absolute end-2.5 bottom-2.5 px-4 py-2'}} text='Search' type='submit' ButtonType={ButtonType.Standard}></Button>
             </div>
         </form>
     );

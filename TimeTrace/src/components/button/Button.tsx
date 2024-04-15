@@ -1,0 +1,24 @@
+import { ButtonType, IButtonProps } from "./IButtonProps";
+
+interface ButtonTypeStyles {
+    [ButtonType.Modal]: string;
+    [ButtonType.Standard]: string;
+    [ButtonType.none]: string;
+}
+
+const buttonTypeStyles: ButtonTypeStyles = {
+    [ButtonType.none]: '',
+    [ButtonType.Standard]: 'text-white bg-gray-800 hover:bg-gray-700 font-medium rounded-lg text-sm',
+    [ButtonType.Modal]: 'text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800'
+}
+
+function Button({ text, onClick, type, style, ButtonType }: IButtonProps) {
+    return (
+        <button onClick={onClick} className={`${buttonTypeStyles[ButtonType] + " "+ style?.style}`} type={type}>
+            {text}
+        </button>
+    );
+}
+
+
+export default Button;
