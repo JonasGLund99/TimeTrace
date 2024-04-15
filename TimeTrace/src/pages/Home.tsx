@@ -22,7 +22,7 @@ function Home() {
 
     //TODO ref tags to different section and add pictures with the updated information.
     return (
-        <div className="flex flex-row justify-center h-full mt-10 overflow-auto">
+        <div className="flex flex-row justify-center h-full mt-20 overflow-auto">
             <button className="absolute justify-end p-2 text-gray-300 rounded-xl top-5 right-5 bg-slate-800" onClick={handleCollapseAll}>
                 {collapseAll ? (
                     <CloseAllIcon />

@@ -19,7 +19,7 @@ function Collapsible({ label, children, isOpen }: Collapsibleprop) {
     }, [isOpen]);
 
     return (
-        <div className="flex flex-col w-full my-2">
+        <div className="flex flex-col w-full my-4">
             <button className={`flex justify-between p-4 text-3xl font-semibold text-left text-gray-300 bg-gray-800  ${open ? 'rounded-t-lg' : 'rounded-lg'}`} onClick={toggle}>
                 {label}
                 {open ? (
