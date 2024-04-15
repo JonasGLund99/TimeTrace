@@ -44,11 +44,11 @@ export abstract class TREBuilder {
 
     public static convertz(tre: string, mappings: CustomMap): string {
         let mapValues: string[] = Array.from(new Set(mappings.values())).filter(e => e!== "")
-        let convertion: string = "((";
+        let convertion: string = "(";
         mapValues.forEach(map => {
-            convertion += `${map}*`
+            convertion += `${map}|`
         });
-        convertion += "Z*)*)"
+        convertion += "Z)*"
         let newTre: string = tre.replaceAll("z", convertion)
         console.log(newTre)
         return newTre
