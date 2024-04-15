@@ -40,6 +40,11 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
         setMappings(newMappings)
     }
 
+    function listenForEnter(keyPress: React.KeyboardEvent<HTMLInputElement>) {
+        if(keyPress.key === "Enter")
+            searchLog(searchQuery)
+    }
+
     return (
         <div>
             <div className="flex">
@@ -47,10 +52,11 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                     <input
                         id="regex-input"
                         type="text"
-                        className="w-full pl-10 pr-2 border-2 border-gray-300 rounded-lg"
+                        className="w-full pl-12 pr-2 border-2 border-gray-300 rounded-lg"
                         placeholder="Search using regex... e.g. gr(a|e)y"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => listenForEnter(e)}
                     ></input>
                     <Button
                         buttonType={ButtonType.none}

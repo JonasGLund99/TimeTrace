@@ -17,7 +17,8 @@ export abstract class LogHandler {
         let foundIntervals: SearchInterval[] = [];
 
         for (let i = 0; i < MonaaOutput.length; i++) {
-            if (MonaaOutput[i].includes("=======") && foundStart !== -1 && foundEnd !== -1) { //RESET interval
+            const line = MonaaOutput[i]; 
+            if (line.includes("=======") && foundStart !== -1 && foundEnd !== -1) { //RESET interval
                 let SearchInterval: SearchInterval = { start: foundStart, end: foundEnd };
                 foundIntervals.push(SearchInterval);
 

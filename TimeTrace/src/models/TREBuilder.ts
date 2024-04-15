@@ -8,7 +8,7 @@ export abstract class TREBuilder {
         TREParser.parseTRE(trimmedTRE, mappings);
         const converted_tre = this.convertTimeConstraint(trimmedTRE);
         
-        return converted_tre + "$";
+        return "("+ converted_tre + ")$";
     }
 
     public static convertTimeConstraint(tre: string) : string{

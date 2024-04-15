@@ -26,7 +26,10 @@ export abstract class LogSearcher {
                     break;
                 }
             }
-            MonaaZoneMatches.push(foundmatch);
+
+            if(foundmatch.lineMatches.length > 0) {
+                MonaaZoneMatches.push(foundmatch);
+            }
         }
         console.timeEnd("findZones");
         return MonaaZoneMatches;
