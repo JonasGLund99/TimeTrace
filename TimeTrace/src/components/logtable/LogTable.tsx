@@ -7,6 +7,7 @@ import MappingInputs from "./MappingInputs";
 import LineContents from "./LineContents";
 import LineNumbers from "./LineNumbers";
 import Searcher from "./searcher/Searcher";
+import { filterAllMappedUnmappedLines } from "../../models/helpers/filterLinesBasedOnShowMode";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -25,6 +26,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
     const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
+    const { shownLinesMode, setShownLinesMode } = useContext(LogTableContext);
 
     useEffect(() => {
         setFilteredFileLines(mapEventsToFileLine(events));
@@ -78,9 +80,13 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         };
     }, [currentPage]);
 
+    useEffect(() => {
+        setFilteredFileLines(filterAllMappedUnmappedLines(mapEventsToFileLine(events), shownLinesMode, mappings))
+    }, [shownLinesMode])
+
     function searchLog(query: string) {
         if (query === "") {
-            setFilteredFileLines(mapEventsToFileLine(events));
+            setFilteredFileLines(filterAllMappedUnmappedLines(mapEventsToFileLine(events), shownLinesMode, mappings));
             return;
         };
 
@@ -101,7 +107,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             filteredFileLines.push({ text: events[index], line: index });
             return true;
         });
-
+        filteredFileLines = filterAllMappedUnmappedLines(filteredFileLines, shownLinesMode, mappings)
         setFilteredFileLines(filteredFileLines);
     }
 
@@ -126,7 +132,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 filteredFileLines.push({ text: events[index], line: index });
             }
         });
-
+        filteredFileLines = filterAllMappedUnmappedLines(filteredFileLines, shownLinesMode, mappings)
         setFilteredFileLines(filteredFileLines);
     }
 
