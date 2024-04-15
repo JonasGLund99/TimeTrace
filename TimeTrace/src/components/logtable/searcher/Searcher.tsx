@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { LogTableContext } from "../../../context/LogTableContext";
 import AdvancedSearch from "./AdvancedSearch";
 import StandardSearch from "./StandardSearch";
-import ShowLineToggle from "../ToggleShowLines";
+import ShowLineToggle from "./ToggleShowLines";
 
 interface SearcherProps {
     searchQuery: string;
