@@ -76,7 +76,7 @@ function LogPage() {
             <LogTableProvider>
                 <div className="h-[15%] flex flex-col gap-2">
                     <div id="Predefined queries" className="flex items-center self-center">
-                        <Button style={{style: 'px-4 py-2'}} ButtonType={ButtonType.Standard} text="Between" onClick={() => createModalObject(PredefinedTre.Between)}/>
+                        <Button style={{style: 'px-4 py-2'}} buttonType={ButtonType.Standard} onClick={() => createModalObject(PredefinedTre.Between)}>Between</Button>
                     </div>
                     <SearchForm />
                 </div>

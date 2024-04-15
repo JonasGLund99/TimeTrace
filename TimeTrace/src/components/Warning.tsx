@@ -1,5 +1,7 @@
 import { AppdataContext } from "../context/AppContext";
 import { useContext } from "react";
+import Button from "./button/Button";
+import { ButtonType } from "./button/IButtonProps";
 
 export default function Warning() {
     const { errorObj, setError } = useContext(AppdataContext);
@@ -24,14 +26,10 @@ export default function Warning() {
                 <div className="mt-2 mb-4 overflow-y-auto text-sm max-h-60" dangerouslySetInnerHTML={{ __html: errorObj.errorString }}></div>
                 <div className="flex">
                     {errorObj.callback !== null &&
-                        <button type="button" onClick={errorObj.callback} className="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800">
-                            {errorObj.callbackTitle}
-                        </button>
+                        <Button type="button" onClick={errorObj.callback} style={{style: 'px-3 py-1.5 me-2 text-center inline-flex items-center'}} buttonType={ButtonType.Modal}>{errorObj.callbackTitle}</Button>
                     }
                     {errorObj.is_dismissible &&
-                        <button type="button" onClick={closeWarning} className="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800" data-dismiss-target="#alert-additional-content-4" aria-label="Close">
-                            Dismiss
-                        </button>
+                        <Button type="button" onClick={closeWarning} style={{style: 'px-3 py-1.5 me-2 text-center inline-flex items-center'}} buttonType={ButtonType.Modal}>Dismiss</Button>
                     }
                 </div>
             </div>

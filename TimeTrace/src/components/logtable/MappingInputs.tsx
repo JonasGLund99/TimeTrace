@@ -4,6 +4,8 @@ import { FileLine } from '../../models/Types/FileLine';
 import { cn } from "../../models/helpers/cn";
 import Trashcan from "../svgs/Trashcan";
 import { CustomMap } from "../../models/Types/EventMapping";
+import Button from "../button/Button";
+import { ButtonType } from "../button/IButtonProps";
 
 interface MappingInputsProps {
     lineIsHighlighted: (line: number) => boolean;
@@ -56,9 +58,9 @@ function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, 
                         }}
                     />
                     {mappingsAreEditable &&
-                        <button onClick={() => {removeMapping(fileLine.line)}}>
+                        <Button buttonType={ButtonType.none} onClick={() => {removeMapping(fileLine.line)}}>
                             <Trashcan />
-                        </button>
+                        </Button>
                     }
                 </div>
             ))}

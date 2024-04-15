@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { AppdataContext } from "../context/AppContext";
 import Trashcan from "./svgs/Trashcan";
 import { CustomMap } from "../models/Types/EventMapping";
+import Button from "./button/Button";
+import { ButtonType } from "./button/IButtonProps";
 
 function MappedItemsList() {
     const { mappings, setMappings } = useContext(AppdataContext);
@@ -26,9 +28,9 @@ function MappedItemsList() {
                         <p className="col-span-2">{map}</p>
                         <p className="col-span-9 truncate">{event}</p>
                         <div className="flex justify-center col-span-1">
-                            <button onClick={() => {removeMapping(event)}}>
+                            <Button buttonType={ButtonType.none} onClick={() => {removeMapping(event)}}>
                                 <Trashcan />
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 ))}

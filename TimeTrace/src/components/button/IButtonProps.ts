@@ -1,9 +1,11 @@
+import { ReactNode } from "react";
+
 export interface IButtonProps {
-    text: string;
     onClick?: () => void;
     type?: "submit" | "button" | "reset" | undefined;
     style?: {style: string};
-    ButtonType: ButtonType;
+    buttonType: ButtonType;
+    children?: ReactNode;
 }
 
 export enum ButtonType {
