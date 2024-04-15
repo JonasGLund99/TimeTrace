@@ -18,13 +18,13 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { fileLines } = useContext(AppdataContext);
     const { matches } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
-    const [searchQuery, setSearchQuery] = useState<string>("");
     const { currentPage, setCurrentPage } = useContext(LogTableContext);
     const { advancedSearchMode } = useContext(LogTableContext);
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
-    const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
-    const linesPerPage = 100;
-    const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
+    const { filteredFileLines, setFilteredFileLines } = useContext(LogTableContext);
+    const { shownLines, setShownLines } = useContext(LogTableContext);
+    const { linesPerPage } = useContext(LogTableContext)
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
     useEffect(() => {
         setFilteredFileLines(mapEventsToFileLine(events));
@@ -134,8 +134,8 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         if (!logTable) return;
         const scrollY = logTable.scrollTop;
         const windowHeight = logTable.clientHeight;
-        const documentHeight = logTable.scrollHeight;
-        if (scrollY + windowHeight >= documentHeight - 100) {
+        const fullHeight = logTable.scrollHeight;
+        if (scrollY + windowHeight >= fullHeight - 100) {
             setCurrentPage(currentPage + 1);
         }
     };
