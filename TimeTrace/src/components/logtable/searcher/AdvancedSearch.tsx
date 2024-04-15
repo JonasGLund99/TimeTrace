@@ -59,7 +59,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                         onKeyDown={(e) => listenForEnter(e)}
                     ></input>
                     <Button
-                        buttonType={ButtonType.none}
+                        buttonType={ButtonType.None}
                         style={{ style: "absolute top-0 left-0 h-full flex items-center justify-center h-full px-2 rounded-l-lg bg-gray-800 hover:bg-gray-700" }}
                         onClick={() => searchLog(searchQuery)}
                     >

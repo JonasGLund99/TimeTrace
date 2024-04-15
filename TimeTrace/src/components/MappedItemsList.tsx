@@ -28,7 +28,7 @@ function MappedItemsList() {
                         <p className="col-span-2">{map}</p>
                         <p className="col-span-9 truncate">{event}</p>
                         <div className="flex justify-center col-span-1">
-                            <Button buttonType={ButtonType.none} onClick={() => {removeMapping(event)}}>
+                            <Button buttonType={ButtonType.None} onClick={() => {removeMapping(event)}}>
                                 <Trashcan />
                             </Button>
                         </div>

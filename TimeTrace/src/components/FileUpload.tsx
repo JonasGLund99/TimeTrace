@@ -174,7 +174,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         <DateFormatChooser />
                     }
                     {uploadedFile &&
-                        <Button buttonType={ButtonType.none} onClick={handleFileRemove} data-testid="remove-button">
+                        <Button buttonType={ButtonType.None} onClick={handleFileRemove} data-testid="remove-button">
                             <Trashcan />
                         </Button>
                     }

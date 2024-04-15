@@ -27,10 +27,10 @@ function Searcher({searchQuery, setSearchQuery, searchLog, mappingsAreEditable}:
                     <div className="relative w-full h-10 p-1 mb-2 bg-gray-200 border rounded-md">
                         <div className="relative flex items-center w-full h-full">
                             <div  className="flex justify-center w-full text-gray-400 cursor-pointer">
-                                <Button buttonType={ButtonType.none} style={{style: 'w-full'}} onClick={handleSearchModeChange}>Standard Search Mode</Button>
+                                <Button buttonType={ButtonType.None} style={{style: 'w-full'}} onClick={handleSearchModeChange}>Standard Search Mode</Button>
                             </div>
                             <div className="flex justify-center w-full text-gray-400 cursor-pointer">
-                                <Button buttonType={ButtonType.none} style={{style: 'w-full'}} onClick={handleSearchModeChange}>Advanced Search Mode</Button>
+                                <Button buttonType={ButtonType.None} style={{style: 'w-full'}} onClick={handleSearchModeChange}>Advanced Search Mode</Button>
                             </div>
                         </div>
                         <span className={`bg-white shadow text-sm flex items-center justify-center w-1/2 rounded h-[1.88rem] transition-all duration-500 ease-in-out top-[4px] absolute ${!advancedSearchMode ? 'left-1 font-semibold' : 'left-1/2 -ml-1 font-semibold'}`}

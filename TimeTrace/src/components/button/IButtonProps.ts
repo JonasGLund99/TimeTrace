@@ -9,7 +9,8 @@ export interface IButtonProps {
 }
 
 export enum ButtonType {
-    none, 
+    None, 
     Standard,
-    Modal
+    Modal,
+    Warning,
 }
