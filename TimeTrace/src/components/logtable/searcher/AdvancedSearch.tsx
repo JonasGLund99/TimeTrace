@@ -4,7 +4,7 @@ import { AppdataContext } from "../../../context/AppContext";
 import { CustomMap } from "../../../models/Types/EventMapping";
 import Button from "../../button/Button";
 import { ButtonStyle } from "../../button/IButtonProps";
-import { Tooltip } from '@material-tailwind/react';
+import Tooltip from "../../tooltip/ToolTip";
 interface SearcherProps {
     searchQuery: string;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -50,15 +50,17 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
             <div>
                 <div className="flex">
                     <div className="relative w-full">
-                        <input
-                            id="regex-input"
-                            type="text"
-                            className="w-full pl-12 pr-2 border-2 border-gray-300 rounded-lg"
-                            placeholder="Search using regex... e.g. gr(a|e)y"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            onKeyDown={(e) => listenForEnter(e)}
-                            ></input>
+                        <Tooltip tooltip="Search in your log using regex or plain text.">
+                            <input
+                                id="regex-input"
+                                type="text"
+                                className="w-full pl-12 pr-2 border-2 border-gray-300 rounded-lg"
+                                placeholder="Search using regex... e.g. gr(a|e)y"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onKeyDown={(e) => listenForEnter(e)}
+                                ></input>
+                        </Tooltip>
                         <Button
                             buttonStyle={ButtonStyle.None}
                             style={{ style: "absolute top-0 left-0 h-full flex items-center justify-center h-full px-2 rounded-l-lg bg-gray-800 hover:bg-gray-700" }}
@@ -86,15 +88,17 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                             </svg>
                         </Button>
                     </div>
-                    <input
-                        id="map-regex-to-value"
-                        className="w-20 px-2 mx-2 text-center border-2 border-gray-300 rounded-lg"
-                        type="text"
-                        placeholder="map to..."
-                        maxLength={1}
-                        value={regexMapValue}
-                        onChange={(e) => setRegexMapValue(e.target.value)}
-                        />
+                    <Tooltip tooltip="Map found events to a value.">
+                        <input
+                            id="map-regex-to-value"
+                            className="w-20 px-2 mx-2 text-center border-2 border-gray-300 rounded-lg"
+                            type="text"
+                            placeholder="map to..."
+                            maxLength={1}
+                            value={regexMapValue}
+                            onChange={(e) => setRegexMapValue(e.target.value)}
+                            />
+                    </Tooltip>
                     <Button tooltip="Create the mapping for all lines matched by your search." onClick={mapEventsUsingRegex} style={{style: 'relative'}} >
                         <label htmlFor="" className="px-6 rounded-md cursor-pointer">
                             Confirm
