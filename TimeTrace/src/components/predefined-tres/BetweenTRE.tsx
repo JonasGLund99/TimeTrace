@@ -3,6 +3,7 @@ import ModalInput from "../modal/ModalInput";
 import { BetweenTREClass } from "./PredefinedTREs";
 import Button from "../button/Button";
 import { ButtonType } from "../button/IButtonProps";
+import PredefinedTREButtonGroup from "./PredefinedTREButtonGroup";
 
 interface IBetweenTREProps {
     treObject: BetweenTREClass;
@@ -17,11 +18,6 @@ function BetweenTRE({ treObject, onSubmit, closeTRE }: IBetweenTREProps) {
         setTREObject(new BetweenTREClass(TREObject.input));
     }
 
-    useEffect(() => {
-        console.log(onSubmit);
-    }, [])
-
-
     return (
         <form id="BetweenTRE" onSubmit={onSubmit}>
             <div className="flex flex-col gap-2">
@@ -34,14 +30,7 @@ function BetweenTRE({ treObject, onSubmit, closeTRE }: IBetweenTREProps) {
                     <ModalInput required={true} value={TREObject.input.endTime} onChange={(e) => { treObject.input.endTime = e.target.value; updateTREObject();}} label="End time" placeholder="Enter the end time" ></ModalInput>
                 </div>
             </div>
-                <div id="modal-button-container" className="flex justify-center pt-2">
-                    <Button type="submit" buttonType={ButtonType.Modal}>
-                        Insert TRE
-                    </Button>
-                    <Button buttonType={ButtonType.None} type="button" onClick={closeTRE} style={{style: 'text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800'}}>
-                        Cancel
-                    </Button>
-                </div>
+            <PredefinedTREButtonGroup closeTRE={closeTRE}/>
         </form>
     )
 }
