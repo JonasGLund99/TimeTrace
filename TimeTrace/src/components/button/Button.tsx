@@ -1,5 +1,5 @@
-import { Tooltip } from "@material-tailwind/react";
 import { ButtonStyle, IButtonProps } from "./IButtonProps";
+import Tooltip from '../tooltip/ToolTip';
 
 interface ButtonTypeStyles {
     [ButtonStyle.Default]: string;
@@ -27,7 +27,7 @@ function Button({ onClick, type, style, buttonStyle, children, tooltip }: IButto
     }
 
     return (
-        <Tooltip className="border border-github-borderWhiteBg bg-github-navbarBg text-github-textWhiteBg " content={tooltip}>
+        <Tooltip tooltip={tooltip}>
             <button onClick={onClick} className={`${style?.style + " " + insertButtonStyle()}`} type={type}>
                 {children}
             </button>
