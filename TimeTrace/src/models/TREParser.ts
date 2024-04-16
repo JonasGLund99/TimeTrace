@@ -93,10 +93,15 @@ export abstract class TREParser {
     }
 
     public static validateSpecialChars(tre: string): void {
-        const expressionWithoutSymbol = /(?<![a-zA-Z)*+])([+*&|]+)/g;
-        const invalidExpression = tre.match(expressionWithoutSymbol);
-        if (invalidExpression && invalidExpression.length > 0) {
-            throw new Error(`Expression ${invalidExpression[0]} must be preceded by a mapped symbol.`);
+        const expressionWithoutSymbolBefore = /(?<![a-zA-Z)*+])([+*&|]+)/g;
+        const invalidExpressionBefore = tre.match(expressionWithoutSymbolBefore);
+        if (invalidExpressionBefore && invalidExpressionBefore.length > 0) {
+            throw new Error(`Expression ${invalidExpressionBefore[0]} must be preceded by a mapped symbol.`);
+        }
+        const expressionWithoutSymbolAfter = /[|&](?![a-zA-Z])/g;
+        const invalidExpressionAfter = tre.match(expressionWithoutSymbolAfter);
+        if (invalidExpressionAfter && invalidExpressionAfter.length > 0) {
+            throw new Error(`Expression ${invalidExpressionAfter[0]} must be followed by a mapped symbol.`);
         }
     }
 
@@ -115,7 +120,6 @@ export abstract class TREParser {
             // Skip special symbols
             if (
                 symbol === "z" ||
-                symbol === "Z" ||
                 symbol === "|" ||
                 symbol === "+" ||
                 symbol === "*" ||

@@ -1,5 +1,6 @@
 import { TREBuilder } from "../../models/TREBuilder";
 import { CustomMap } from "../../models/Types/EventMapping";
+import { TREParser } from '../../models/TREParser';
 
 describe('TREParser', () => {
     
@@ -65,42 +66,154 @@ describe('TREParser', () => {
            });
         });
         describe('validateSpecialChars', () => {
-            test('', ()=>{
+            test('Should trow error as no symbol before | in TRE', ()=>{
            // Arrange
-           const tre = "";
-
-           // Act
-           //     const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
-           // Assert
-           //     expect(trimmedTRE).toEqual(convertedTRE);
-   
+           const trimmedTRE = "((A|C)*(|Z)*)%(10ms,100s)";
+           const invalidSpecialCharacter = "|"
+           // Act and Assert
+           expect(() => TREParser.validateSpecialChars(trimmedTRE)).toThrowError(
+            `Expression ${invalidSpecialCharacter[0]} must be preceded by a mapped symbol.`
+            );
            });
+
+           test('Should trow error as no symbol after | in TRE', ()=>{
+            // Arrange
+            const trimmedTRE = "((A|C)*(A|)*)%(10ms,100s)";
+            const invalidSpecialCharacter = "|"
+            // Act and Assert
+            expect(() => TREParser.validateSpecialChars(trimmedTRE)).toThrowError(
+             `Expression ${invalidSpecialCharacter[0]} must be followed by a mapped symbol.`
+             );
+            });
+
+            test('Should trow error as no symbol after & in TRE', ()=>{
+                // Arrange
+                const trimmedTRE = "((A|C)*(A&)*)%(10ms,100s)";
+                const invalidSpecialCharacter = "&"
+                // Act and Assert
+                expect(() => TREParser.validateSpecialChars(trimmedTRE)).toThrowError(
+                 `Expression ${invalidSpecialCharacter[0]} must be followed by a mapped symbol.`
+                 );
+                });
+                test('Should trow error as no symbol after & in && where it should be preceded on the seconde & in TRE', ()=>{
+                    // Arrange
+                    const trimmedTRE = "((A|C)*(A&&)*)%(10ms,100s)";
+                    const invalidSpecialCharacter = "&"
+                    // Act and Assert
+                    expect(() => TREParser.validateSpecialChars(trimmedTRE)).toThrowError(
+                     `Expression ${invalidSpecialCharacter[0]} must be preceded by a mapped symbol.`
+                     );
+                    });
+
         });
+
         describe('validateSymbolMappings', () => {
-            test('', ()=>{
-           // Arrange
-            const trimmedTRE = "";
-            const mappings: CustomMap = new CustomMap();
-            //mappings.set({key: 'login', isRegex: false}, 'A')
+            test('Should trow error as symbol C in not mapped to event', ()=>{
+            // Arrange
+                const trimmedTRE = "((A|C)*(A|Z)*)%(10ms,100s)";
+                const mappings: CustomMap = new CustomMap();
+                const invalidSymbol = 'C';
+                mappings.set({key: 'login', isRegex: false}, 'A')
+                mappings.set({key: 'login', isRegex: false}, 'A')
+                mappings.set({key: 'delete', isRegex: false}, 'Z')
+                mappings.set({key: 'login', isRegex: false}, 'A')
+                mappings.set({key: 'login', isRegex: false}, 'A')
+                mappings.set({key: 'logout', isRegex: false}, 'B');
+            // Act and Assert
+            expect(() => TREParser.validateSymbolMappings(trimmedTRE,mappings)).toThrowError(
+                `Symbol '${invalidSymbol}' does not have an event mapped to it.`
+                );
+           });
 
-           // Act
-           //     const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
-           // Assert
-           //     expect(trimmedTRE).toEqual(convertedTRE);
-   
-           });
+           test('Should not trow error as z event are ignored', ()=>{
+                // Arrange
+                const trimmedTRE = "((A|z)*(A|Z)*)%(10ms,100s)";
+                const mappings: CustomMap = new CustomMap();
+                mappings.set({key: 'login', isRegex: false}, 'Z')
+                mappings.set({key: 'login', isRegex: false}, 'Z')
+                mappings.set({key: 'delete', isRegex: false}, 'A')
+                mappings.set({key: 'login', isRegex: false}, 'Z')
+                mappings.set({key: 'login', isRegex: false}, 'Z')
+                mappings.set({key: 'logout', isRegex: false}, 'B');
+                // Act and Assert
+                expect(() => TREParser.validateSymbolMappings(trimmedTRE,mappings)).not.toThrowError();
+            });
+
+            test('Should trow error as all event are mapped and Z therefore are invalid symbol', ()=>{
+                // Arrange
+                const trimmedTRE = "((A|C)*(C|Z)*)%(10h,1.2d)";
+                const mappings: CustomMap = new CustomMap();
+                const invalidSymbol = 'Z';
+                mappings.set({key: 'login', isRegex: false}, 'B')
+                mappings.set({key: 'login', isRegex: false}, 'B')
+                mappings.set({key: 'delete', isRegex: false}, 'A')
+                mappings.set({key: 'login', isRegex: false}, 'B')
+                mappings.set({key: 'login', isRegex: false}, 'B')
+                mappings.set({key: 'logout', isRegex: false}, 'C');
+                // Act and Assert
+                expect(() => TREParser.validateSymbolMappings(trimmedTRE,mappings)).toThrowError(
+                    `Symbol '${invalidSymbol}' does not have an event mapped to it.`
+                    );
+            });
+           
         });
+
         describe('convertTimeToms', () => {
-            test('', ()=>{
-           //     // Arrange
-                const trimmedTRE = "";
+           test('test second unit', ()=>{
+             // Arrange
+                const timeContraint = 10;
+                const timeUnit ="s";
+                const expectedTimeMS = 10000
+            // Act
+                const actualTimeMS = TREParser.convertTimeToms(timeContraint, timeUnit);
+            // Assert
+                 expect(expectedTimeMS).toEqual(actualTimeMS);
+            });
+
+            test('test minut unit', ()=>{
+            // Arrange
+                const timeContraint = 10;
+                const timeUnit ="m";
+                const expectedTimeMS = 600000
+            // Act
+                const actualTimeMS = TREParser.convertTimeToms(timeContraint, timeUnit);
+            // Assert
+                expect(expectedTimeMS).toEqual(actualTimeMS);
+            });
+
+            test('test hour unit', ()=>{
+            // Arrange
+                const timeContraint = 10;
+                const timeUnit ="h";
+                const expectedTimeMS = 36000000
+            // Act
+                const actualTimeMS = TREParser.convertTimeToms(timeContraint, timeUnit);
+            // Assert
+                expect(expectedTimeMS).toEqual(actualTimeMS);
+            });
+
+            test('test day unit ', ()=>{
+            // Arrange
+                const timeContraint = 1000;
+                const timeUnit ="d";
+                const expectedTimeMS = 86400000000
+            // Act
+                const actualTimeMS = TREParser.convertTimeToms(timeContraint, timeUnit);
+            // Assert
+                expect(expectedTimeMS).toEqual(actualTimeMS);
+            });
+
+            test('test with no unit found', ()=>{
+            // Arrange
+                const timeContraint = 10;
                 const timeUnit ="";
-           //     // Act
-           //     const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
-           //     // Assert
-           //     expect(trimmedTRE).toEqual(convertedTRE);
-   
-           });
+                const expectedTimeMS = 10
+            // Act
+                const actualTimeMS = TREParser.convertTimeToms(timeContraint, timeUnit);
+            // Assert
+                expect(expectedTimeMS).toEqual(actualTimeMS);
+             });
+        
         });
 })
 });
