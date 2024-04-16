@@ -159,7 +159,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         className="hidden"
                         onChange={handleFileUpload}
                     />
-                    <Button style={{style: 'relative '}} buttonStyle={ButtonStyle.Standard}>
+                    <Button style={{style: 'relative '}}>
                         <label htmlFor="contained-button-file" className="flex items-center px-6 py-4 rounded-md cursor-pointer">
                             {
                                 uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"

@@ -77,7 +77,7 @@ export default function SearchForm() {
                     onChange={(e) => setTre(e.target.value)}
                     required
                 />
-                <Button style={{style: 'absolute end-2.5 bottom-2.5 px-4 py-2'}} type='submit' buttonStyle={ButtonStyle.Standard}>Search</Button>
+                <Button style={{style: 'absolute end-2.5 bottom-2.5 px-4 py-2'}} type='submit'>Search</Button>
             </div>
         </form>
     );

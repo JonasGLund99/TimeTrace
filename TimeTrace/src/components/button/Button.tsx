@@ -17,9 +17,16 @@ const buttonTypeStyles: ButtonTypeStyles = {
     [ButtonStyle.Warning]: 'text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800',
 }
 
-function Button({ onClick, type, style, buttonStyle: ButtonType, children }: IButtonProps) {
+function Button({ onClick, type, style, buttonStyle, children }: IButtonProps) {
+    function insertButtonStyle(): string {
+        if (buttonStyle === undefined) {
+            return buttonTypeStyles[ButtonStyle.Standard];
+        }
+        return buttonTypeStyles[buttonStyle];
+    }
+
     return (
-        <button onClick={onClick} className={`${style?.style + " " + buttonTypeStyles[ButtonType]}`} type={type}>
+        <button onClick={onClick} className={`${style?.style + " " + insertButtonStyle()}`} type={type}>
             {children}
         </button>
     );

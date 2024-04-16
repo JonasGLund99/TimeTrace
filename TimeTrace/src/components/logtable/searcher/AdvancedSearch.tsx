@@ -94,7 +94,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                     value={regexMapValue}
                     onChange={(e) => setRegexMapValue(e.target.value)}
                 />
-                <Button onClick={mapEventsUsingRegex} buttonStyle={ButtonStyle.Standard} style={{style: 'relative'}} >
+                <Button onClick={mapEventsUsingRegex} style={{style: 'relative'}} >
                     <label htmlFor="" className="px-6 rounded-md cursor-pointer">
                         Confirm
                     </label>
