@@ -41,12 +41,13 @@ function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, 
     return (
         <div className="sticky right-0 flex flex-col mapping-container">
             {shownLines.map((fileLine: FileLine) => (
-                <div key={fileLine.line} className={cn(
+                <div key={"mappinginput" + fileLine.line} className={cn(
                     lineIsHighlighted(fileLine.line)
                         ? eventIsMapped(fileLine) ? "bg-yellow-200" : "bg-yellow-100"
                         : "even:bg-white odd:bg-gray-100",
                     "flex items-center justify-end gap-1 py-2 pl-2 pr-1")}>
                     <input
+                        key={"input" + fileLine.line}
                         className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                         type="text"
                         readOnly={mappingsAreEditable ? false : true}
@@ -56,7 +57,9 @@ function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, 
                         }}
                     />
                     {mappingsAreEditable &&
-                        <button onClick={() => {removeMapping(fileLine.line)}}>
+                        <button
+                            key={"button" + fileLine.line}
+                            onClick={() => {removeMapping(fileLine.line)}}>
                             <Trashcan />
                         </button>
                     }

@@ -15,7 +15,7 @@ interface LineContentsProps {
 function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFileLines, fileLines }: LineContentsProps) {
     const { uploadedFile } = useContext(AppdataContext);
     return (
-        <div className={cn(
+        <div id="linecontents-container" className={cn(
             filteredFileLines.length === 0
                 ? "items-center justify-center"
                 : "",
@@ -33,7 +33,7 @@ function LineContents({ lineIsHighlighted, eventIsMapped, shownLines, filteredFi
                 </div>
             )}
             {shownLines.map((fileLine: FileLine, i: number) => {
-                return <pre key={i} className={cn(
+                return <pre key={"linecontent" + i} className={cn(
                     lineIsHighlighted(fileLine.line)
                         ? eventIsMapped(fileLine) ? "mapped-line bg-yellow-200" : "unmapped-line bg-yellow-100"
                         : "even:bg-white odd:bg-gray-100",

@@ -8,7 +8,7 @@ interface MatchNavigatorProps {
 
 function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
-    const { currentPage, setCurrentPage } = useContext(LogTableContext);
+    const { currentPageSpan, setCurrentPageSpan } = useContext(LogTableContext);
     const { setShownLines } = useContext(LogTableContext);
     const { filteredFileLines } = useContext(LogTableContext);
     const { matches } = useContext(AppdataContext);
@@ -18,13 +18,12 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
         const startOfMatchIndex: number = matches[prevIndex].lineMatches[0];
         const endOfMatchIndex: number = matches[prevIndex].lineMatches[matches[prevIndex].lineMatches.length - 1];
 
-        if (startOfMatchIndex < (currentPage - 1) * linesPerPage) {
+        if (startOfMatchIndex < currentPageSpan.min * linesPerPage) {
             const endOfRender = Math.ceil(endOfMatchIndex / linesPerPage);
             const startOfRender = Math.floor(startOfMatchIndex / linesPerPage); 
             setShownLines([...(filteredFileLines.slice(linesPerPage * startOfRender, linesPerPage * endOfRender))]);
-            setCurrentPage(endOfRender);
+            setCurrentPageSpan({ min: startOfRender, max: endOfRender });
         }
-
         setMonaaMatchIndex(prevIndex)
     }
 
@@ -33,14 +32,14 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
         const startOfMatchIndex: number = matches[nextIndex].lineMatches[0];
         const endOfMatchIndex: number = matches[nextIndex].lineMatches[matches[nextIndex].lineMatches.length - 1];
 
-        if (endOfMatchIndex > currentPage * linesPerPage) {
+        if (endOfMatchIndex > currentPageSpan.max * linesPerPage) {
             // If the end of the match is outside the currently shown lines
             const endOfRender = Math.ceil(endOfMatchIndex / linesPerPage);
             const startOfRender = Math.floor(startOfMatchIndex / linesPerPage); 
 
             // Only render necessary pages
             setShownLines([...(filteredFileLines.slice(linesPerPage * startOfRender, linesPerPage * endOfRender))]);
-            setCurrentPage(endOfRender);
+            setCurrentPageSpan({ min: startOfRender, max: endOfRender });
         }
         setMonaaMatchIndex(nextIndex);
     }
