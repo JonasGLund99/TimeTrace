@@ -4,7 +4,7 @@ export interface IButtonProps {
     onClick?: () => void;
     type?: "submit" | "button" | "reset" | undefined;
     style?: {style: string};
-    buttonType: ButtonType;
+    buttonStyle: ButtonType;
     children?: ReactNode;
 }
 

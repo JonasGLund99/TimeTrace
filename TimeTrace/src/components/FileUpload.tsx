@@ -159,7 +159,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         className="hidden"
                         onChange={handleFileUpload}
                     />
-                    <Button style={{style: 'relative '}} buttonType={ButtonType.Standard}>
+                    <Button style={{style: 'relative '}} buttonStyle={ButtonType.Standard}>
                         <label htmlFor="contained-button-file" className="flex items-center px-6 py-4 rounded-md cursor-pointer">
                             {
                                 uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
@@ -174,7 +174,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         <DateFormatChooser />
                     }
                     {uploadedFile &&
-                        <Button buttonType={ButtonType.None} onClick={handleFileRemove} data-testid="remove-button">
+                        <Button buttonStyle={ButtonType.None} onClick={handleFileRemove} data-testid="remove-button">
                             <Trashcan />
                         </Button>
                     }

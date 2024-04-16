@@ -26,10 +26,10 @@ export default function Warning() {
                 <div className="mt-2 mb-4 overflow-y-auto text-sm max-h-60" dangerouslySetInnerHTML={{ __html: errorObj.errorString }}></div>
                 <div className="flex">
                     {errorObj.callback !== null &&
-                        <Button type="button" onClick={errorObj.callback} style={{style: 'px-3 py-1.5 me-2 text-center inline-flex items-center'}} buttonType={ButtonType.Warning}>{errorObj.callbackTitle}</Button>
+                        <Button type="button" onClick={errorObj.callback} style={{style: 'px-3 py-1.5 me-2 text-center inline-flex items-center'}} buttonStyle={ButtonType.Warning}>{errorObj.callbackTitle}</Button>
                     }
                     {errorObj.is_dismissible &&
-                        <Button type="button" onClick={closeWarning} style={{style: 'px-3 py-1.5 me-2 text-center inline-flex items-center'}} buttonType={ButtonType.Warning}>Dismiss</Button>
+                        <Button type="button" onClick={closeWarning} style={{style: 'px-3 py-1.5 me-2 text-center inline-flex items-center'}} buttonStyle={ButtonType.Warning}>Dismiss</Button>
                     }
                 </div>
             </div>
