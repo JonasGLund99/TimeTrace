@@ -106,7 +106,7 @@ export abstract class TREParser {
         const expressionWithDoubleQuantifier = /[+*]{2}/g
         const invalidExpressionDoubleQuantifier = tre.match(expressionWithDoubleQuantifier);
         if (invalidExpressionDoubleQuantifier && invalidExpressionDoubleQuantifier.length > 0) {
-        throw new Error(`Expression ${invalidExpressionDoubleQuantifier[0]} There can not be two quantifiers (*/+) consecutive.`);
+        throw new Error(`Expression ${invalidExpressionDoubleQuantifier[0]} There can not be two quantifiers (*/+) consecutivly.`);
         }
     }
 

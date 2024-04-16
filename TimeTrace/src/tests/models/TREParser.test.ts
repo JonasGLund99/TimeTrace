@@ -119,7 +119,7 @@ describe('TREParser', () => {
                 const invalidSpecialCharacter = "++"
                 // Act and Assert
                 expect(() => TREParser.validateSpecialChars(trimmedTRE)).toThrowError(
-                    `Expression ${invalidSpecialCharacter} There can not be two quantifiers (*/+) consecutive.`
+                    `Expression ${invalidSpecialCharacter} There can not be two quantifiers (*/+) consecutivly.`
                 );
             });
 
@@ -129,7 +129,7 @@ describe('TREParser', () => {
                 const invalidSpecialCharacter = "**"
                 // Act and Assert
                 expect(() => TREParser.validateSpecialChars(trimmedTRE)).toThrowError(
-                    `Expression ${invalidSpecialCharacter} There can not be two quantifiers (*/+) consecutive.`
+                    `Expression ${invalidSpecialCharacter} There can not be two quantifiers (*/+) consecutivly.`
                 );
             });
 
@@ -139,7 +139,7 @@ describe('TREParser', () => {
                 const invalidSpecialCharacter = "**"
                 // Act and Assert
                 expect(() => TREParser.validateSpecialChars(trimmedTRE)).toThrowError(
-                    `Expression ${invalidSpecialCharacter} There can not be two quantifiers (*/+) consecutive.`
+                    `Expression ${invalidSpecialCharacter} There can not be two quantifiers (*/+) consecutivly.`
                 );
             });
             
