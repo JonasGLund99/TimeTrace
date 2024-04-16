@@ -98,10 +98,15 @@ export abstract class TREParser {
         if (invalidExpressionBefore && invalidExpressionBefore.length > 0) {
             throw new Error(`Expression ${invalidExpressionBefore[0]} must be preceded by a mapped symbol.`);
         }
-        const expressionWithoutSymbolAfter = /[|&](?![a-zA-Z])/g;
+        const expressionWithoutSymbolAfter = /[|&](?![\(a-zA-Z])/g;
         const invalidExpressionAfter = tre.match(expressionWithoutSymbolAfter);
         if (invalidExpressionAfter && invalidExpressionAfter.length > 0) {
             throw new Error(`Expression ${invalidExpressionAfter[0]} must be followed by a mapped symbol.`);
+        }
+        const expressionWithDoubleQuantifier = /[+*]{2}/g
+        const invalidExpressionDoubleQuantifier = tre.match(expressionWithDoubleQuantifier);
+        if (invalidExpressionDoubleQuantifier && invalidExpressionDoubleQuantifier.length > 0) {
+        throw new Error(`Expression ${invalidExpressionDoubleQuantifier[0]} There can not be two quantifiers (*/+) consecutive.`);
         }
     }
 
