@@ -13,7 +13,7 @@ function ModalInput({ placeholder, type, label, value, onChange, required }: IMo
     return (
         <div className="flex flex-col w-full">
             <label>{label}</label>
-            <input required={required} value={value} onChange={onChange} className="px-2 py-2 border border-yellow-300 rounded-lg dark:border-yellow-800" placeholder={placeholder} type={type} ></input>
+            <input required={required} value={value} onChange={onChange} className="px-2 py-2 border rounded-lg border-github-borderWhiteBg " placeholder={placeholder} type={type} ></input>
         </div>
     )
 }

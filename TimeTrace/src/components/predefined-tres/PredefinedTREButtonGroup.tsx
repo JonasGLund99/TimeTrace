@@ -11,7 +11,7 @@ function PredefinedTREButtonGroup({closeTRE}: PredefinedTREButtonGroupProps) {
         <Button type="submit" buttonStyle={ButtonStyle.Modal}>
             Insert TRE
         </Button>
-        <Button buttonStyle={ButtonStyle.None} type="button" onClick={closeTRE} style={{style: 'text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800'}}>
+        <Button buttonStyle={ButtonStyle.None} type="button" onClick={closeTRE} style={{style: 'text-github-textWhiteBg bg-github-navbarBg border border-github-borderWhiteBg hover:bg-github-highlightedBtnNavBg focus:ring-4 focus:outline-none focus:ring-github-borderWhiteBg font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center'}}>
             Cancel
         </Button>
     </div>
