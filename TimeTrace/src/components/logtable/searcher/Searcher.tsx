@@ -5,6 +5,7 @@ import StandardSearch from "./StandardSearch";
 import Button from "../../button/Button";
 import { ButtonStyle } from "../../button/IButtonProps";
 import ShowLineToggle from "./ToggleShowLines";
+import Tooltip from "../../tooltip/ToolTip";
 
 interface SearcherProps {
     searchQuery: string;
@@ -23,7 +24,7 @@ function Searcher({ searchQuery, setSearchQuery, searchLog, mappingsAreEditable 
 
     return (
         <div className="w-full">
-            <ShowLineToggle></ShowLineToggle>
+                <ShowLineToggle></ShowLineToggle>
             <div id="search-container" className="flex flex-col content-center w-full">
                 {mappingsAreEditable &&
                     (

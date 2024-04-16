@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { LogTableContext } from "../../../context/LogTableContext";
 import { ShowLinesMode } from "../../../context/LogTableContext";
+import Tooltip from "../../tooltip/ToolTip";
 
 function ShowLineToggle() {
 
@@ -23,16 +24,18 @@ function ShowLineToggle() {
 
     return (
         <form className="mb-2">
-            <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block h-8"
-                onChange={(e) => {
-                        handleShowFilterUpdate(e.target.value);
-                    }
-                }>
-                <option value="all">Show All Lines</option>
-                <option value="mapped">Show Mapped Lines</option>
-                <option value="unmapped">Show Unmapped Lines</option>
-            </select>
-        </form>
+                <Tooltip tooltip="Change which lines are shown from the file.">
+                    <select className="block h-8 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        onChange={(e) => {
+                            handleShowFilterUpdate(e.target.value);
+                        }
+                    }>
+                        <option value="all">Show All Lines</option>
+                        <option value="mapped">Show Mapped Lines</option>
+                        <option value="unmapped">Show Unmapped Lines</option>
+                    </select>
+                </Tooltip>
+            </form>
     );
 }
 
