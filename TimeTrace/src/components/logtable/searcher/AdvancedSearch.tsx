@@ -3,7 +3,7 @@ import { LogTableContext } from "../../../context/LogTableContext";
 import { AppdataContext } from "../../../context/AppContext";
 import { CustomMap } from "../../../models/Types/EventMapping";
 import Button from "../../button/Button";
-import { ButtonType } from "../../button/IButtonProps";
+import { ButtonStyle } from "../../button/IButtonProps";
 interface SearcherProps {
     searchQuery: string;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -59,7 +59,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                         onKeyDown={(e) => listenForEnter(e)}
                     ></input>
                     <Button
-                        buttonStyle={ButtonType.None}
+                        buttonStyle={ButtonStyle.None}
                         style={{ style: "absolute top-0 left-0 h-full flex items-center justify-center h-full px-2 rounded-l-lg bg-gray-800 hover:bg-gray-700" }}
                         onClick={() => searchLog(searchQuery)}
                     >
@@ -94,7 +94,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                     value={regexMapValue}
                     onChange={(e) => setRegexMapValue(e.target.value)}
                 />
-                <Button onClick={mapEventsUsingRegex} buttonStyle={ButtonType.Standard} style={{style: 'relative'}} >
+                <Button onClick={mapEventsUsingRegex} buttonStyle={ButtonStyle.Standard} style={{style: 'relative'}} >
                     <label htmlFor="" className="px-6 rounded-md cursor-pointer">
                         Confirm
                     </label>

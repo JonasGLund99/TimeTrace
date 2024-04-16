@@ -9,7 +9,7 @@ import { Store } from 'react-notifications-component';
 import { CustomMap } from "../models/Types/EventMapping";
 import DateFormatChooser from "./DateFormatChooser";
 import Button from './button/Button';
-import { ButtonType } from "./button/IButtonProps";
+import { ButtonStyle } from "./button/IButtonProps";
 
 interface FileUploadProps {
     showDateFormatChooser?: boolean;
@@ -159,7 +159,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         className="hidden"
                         onChange={handleFileUpload}
                     />
-                    <Button style={{style: 'relative '}} buttonStyle={ButtonType.Standard}>
+                    <Button style={{style: 'relative '}} buttonStyle={ButtonStyle.Standard}>
                         <label htmlFor="contained-button-file" className="flex items-center px-6 py-4 rounded-md cursor-pointer">
                             {
                                 uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
@@ -174,7 +174,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         <DateFormatChooser />
                     }
                     {uploadedFile &&
-                        <Button buttonStyle={ButtonType.None} onClick={handleFileRemove} data-testid="remove-button">
+                        <Button buttonStyle={ButtonStyle.None} onClick={handleFileRemove} data-testid="remove-button">
                             <Trashcan />
                         </Button>
                     }

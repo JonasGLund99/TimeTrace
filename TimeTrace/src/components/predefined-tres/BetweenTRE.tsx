@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ModalInput from "../modal/ModalInput";
 import { BetweenTREClass } from "./PredefinedTREs";
 import Button from "../button/Button";
-import { ButtonType } from "../button/IButtonProps";
+import { ButtonStyle } from "../button/IButtonProps";
 import PredefinedTREButtonGroup from "./PredefinedTREButtonGroup";
 
 interface IBetweenTREProps {

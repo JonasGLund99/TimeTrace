@@ -4,11 +4,12 @@ export interface IButtonProps {
     onClick?: () => void;
     type?: "submit" | "button" | "reset" | undefined;
     style?: {style: string};
-    buttonStyle: ButtonType;
+    buttonStyle: ButtonStyle;
     children?: ReactNode;
 }
 
-export enum ButtonType {
+export enum ButtonStyle {
+    Default,
     None, 
     Standard,
     Modal,

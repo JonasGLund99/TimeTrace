@@ -5,7 +5,7 @@ import { AppdataContext } from "../context/AppContext";
 import { navigation } from "../components/Navbar";
 import LogTableProvider from '../context/LogTableContext';
 import Button from "../components/button/Button";
-import { ButtonType } from "../components/button/IButtonProps";
+import { ButtonStyle } from "../components/button/IButtonProps";
 import BetweenTRE from '../components/predefined-tres/BetweenTRE';
 import { BetweenTREClass, IPredefinedTRE, PredefinedTre } from '../components/predefined-tres/PredefinedTREs';
 
@@ -76,7 +76,7 @@ function LogPage() {
             <LogTableProvider>
                 <div className="h-[15%] flex flex-col gap-2">
                     <div id="Predefined queries" className="flex items-center self-center">
-                        <Button style={{style: 'px-4 py-2'}} buttonStyle={ButtonType.Standard} onClick={() => createModalObject(PredefinedTre.Between)}>Between</Button>
+                        <Button style={{style: 'px-4 py-2'}} buttonStyle={ButtonStyle.Standard} onClick={() => createModalObject(PredefinedTre.Between)}>Between</Button>
                     </div>
                     <SearchForm />
                 </div>
