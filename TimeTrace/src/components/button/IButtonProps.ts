@@ -6,6 +6,7 @@ export interface IButtonProps {
     style?: {style: string};
     buttonStyle?: ButtonStyle;
     children?: ReactNode;
+    tooltip?: string;
 }
 
 export enum ButtonStyle {

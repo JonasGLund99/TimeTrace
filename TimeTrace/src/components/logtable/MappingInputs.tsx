@@ -58,7 +58,7 @@ function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, 
                         }}
                     />
                     {mappingsAreEditable &&
-                        <Button buttonStyle={ButtonStyle.None} onClick={() => {removeMapping(fileLine.line)}}>
+                        <Button tooltip="Remove mapping." buttonStyle={ButtonStyle.None} onClick={() => {removeMapping(fileLine.line)}}>
                             <Trashcan />
                         </Button>
                     }

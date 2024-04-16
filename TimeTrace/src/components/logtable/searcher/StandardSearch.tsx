@@ -11,7 +11,7 @@ function StandardSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
         <div>
             <input
                 type="text"
-                className="px-2 border-2 border-gray-300 rounded-lg w-full"
+                className="w-full px-2 border-2 border-gray-300 rounded-lg"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => {

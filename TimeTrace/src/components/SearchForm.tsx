@@ -8,7 +8,11 @@ import { Store } from 'react-notifications-component';
 import Button from './button/Button';
 import { ButtonStyle } from './button/IButtonProps';
 
-export default function SearchForm() {
+interface SearchFormProps {
+    tooltip?: string;
+}
+
+export default function SearchForm({ tooltip }: SearchFormProps) {
     const { tre, setTre } = useContext(AppdataContext);
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
@@ -77,7 +81,7 @@ export default function SearchForm() {
                     onChange={(e) => setTre(e.target.value)}
                     required
                 />
-                <Button style={{style: 'absolute end-2.5 bottom-2.5 px-4 py-2'}} type='submit'>Search</Button>
+                <Button tooltip={tooltip} style={{style: 'absolute end-2.5 bottom-2.5 px-4 py-2'}} type='submit'>Search</Button>
             </div>
         </form>
     );

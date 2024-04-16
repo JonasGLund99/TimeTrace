@@ -76,9 +76,9 @@ function LogPage() {
             <LogTableProvider>
                 <div className="h-[15%] flex flex-col gap-2">
                     <div id="Predefined queries" className="flex items-center self-center">
-                        <Button style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.Between)}>Between</Button>
+                        <Button tooltip="TRE to match groups of events within a duration." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.Between)}>Within</Button>
                     </div>
-                    <SearchForm />
+                    <SearchForm tooltip="Search for matches within your file with Timed Regular Expressions." />
                 </div>
                 <div className="w-full h-[85%]">
                     <LogTable mappingsAreEditable={false} />

@@ -1,3 +1,4 @@
+import { Tooltip } from "@material-tailwind/react";
 
 interface IModalInputProps {
     placeholder?: string;
@@ -9,12 +10,14 @@ interface IModalInputProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function ModalInput({ placeholder, type, label, value, onChange, required }: IModalInputProps) {
+function ModalInput({ placeholder, type, label, value, onChange, required, tooltip }: IModalInputProps) {
     return (
-        <div className="flex flex-col w-full">
-            <label>{label}</label>
-            <input required={required} value={value} onChange={onChange} className="px-2 py-2 border rounded-lg border-github-borderWhiteBg " placeholder={placeholder} type={type} ></input>
-        </div>
+        <Tooltip content={tooltip}>
+            <div className="flex flex-col w-full">
+                <label>{label}</label>
+                <input required={required} value={value} onChange={onChange} className="px-2 py-2 border rounded-lg border-github-borderWhiteBg " placeholder={placeholder} type={type} ></input>
+            </div>
+        </Tooltip>
     )
 }
 

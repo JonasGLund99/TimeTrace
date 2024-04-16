@@ -1,3 +1,4 @@
+import { Tooltip } from "@material-tailwind/react";
 import { ButtonStyle, IButtonProps } from "./IButtonProps";
 
 interface ButtonTypeStyles {
@@ -17,7 +18,7 @@ const buttonTypeStyles: ButtonTypeStyles = {
     [ButtonStyle.Warning]: 'text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800',
 }
 
-function Button({ onClick, type, style, buttonStyle, children }: IButtonProps) {
+function Button({ onClick, type, style, buttonStyle, children, tooltip }: IButtonProps) {
     function insertButtonStyle(): string {
         if (buttonStyle === undefined) {
             return buttonTypeStyles[ButtonStyle.Standard];
@@ -26,9 +27,11 @@ function Button({ onClick, type, style, buttonStyle, children }: IButtonProps) {
     }
 
     return (
-        <button onClick={onClick} className={`${style?.style + " " + insertButtonStyle()}`} type={type}>
-            {children}
-        </button>
+        <Tooltip className="border border-github-borderWhiteBg bg-github-navbarBg text-github-textWhiteBg " content={tooltip}>
+            <button onClick={onClick} className={`${style?.style + " " + insertButtonStyle()}`} type={type}>
+                {children}
+            </button>
+        </Tooltip>
     );
 }
 
