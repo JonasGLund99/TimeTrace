@@ -14,11 +14,13 @@ export type ErrorObject = {
 export type ModalObject = {
     text: string,
     title: string,
-    submit: (() => void) | null,
+    submit?: (() => void) | null,
     closeCallback?: (() => void),
     submitTitle: string | null,
     is_dismissible: boolean,
     children?: ReactNode,
+    submitButtonType?: "submit" | "button" | "reset" | undefined,
+    cancelButtonType?: "submit" | "button" | "reset" | undefined,
 }
 
 export type AppdataContextInterface = {

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import LogTable from "../components/logtable/LogTable";
 import SearchForm from "../components/SearchForm";
 import { AppdataContext } from "../context/AppContext";
@@ -42,26 +42,26 @@ function LogPage() {
     }, [uploadedFile, setError]);
 
     function createModalObject(predefTREType: PredefinedTre) {
-        let TREObject: IPredefinedTRE;
+        let predefinedTRE: ReactNode;
 
         switch(predefTREType) {
             case PredefinedTre.None:
                 throw new Error("A predefined TRE type must be selected.");
             case PredefinedTre.Between:
-                TREObject = new BetweenTREClass();
+                let TREObject = new BetweenTREClass();
+                predefinedTRE = <BetweenTRE treObject={TREObject} onSubmit={() => insertPredefinedTRE(TREObject)} closeTRE={() => {setModal(null)}}/>
                 break;
             default:
                 throw new Error("The predefined type of the TRE has not been defined in this switch case");;
         }
 
         setModal({
+            is_dismissible: false,
             title: "Event followed by an event within a duration",
             text: "This is a predefined query",
-            submit: () => { insertPredefinedTRE(TREObject)},
-            closeCallback: () => {setModal(null)},
             submitTitle: "Insert TRE",
-            is_dismissible: true,
-            children: <BetweenTRE treObject={TREObject}/>,
+            children: predefinedTRE,
+            submitButtonType: "submit",
         })
     }
 

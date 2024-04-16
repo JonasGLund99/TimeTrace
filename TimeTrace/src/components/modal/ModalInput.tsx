@@ -1,6 +1,7 @@
 
 interface IModalInputProps {
-    placeholder: string;
+    placeholder?: string;
+    tooltip?: string;
     type?: 'text' | 'number' | 'date';
     label: string;
     value: string;

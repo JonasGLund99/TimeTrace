@@ -1,5 +1,5 @@
-import { AppdataContext } from "../../context/AppContext";
-import { ReactNode, useContext } from "react";
+import { AppdataContext, ModalObject } from '../../context/AppContext';
+import { ReactNode, useContext, useEffect } from 'react';
 import Button from "../button/Button";
 import { ButtonType } from "../button/IButtonProps";
 
@@ -14,6 +14,20 @@ export default function Modal() {
 
     if (modalObj === null) return null;
 
+
+    function submitClick() {
+        if(modalObj === null) return;
+
+        if(modalObj.submitButtonType !== "submit" && modalObj.submit !== null && modalObj.submit !== undefined) {
+            modalObj.submit();
+        } 
+        else {
+            return;
+        }
+
+    }
+
+
     return (
         <div className="h-screen w-screen flex items-center justify-center backdrop-blur-[3px] fixed z-10">
             <div id="alert-additional-content-4" className="w-1/3 p-4 mb-4 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800" role="alert">
@@ -25,8 +39,8 @@ export default function Modal() {
                 </div>
                 {modalObj.children}
                 <div id="modal-button-container" className="flex justify-center pt-2">
-                    {modalObj.submit !== null &&
-                        <Button type="button" onClick={modalObj.submit} buttonType={ButtonType.Modal}>
+                    {modalObj.submit !== null && modalObj.submit !== undefined &&
+                        <Button type={modalObj.submitButtonType} onClick={submitClick} buttonType={ButtonType.Modal}>
                             {modalObj.submitTitle}
                         </Button>
                     }
