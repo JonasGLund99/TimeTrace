@@ -50,7 +50,6 @@ export abstract class TREBuilder {
         });
         convertion += "Z)*"
         let newTre: string = tre.replaceAll("z", convertion)
-        console.log(newTre)
         return newTre
     }
 }
