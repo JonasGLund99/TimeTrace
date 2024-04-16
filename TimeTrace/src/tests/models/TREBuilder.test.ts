@@ -1,6 +1,5 @@
 import { TREBuilder } from "../../models/TREBuilder";
 import { CustomMap } from "../../models/Types/EventMapping";
-import { ErrorObject } from '../../context/AppContext';
 
 describe('TREBuilder', () => {
     
