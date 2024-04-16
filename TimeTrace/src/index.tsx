@@ -28,7 +28,7 @@ export default function App() {
         <Modal/>
         <ReactNotifications />
         <Navbar />
-        <div className="w-full h-[94%] p-5">
+        <div className="relative w-full h-[94%] p-5">
           <Loader />
           <Routes>
             <Route path="/" element={<Home />} />

@@ -7,7 +7,7 @@ import MappingInputs from "./MappingInputs";
 import LineContents from "./LineContents";
 import LineNumbers from "./LineNumbers";
 import Searcher from "./searcher/Searcher";
-import AdvancedSearch from "./searcher/AdvancedSearch";
+import { filterAllMappedUnmappedLines } from "../../models/helpers/filterLinesBasedOnShowMode";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -26,6 +26,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
     const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
+    const { shownLinesMode, setShownLinesMode } = useContext(LogTableContext);
 
     useEffect(() => {
         setFilteredFileLines(mapEventsToFileLine(events));
@@ -49,9 +50,9 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const firstMappedLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
         const firstUnmappedLineMatched = document.querySelector(".bg-yellow-100") as HTMLElement;
 
-        let lineToScrollTo : HTMLElement;
+        let lineToScrollTo: HTMLElement;
         if (!firstMappedLineMatched && !firstUnmappedLineMatched) return;
-        
+
         if (!firstMappedLineMatched) {
             lineToScrollTo = firstUnmappedLineMatched;
         }
@@ -79,9 +80,13 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         };
     }, [currentPage]);
 
+    useEffect(() => {
+        setFilteredFileLines(filterAllMappedUnmappedLines(mapEventsToFileLine(events), shownLinesMode, mappings))
+    }, [shownLinesMode])
+
     function searchLog(query: string) {
         if (query === "") {
-            setFilteredFileLines(mapEventsToFileLine(events));
+            setFilteredFileLines(filterAllMappedUnmappedLines(mapEventsToFileLine(events), shownLinesMode, mappings));
             return;
         };
 
@@ -102,15 +107,15 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             filteredFileLines.push({ text: events[index], line: index });
             return true;
         });
-
+        filteredFileLines = filterAllMappedUnmappedLines(filteredFileLines, shownLinesMode, mappings)
         setFilteredFileLines(filteredFileLines);
     }
 
     function searchUsingRegex(query: string) {
         let regex: RegExp
         try {
-            regex = new RegExp(query); 
-        } catch(e) {
+            regex = new RegExp(query);
+        } catch (e) {
             setError({
                 title: "Error trying to interpret regex",
                 errorString: "Regex error <br/><br/>" + e,
@@ -120,14 +125,14 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             })
             return
         }
-        
+
         let filteredFileLines: FileLine[] = [];
         fileLines.forEach((fileLine, index) => {
             if (regex.test(fileLine)) {
                 filteredFileLines.push({ text: events[index], line: index });
             }
         });
-
+        filteredFileLines = filterAllMappedUnmappedLines(filteredFileLines, shownLinesMode, mappings)
         setFilteredFileLines(filteredFileLines);
     }
 
@@ -164,14 +169,12 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     return (
         <div id="fixed-container" className="flex flex-col content-center w-full h-full">
             <div id="top-log-table-title-container" className="flex p-1">
-                <div id="search-container" className="flex flex-col content-center w-full">
-                    <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} mappingsAreEditable={mappingsAreEditable} />
-                </div>
+                <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} mappingsAreEditable={mappingsAreEditable} />
             </div>
             <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">
                 <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} />
                 <LineContents lineIsHighlighted={lineIsHighlighted} fileLines={fileLines} shownLines={shownLines} eventIsMapped={eventIsMapped} filteredFileLines={filteredFileLines} />
-                <MappingInputs lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} fileLines={fileLines}/>
+                <MappingInputs lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} mappingsAreEditable={mappingsAreEditable} fileLines={fileLines} />
             </div>
             {!mappingsAreEditable && matches.length > 0 &&
                 <MatchNavigator linesPerPage={linesPerPage} />
