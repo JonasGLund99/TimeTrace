@@ -23,12 +23,12 @@ function ShowLineToggle() {
 
     return (
         <form className="mb-2">
-            <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block h-8"
+            <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block h-8"
                 onChange={(e) => {
                         handleShowFilterUpdate(e.target.value);
                     }
                 }>
-                <option selected value="all">Show All Lines</option>
+                <option value="all">Show All Lines</option>
                 <option value="mapped">Show Mapped Lines</option>
                 <option value="unmapped">Show Unmapped Lines</option>
             </select>
