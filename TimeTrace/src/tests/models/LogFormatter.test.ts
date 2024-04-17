@@ -50,7 +50,7 @@ describe('LogFormatter', () => {
             mappings.set({key: 'login', isRegex: false}, 'B')
             mappings.set({key: 'logout', isRegex: false}, 'C')
             mappings.set({key: 'updated', isRegex: false}, '')
-            mappings.set({key: 'udated', isRegex: false}, '')
+            mappings.set({key: 'updated', isRegex: false}, '')
             mappings.set({key: 'login', isRegex: false}, 'B')
             mappings.set({key: 'logout', isRegex: false}, 'C')
             mappings.set({key: 'edited', isRegex: false}, 'A');

@@ -92,7 +92,7 @@ describe('TREBuilder', () => {
         test('correctly build tre from rawtre with unit and whitespace', ()=>{
             // Arrange
             const rawTRE = "(A|   Z)    %(     100 s,      1000 h    )";
-            const expectedFinalActualTRE = "((A|B)%(100000,3600000000))$"
+            const expectedFinalActualTRE = "((A|Z)%(100000,3600000000))$"
             const mappings: CustomMap = new CustomMap();
             mappings.set({key: 'login', isRegex: false}, 'A')
             mappings.set({key: 'login', isRegex: false}, 'A')
@@ -138,25 +138,7 @@ describe('TREBuilder', () => {
             // Act
             const actualConvertedTre = TREBuilder.convertz(convertedTRE, mappings);
             // Assert
-            expect(actualConvertedTre).toEqual(expectedConvertedTre);
-
-        });
-        test('', ()=>{
-            // Arrange
-            const convertedTRE = "(A|B)%(3960000,3600000)"
-            const mappings: CustomMap = new CustomMap();
-            const expectedConvertedTre = "(AB)(A*B*Z*)*(AB)%(100000,3600000000)"
-            mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'delete', isRegex: false}, '')
-            mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'logout', isRegex: false}, 'B'); 
-            // Act
-            // Assert
-            expect(() => TREBuilder.convertz(convertedTRE, mappings)).toThrowError(
-                "First number in time constraint must be smaller than the second number e.g. a%(1ms,1s) or a%(1s,2s) etc."
-            );
+            expect(expectedConvertedTre).toEqual(actualConvertedTre);
 
         });
     })

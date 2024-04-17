@@ -106,7 +106,7 @@ describe('TREParser', () => {
                 );
             });
 
-            test('0 Should not throw error as (AC)* & (AB)* are allowed ', ()=>{
+            test('Should not throw error as (AC)* & (AB)* are allowed ', ()=>{
                 // Arrange
                 const trimmedTRE = "(A|B)*&(C|B)*%(10ms,100s)";
                 // Act and Assert
@@ -190,24 +190,6 @@ describe('TREParser', () => {
                 // Act and Assert
                 expect(() => TREParser.validateSymbolMappings(trimmedTRE,mappings)).not.toThrowError();
             });
-
-            test('Should trow error as all event are mapped and Z therefore are invalid symbol', ()=>{
-                // Arrange
-                const trimmedTRE = "((A|C)*(C|Z)*)%(10h,1.2d)";
-                const mappings: CustomMap = new CustomMap();
-                const invalidSymbol = 'Z';
-                mappings.set({key: 'login', isRegex: false}, 'B')
-                mappings.set({key: 'login', isRegex: false}, 'B')
-                mappings.set({key: 'delete', isRegex: false}, 'A')
-                mappings.set({key: 'login', isRegex: false}, 'B')
-                mappings.set({key: 'login', isRegex: false}, 'B')
-                mappings.set({key: 'logout', isRegex: false}, 'C');
-                // Act and Assert
-                expect(() => TREParser.validateSymbolMappings(trimmedTRE,mappings)).toThrowError(
-                    `Symbol '${invalidSymbol}' does not have an event mapped to it.`
-                    );
-            });
-           
         });
 
         describe('convertTimeToms', () => {

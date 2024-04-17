@@ -125,6 +125,7 @@ export abstract class TREParser {
             // Skip special symbols
             if (
                 symbol === "z" ||
+                symbol === "Z" ||
                 symbol === "|" ||
                 symbol === "+" ||
                 symbol === "*" ||
