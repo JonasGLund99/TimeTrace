@@ -6,24 +6,19 @@ import { extractTimeStamp } from "./extractTimeStamp";
 
 
 export function filterAllMappedUnmappedLines(lines: FileLine[], mode: ShowLinesMode, mappings: CustomMap): FileLine[] {
-    let validator: (line: FileLine) => boolean;
-
-    switch (mode) {
-        case ShowLinesMode.ALL:
-            return lines;
-        case ShowLinesMode.MAPPED:
-            validator = (line: FileLine): boolean => {
+    const filtered = lines.filter((line: FileLine) => { //filter that either returns all lines, lines where mapping!==undefined (mapped) or mapping===undefined (unmapped)
+        switch (mode) {
+            case ShowLinesMode.ALL:
+                return true;
+            case ShowLinesMode.MAPPED:
                 return mappings.get(line.text, line.text) !== undefined;
-            };
-            break;
-        case ShowLinesMode.UNMAPPED:
-            validator = (line: FileLine): boolean => {
+            case ShowLinesMode.UNMAPPED:
                 return mappings.get(line.text, line.text) === undefined;
-            };
-            break;
-    }
+            default:
+                return false;
+        }
+    });
 
-    const filtered = lines.filter(validator)
     return filtered;
 
 }
