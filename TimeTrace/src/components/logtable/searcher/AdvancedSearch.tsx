@@ -2,6 +2,9 @@ import { useContext, useState } from "react";
 import { LogTableContext } from "../../../context/LogTableContext";
 import { AppdataContext } from "../../../context/AppContext";
 import { CustomMap } from "../../../models/Types/EventMapping";
+import Button from "../../button/Button";
+import { ButtonStyle } from "../../button/IButtonProps";
+import Tooltip from "../../tooltip/ToolTip";
 interface SearcherProps {
     searchQuery: string;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -28,7 +31,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                 errorString: errorStr,
                 callback: null,
                 callbackTitle: null,
-                is_dismissible: true
+                isDismissible: true
             })
             return
         }
@@ -44,61 +47,65 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
     }
 
     return (
-        <div>
-            <div className="flex">
-                <div className="relative w-full">
-                    <input
-                        id="regex-input"
-                        type="text"
-                        className="w-full pl-12 pr-2 border-2 border-gray-300 rounded-lg"
-                        placeholder="Search using regex... e.g. gr(a|e)y"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        onKeyDown={(e) => listenForEnter(e)}
+            <div>
+                <div className="flex">
+                    <div className="relative w-full">
+                        <Tooltip tooltip="Search in your log using regex or plain text.">
+                            <input
+                                id="regex-input"
+                                type="text"
+                                className="w-full pl-12 pr-2 border-2 border-gray-300 rounded-lg"
+                                placeholder="Search using regex... e.g. gr(a|e)y"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onKeyDown={(e) => listenForEnter(e)}
+                                ></input>
+                        </Tooltip>
+                        <Button
+                            buttonStyle={ButtonStyle.None}
+                            style={{ style: "absolute top-0 left-0 h-full flex items-center justify-center h-full px-2 rounded-l-lg bg-gray-800 hover:bg-gray-700" }}
+                            onClick={() => searchLog(searchQuery)}
                         >
-                        </input>
-                    <button
-                        className="absolute top-0 left-0 flex items-center justify-center h-full px-2 bg-gray-800 rounded-l-lg hover:bg-gray-700"
-                        onClick={() => searchLog(searchQuery)}
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-6 h-6 text-gray-400"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15 11a4 4 0 11-8 0 4 4 0 018 0z"
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-6 h-6 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 11a4 4 0 11-8 0 4 4 0 018 0z"
+                                    />
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M17.5 17.5l2.5 2.5"
+                                    />
+                            </svg>
+                        </Button>
+                    </div>
+                    <Tooltip tooltip="Map found events to a value.">
+                        <input
+                            id="map-regex-to-value"
+                            className="w-20 px-2 mx-2 text-center border-2 border-gray-300 rounded-lg"
+                            type="text"
+                            placeholder="map to..."
+                            maxLength={1}
+                            value={regexMapValue}
+                            onChange={(e) => setRegexMapValue(e.target.value)}
                             />
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M17.5 17.5l2.5 2.5"
-                            />
-                        </svg>
-                    </button>
+                    </Tooltip>
+                    <Button tooltip="Create the mapping for all lines matched by your search." onClick={mapEventsUsingRegex} style={{style: 'relative'}} >
+                        <label htmlFor="" className="px-6 rounded-md cursor-pointer">
+                            Confirm
+                        </label>
+                    </Button>
                 </div>
-                <input
-                    id="map-regex-to-value"
-                    className="w-20 px-2 mx-2 text-center border-2 border-gray-300 rounded-lg"
-                    type="text"
-                    placeholder="map to..."
-                    maxLength={1}
-                    value={regexMapValue}
-                    onChange={(e) => setRegexMapValue(e.target.value)}
-                />
-                <button onClick={mapEventsUsingRegex} className="relative text-sm text-white bg-gray-800 rounded-lg h-7 hover:bg-gray-700">
-                    <label htmlFor="" className="px-6 rounded-md cursor-pointer">
-                        Confirm
-                    </label>
-                </button>
             </div>
-        </div>
     );
 }
 

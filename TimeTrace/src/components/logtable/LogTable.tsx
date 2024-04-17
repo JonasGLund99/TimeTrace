@@ -21,7 +21,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { setError } = useContext(AppdataContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const { currentPage, setCurrentPage } = useContext(LogTableContext);
-    const { advancedSearchMode, setAdvancedSearchMode } = useContext(LogTableContext);
+    const { advancedSearchMode } = useContext(LogTableContext);
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
     const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
     const linesPerPage = 100;
@@ -121,7 +121,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 errorString: "Regex error <br/><br/>" + e,
                 callback: null,
                 callbackTitle: null,
-                is_dismissible: true
+                isDismissible: true
             })
             return
         }

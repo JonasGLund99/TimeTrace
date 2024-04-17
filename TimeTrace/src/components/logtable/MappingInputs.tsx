@@ -4,6 +4,9 @@ import { FileLine } from '../../models/Types/FileLine';
 import { cn } from "../../models/helpers/cn";
 import Trashcan from "../svgs/Trashcan";
 import { CustomMap } from "../../models/Types/EventMapping";
+import Button from "../button/Button";
+import { ButtonStyle } from "../button/IButtonProps";
+import Tooltip from "../tooltip/ToolTip";
 
 interface MappingInputsProps {
     lineIsHighlighted: (line: number) => boolean;
@@ -46,19 +49,21 @@ function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, 
                         ? eventIsMapped(fileLine) ? "bg-yellow-200" : "bg-yellow-100"
                         : "even:bg-white odd:bg-gray-100",
                     "flex items-center justify-end gap-1 py-2 pl-2 pr-1")}>
-                    <input
-                        className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
-                        type="text"
-                        readOnly={mappingsAreEditable ? false : true}
-                        value={mappings.get(fileLine.text, fileLines[fileLine.line]) || ''}
-                        onChange={(event) => {
-                            handleMappingChange(event.target.value, fileLine.line);
-                        }}
-                    />
+                    <Tooltip tooltip={`${(mappings.get(fileLine.text, fileLines[fileLine.line]) || '') === '' ? 'Map event to a value' : 'Event is mapped to ' + (mappings.get(fileLine.text, fileLines[fileLine.line]) || '') + '.'}`}>
+                        <input
+                            className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
+                            type="text"
+                            readOnly={mappingsAreEditable ? false : true}
+                            value={mappings.get(fileLine.text, fileLines[fileLine.line]) || ''}
+                            onChange={(event) => {
+                                handleMappingChange(event.target.value, fileLine.line);
+                            }}
+                            />
+                    </Tooltip>
                     {mappingsAreEditable &&
-                        <button onClick={() => {removeMapping(fileLine.line)}}>
+                        <Button tooltip="Remove mapping." buttonStyle={ButtonStyle.None} onClick={() => {removeMapping(fileLine.line)}}>
                             <Trashcan />
-                        </button>
+                        </Button>
                     }
                 </div>
             ))}
