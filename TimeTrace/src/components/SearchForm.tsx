@@ -68,7 +68,7 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
 
     return (
         <Tooltip tooltip={tooltip}>
-            <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+            <form className="w-[40vw] mx-auto" onSubmit={handleSubmit}>
                 <div className="relative">
                     <div className="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
                         <svg className="w-4 h-4 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
