@@ -18,15 +18,17 @@ import Loader from './components/Loader';
 
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
+import Modal from './components/modal/Modal';
 
 export default function App() {
   return (
     <BrowserRouter>
       <AppdataProvider>
         <Warning />
+        <Modal/>
         <ReactNotifications />
         <Navbar />
-        <div className="w-full h-[94%] p-5">
+        <div className="relative w-full h-[94%] p-5">
           <Loader />
           <Routes>
             <Route path="/" element={<Home />} />

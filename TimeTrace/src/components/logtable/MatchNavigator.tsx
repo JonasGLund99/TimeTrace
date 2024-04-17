@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AppdataContext } from "../../context/AppContext";
 import { LogTableContext } from "../../context/LogTableContext";
+import Button from "../button/Button";
 
 interface MatchNavigatorProps {
     linesPerPage: number;
@@ -46,10 +47,7 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
 
     return (
         <div id="matches-buttons" className="mt-4 w-full h-[10%] flex flex-row justify-center items-center gap-20 ">
-            <button className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700 "
-                onClick={() => { handlePreviousMatchClick() }}>
-                Previous match
-            </button>
+            <Button style={{style: 'px-4 py-2'}} onClick={() => { handlePreviousMatchClick() }}>Previous match</Button>
             <pre id="monaa-match-input" className="text-gray-800 ">
                 {/* TODO:
                 <input
@@ -65,10 +63,10 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
                     }} /> */}
                 {monaaMatchIndex + 1} / {matches.length}
             </pre>
-            <button className="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700"
+            <Button style={{style: 'px-4 py-2'}}
                 onClick={() => handeNextMatchClick()}>
                 Next match
-            </button>
+            </Button>
         </div>
     );
 }

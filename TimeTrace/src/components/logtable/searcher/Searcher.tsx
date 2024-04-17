@@ -2,6 +2,10 @@ import { useContext } from "react";
 import { LogTableContext } from "../../../context/LogTableContext";
 import AdvancedSearch from "./AdvancedSearch";
 import StandardSearch from "./StandardSearch";
+import Button from "../../button/Button";
+import { ButtonStyle } from "../../button/IButtonProps";
+import ShowLineToggle from "./ToggleShowLines";
+import Tooltip from "../../tooltip/ToolTip";
 
 interface SearcherProps {
     searchQuery: string;
@@ -10,38 +14,42 @@ interface SearcherProps {
     mappingsAreEditable: boolean;
 }
 
-function Searcher({searchQuery, setSearchQuery, searchLog, mappingsAreEditable}: SearcherProps) {
+function Searcher({ searchQuery, setSearchQuery, searchLog, mappingsAreEditable }: SearcherProps) {
 
     const { advancedSearchMode, setAdvancedSearchMode } = useContext(LogTableContext);
 
     const handleSearchModeChange = () => {
-        setAdvancedSearchMode(prevMode => !prevMode); 
+        setAdvancedSearchMode(prevMode => !prevMode);
     };
 
     return (
-        <div>
-            {mappingsAreEditable && 
-                (
-                    <div className="relative w-full mb-2 rounded-md border h-10 p-1 bg-gray-200">
-                        <div className="relative w-full h-full flex items-center">
-                            <div  className="w-full flex justify-center text-gray-400 cursor-pointer">
-                                <button className="w-full" onClick={handleSearchModeChange}>Standard Search Mode</button>
+        <div className="w-full">
+                <ShowLineToggle></ShowLineToggle>
+            <div id="search-container" className="flex flex-col content-center w-full">
+                {mappingsAreEditable &&
+                    (
+                        <div className="relative w-full h-10 p-1 mb-2 bg-gray-200 border rounded-md">
+                            <div className="relative flex items-center w-full h-full">
+                                <div className="flex justify-center w-full text-gray-400 cursor-pointer">
+                                    <Button tooltip="Search in your log with plain text." buttonStyle={ButtonStyle.None} style={{style: 'w-full'}} onClick={handleSearchModeChange}>Standard Search Mode</Button>
+                                </div>
+                                <div className="flex justify-center w-full text-gray-400 cursor-pointer">
+                                    <Button tooltip="Search in your log with regex or plain text." buttonStyle={ButtonStyle.None} style={{style: 'w-full'}} onClick={handleSearchModeChange}>Advanced Search Mode</Button>
+                                </div>
                             </div>
-                            <div className="w-full flex justify-center text-gray-400 cursor-pointer">
-                                <button className="w-full" onClick={handleSearchModeChange}>Advanced Search Mode</button>
-                            </div>
+                            <span className={`bg-white shadow text-sm flex items-center justify-center w-1/2 rounded h-[1.88rem] transition-all duration-500 ease-in-out top-[4px] absolute ${!advancedSearchMode ? 'left-1 font-semibold' : 'left-1/2 -ml-1 font-semibold'}`}
+                                children={!advancedSearchMode ? 'Standard Searching...' : 'Searching using regex...'}
+                            ></span>
                         </div>
-                        <span className={`bg-white shadow text-sm flex items-center justify-center w-1/2 rounded h-[1.88rem] transition-all duration-500 ease-in-out top-[4px] absolute ${!advancedSearchMode ? 'left-1 font-semibold' : 'left-1/2 -ml-1 font-semibold'}`}
-                            children={!advancedSearchMode ? 'Standard Searching...' : 'Searching using regex...'}
-                        ></span>
-                    </div>
-                )
-            }   
-            
-            {advancedSearchMode 
-                ? <AdvancedSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog}/>
-                : <StandardSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog}/>
-            }
+                    )
+                }
+
+                {advancedSearchMode
+                    ? <AdvancedSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} />
+                    : <StandardSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} />
+                }
+
+            </div>
         </div>
     );
 }

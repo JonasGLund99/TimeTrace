@@ -7,6 +7,7 @@ import MappingInputs from "./MappingInputs";
 import LineContents from "./LineContents";
 import LineNumbers from "./LineNumbers";
 import Searcher from "./searcher/Searcher";
+import { filterAllMappedUnmappedLines } from "../../models/helpers/filterLinesBasedOnShowMode";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -25,6 +26,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { shownLines, setShownLines } = useContext(LogTableContext);
     const { linesPerPage } = useContext(LogTableContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const { shownLinesMode, setShownLinesMode } = useContext(LogTableContext);
 
     useEffect(() => {
         setFilteredFileLines(mapEventsToFileLine(events));
@@ -72,9 +74,13 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         };
     }, [currentPageSpan]);
 
+    useEffect(() => {
+        setFilteredFileLines(filterAllMappedUnmappedLines(mapEventsToFileLine(events), shownLinesMode, mappings))
+    }, [shownLinesMode])
+
     function searchLog(query: string) {
         if (query === "") {
-            setFilteredFileLines(mapEventsToFileLine(events));
+            setFilteredFileLines(filterAllMappedUnmappedLines(mapEventsToFileLine(events), shownLinesMode, mappings));
             return;
         };
 
@@ -94,7 +100,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             filteredFileLines.push({ text: events[index], line: index });
             return true;
         });
-
+        filteredFileLines = filterAllMappedUnmappedLines(filteredFileLines, shownLinesMode, mappings)
         setFilteredFileLines(filteredFileLines);
     }
 
@@ -108,7 +114,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 errorString: "Regex error <br/><br/>" + e,
                 callback: null,
                 callbackTitle: null,
-                is_dismissible: true
+                isDismissible: true
             })
             return
         }
@@ -119,7 +125,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 filteredFileLines.push({ text: events[index], line: index });
             }
         });
-
+        filteredFileLines = filterAllMappedUnmappedLines(filteredFileLines, shownLinesMode, mappings)
         setFilteredFileLines(filteredFileLines);
     }
 
@@ -178,9 +184,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     return (
         <div id="fixed-container" className="flex flex-col content-center w-full h-full">
             <div id="top-log-table-title-container" className="flex p-1">
-                <div id="search-container" className="flex flex-col content-center w-full">
-                    <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} mappingsAreEditable={mappingsAreEditable} />
-                </div>
+                <Searcher searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchLog={searchLog} mappingsAreEditable={mappingsAreEditable} />
             </div>
             <div id="log-table" className="relative flex h-full pt-0 overflow-auto border-2 border-gray-300 rounded-md">
                 <LineNumbers lineIsHighlighted={lineIsHighlighted} shownLines={shownLines} eventIsMapped={eventIsMapped} />
