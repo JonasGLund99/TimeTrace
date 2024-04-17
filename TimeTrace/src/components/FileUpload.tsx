@@ -8,6 +8,8 @@ import FileUploadLogo from "./svgs/FileUploadLogo";
 import { Store } from 'react-notifications-component';
 import { CustomMap } from "../models/Types/EventMapping";
 import DateFormatChooser from "./DateFormatChooser";
+import Button from './button/Button';
+import { ButtonStyle } from "./button/IButtonProps";
 
 interface FileUploadProps {
     showDateFormatChooser?: boolean;
@@ -108,7 +110,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                     errorString: "Error duing upload of file <br/> <br/>" + e,
                     callback: null,
                     callbackTitle: null,
-                    is_dismissible: true
+                    isDismissible: true
                 })
                 //reset
                 setFileLines([]);
@@ -157,8 +159,8 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         className="hidden"
                         onChange={handleFileUpload}
                     />
-                    <button className="relative py-2 text-sm font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-700">
-                        <label htmlFor="contained-button-file" className="px-6 py-2 rounded-md cursor-pointer">
+                    <Button style={{style: 'relative '}} tooltip="Upload a file.">
+                        <label htmlFor="contained-button-file" className="flex items-center px-6 py-4 rounded-md cursor-pointer">
                             {
                                 uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
                             }
@@ -167,14 +169,14 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                             uploadedFile === null &&
                             <span id="ping" className="absolute top-[-3px] right-[-3px] block w-3 h-3 bg-yellow-200 rounded-full animate-ping ring-1 ring-yellow-200" style={{ animationDuration: '2s', animationTimingFunction: 'ease-out' }}></span>
                         }
-                    </button>
+                    </Button>
                     {!uploadedFile && showDateFormatChooser &&
-                        <DateFormatChooser />
+                        <DateFormatChooser tooltip="Select your date format." />
                     }
                     {uploadedFile &&
-                        <button onClick={handleFileRemove} data-testid="remove-button">
+                        <Button tooltip={`Remove uploaded file (${uploadedFile.name}).`} buttonStyle={ButtonStyle.None} onClick={handleFileRemove} data-testid="remove-button">
                             <Trashcan />
-                        </button>
+                        </Button>
                     }
                 </div>
             }

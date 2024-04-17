@@ -19,15 +19,15 @@ function MappingsPage() {
     }, [])
 
     return (
-        <div id="mappings-page" className="flex flex-row h-full gap-5" >
+        <div id="mappings-page" className="flex flex-col h-full gap-5 md:flex-row" >
             <LogTableProvider>
-                <div className="w-[40%]">
+                <div className="w-full md:w-[40%]">
                     <FileUpload asDragAndDrop={false} showDateFormatChooser={true} />
                     <div className="h-[95%]">
                         <MappedItemsList />
                     </div>
                 </div>
-                <div className="w-[60%] h-full">
+                <div className="w-full md:w-[60%] h-full">
                     <LogTable mappingsAreEditable={true} />
                 </div>
             </LogTableProvider>
