@@ -162,12 +162,12 @@ describe('TREParser', () => {
         describe('validateSymbolMappings', () => {
             test('Should trow error as symbol C in not mapped to event', ()=>{
                 // Arrange
-                const trimmedTRE = "((A|C)*(A|Z)*)%(10ms,100s)";
+                const trimmedTRE = "((A|C)*(A|B)*)%(10ms,100s)";
                 const mappings: CustomMap = new CustomMap();
                 const invalidSymbol = 'C';
                 mappings.set({key: 'login', isRegex: false}, 'A')
                 mappings.set({key: 'login', isRegex: false}, 'A')
-                mappings.set({key: 'delete', isRegex: false}, 'Z')
+                mappings.set({key: 'delete', isRegex: false}, '')
                 mappings.set({key: 'login', isRegex: false}, 'A')
                 mappings.set({key: 'login', isRegex: false}, 'A')
                 mappings.set({key: 'logout', isRegex: false}, 'B');
@@ -179,14 +179,14 @@ describe('TREParser', () => {
 
            test('Should not trow error as z event are ignored', ()=>{
                 // Arrange
-                const trimmedTRE = "((A|z)*(A|Z)*)%(10ms,100s)";
+                const trimmedTRE = "((A|z)*(A|C)*)%(10ms,100s)";
                 const mappings: CustomMap = new CustomMap();
-                mappings.set({key: 'login', isRegex: false}, 'Z')
-                mappings.set({key: 'login', isRegex: false}, 'Z')
+                mappings.set({key: 'login', isRegex: false}, 'C')
+                mappings.set({key: 'login', isRegex: false}, 'C')
                 mappings.set({key: 'delete', isRegex: false}, 'A')
-                mappings.set({key: 'login', isRegex: false}, 'Z')
-                mappings.set({key: 'login', isRegex: false}, 'Z')
-                mappings.set({key: 'logout', isRegex: false}, 'B');
+                mappings.set({key: 'login', isRegex: false}, 'C')
+                mappings.set({key: 'login', isRegex: false}, 'C')
+                mappings.set({key: 'logout', isRegex: false}, '');
                 // Act and Assert
                 expect(() => TREParser.validateSymbolMappings(trimmedTRE,mappings)).not.toThrowError();
             });

@@ -15,7 +15,7 @@ describe('LogFormatter', () => {
             const mappings: CustomMap = new CustomMap();
             mappings.set({key: 'login', isRegex: false}, 'A')
             mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'delete', isRegex: false}, 'Z')
+            mappings.set({key: 'delete', isRegex: false}, '')
             mappings.set({key: 'login', isRegex: false}, 'A')
             mappings.set({key: 'login', isRegex: false}, 'A')
             mappings.set({key: 'logout', isRegex: false}, 'B'); 
