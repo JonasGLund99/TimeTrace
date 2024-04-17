@@ -95,10 +95,7 @@ describe('TREBuilder', () => {
             const expectedFinalActualTRE = "((A|Z)%(100000,3600000000))$"
             const mappings: CustomMap = new CustomMap();
             mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'login', isRegex: false}, 'A')
             mappings.set({key: 'delete', isRegex: false}, '')
-            mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'login', isRegex: false}, 'A')
             mappings.set({key: 'logout', isRegex: false}, 'B'); 
             // Act
             const finalActualTRE = TREBuilder.buildTRE(rawTRE, mappings);
@@ -112,10 +109,7 @@ describe('TREBuilder', () => {
             // const expectedFinalActualTRE = "((A|B)%(3960000,3600000))$"
             const mappings: CustomMap = new CustomMap();
             mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'login', isRegex: false}, 'A')
             mappings.set({key: 'delete', isRegex: false}, '')
-            mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'login', isRegex: false}, 'A')
             mappings.set({key: 'logout', isRegex: false}, 'B'); 
             // Act
             // Assert
@@ -139,6 +133,22 @@ describe('TREBuilder', () => {
             const actualConvertedTre = TREBuilder.convertz(convertedTRE, mappings);
             // Assert
             expect(expectedConvertedTre).toEqual(actualConvertedTre);
+
+        });
+    })
+    describe('convertz', () => {
+        test('', ()=>{
+            // Arrange
+            const convertedTRE = "(AB)z*(AB)%(100000,3600000000)"
+            const expectedConvertedTre = "(AB)(A|B|Z)*(AB)%(100000,3600000000)"
+            const mappings: CustomMap = new CustomMap();
+            mappings.set({key: 'delete', isRegex: false}, '')
+            mappings.set({key: 'login', isRegex: false}, 'A')  
+            mappings.set({key: 'logout', isRegex: false}, 'B'); 
+            // Act
+            const actualConvertedTre = TREBuilder.convertz(convertedTRE, mappings);
+            // Assert
+            expect(actualConvertedTre).toEqual(expectedConvertedTre);
 
         });
     })

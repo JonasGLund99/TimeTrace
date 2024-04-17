@@ -166,10 +166,7 @@ describe('TREParser', () => {
                 const mappings: CustomMap = new CustomMap();
                 const invalidSymbol = 'C';
                 mappings.set({key: 'login', isRegex: false}, 'A')
-                mappings.set({key: 'login', isRegex: false}, 'A')
                 mappings.set({key: 'delete', isRegex: false}, '')
-                mappings.set({key: 'login', isRegex: false}, 'A')
-                mappings.set({key: 'login', isRegex: false}, 'A')
                 mappings.set({key: 'logout', isRegex: false}, 'B');
                 // Act and Assert
                 expect(() => TREParser.validateSymbolMappings(trimmedTRE,mappings)).toThrowError(
@@ -182,10 +179,7 @@ describe('TREParser', () => {
                 const trimmedTRE = "((A|z)*(A|C)*)%(10ms,100s)";
                 const mappings: CustomMap = new CustomMap();
                 mappings.set({key: 'login', isRegex: false}, 'C')
-                mappings.set({key: 'login', isRegex: false}, 'C')
                 mappings.set({key: 'delete', isRegex: false}, 'A')
-                mappings.set({key: 'login', isRegex: false}, 'C')
-                mappings.set({key: 'login', isRegex: false}, 'C')
                 mappings.set({key: 'logout', isRegex: false}, '');
                 // Act and Assert
                 expect(() => TREParser.validateSymbolMappings(trimmedTRE,mappings)).not.toThrowError();
