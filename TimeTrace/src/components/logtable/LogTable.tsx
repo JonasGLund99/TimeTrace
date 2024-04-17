@@ -19,13 +19,13 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { fileLines } = useContext(AppdataContext);
     const { matches } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
-    const [searchQuery, setSearchQuery] = useState<string>("");
-    const { currentPage, setCurrentPage } = useContext(LogTableContext);
+    const { currentPageSpan, setCurrentPageSpan } = useContext(LogTableContext);
     const { advancedSearchMode } = useContext(LogTableContext);
     const { monaaMatchIndex, setMonaaMatchIndex } = useContext(LogTableContext);
-    const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
-    const linesPerPage = 100;
-    const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
+    const { filteredFileLines, setFilteredFileLines } = useContext(LogTableContext);
+    const { shownLines, setShownLines } = useContext(LogTableContext);
+    const { linesPerPage } = useContext(LogTableContext);
+    const [searchQuery, setSearchQuery] = useState<string>("");
     const { shownLinesMode, setShownLinesMode } = useContext(LogTableContext);
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
 
     useEffect(() => {
         setShownLines(filteredFileLines.slice(0, linesPerPage));
-        setCurrentPage(0);
+        setCurrentPageSpan({ min: 0, max: 1 });
         const logTable = document.querySelector("#log-table");
         if (logTable) logTable.scrollTo({ top: 0, behavior: 'smooth' });
     }, [filteredFileLines]);
@@ -47,8 +47,8 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const logTable = document.querySelector("#log-table");
         if (!logTable) return;
 
-        const firstMappedLineMatched = document.querySelector(".bg-yellow-200") as HTMLElement;
-        const firstUnmappedLineMatched = document.querySelector(".bg-yellow-100") as HTMLElement;
+        const firstMappedLineMatched = document.querySelector(".mapped-line") as HTMLElement;
+        const firstUnmappedLineMatched = document.querySelector(".unmapped-line") as HTMLElement;
 
         let lineToScrollTo: HTMLElement;
         if (!firstMappedLineMatched && !firstUnmappedLineMatched) return;
@@ -62,14 +62,8 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         else {
             lineToScrollTo = firstMappedLineMatched.offsetTop < firstUnmappedLineMatched.offsetTop ? firstMappedLineMatched : firstUnmappedLineMatched;
         }
-        logTable.scrollTo({ top: lineToScrollTo.offsetTop, behavior: 'smooth' });
+        logTable.scrollTo({ top: lineToScrollTo.offsetTop });
     }, [monaaMatchIndex]);
-
-    useEffect(() => {
-        if (currentPage !== 0) {
-            setShownLines(shownLines => [...shownLines, ...(filteredFileLines.slice(linesPerPage * currentPage, linesPerPage * (currentPage + 1)))]);
-        }
-    }, [currentPage]);
 
     useEffect(() => {
         const logTable = document.querySelector("#log-table");
@@ -78,7 +72,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         return () => {
             logTable.removeEventListener('scroll', handleScroll);
         };
-    }, [currentPage]);
+    }, [currentPageSpan]);
 
     useEffect(() => {
         setFilteredFileLines(filterAllMappedUnmappedLines(mapEventsToFileLine(events), shownLinesMode, mappings))
@@ -95,7 +89,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         } else {
             searchStandard(query)
         }
-
     }
 
     function searchStandard(query: string) {
@@ -141,9 +134,31 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         if (!logTable) return;
         const scrollY = logTable.scrollTop;
         const windowHeight = logTable.clientHeight;
-        const documentHeight = logTable.scrollHeight;
-        if (scrollY + windowHeight >= documentHeight - 100) {
-            setCurrentPage(currentPage + 1);
+        const fullHeight = logTable.scrollHeight;
+        const scrollOffset = 100;
+        const scrollBottom: boolean = scrollY + windowHeight >= fullHeight - scrollOffset;
+        const scrollTop: boolean = scrollY <= scrollOffset;
+        
+        if (scrollBottom) {
+            const nextPage = currentPageSpan.max + 1;
+            setShownLines(shownLines => [...shownLines, ...(filteredFileLines.slice(linesPerPage * currentPageSpan.max, linesPerPage * nextPage))]);
+            setCurrentPageSpan({
+                min: currentPageSpan.min,
+                max: nextPage
+            });
+        }
+        else if (scrollTop) {
+            if (currentPageSpan.min === 0) return;
+            const prevPage = currentPageSpan.min - 1;
+            const container = logTable.querySelector("#linecontents-container") as HTMLElement;
+            if (!container) return;
+            const topLine = container.firstElementChild as HTMLElement;
+            setShownLines(filteredFileLines.slice(linesPerPage * prevPage, linesPerPage * currentPageSpan.max));
+            logTable.scrollTo({ top: (topLine.offsetHeight * linesPerPage + scrollOffset) });
+            setCurrentPageSpan({
+                min: prevPage,
+                max: currentPageSpan.max
+            });
         }
     };
 

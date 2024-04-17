@@ -1,4 +1,12 @@
-import { createContext, ReactNode, useState, Dispatch, SetStateAction } from "react";
+import { useContext, createContext, ReactNode, useState, Dispatch, SetStateAction } from "react";
+import { FileLine } from "../models/FileLine";
+import { mapEventsToFileLine } from "../models/Types/FileLine";
+import { AppdataContext } from "./AppContext";
+
+interface PageSpan {
+    min: number;
+    max: number;
+}
 
 export enum ShowLinesMode {
     ALL = "all",
@@ -9,24 +17,34 @@ export enum ShowLinesMode {
 export type LogTableContextInterface = {
     monaaMatchIndex: number;
     setMonaaMatchIndex: Dispatch<SetStateAction<number>>;
-    currentPage: number;
-    setCurrentPage: Dispatch<SetStateAction<number>>;
+    currentPageSpan: PageSpan;
+    setCurrentPageSpan: Dispatch<SetStateAction<PageSpan>>;
     advancedSearchMode: boolean;
     setAdvancedSearchMode: Dispatch<SetStateAction<boolean>>;
+    shownLines: FileLine[];
+    setShownLines: Dispatch<SetStateAction<FileLine[]>>;
     shownLinesMode: ShowLinesMode;
     setShownLinesMode: Dispatch<SetStateAction<ShowLinesMode>>;
+    filteredFileLines: FileLine[];
+    setFilteredFileLines: Dispatch<SetStateAction<FileLine[]>>;
+    linesPerPage: number;
 }
 
 const defaultState: LogTableContextInterface = {
     monaaMatchIndex: -1,
     setMonaaMatchIndex: () => { },
-    currentPage: 0,
-    setCurrentPage: () => { }, 
+    currentPageSpan: { min: 0, max: 1 },
+    setCurrentPageSpan: () => { },
     advancedSearchMode: false,
-    setAdvancedSearchMode: () => { }, 
+    setAdvancedSearchMode: () => { },
+    shownLines: [],
+    setShownLines: () => { },
     shownLinesMode: ShowLinesMode.ALL,
-    setShownLinesMode: () => { } 
-};
+    setShownLinesMode: () => { },
+    filteredFileLines: [],
+    setFilteredFileLines: () => { },
+    linesPerPage: 100
+} as LogTableContextInterface;
 
 export const LogTableContext = createContext<LogTableContextInterface>(defaultState);
 
@@ -36,12 +54,16 @@ type LogTableProviderProps = {
 
 export default function LogTableProvider({ children }: LogTableProviderProps) {
     const [monaaMatchIndex, setMonaaMatchIndex] = useState<number>(-1);
-    const [currentPage, setCurrentPage] = useState<number>(0);
-    const [advancedSearchMode, setAdvancedSearchMode] = useState<boolean>(false);
+    const [currentPageSpan, setCurrentPageSpan] = useState<PageSpan>({ min: 0, max: 1 });
+    const [advancedSearchMode, setAdvancedSearchMode] = useState(false);
+    const { events } = useContext(AppdataContext);
+    const [filteredFileLines, setFilteredFileLines] = useState<FileLine[]>(mapEventsToFileLine(events));
+    const linesPerPage = 100;
+    const [shownLines, setShownLines] = useState<FileLine[]>(filteredFileLines.slice(0, linesPerPage));
     const [shownLinesMode, setShownLinesMode] = useState<ShowLinesMode>(ShowLinesMode.ALL);
 
     return (
-        <LogTableContext.Provider value={{ monaaMatchIndex, setMonaaMatchIndex, currentPage, setCurrentPage, advancedSearchMode, setAdvancedSearchMode, shownLinesMode, setShownLinesMode }}>
+        < LogTableContext.Provider value={{ monaaMatchIndex, setMonaaMatchIndex, currentPageSpan, setCurrentPageSpan, advancedSearchMode, setAdvancedSearchMode, filteredFileLines, setFilteredFileLines, shownLines, setShownLines, shownLinesMode, setShownLinesMode, linesPerPage }}>
             {children}
         </LogTableContext.Provider>
     );

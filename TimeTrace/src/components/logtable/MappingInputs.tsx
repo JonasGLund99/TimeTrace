@@ -44,13 +44,14 @@ function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, 
     return (
         <div className="sticky right-0 flex flex-col mapping-container">
             {shownLines.map((fileLine: FileLine) => (
-                <div key={fileLine.line} className={cn(
+                <div key={"mappinginput" + fileLine.line} className={cn(
                     lineIsHighlighted(fileLine.line)
                         ? eventIsMapped(fileLine) ? "bg-yellow-200" : "bg-yellow-100"
                         : "even:bg-white odd:bg-gray-100",
                     "flex items-center justify-end gap-1 py-2 pl-2 pr-1")}>
                     <Tooltip tooltip={`${(mappings.get(fileLine.text, fileLines[fileLine.line]) || '') === '' ? 'Map event to a value' : 'Event is mapped to ' + (mappings.get(fileLine.text, fileLines[fileLine.line]) || '') + '.'}`}>
                         <input
+                            key={"input" + fileLine.line}
                             className="w-6 h-6 text-center border-2 border-gray-300 rounded-md"
                             type="text"
                             readOnly={mappingsAreEditable ? false : true}
@@ -58,7 +59,7 @@ function MappingInputs({ lineIsHighlighted, eventIsMapped, mappingsAreEditable, 
                             onChange={(event) => {
                                 handleMappingChange(event.target.value, fileLine.line);
                             }}
-                            />
+                        />
                     </Tooltip>
                     {mappingsAreEditable &&
                         <Button tooltip="Remove mapping." buttonStyle={ButtonStyle.None} onClick={() => {removeMapping(fileLine.line)}}>

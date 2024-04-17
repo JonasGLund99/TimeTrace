@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { MonaaZone } from "../models/MonaaZone";
 import { DateFormat } from "../models/helpers/dateFormats";
 import { CustomMap } from "../models/Types/EventMapping";
@@ -86,6 +86,12 @@ export default function AppdataProvider({ children }: AppDataProvideProps) {
     const [tre, setTre] = useState<string>("");
     const [dateFormat, setDateFormat] = useState<string>(DateFormat.ISO_8601);
     const [modalObj, setModal] = useState<ModalObject | null>(null);
+
+    // Reset matches and TRE when mappings change
+    useEffect(() => {
+        setMatches([]);
+        setTre("");
+    }, [mappings]);
 
     return (
         <AppdataContext.Provider value={{ modalObj, setModal, events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading, tre, setTre, dateFormat, setDateFormat }}>

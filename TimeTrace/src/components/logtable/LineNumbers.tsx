@@ -11,7 +11,7 @@ function LineNumbers({ lineIsHighlighted, eventIsMapped, shownLines }: LineNumbe
     return (
         <div id="lineNumber-container" className="sticky left-0">
             {shownLines.map((fileLine: FileLine) => {
-                return <pre key={fileLine.line} className={cn(
+                return <pre key={"linenumber" + fileLine.line} className={cn(
                     lineIsHighlighted(fileLine.line)
                         ? eventIsMapped(fileLine) ? "bg-yellow-200" : "bg-yellow-100"
                         : "even:bg-white odd:bg-gray-100",
