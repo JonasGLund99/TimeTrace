@@ -136,20 +136,4 @@ describe('TREBuilder', () => {
 
         });
     })
-    describe('convertz', () => {
-        test('', ()=>{
-            // Arrange
-            const convertedTRE = "(AB)z*(AB)%(100000,3600000000)"
-            const expectedConvertedTre = "(AB)(A|B|Z)*(AB)%(100000,3600000000)"
-            const mappings: CustomMap = new CustomMap();
-            mappings.set({key: 'delete', isRegex: false}, '')
-            mappings.set({key: 'login', isRegex: false}, 'A')  
-            mappings.set({key: 'logout', isRegex: false}, 'B'); 
-            // Act
-            const actualConvertedTre = TREBuilder.convertz(convertedTRE, mappings);
-            // Assert
-            expect(actualConvertedTre).toEqual(expectedConvertedTre);
-
-        });
-    })
 })

@@ -93,6 +93,11 @@ export abstract class TREParser {
     }
 
     public static validateSpecialChars(tre: string): void {
+        const expressionWithSmallZFollowedByStar = /z\*/g;
+        const invalidExpressionWithSmallZFollowedByStar = tre.match(expressionWithSmallZFollowedByStar);
+        if (invalidExpressionWithSmallZFollowedByStar && invalidExpressionWithSmallZFollowedByStar.length > 0) {
+            throw new Error(`Expression ${invalidExpressionWithSmallZFollowedByStar[0]} is not allowed. "*" cannot be used after z as this is inferred as (a|b|c|....|Z)*.`);
+        }
         const expressionWithoutSymbolBefore = /(?<![a-zA-Z)*+])([+*&|]+)/g;
         const invalidExpressionBefore = tre.match(expressionWithoutSymbolBefore);
         if (invalidExpressionBefore && invalidExpressionBefore.length > 0) {

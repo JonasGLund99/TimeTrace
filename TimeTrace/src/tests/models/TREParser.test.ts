@@ -75,6 +75,15 @@ describe('TREParser', () => {
                     `Expression ${invalidSpecialCharacter} must be preceded by a mapped symbol.`
                 );
            });
+           test('Should trow error as * is not allowed after z', ()=>{
+                // Arrange
+                const trimmedTRE = "((A|C)z*(A|Z)*)%(10ms,100s)";
+                const invalidSpecialCharacter = "z*"
+                // Act and Assert
+                expect(() => TREParser.validateSpecialChars(trimmedTRE)).toThrowError(
+                    `Expression ${invalidSpecialCharacter} is not allowed. "*" cannot be used after z as this is inferred as (a|b|c|....|Z)*.`
+                );
+            });
 
            test('Should trow error as no symbol after | in TRE', ()=>{
                 // Arrange
