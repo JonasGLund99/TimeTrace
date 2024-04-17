@@ -61,7 +61,7 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
                 errorString: "An error occured during the timed regex search in the file <br /> <br />" + e,
                 callback: null,
                 callbackTitle: null,
-                is_dismissible: true
+                isDismissible: true
             })
         }
     }

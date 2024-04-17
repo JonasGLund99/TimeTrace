@@ -28,7 +28,7 @@ export default function Warning() {
                     {errorObj.callback !== null &&
                         <Button type="button" onClick={errorObj.callback} style={{style: 'px-3 py-1.5 me-2 text-center inline-flex items-center'}} buttonStyle={ButtonStyle.Warning}>{errorObj.callbackTitle}</Button>
                     }
-                    {errorObj.is_dismissible &&
+                    {errorObj.isDismissible &&
                         <Button type="button" onClick={closeWarning} style={{style: 'px-3 py-1.5 me-2 text-center inline-flex items-center'}} buttonStyle={ButtonStyle.Warning}>Dismiss</Button>
                     }
                 </div>

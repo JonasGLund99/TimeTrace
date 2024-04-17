@@ -8,7 +8,7 @@ export type ErrorObject = {
     title: string,
     callback: (() => void) | null,
     callbackTitle: string | null,
-    is_dismissible: boolean
+    isDismissible: boolean
 }
 
 export type ModalObject = {
@@ -17,7 +17,7 @@ export type ModalObject = {
     submit?: (() => void) | null,
     closeCallback?: (() => void),
     submitTitle: string | null,
-    is_dismissible: boolean,
+    isDismissible: boolean,
     children?: ReactNode,
     submitButtonType?: "submit" | "button" | "reset" | undefined,
     cancelButtonType?: "submit" | "button" | "reset" | undefined,

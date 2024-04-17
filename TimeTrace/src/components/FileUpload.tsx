@@ -110,7 +110,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                     errorString: "Error duing upload of file <br/> <br/>" + e,
                     callback: null,
                     callbackTitle: null,
-                    is_dismissible: true
+                    isDismissible: true
                 })
                 //reset
                 setFileLines([]);

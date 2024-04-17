@@ -1,6 +1,6 @@
 export enum PredefinedTre {
     None,
-    Between,
+    Within,
 }
 
 export interface IPredefinedTRE {
@@ -9,23 +9,21 @@ export interface IPredefinedTRE {
 }
 
 
-export interface BetweenTREInput {
+export interface WithinTREInput {
     firstGroup: string;
     secondGroup: string;
     startTime: string;
     endTime: string;
-
 }
 
-export class BetweenTREClass implements IPredefinedTRE {
-    public type: PredefinedTre = PredefinedTre.Between;
-    public input: BetweenTREInput;
-    //[0] = First group of events, [1] = Second group of events, [2] = Start time, [3] = End time
+export class WithinTREClass implements IPredefinedTRE {
+    public type: PredefinedTre = PredefinedTre.Within;
+    public input: WithinTREInput;
     public insertTRE(): string {
         return `((${this.input.firstGroup})(${this.input.secondGroup}))%(${this.input.startTime},${this.input.endTime})`;
     }
 
-    public constructor(input?: BetweenTREInput) {
+    public constructor(input?: WithinTREInput) {
         if (input) {
             this.input = input;
         } 

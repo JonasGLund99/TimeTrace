@@ -121,7 +121,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
                 errorString: "Regex error <br/><br/>" + e,
                 callback: null,
                 callbackTitle: null,
-                is_dismissible: true
+                isDismissible: true
             })
             return
         }

@@ -31,7 +31,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                 errorString: errorStr,
                 callback: null,
                 callbackTitle: null,
-                is_dismissible: true
+                isDismissible: true
             })
             return
         }
