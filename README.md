@@ -63,9 +63,10 @@ To kill a puthon process, use command
 Import `P6.postman_collection.json` in your Postman App.
 
 **POST Body**
-In the form-data body add two keys: "file" and "regex".
-Upload file P6\experiments\logfiles\logMappedAB.txt to the file value.
-Add a valid timed regular expression in the value field of the "regex" key.
+In the body select raw and add a json body of the format below.
+*lines* Is an array of strings symbolising the lines of the file uploaded.
+
+*regex* Add a valid timed regular expression using the MONAA syntax.
 
 Your request should look something like below
 ![Postman example](postman_example.png)
