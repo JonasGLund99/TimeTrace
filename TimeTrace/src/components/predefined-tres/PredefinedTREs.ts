@@ -2,11 +2,11 @@ export enum PredefinedTre {
     None,
     Within,
     Sequential,
-    After,
+    TimedEvent,
+    TimedSequential,
 }
 
 export interface IPredefinedTRE {
-    type: PredefinedTre;
     title: string;
     insertTRE: () => string;
 }
@@ -20,7 +20,6 @@ export interface WithinTREInput {
 }
 
 export class WithinTREClass implements IPredefinedTRE {
-    public type: PredefinedTre = PredefinedTre.Within;
     public input: WithinTREInput;
     public title: string = 'Event followed by an event within a duration';
 
@@ -46,7 +45,6 @@ export interface SequentialTREInput {
 export class SequentialTREClass implements IPredefinedTRE {
     public title: string = 'Event followed by an event';
     public input: SequentialTREInput;
-    public type: PredefinedTre = PredefinedTre.Sequential;
     public insertTRE(): string {
         return `(${this.input.firstGroup})(${this.input.secondGroup})`
     }
@@ -61,26 +59,52 @@ export class SequentialTREClass implements IPredefinedTRE {
     }
 }
 
-export interface AfterTREInput {
+export interface TimedEventTREInput {
     firstGroup: string;
     startTime: string;
     endTime: string;
 }
 
-export class AfterTREclass implements IPredefinedTRE {
+export class TimedEventTREClass implements IPredefinedTRE {
     public title: string = 'An event with a time constraint';
-    public type: PredefinedTre = PredefinedTre.After;
-    public input: AfterTREInput;
+    public input: TimedEventTREInput;
     public insertTRE(): string {
         return `(${this.input.firstGroup})%(${this.input.startTime},${this.input.endTime})`;
     }
 
-    public constructor(input?: AfterTREInput) {
+    public constructor(input?: TimedEventTREInput) {
         if (input) {
             this.input = input;
         } 
         else {
             this.input = { firstGroup: '', startTime: '', endTime: ''};
+        }
+    }
+}
+
+export interface TimedSequentialTREInput {
+    firstGroup: string;
+    firstStartTime: string;
+    firstEndTime: string;
+    secondGroup: string;
+    secondStartTime: string;
+    secondEndTime: string;
+}
+
+export class TimedSequentialClass implements IPredefinedTRE {
+    public title: string = 'Two sequential events with time constraints';
+    public input: TimedSequentialTREInput;
+
+    public insertTRE(): string {
+        return `(${this.input.firstGroup})%(${this.input.firstStartTime},${this.input.firstEndTime})(${this.input.secondGroup})%(${this.input.secondStartTime},${this.input.secondEndTime})`;
+    }
+
+    public constructor(input?: TimedSequentialTREInput) {
+        if (input) {
+            this.input = input;
+        } 
+        else {
+            this.input = { firstGroup: '', firstStartTime: '', firstEndTime: '', secondGroup: '', secondStartTime: '', secondEndTime: ''};
         }
     }
 }

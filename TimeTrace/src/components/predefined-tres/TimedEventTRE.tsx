@@ -1,19 +1,19 @@
 import {useState } from "react";
 import ModalInput from "../modal/ModalInput";
-import { AfterTREclass } from "./PredefinedTREs";
+import { TimedEventTREClass } from "./PredefinedTREs";
 import PredefinedTREButtonGroup from "./PredefinedTREButtonGroup";
 
-interface AfterTREProps {
-    treObject: AfterTREclass;
+interface TimedEventTREProps {
+    treObject: TimedEventTREClass;
     onSubmit: () => void;
     closeTRE: () => void;
 }
 
-function AfterTRE({ treObject, onSubmit, closeTRE }: AfterTREProps) {
-    const [TREObject, setTREObject] = useState<AfterTREclass>(treObject) // [0] = First group of events, [1] = Second group of events, [2] = Start time, [3] = End time
+function TimedEventTRE({ treObject, onSubmit, closeTRE }: TimedEventTREProps) {
+    const [TREObject, setTREObject] = useState<TimedEventTREClass>(treObject) // [0] = First group of events, [1] = Second group of events, [2] = Start time, [3] = End time
 
     function updateTREObject() {
-        setTREObject(new AfterTREclass(TREObject.input));
+        setTREObject(new TimedEventTREClass(TREObject.input));
     }
 
     return (
@@ -32,4 +32,4 @@ function AfterTRE({ treObject, onSubmit, closeTRE }: AfterTREProps) {
     )
 }
 
-export default AfterTRE;
+export default TimedEventTRE;
