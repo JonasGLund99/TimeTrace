@@ -1,5 +1,4 @@
-import { useContext, useEffect } from "react";
-import { AppdataContext } from "../../context/AppContext";
+import { useContext } from "react";
 import { LogTableContext } from "../../context/LogTableContext";
 import Button from "../button/Button";
 import { calcStartEndOfRender } from "../../models/helpers/scrollLogTable";
@@ -13,7 +12,7 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
     const { currentPageSpan, setCurrentPageSpan } = useContext(LogTableContext);
     const { setShownLines } = useContext(LogTableContext);
     const { filteredFileLines } = useContext(LogTableContext);
-    const { matches } = useContext(AppdataContext);
+    const { matches } = useContext(LogTableContext);
 
     function handleNewMatchIndex(newMatchIndex: number) {
         if (newMatchIndex < 0) {

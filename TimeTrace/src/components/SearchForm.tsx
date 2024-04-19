@@ -19,7 +19,7 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { uploadedFile } = useContext(AppdataContext);
-    const { setMatches } = useContext(AppdataContext);
+    const { setMatches } = useContext(LogTableContext);
     const { setError } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
     const { setMonaaMatchIndex } = useContext(LogTableContext);

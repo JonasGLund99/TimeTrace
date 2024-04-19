@@ -2,6 +2,7 @@ import { useContext, createContext, ReactNode, useState, Dispatch, SetStateActio
 import { FileLine } from "../models/FileLine";
 import { mapEventsToFileLine } from "../models/Types/FileLine";
 import { AppdataContext } from "./AppContext";
+import { MonaaZone } from "../models/MonaaZone";
 
 interface PageSpan {
     min: number;
@@ -15,6 +16,8 @@ export enum ShowLinesMode {
 }
 
 export type LogTableContextInterface = {
+    matches: MonaaZone[];
+    setMatches: React.Dispatch<React.SetStateAction<MonaaZone[]>>;
     monaaMatchIndex: number;
     setMonaaMatchIndex: Dispatch<SetStateAction<number>>;
     currentPageSpan: PageSpan;
@@ -31,6 +34,8 @@ export type LogTableContextInterface = {
 }
 
 const defaultState: LogTableContextInterface = {
+    matches: [],
+    setMatches: () => { },
     monaaMatchIndex: -1,
     setMonaaMatchIndex: () => { },
     currentPageSpan: { min: 0, max: 1 },
@@ -53,6 +58,7 @@ type LogTableProviderProps = {
 }
 
 export default function LogTableProvider({ children }: LogTableProviderProps) {
+    const [matches, setMatches] = useState<MonaaZone[]>([]);
     const [monaaMatchIndex, setMonaaMatchIndex] = useState<number>(-1);
     const [currentPageSpan, setCurrentPageSpan] = useState<PageSpan>({ min: 0, max: 1 });
     const [advancedSearchMode, setAdvancedSearchMode] = useState(false);
@@ -63,7 +69,7 @@ export default function LogTableProvider({ children }: LogTableProviderProps) {
     const [shownLinesMode, setShownLinesMode] = useState<ShowLinesMode>(ShowLinesMode.ALL);
 
     return (
-        < LogTableContext.Provider value={{ monaaMatchIndex, setMonaaMatchIndex, currentPageSpan, setCurrentPageSpan, advancedSearchMode, setAdvancedSearchMode, filteredFileLines, setFilteredFileLines, shownLines, setShownLines, shownLinesMode, setShownLinesMode, linesPerPage }}>
+        < LogTableContext.Provider value={{ matches, setMatches, monaaMatchIndex, setMonaaMatchIndex, currentPageSpan, setCurrentPageSpan, advancedSearchMode, setAdvancedSearchMode, filteredFileLines, setFilteredFileLines, shownLines, setShownLines, shownLinesMode, setShownLinesMode, linesPerPage }}>
             {children}
         </LogTableContext.Provider>
     );

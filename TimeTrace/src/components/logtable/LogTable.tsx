@@ -18,7 +18,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { events } = useContext(AppdataContext);
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
-    const { matches } = useContext(AppdataContext);
+    const { matches } = useContext(LogTableContext);
     const { setError } = useContext(AppdataContext);
     const { currentPageSpan, setCurrentPageSpan } = useContext(LogTableContext);
     const { advancedSearchMode } = useContext(LogTableContext);
