@@ -2,7 +2,7 @@
 
 Better Timed Pattern Searching in Log Files
 
-## To run the front-end project
+## React front-end
 Clone the GitHub project and cd into the project 
 
 `cd TimeTrace`
@@ -27,7 +27,7 @@ Open a terminal and run the following ssh command:
 This will tunnel port 5000 on the server to localhost:5000.
 
 **Step 3 - Open browser**
-Open your browser and go to localhost:3000 where the TimeTrace frontend will be hosted.
+Open your browser and go to localhost:3000 where the TimeTrace front-end will be hosted.
 
 Follow the guides on the home page on how to use TimeTrace.
 
