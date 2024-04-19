@@ -42,7 +42,7 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
             </Button>
             <pre id="monaa-match-input" className="text-gray-800 ">
                 <input
-                    className="text-right "
+                    className="text-right"
                     type="number"
                     name="matchIndex"
                     id=""
