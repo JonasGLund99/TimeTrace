@@ -2,7 +2,7 @@
 
 Better Timed Pattern Searching in Log Files
 
-## To run the front end project
+## To run the front-end project
 Clone the GitHub project and cd into the project 
 
 `cd TimeTrace`
@@ -13,10 +13,9 @@ Clone the GitHub project and cd into the project
 ### Start the project
 `npm start`
 
-
 ## MONAA backend
 Because this project uses the MONAA tool that only runs on Ubuntu, a separate backend server has been set up and runs on CLAAUDIA.
-For the front end to connect to CLAAUDIA, it is necessary with an SSH tunnel.
+For the front-end to connect to CLAAUDIA, it is necessary with an SSH tunnel.
 
 ### SSH tunnel setup
 **Step 1 - Private key**
@@ -35,35 +34,34 @@ Follow the guides on the home page on how to use TimeTrace.
 *You should not need anything else from this guide to use the tool unless you are a developer*
 ---
 
-
-
 ### SSH information
 Blogpost: https://www.combell.com/en/help/kb/create-an-openstack-linux-instance-and-connect-to-it-via-internet/
 
 Ubuntu server: https://strato-new.claaudia.aau.dk/project/instances/
 Ubuntu server IP: http://130.225.37.239
 
-### Start monaa flask server
-`cd monaa-backend` 
+### Start MONAA flask server
+`cd MONAA-backend` 
 
 (`git pull`)
 
 `nohup python3 -m flask --app server run &`
 This should start the flask server and you should be able to close the terminal without the server shutting down.
 
-### Check running python scripts and kill them
-To check what python processes are running, use command:
+### Check running Python scripts and kill them
+To check what Python processes are running, use the command:
+
 `pgrep python3`
 
-To kill a puthon process, use command
+To kill a Python process, use the command:
+
 `sudo kill <process-id>`
-(https://medium.com/analytics-vidhya/deploy-a-flask-app-on-amazon-aws-ec2-and-keep-it-running-while-you-are-offline-38d22571e2c5)
 
 ### Postman
 Import `P6.postman_collection.json` in your Postman App.
 
 **POST Body**
-In the body select raw and add a json body of the format below.
+In the body select raw and add a JSON body of the format below.
 *lines* Is an array of strings symbolising the lines of the file uploaded.
 
 *regex* Add a valid timed regular expression using the MONAA syntax.
