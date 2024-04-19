@@ -41,7 +41,6 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
                 Previous match
             </Button>
             <pre id="monaa-match-input" className="text-gray-800 ">
-                {/* TODO:
                 <input
                     className="text-right "
                     type="number"
@@ -51,9 +50,9 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
                     min={1}
                     max={matches.length}
                     onChange={(e) => {
-                        setMonaaMatchIndex((e.target.value as unknown as number) - 1);
-                    }} /> */}
-                {monaaMatchIndex + 1} of {matches.length}
+                        handleNewMatchIndex((e.target.value as unknown as number) - 1);
+                    }} />
+                of {matches.length}
             </pre>
             <Button style={{ style: 'px-4 py-2' }}
                 onClick={() => handleNewMatchIndex(monaaMatchIndex + 1)}>

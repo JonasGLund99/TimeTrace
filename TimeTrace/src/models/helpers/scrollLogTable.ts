@@ -24,7 +24,7 @@ export function scrollToMonaaMatch() {
 }
 
 export function calcStartEndOfRender(minPage: number, maxPage: number, startOfMatchIndex: number, endOfMatchIndex: number, linesPerPage: number): { startOfRender: number, endOfRender: number } {
-    const offsetIndex = 5;
+    const offsetIndex = 10;
     let startOfRender = Math.floor(startOfMatchIndex / linesPerPage);
     let endOfRender = Math.ceil(endOfMatchIndex / linesPerPage);
 
