@@ -46,6 +46,7 @@ Ubuntu server IP: http://130.225.37.239
 (`git pull`)
 
 `nohup python3 -m flask --app server run &`
+
 This should start the flask server and you should be able to close the terminal without the server shutting down.
 
 ### Check running Python scripts and kill them
