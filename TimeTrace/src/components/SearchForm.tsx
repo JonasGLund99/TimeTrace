@@ -8,6 +8,7 @@ import { Store } from 'react-notifications-component';
 import Button from './button/Button';
 import Tooltip from './tooltip/ToolTip';
 import { MonaaZone } from '../models/MonaaZone';
+import { calcStartEndOfRender } from '../models/helpers/scrollLogTable';
 
 interface SearchFormProps {
     tooltip?: string;
@@ -45,11 +46,12 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
         const maxPage = Math.ceil(filteredFileLines.length / linesPerPage);
         const startOfMatchIndex = matches[newMatchIndex].lineMatches[0];
         const endOfMatchIndex = matches[newMatchIndex].lineMatches[matches[newMatchIndex].lineMatches.length - 1];
-        const startOfRender = Math.floor(startOfMatchIndex / linesPerPage) === minPage ? minPage : Math.floor(startOfMatchIndex / linesPerPage) - 1;
-        const endOfRender = Math.ceil(endOfMatchIndex / linesPerPage) === maxPage ? maxPage : Math.ceil(endOfMatchIndex / linesPerPage) + 1;
-        if (startOfRender < currentPageSpan.min || endOfRender > currentPageSpan.max) {
-            setShownLines(filteredFileLines.slice(linesPerPage * startOfRender, linesPerPage * endOfRender));
-            setCurrentPageSpan({ min: startOfRender, max: endOfRender });
+        const renderObj = calcStartEndOfRender(minPage, maxPage, startOfMatchIndex, endOfMatchIndex, linesPerPage);
+        const matchIsOutsideCurrentPageSpan = renderObj.startOfRender < currentPageSpan.min || renderObj.endOfRender > currentPageSpan.max;
+        
+        if (matchIsOutsideCurrentPageSpan) {
+            setShownLines(filteredFileLines.slice(linesPerPage * renderObj.startOfRender, linesPerPage * renderObj.endOfRender));
+            setCurrentPageSpan({ min: renderObj.startOfRender, max: renderObj.endOfRender });
         }
         setMonaaMatchIndex(-1); //set to -1 to trigger a scroll to the first match (when use effect on LogTable sets it to 0 after this)
     }

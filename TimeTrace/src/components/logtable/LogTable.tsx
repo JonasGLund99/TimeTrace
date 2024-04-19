@@ -123,7 +123,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const scrollTop: boolean = scrollY <= scrollOffset;
 
         if (scrollBottom) {
-            console.log("scrollBottom")
             const nextPage = currentPageSpan.max + 1;
             setShownLines(shownLines => [...shownLines, ...(filteredFileLines.slice(linesPerPage * currentPageSpan.max, linesPerPage * nextPage))]);
             setCurrentPageSpan({
@@ -132,7 +131,6 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
             });
         }
         else if (scrollTop) {
-            console.log("scrollTop")
             if (currentPageSpan.min === 0) return;
             const prevPage = currentPageSpan.min - 1;
             const container = logTable.querySelector("#linecontents-container") as HTMLElement;
