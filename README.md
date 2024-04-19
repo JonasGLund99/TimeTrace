@@ -15,8 +15,8 @@ cd into the project
 
 
 ## MONAA backend
-Because this project uses the MONAA tool that only runs on Ubuntu, a seperate backend server has been set up and runs on CLAAUDIA.
-For the frontend to connect to CLAAUDIA, it is necessary with an SSH tunnel.
+Because this project uses the MONAA tool that only runs on Ubuntu, a separate backend server has been set up and runs on CLAAUDIA.
+For the front end to connect to CLAAUDIA, it is necessary with an SSH tunnel.
 
 ### SSH tunnel setup
 **Step 1 - Private key**
@@ -25,7 +25,7 @@ Save your private key (<private_key.pem>) somewhere safe.
 **Step 2 - SSH**
 Open a terminal and run the following ssh command:
 `ssh -i "path/to/private_key.pem" ubuntu@130.225.37.239 -L 5000:localhost:5000`
-This will tunnel port 5000 on the server to localhots:5000.
+This will tunnel port 5000 on the server to localhost:5000.
 
 **Step 3 - Open browser**
 Open your browser and go to localhost:3000 where the TimeTrace frontend will be hosted.
@@ -75,4 +75,4 @@ Send your request and view the response
 
 
 ### Recommended extensions for VSCode:
-Headwind (heybourn.headwind)
+[Headwind](https://marketplace.visualstudio.com/items?itemName=heybourn.headwind)
