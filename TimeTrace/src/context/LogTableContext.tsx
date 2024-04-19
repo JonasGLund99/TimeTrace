@@ -43,7 +43,7 @@ const defaultState: LogTableContextInterface = {
     setShownLinesMode: () => { },
     filteredFileLines: [],
     setFilteredFileLines: () => { },
-    linesPerPage: 100
+    linesPerPage: 100,
 } as LogTableContextInterface;
 
 export const LogTableContext = createContext<LogTableContextInterface>(defaultState);

@@ -70,13 +70,13 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
             Store.addNotification({
                 title: `Monaa searh for pattern: ${tre}`,
                 message: `Found ${monaaZones.length} matches in ${(duration / 1000).toFixed(1)} seconds`,
-                type: "success",
+                type: `${monaaZones.length > 0 ? "success" : "warning"}`,
                 insert: "top",
                 container: "bottom-right",
                 animationIn: ["animate__animated", "animate__fadeIn"],
                 animationOut: ["animate__animated", "animate__fadeOut"],
                 dismiss: {
-                    duration: 5000,
+                    duration: 2000,
                     onScreen: true
                 }
             });
