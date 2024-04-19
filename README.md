@@ -2,9 +2,9 @@
 
 Better Timed Pattern Searching in Log Files
 
-## To run the frontend prject
-Clone the github project
-cd into the project 
+## To run the front end project
+Clone the GitHub project and cd into the project 
+
 `cd TimeTrace`
 
 ### Install the necessary node packages
