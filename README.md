@@ -15,7 +15,7 @@ cd into the project
 
 
 ## MONAA backend
-Because this project uses the MONAA tool that only runs on ubuntu, a seperate backend server has been set up and runs on CLAAUDIA.
+Because this project uses the MONAA tool that only runs on Ubuntu, a seperate backend server has been set up and runs on CLAAUDIA.
 For the frontend to connect to CLAAUDIA, it is necessary with an SSH tunnel.
 
 ### SSH tunnel setup
