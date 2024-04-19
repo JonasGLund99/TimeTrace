@@ -6,8 +6,8 @@ import { getFileLines } from "../models/helpers/getFileLines";
 import { LogTableContext } from '../context/LogTableContext';
 import { Store } from 'react-notifications-component';
 import Button from './button/Button';
-import { ButtonStyle } from './button/IButtonProps';
 import Tooltip from './tooltip/ToolTip';
+import { MonaaZone } from '../models/MonaaZone';
 
 interface SearchFormProps {
     tooltip?: string;
@@ -22,11 +22,37 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
     const { setError } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
     const { setMonaaMatchIndex } = useContext(LogTableContext);
+    const { setShownLines } = useContext(LogTableContext);
+    const { filteredFileLines } = useContext(LogTableContext);
+    const { linesPerPage } = useContext(LogTableContext);
+    const { currentPageSpan, setCurrentPageSpan } = useContext(LogTableContext);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         callMonaa(tre);
     };
+
+    function findFirstMatch(matches: MonaaZone[]) {
+        if (matches.length === 0) {
+            setShownLines(filteredFileLines.slice(0, linesPerPage));
+            setCurrentPageSpan({ min: 0, max: 1 });
+            setMonaaMatchIndex(-1);
+            return;
+        }
+
+        const newMatchIndex = 0;
+        const minPage = 0;
+        const maxPage = Math.ceil(filteredFileLines.length / linesPerPage);
+        const startOfMatchIndex = matches[newMatchIndex].lineMatches[0];
+        const endOfMatchIndex = matches[newMatchIndex].lineMatches[matches[newMatchIndex].lineMatches.length - 1];
+        const startOfRender = Math.floor(startOfMatchIndex / linesPerPage) === minPage ? minPage : Math.floor(startOfMatchIndex / linesPerPage) - 1;
+        const endOfRender = Math.ceil(endOfMatchIndex / linesPerPage) === maxPage ? maxPage : Math.ceil(endOfMatchIndex / linesPerPage) + 1;
+        if (startOfRender < currentPageSpan.min || endOfRender > currentPageSpan.max) {
+            setShownLines(filteredFileLines.slice(linesPerPage * startOfRender, linesPerPage * endOfRender));
+            setCurrentPageSpan({ min: startOfRender, max: endOfRender });
+        }
+        setMonaaMatchIndex(-1); //set to -1 to trigger a scroll to the first match (when use effect on LogTable sets it to 0 after this)
+    }
 
     async function callMonaa(tre: string) {
         setLoading(true);
@@ -36,8 +62,8 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
             const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings);
             const formattedFile = await getFileLines(formattedLog);
             const monaaZones = await QueryHandler.search(tre, formattedFile, fileLines, mappings);
-            setMonaaMatchIndex(-1);
             setMatches(monaaZones);
+            findFirstMatch(monaaZones);
             const endTime = performance.now(); //End of Monaa call
             const duration = endTime - startTime;
             setLoading(false);
@@ -82,12 +108,10 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
                         value={tre}
                         onChange={(e) => setTre(e.target.value)}
                         required
-                        />
-                    <Button style={{style: 'absolute end-2.5 bottom-2.5 px-4 py-2'}} type='submit'>Search</Button>
+                    />
+                    <Button style={{ style: 'absolute end-2.5 bottom-2.5 px-4 py-2' }} type='submit'>Search</Button>
                 </div>
             </form>
         </Tooltip>
     );
 }
-
-
