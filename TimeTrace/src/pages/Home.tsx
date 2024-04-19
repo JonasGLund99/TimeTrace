@@ -57,53 +57,57 @@ function Home() {
                     <h3 className="text-xl font-semibold">To get started</h3>
                     <p>
                         To get started with TimeTrace as your tool for searching and analyzing in your logfile or timeseries data, upload a file. The uploaded logfile must be either a .txt file or a .log file. If the logfile og timeseries is not in one of the following formats, you will have to convert your data to one of these supported formats.
-                        <br />
-                        <br />
-                        <h4 className="text-lg font-semibold">Uploading a file</h4>
+                    </p>
+                    <br />
+                    <br />
+                    <h4 className="text-lg font-semibold">Uploading a file</h4>
+                    <p>
                         Navigating to the mappings page the below screen will be seen.
-                        <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
-                        A file can either be uploaded by pressing the upload button dragging a file over the drop zone.
-                        <br />
-                        <br />
-                        <h4 className="text-lg font-semibold">Mapping your events</h4>
+                    </p>
+                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
+                    A file can either be uploaded by pressing the upload button dragging a file over the drop zone.
+                    <br />
+                    <br />
+                    <h4 className="text-lg font-semibold">Mapping your events</h4>
+                    <p>
                         After uploading a file create the mappings of your events. The value to which you map your event have to be one charater from <span className="font-semibold">a-y or A-Y</span>. This means that you can map a total of 50 event to value.
                         This restriction comes from the underlying search engine Monaa, which dokumentation your can view <a className="text-blue-600" href="https://monaa.readthedocs.io/en/latest/">here</a>. Remark that the character z and Z are reserved values. Both will be used in the search page, where z are the mapped value of all mapped and unmapped events. The Z value are used as map value for all unmapped events.
-                        <br />
-                        <br />
-                        <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
-                        <br />
-                        <br />
-                        On the left the mapping created can be seen and on the right mappings can be created. Here giving a line a mapping value will map each identical event to this value. To delete and event press the trashcan. In the standard search setting you can search for the event that your which to find and map to value.
-                        Switching to the advanced search mode with regex allows you to create mapping based on regex patterns. To learn more about regex patterns <a className="text-blue-600" href="https://regexr.com/">click here</a>.
-                        <br />
-                        <br />
-                        <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
-                        <br />
-                        <br />
-                        When mapping event to value mapping value with a regex search pattern all events matching this pattern will be given that map value.
-                        Notice, if two mappings created with regex search patterns are made and some event overlap, there will be no overwrite of the first mapped search pattern.
-                        Furthermore the single mappings created below the overview that mathces all indetical event, will overrule if they should be matched and mapped during advanced search with regex
-                        <br />
-                        <br />
-                        <h4 className="text-lg font-semibold">Searching for patterns in your file</h4>
-                        When you have created the mappings of the events you wish to base your search/analyzis upon, navigate the View log page.
-                        <br />
-                        <br />
-                        <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
-                        <br />
-                        <br />
-                        To start searching for the patterns in your logfile you simply create a timed regular expression. The syntax for searching for patters in your log i different from the previousely mentioned regex patterns. Here the syntax are specific to the underlying engine Monaa. For more information of the Monaa syntax <a className="text-blue-600" href="https://monaa.readthedocs.io/en/latest/">click here</a>.
-                        After pressing search the timed regular expression and the mapped file are prossesed the matches will be represented in the overview below the searchbar. Here the matches will be highligted.
-                        <br />
-                        <br />
-                        <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
-                        <br />
-                        <br />
                     </p>
+                    <br />
+                    <br />
+                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
+                    <br />
+                    <br />
+                    On the left the mapping created can be seen and on the right mappings can be created. Here giving a line a mapping value will map each identical event to this value. To delete and event press the trashcan. In the standard search setting you can search for the event that your which to find and map to value.
+                    Switching to the advanced search mode with regex allows you to create mapping based on regex patterns. To learn more about regex patterns <a className="text-blue-600" href="https://regexr.com/">click here</a>.
+                    <br />
+                    <br />
+                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
+                    <br />
+                    <br />
+                    When mapping event to value mapping value with a regex search pattern all events matching this pattern will be given that map value.
+                    Notice, if two mappings created with regex search patterns are made and some event overlap, there will be no overwrite of the first mapped search pattern.
+                    Furthermore the single mappings created below the overview that mathces all indetical event, will overrule if they should be matched and mapped during advanced search with regex
+                    <br />
+                    <br />
+                    <h4 className="text-lg font-semibold">Searching for patterns in your file</h4>
+                    When you have created the mappings of the events you wish to base your search/analyzis upon, navigate the View log page.
+                    <br />
+                    <br />
+                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
+                    <br />
+                    <br />
+                    To start searching for the patterns in your logfile you simply create a timed regular expression. The syntax for searching for patters in your log i different from the previousely mentioned regex patterns. Here the syntax are specific to the underlying engine Monaa. For more information of the Monaa syntax <a className="text-blue-600" href="https://monaa.readthedocs.io/en/latest/">click here</a>.
+                    After pressing search the timed regular expression and the mapped file are prossesed the matches will be represented in the overview below the searchbar. Here the matches will be highligted.
+                    <br />
+                    <br />
+                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
+                    <br />
+                    <br />
                 </Collapsible>
 
                 <Collapsible label="Guide to regex" isOpen={collapseAll}>
-                    <p id="regex-section">
+                    <div id="regex-section">
 
                         <div className="mb-4">
                             <p>Before exploring TimeTrace's advanced features for time tracking and data analysis, it's helpful to understand the basics of regular expressions to enhance its utility.</p>
@@ -179,7 +183,7 @@ function Home() {
                                 <li><a className="text-blue-600" href="https://regexr.com/">RegExr</a> - Online regex tester and debugger.</li>
                             </ul>
                         </div>
-                    </p>
+                    </div>
                 </Collapsible>
 
                 <Collapsible label="Monaa syntax for timed regular expresions" isOpen={collapseAll}>
