@@ -10,7 +10,7 @@ describe('TREBuilder', () => {
             // Act
             const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
             // Assert
-            expect(trimmedTRE).toEqual(convertedTRE);
+            expect(convertedTRE).toEqual(trimmedTRE);
 
         });
 
@@ -21,7 +21,7 @@ describe('TREBuilder', () => {
               // Act
               const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
               // Assert
-              expect(expectedConvertedTRE).toEqual(convertedTRE);
+              expect(convertedTRE).toEqual(expectedConvertedTRE);
         });
 
         test('Should convert s to ms', ()=>{
@@ -31,7 +31,7 @@ describe('TREBuilder', () => {
                 // Act
                 const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
                 // Assert
-                expect(expectedConvertedTRE).toEqual(convertedTRE);
+                expect(convertedTRE).toEqual(expectedConvertedTRE);
             
         });
 
@@ -42,7 +42,7 @@ describe('TREBuilder', () => {
                 // Act
                 const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
                 // Assert
-                expect(expectedConvertedTRE).toEqual(convertedTRE);
+                expect(convertedTRE).toEqual(expectedConvertedTRE);
         });
 
         test('Should convert h to ms', ()=>{
@@ -52,7 +52,7 @@ describe('TREBuilder', () => {
                 // Act
                 const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
                 // Assert
-                expect(expectedConvertedTRE).toEqual(convertedTRE);
+                expect(convertedTRE).toEqual(expectedConvertedTRE);
             
         });
 
@@ -63,7 +63,7 @@ describe('TREBuilder', () => {
                 // Act
                 const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
                 // Assert
-                expect(expectedConvertedTRE).toEqual(convertedTRE);
+                expect(convertedTRE).toEqual(expectedConvertedTRE);
             
         });
 
@@ -74,7 +74,7 @@ describe('TREBuilder', () => {
                 // Act
                 const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
                 // Assert
-                expect(expectedConvertedTRE).toEqual(convertedTRE);
+                expect(convertedTRE).toEqual(expectedConvertedTRE);
             
         });
 
@@ -85,7 +85,7 @@ describe('TREBuilder', () => {
             // Act
             const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
             // Assert
-            expect(expectedConvertedTRE).toEqual(convertedTRE);
+            expect(convertedTRE).toEqual(expectedConvertedTRE);
     });
     });
     describe('buildTRE', () => {
@@ -100,7 +100,7 @@ describe('TREBuilder', () => {
             // Act
             const finalActualTRE = TREBuilder.buildTRE(rawTRE, mappings);
             // Assert
-            expect(expectedFinalActualTRE).toEqual(finalActualTRE);
+            expect(finalActualTRE).toEqual(expectedFinalActualTRE);
 
         });
         test('Should not return but throw Error from parser, (First number in time constraint must be smaller than the second number)', ()=>{
@@ -132,7 +132,7 @@ describe('TREBuilder', () => {
             // Act
             const actualConvertedTre = TREBuilder.convertz(convertedTRE, mappings);
             // Assert
-            expect(expectedConvertedTre).toEqual(actualConvertedTre);
+            expect(actualConvertedTre).toEqual(expectedConvertedTre);
 
         });
     })

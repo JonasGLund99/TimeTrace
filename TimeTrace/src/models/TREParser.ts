@@ -4,8 +4,10 @@ export abstract class TREParser {
     public static parseTRE(tre: string, mappings: CustomMap) {
         this.validateGroups(tre);
         this.validateTimeConstraints(tre);
-        this.validateSymbols(tre);
+        this.validateNumbers(tre);
+        this.validateSpecialChars(tre);
         this.validateSymbolMappings(tre, mappings);
+
         return tre;
     }
 
@@ -21,14 +23,13 @@ export abstract class TREParser {
                 opened++;
             } else if (char === ")") {
                 if (opened === 0) {
-                    throw new Error("A parenthesis was opened without it being closed."); // Found closing parenthesis without matching opening parenthesis
+                    throw new Error("An additional parenthesis is being closed without it having been opened."); // Found closing parenthesis without matching opening parenthesis
                 }
                 opened--;
             }
         }
-
-        if (opened < 0) {
-            throw new Error("An additional parenthesis is being closed without it having been opened.");
+        if (opened != 0) {
+            throw new Error("A parenthesis was opened without it being closed.");
         }
     }
 
@@ -58,7 +59,7 @@ export abstract class TREParser {
         }
 
         if (matchCount !== timeConstraintCount) {
-            throw new Error("Something is wrong in your time constraints. Look after white space after the comma, an extra parenthesis or an invalid time unit. A valid time constraint could be a%(1ms,1s)");
+            throw new Error("Something is wrong in your time constraints. Look after an extra parenthesis or an invalid time unit. A valid time constraint could be a%(1ms,1s)");
         }
 
         // Regular expression to match time constraints that are not preceded by a mapped symbol
@@ -67,17 +68,6 @@ export abstract class TREParser {
         const invalidTimeConstraint = tre.match(symbolBeforeTimeConstraint);
         if (invalidTimeConstraint && invalidTimeConstraint.length > 0) {
             throw new Error("Time constraints must be preceded by a mapped symbol.");
-        }
-    }
-
-    public static validateSymbols(tre: string): void {
-        const symbolsAreValid = /^[a-zA-Z()%\s\d+*|&,.]+$/.test(tre);
-
-        this.validateNumbers(tre);
-        this.validateSpecialChars(tre);
-
-        if (!symbolsAreValid) {
-            throw new Error("TRE contains invalid symbols. Only a-z, A-Z, %, parentheses, . , and whitespace are allowed.");
         }
     }
 
