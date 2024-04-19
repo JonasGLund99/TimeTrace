@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "1a534104-16b4-4f07-8411-86c5ac1f4db7",
+		"name": "P6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33475401",
+		"_collection_link": "https://dark-zodiac-631251.postman.co/workspace/New-Team-Workspace~11bb05bc-a7fa-4794-817e-433fef6811bd/collection/26798854-1a534104-16b4-4f07-8411-86c5ac1f4db7?action=share&source=collection_link&creator=33475401"
+	},
+	"item": [
+		{
+			"name": "monaa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/jonas/Downloads/input.txt"
+						},
+						{
+							"key": "regex",
+							"value": "(AB)%(0,20)$",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/monaa/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"monaa",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "monaa",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/jonas/Downloads/input.txt"
+								},
+								{
+									"key": "regex",
+									"value": "(AB)%(0,20)$",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/monaa/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"monaa",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.1 Python/3.10.12"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 08 Mar 2024 10:06:40 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "740"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"monaa search success\",\n    \"monaa_result\": {\n        \"lines\": [\n            \" -0.000000       <= t <   1.000000\\n\",\n            \"  8.000000        < t' <=  15.000000\\n\",\n            \"  7.000000        < t' - t <=  15.000000\\n\",\n            \"=============================\\n\",\n            \"  8.000000       <= t <  15.000000\\n\",\n            \" 20.000000        < t' <=  23.000000\\n\",\n            \"  5.000000        < t' - t <=  15.000000\\n\",\n            \"=============================\\n\",\n            \" 20.000000       <= t <  23.000000\\n\",\n            \" 27.000000        < t' <=  30.000000\\n\",\n            \"  4.000000        < t' - t <=  10.000000\\n\",\n            \"=============================\\n\",\n            \" 27.000000       <= t <  30.000000\\n\",\n            \" 34.000000        < t' <=  40.000000\\n\",\n            \"  4.000000        < t' - t <=  13.000000\\n\",\n            \"=============================\\n\"\n        ]\n    },\n    \"regex\": \"(AB)%(0,20)$\",\n    \"status\": \"success\"\n}"
+				}
+			]
+		}
+	]
+}
