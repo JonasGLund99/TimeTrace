@@ -16,15 +16,12 @@ export abstract class LogSearcher {
         for (let i = 0; i < searchIntervals.length; i++) {
             let foundmatch = new MonaaZone();
             let startingIndex = this.findStartingIndex(timestamps, searchIntervals[i], averageTimegrowth);
-
-            for (let j = startingIndex; j < timestamps.length; j++) {
-                const timestamp = timestamps[j];
-
-                if (timestamp >= searchIntervals[i].start && timestamp <= searchIntervals[i].end) {
-                    foundmatch.lineMatches.push(j);
-                } else if (timestamp > searchIntervals[i].end) {
-                    break;
-                }
+            
+            
+            let j: number = startingIndex;
+            while (timestamps[j] >= searchIntervals[i].start && timestamps[j] <= searchIntervals[i].end) {
+                foundmatch.lineMatches.push(j)
+                j++;
             }
 
             if(foundmatch.lineMatches.length > 0) {
