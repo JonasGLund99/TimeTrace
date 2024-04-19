@@ -37,16 +37,16 @@ export abstract class LogSearcher {
 
     private static getTimestampInfo(logFile: string[]): [number[], number] {
         let prevLineTime: number = 0;
-        let averageTimegrowth: number = 0;
         const timestamps: number[] = [];
 
         logFile.forEach((line: string) => {
             const eventTimeStamp = parseInt(LogFormatter.convertDateToMs(extractTimeStamp(line)));
             timestamps.push(eventTimeStamp);
-            averageTimegrowth = (averageTimegrowth + (eventTimeStamp - prevLineTime)) / 2;
             prevLineTime = eventTimeStamp;
         });
 
+        let averageTimegrowth: number = (timestamps[timestamps.length - 1] - timestamps[0])/timestamps.length
+        
         return [timestamps, averageTimegrowth];
     }
 
