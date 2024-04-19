@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Collapsible from '../components/Collapsible';
 import CloseAllIcon from '../components/svgs/CloseAllIcon';
 import OpenAllIcon from "../components/svgs/OpenAllIcon";
+import Button from "../components/button/Button";
 function Home() {
     const [collapseAll, setCollapseAll] = useState(false);
 
@@ -23,34 +24,33 @@ function Home() {
     //TODO ref tags to different section and add pictures with the updated information.
     return (
         <div className="flex flex-row justify-center h-full overflow-auto pt-14">
-            <div className="absolute p-2 font-bold top-5 right-16 ">
-                {collapseAll ? (
-                    <p>Close all</p>
-                ) : (
-                    <p>Open all</p>
-                )}
-            </div>
-            <button className="absolute justify-end p-2 text-gray-300 rounded-xl top-5 right-5 bg-slate-800" onClick={handleCollapseAll}>
-                {collapseAll ? (
-                    <CloseAllIcon />
-                ) : (
-                    <OpenAllIcon />
-                )}
-            </button>
-            <div className="w-[90%] h-full  rounded-lg items-center flex flex-col ">
+            <div className="relative w-[90%] h-full rounded-lg items-center flex flex-col ">
+                <Button style={{style: "absolute right-0 flex items-center gap-4 p-3 text-gray-100 -top-10"}} onClick={handleCollapseAll}>
+                    {collapseAll ? (
+                        <p>Close all</p>
+                    ) : (
+                        <p>Open all</p>
+                    )}
+                    {collapseAll ? (
+                        <CloseAllIcon />
+                    ) : (
+                        <OpenAllIcon />
+                    )}
+                </Button>
                 <Collapsible label="Welcome to TimeTrace" isOpen={collapseAll}>
                     <div className="">
                         <h3 className="text-xl font-semibold">Welcome!</h3>
                         <p>
-                            Welcome to Timetrace, your premier solution for efficient log analysis. In the vast expanse of data, Timetrace stands as your trusted navigator, meticulously sifting through logs to unveil valuable insights. Our cutting-edge technology ensures swift and precise pattern recognition, empowering you to extract meaningful information with unparalleled efficiency. Join us as we redefine the landscape of log analysis, where professionalism meets proficiency. Experience the power of Timetrace and unlock the true potential of your data.
+                            Welcome to TimeTrace, your premier solution for efficient log analysis. In the vast expanse of data, TimeTrace stands as your trusted navigator, meticulously sifting through logs to unveil valuable insights. Our cutting-edge technology ensures swift and precise pattern recognition, empowering you to extract meaningful information with unparalleled efficiency. Join us as we redefine the landscape of log analysis, where professionalism meets proficiency. Experience the power of TimeTrace and unlock the true potential of your data.
                         </p>
                         <br />
                         <h3 className="text-xl font-semibold">What can i do with TimeTrace</h3>
-                        <li>Effeciently search for patterns in your big log files </li>
-                        <li>Analyse your timeseries data for specific patterns </li>
-                        <li>Effectivly find errors from the wast amount of data your system creates in form of logfiles</li>
-                        <br />
-                        <li>And much more</li>
+                        <ul className="pl-8 list-disc">
+                            <li>Effeciently search for patterns in your big log files </li>
+                            <li>Analyse your timeseries data for specific patterns </li>
+                            <li>Effectivly find errors from the wast amount of data your system creates in form of logfiles</li>
+                            <li>And much more</li>
+                        </ul>
                     </div>
                 </Collapsible>
                 <Collapsible label="How to get started" isOpen={collapseAll}>
@@ -71,7 +71,7 @@ function Home() {
                     <h4 className="text-lg font-semibold">Mapping your events</h4>
                     <p>
                         After uploading a file create the mappings of your events. The value to which you map your event have to be one charater from <span className="font-semibold">a-y or A-Y</span>. This means that you can map a total of 50 event to value.
-                        This restriction comes from the underlying search engine Monaa, which dokumentation your can view <a className="text-blue-600" href="https://monaa.readthedocs.io/en/latest/">here</a>. Remark that the character z and Z are reserved values. Both will be used in the search page, where z are the mapped value of all mapped and unmapped events. The Z value are used as map value for all unmapped events.
+                        This restriction comes from the underlying search engine Monaa, which dokumentation your can view <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/">here</a>. Remark that the character z and Z are reserved values. Both will be used in the search page, where z are the mapped value of all mapped and unmapped events. The Z value are used as map value for all unmapped events.
                     </p>
                     <br />
                     <br />
@@ -79,7 +79,7 @@ function Home() {
                     <br />
                     <br />
                     On the left the mapping created can be seen and on the right mappings can be created. Here giving a line a mapping value will map each identical event to this value. To delete and event press the trashcan. In the standard search setting you can search for the event that your which to find and map to value.
-                    Switching to the advanced search mode with regex allows you to create mapping based on regex patterns. To learn more about regex patterns <a className="text-blue-600" href="https://regexr.com/">click here</a>.
+                    Switching to the advanced search mode with regex allows you to create mapping based on regex patterns. To learn more about regex patterns <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://regexr.com/">click here</a>.
                     <br />
                     <br />
                     <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
@@ -97,7 +97,7 @@ function Home() {
                     <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
                     <br />
                     <br />
-                    To start searching for the patterns in your logfile you simply create a timed regular expression. The syntax for searching for patters in your log i different from the previousely mentioned regex patterns. Here the syntax are specific to the underlying engine Monaa. For more information of the Monaa syntax <a className="text-blue-600" href="https://monaa.readthedocs.io/en/latest/">click here</a>.
+                    To start searching for the patterns in your logfile you simply create a timed regular expression. The syntax for searching for patters in your log i different from the previousely mentioned regex patterns. Here the syntax are specific to the underlying engine Monaa. For more information of the Monaa syntax <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/">click here</a>.
                     After pressing search the timed regular expression and the mapped file are prossesed the matches will be represented in the overview below the searchbar. Here the matches will be highligted.
                     <br />
                     <br />
@@ -179,8 +179,8 @@ function Home() {
                         <div className="mb-4">
                             <h3 className="font-bold">Resources:</h3>
                             <ul className="pl-8 list-disc">
-                                <li><a className="text-blue-600" href="https://www.regular-expressions.info/">Regular-Expressions.info</a> - Comprehensive regex tutorial and reference.</li>
-                                <li><a className="text-blue-600" href="https://regexr.com/">RegExr</a> - Online regex tester and debugger.</li>
+                                <li><a className="text-blue-600" target="_blank" rel="noreferrer" href="https://www.regular-expressions.info/">Regular-Expressions.info</a> - Comprehensive regex tutorial and reference.</li>
+                                <li><a className="text-blue-600" target="_blank" rel="noreferrer" href="https://regexr.com/">RegExr</a> - Online regex tester and debugger.</li>
                             </ul>
                         </div>
                     </div>
@@ -191,7 +191,7 @@ function Home() {
                         <h2 className="mb-4 text-xl font-bold">Timed Regular Expressions</h2>
 
                         <div className="mb-4">
-                            <p className="mb-2">This section illustrates the utilization of timed regular expressions in MONAA. The syntax provided is identical to the underlying workings of MONAA. The documented work of Monaa can be seen at this <a className="text-blue-600" href="https://monaa.readthedocs.io/en/latest/TRE/">webpage</a>.</p>
+                            <p className="mb-2">This section illustrates the utilization of timed regular expressions in MONAA. The syntax provided is identical to the underlying workings of MONAA. The documented work of Monaa can be seen at this <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/TRE/">webpage</a>.</p>
                         </div>
 
                         <h2 className="mb-4 text-xl font-bold">Timed Regular Expressions in MONAA</h2>
@@ -211,7 +211,7 @@ function Home() {
                                     | expr % (s,t) (Time Restriction) <br />
                                 </code>
                             </pre>
-                            <p className="mb-2">Advanced specifications of the theory of timed regular expressions can be further explored in this <a className="text-blue-600" href="https://monaa.readthedocs.io/en/latest/TRE/">paper</a>, by Eugene Asarin, Paul Caspi, and Oded Maler</p>
+                            <p className="mb-2">Advanced specifications of the theory of timed regular expressions can be further explored in this <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/TRE/">paper</a>, by Eugene Asarin, Paul Caspi, and Oded Maler</p>
                         </div>
 
                         <div className="mb-4">
@@ -257,10 +257,10 @@ function Home() {
                         <h3 className="font-bold">TimeTrace Links:</h3>
                         <ul className="pl-8 list-disc">
                             <li className="mb-2">
-                                Link to TimeTrace Github: <a className="text-blue-600" href="https://github.com/JonasGLund99/TimeTrace?tab=readme-ov-file">TimeTrace Github repository</a>
+                                Link to TimeTrace Github: <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://github.com/JonasGLund99/TimeTrace?tab=readme-ov-file">TimeTrace Github repository</a>
                             </li>
                             <li className="mb-2">
-                                Link to TimeTrace paper: <a className="text-blue-600" href="https://www.overleaf.com/project/65c49b8b5ae83f8a929e1371">TimeTrace Official Paper</a>
+                                Link to TimeTrace paper: <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://www.overleaf.com/read/vvptqndjnkpp#253802">TimeTrace Official Paper</a>
                             </li>
                         </ul>
                     </div>
@@ -269,16 +269,16 @@ function Home() {
                         <h3 className="font-bold">Monaa Links:</h3>
                         <ul className="pl-8 list-disc">
                             <li className="mb-2">
-                                Link to Monaa's official webpage: <a className="text-blue-600" href="https://monaa.readthedocs.io/en/latest/TRE/">Monaa webpage</a>
+                                Link to Monaa's official webpage: <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/TRE/">Monaa webpage</a>
                             </li>
                             <li className="mb-2">
-                                Link to Monaa paper: <a className="text-blue-600" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8429481">Monaa paper</a>
+                                Link to Monaa paper: <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8429481">Monaa paper</a>
                             </li>
                             <li className="mb-2">
-                                Link to paper on Monaa's underlying algorithm: <a className="text-blue-600" href="https://arxiv.org/pdf/1706.09174.pdf">paper on Monaa algorithm</a>
+                                Link to paper on Monaa's underlying algorithm: <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://arxiv.org/pdf/1706.09174.pdf">paper on Monaa algorithm</a>
                             </li>
                             <li className="mb-2">
-                                Link to Monaa Github: <a className="text-blue-600" href="https://github.com/MasWag/monaa">Monaa Github repository</a>
+                                Link to Monaa Github: <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://github.com/MasWag/monaa">Monaa Github repository</a>
                             </li>
                         </ul>
                     </div>
@@ -287,7 +287,7 @@ function Home() {
                         <h3 className="font-bold">Additional Relevant Links:</h3>
                         <ul className="pl-8 list-disc">
                             <li className="mb-2">
-                                Link to regex tool for debugging and testing regex patterns: <a className="text-blue-600" href="https://regexr.com/">regex tool</a>
+                                Link to regex tool for debugging and testing regex patterns: <a className="text-blue-600" target="_blank" rel="noreferrer" href="https://regexr.com/">regex tool</a>
                             </li>
                         </ul>
                     </div>
