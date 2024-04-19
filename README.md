@@ -68,10 +68,10 @@ In the body select raw and add a JSON body of the format below.
 *regex* Add a valid timed regular expression using the MONAA syntax.
 
 Your request should look something like below
+
 ![Postman example](postman_example.png)
 
 Send your request and view the response
-
 
 ### Recommended extensions for VSCode:
 [Headwind](https://marketplace.visualstudio.com/items?itemName=heybourn.headwind)
