@@ -28,7 +28,7 @@ export abstract class TREParser {
                 opened--;
             }
         }
-        if (opened != 0) {
+        if (opened !== 0) {
             throw new Error("A parenthesis was opened without it being closed.");
         }
     }
@@ -93,7 +93,7 @@ export abstract class TREParser {
         if (invalidExpressionBefore && invalidExpressionBefore.length > 0) {
             throw new Error(`Expression ${invalidExpressionBefore[0]} must be preceded by a mapped symbol.`);
         }
-        const expressionWithoutSymbolAfter = /[|&](?![\(a-zA-Z])/g;
+        const expressionWithoutSymbolAfter = /[|&](?![(a-zA-Z])/g;
         const invalidExpressionAfter = tre.match(expressionWithoutSymbolAfter);
         if (invalidExpressionAfter && invalidExpressionAfter.length > 0) {
             throw new Error(`Expression ${invalidExpressionAfter[0]} must be followed by a mapped symbol.`);
