@@ -44,7 +44,7 @@ export interface SequentialTREInput {
 }
 
 export class SequentialTREClass implements IPredefinedTRE {
-    public title: string = 'Two sequential events';
+    public title: string = 'Event followed by an event';
     public input: SequentialTREInput;
     public type: PredefinedTre = PredefinedTre.Sequential;
     public insertTRE(): string {
