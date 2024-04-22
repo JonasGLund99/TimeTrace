@@ -137,6 +137,22 @@ describe('TREParser', () => {
                 "Time constraints must be preceded by a mapped symbol."
             );
         });
+        test('should throw error as decimal number are followed by ms', ()=>{
+            // Arrange
+            const trimmedTREWithInvalidTimeConstraint = "AB(1.5ms,3ms)";
+            // Act and  Assert
+            expect(() => TREParser.validateTimeConstraints(trimmedTREWithInvalidTimeConstraint)).toThrowError(
+                "Invalid decimals, decimal number must be followed by a unit greater than milliseconds"
+            );
+        });
+        test('should throw error as decimal number are followed by number without unit', ()=>{
+            // Arrange
+            const trimmedTREWithInvalidTimeConstraint = "AB%(1.5,3)";
+            // Act and  Assert
+            expect(() => TREParser.validateTimeConstraints(trimmedTREWithInvalidTimeConstraint)).toThrowError(
+                "Invalid decimals, decimal number must be followed by a unit greater than milliseconds"
+            );
+        });
     });
           
     describe('validateNumbers', () => {

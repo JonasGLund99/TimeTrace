@@ -14,7 +14,7 @@ export abstract class TREBuilder {
     }
 
     public static convertTimeConstraint(tre: string) : string{
-    const regex = /(\d+(.\d+)*)(ms|s|m|h|d)/g;
+    const regex = /(\d+(\.\d+)*)(ms|s|m|h|d)/g;
 
         return tre.replace(regex, (match, value, decimal, unit) => {
             const numericValue = parseFloat(value + (decimal || ''));
