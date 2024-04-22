@@ -14,10 +14,7 @@ describe('LogFormatter', () => {
             const logfile = new File([fileContents], 'file.txt', { type: 'text/plain' });
             const mappings: CustomMap = new CustomMap();
             mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'delete', isRegex: false}, 'Z')
-            mappings.set({key: 'login', isRegex: false}, 'A')
-            mappings.set({key: 'login', isRegex: false}, 'A')
+            mappings.set({key: 'delete', isRegex: false}, '')
             mappings.set({key: 'logout', isRegex: false}, 'B'); 
             const expfilePath = './src/tests/exampleMonaaFormatLogFile.txt'
             const expfileContents: string = fs.readFileSync(expfilePath, 'utf-8');
@@ -50,9 +47,6 @@ describe('LogFormatter', () => {
             mappings.set({key: 'login', isRegex: false}, 'B')
             mappings.set({key: 'logout', isRegex: false}, 'C')
             mappings.set({key: 'updated', isRegex: false}, '')
-            mappings.set({key: 'udated', isRegex: false}, '')
-            mappings.set({key: 'login', isRegex: false}, 'B')
-            mappings.set({key: 'logout', isRegex: false}, 'C')
             mappings.set({key: 'edited', isRegex: false}, 'A');
 
             const expectedMappedRows: string[] = [

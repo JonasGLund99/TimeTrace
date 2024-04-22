@@ -36,8 +36,6 @@ export type AppdataContextInterface = {
     setError: React.Dispatch<React.SetStateAction<ErrorObject | null>>;
     modalObj: ModalObject | null;
     setModal: React.Dispatch<React.SetStateAction<ModalObject | null>>;
-    matches: MonaaZone[];
-    setMatches: React.Dispatch<React.SetStateAction<MonaaZone[]>>;
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     tre: string;
@@ -59,8 +57,6 @@ const defaultState = {
     setError: (value: ErrorObject | null) => { },
     modalObj: null,
     setModal: (value: ModalObject | null) => { },
-    matches: [],
-    setMatches: (value: MonaaZone[]) => { },
     loading: false,
     setLoading: (loading: boolean) => { },
     tre: "",
@@ -81,20 +77,13 @@ export default function AppdataProvider({ children }: AppDataProvideProps) {
     const [fileLines, setFileLines] = useState<string[]>([]);
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
     const [errorObj, setError] = useState<ErrorObject | null>(null);
-    const [matches, setMatches] = useState<MonaaZone[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [tre, setTre] = useState<string>("");
     const [dateFormat, setDateFormat] = useState<string>(DateFormat.ISO_8601);
     const [modalObj, setModal] = useState<ModalObject | null>(null);
 
-    // Reset matches and TRE when mappings change
-    useEffect(() => {
-        setMatches([]);
-        setTre("");
-    }, [mappings]);
-
     return (
-        <AppdataContext.Provider value={{ modalObj, setModal, events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, matches, setMatches, loading, setLoading, tre, setTre, dateFormat, setDateFormat }}>
+        <AppdataContext.Provider value={{ modalObj, setModal, events, setEvents, mappings, setMappings, fileLines, setFileLines, uploadedFile, setUploadedFile, errorObj, setError, loading, setLoading, tre, setTre, dateFormat, setDateFormat }}>
             {children}
         </AppdataContext.Provider>
     );

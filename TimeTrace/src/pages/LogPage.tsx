@@ -6,7 +6,10 @@ import { navigation } from "../components/Navbar";
 import LogTableProvider from '../context/LogTableContext';
 import Button from "../components/button/Button";
 import WithinTRE from '../components/predefined-tres/WithinTRE';
-import { WithinTREClass, IPredefinedTRE, PredefinedTre } from '../components/predefined-tres/PredefinedTREs';
+import { WithinTREClass, IPredefinedTRE, PredefinedTre, SequentialTREClass, TimedEventTREClass, TimedSequentialClass } from '../components/predefined-tres/PredefinedTREs';
+import SequentialTRE from "../components/predefined-tres/SequentialTRE";
+import TimedEventTRE from "../components/predefined-tres/TimedEventTRE";
+import TimedSequentialTRE from "../components/predefined-tres/TimedSequentialTRE";
 
 function LogPage() {
     const { uploadedFile } = useContext(AppdataContext);
@@ -42,13 +45,29 @@ function LogPage() {
 
     function createModalObject(predefTREType: PredefinedTre) {
         let predefinedTRE: ReactNode;
-
+        let modalTitle: string = '';
         switch(predefTREType) {
             case PredefinedTre.None:
                 throw new Error("A predefined TRE type must be selected.");
             case PredefinedTre.Within:
-                let TREObject = new WithinTREClass();
-                predefinedTRE = <WithinTRE treObject={TREObject} onSubmit={() => insertPredefinedTRE(TREObject)} closeTRE={() => {setModal(null)}}/>
+                let within = new WithinTREClass();
+                modalTitle = within.title;
+                predefinedTRE = <WithinTRE treObject={within} onSubmit={() => insertPredefinedTRE(within)} closeTRE={() => {setModal(null)}}/>
+                break;
+            case PredefinedTre.Sequential:
+                let sequential = new SequentialTREClass();
+                modalTitle = sequential.title;
+                predefinedTRE = <SequentialTRE treObject={sequential} onSubmit={() => insertPredefinedTRE(sequential)} closeTRE={() => {setModal(null)}}/>
+                break;
+            case PredefinedTre.TimedEvent:
+                let after = new TimedEventTREClass();
+                modalTitle = after.title;
+                predefinedTRE = <TimedEventTRE treObject={after} onSubmit={() => insertPredefinedTRE(after)} closeTRE={() => {setModal(null)}}/>
+                break;
+            case PredefinedTre.TimedSequential:
+                let timedSequential = new TimedSequentialClass();
+                modalTitle = timedSequential.title;
+                predefinedTRE = <TimedSequentialTRE treObject={timedSequential} onSubmit={() => insertPredefinedTRE(timedSequential)} closeTRE={() => {setModal(null)}}/>
                 break;
             default:
                 throw new Error("The predefined type of the TRE has not been defined in this switch case");
@@ -56,7 +75,7 @@ function LogPage() {
 
         setModal({
             isDismissible: false,
-            title: "Event followed by an event within a duration",
+            title: modalTitle,
             text: "This is a predefined query",
             submitTitle: "Insert TRE",
             children: predefinedTRE,
@@ -74,10 +93,13 @@ function LogPage() {
         <div id="log-page" className="h-full gap-5">
             <LogTableProvider>
                 <div className="h-[15%] flex flex-col gap-2">
-                    <div id="Predefined queries" className="flex items-center self-center">
+                    <div id="Predefined queries" className="flex items-center self-center gap-2">
+                        <Button tooltip="TRE to find an event with a time constraint." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.TimedEvent)}>Timed Event</Button>
                         <Button tooltip="TRE to match groups of events within a duration." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.Within)}>Within</Button>
+                        <Button tooltip="TRE to find two sequential events." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.Sequential)}>Sequential</Button>
+                        <Button tooltip="TRE to find two sequential events with their own time constraint." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.TimedSequential)}>Timed Sequential</Button>
                     </div>
-                    <SearchForm tooltip="Search for matches within your file with Timed Regular Expressions." />
+                    <SearchForm/>
                 </div>
                 <div className="w-full h-[85%]">
                     <LogTable mappingsAreEditable={false} />

@@ -8,6 +8,7 @@ import LineContents from "./LineContents";
 import LineNumbers from "./LineNumbers";
 import Searcher from "./searcher/Searcher";
 import { filterAllMappedUnmappedLines } from "../../models/helpers/filterLinesBasedOnShowMode";
+import { scrollToMonaaMatch } from "../../models/helpers/scrollLogTable";
 
 interface LogTableProps {
     mappingsAreEditable: boolean;
@@ -17,7 +18,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { events } = useContext(AppdataContext);
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
-    const { matches } = useContext(AppdataContext);
+    const { matches } = useContext(LogTableContext);
     const { setError } = useContext(AppdataContext);
     const { currentPageSpan, setCurrentPageSpan } = useContext(LogTableContext);
     const { advancedSearchMode } = useContext(LogTableContext);
@@ -26,7 +27,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
     const { shownLines, setShownLines } = useContext(LogTableContext);
     const { linesPerPage } = useContext(LogTableContext);
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const { shownLinesMode, setShownLinesMode } = useContext(LogTableContext);
+    const { shownLinesMode } = useContext(LogTableContext);
 
     useEffect(() => {
         setFilteredFileLines(mapEventsToFileLine(events));
@@ -41,28 +42,10 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
 
     useEffect(() => {
         setMonaaMatchIndex(0);
-    }, [matches])
+    }, [matches]);
 
     useEffect(() => {
-        const logTable = document.querySelector("#log-table");
-        if (!logTable) return;
-
-        const firstMappedLineMatched = document.querySelector(".mapped-line") as HTMLElement;
-        const firstUnmappedLineMatched = document.querySelector(".unmapped-line") as HTMLElement;
-
-        let lineToScrollTo: HTMLElement;
-        if (!firstMappedLineMatched && !firstUnmappedLineMatched) return;
-
-        if (!firstMappedLineMatched) {
-            lineToScrollTo = firstUnmappedLineMatched;
-        }
-        else if (!firstUnmappedLineMatched) {
-            lineToScrollTo = firstMappedLineMatched;
-        }
-        else {
-            lineToScrollTo = firstMappedLineMatched.offsetTop < firstUnmappedLineMatched.offsetTop ? firstMappedLineMatched : firstUnmappedLineMatched;
-        }
-        logTable.scrollTo({ top: lineToScrollTo.offsetTop });
+        scrollToMonaaMatch();
     }, [monaaMatchIndex]);
 
     useEffect(() => {
@@ -138,7 +121,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         const scrollOffset = 100;
         const scrollBottom: boolean = scrollY + windowHeight >= fullHeight - scrollOffset;
         const scrollTop: boolean = scrollY <= scrollOffset;
-        
+
         if (scrollBottom) {
             const nextPage = currentPageSpan.max + 1;
             setShownLines(shownLines => [...shownLines, ...(filteredFileLines.slice(linesPerPage * currentPageSpan.max, linesPerPage * nextPage))]);
