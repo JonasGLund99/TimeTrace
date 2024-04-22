@@ -1,0 +1,35 @@
+
+mapZonesToFileLines(fileLines, searchIntervals)
+    matches = []
+    timezones = ExtractTimezonesFromFileLines(fileLines)
+    avgTimeGrowth = (timezones.last - timezones.first) / timezones.length
+    lastMatchStart = 0
+
+    for i=0 to searchIntervals.length
+        matchingLines = [] #holds fileLines that match searchInterval
+        firstFilelineMatchingSearchInterval = startIndex(
+            timestamps, lastMatchStart, searchIntervals[i], avgTimeGrowth
+        )
+
+        j = firstFilelineMatchingSearchInterval
+        while (timestamps[j] >= searchIntervals[i].start && timestamps[j] <= searchIntervals[i].end) {
+            matchingLines.push(j)
+            j++;
+        }
+
+        matches.push(mtachingLines)
+
+    return matches
+
+
+startIndex(timestamps, lastStart, interval, avgTimeGrowth)
+    estimatedStart = floor((interval.start - timestamps[0]) / avgTimeGrowth)
+    
+    if (interval.start <= timestamps[estimatedStart])
+        start = binarySearch(timestamps, interval.start, lastStart, estimatedStart)
+    else
+        start = Max(estimatedStart, lastStart)
+        start = binarySearch(timestamps, interval.start, start, timestamps.length - 1)
+
+    return start
+
