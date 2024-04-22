@@ -71,7 +71,7 @@ export abstract class TREParser {
     }
 
     public static validateSymbols(tre: string): void {
-        const symbolsAreValid = /^[a-zA-Z()%\s\d+*|&,.]+$/.test(tre);
+        const symbolsAreValid = /^[a-zA-Z()%\s\d+*|&,.$]+$/.test(tre);
 
         this.validateNumbers(tre);
         this.validateSpecialChars(tre);
@@ -99,7 +99,8 @@ export abstract class TREParser {
             throw new Error(`Expression ${invalidExpressionWithSmallZFollowedByStar[0]} is not allowed. "*" cannot be used after z as this is inferred as (a|b|c|....|Z)*.`);
         }
 
-        const expressionWithoutSymbol = /(?<![a-yA-Z)*+])([+*&|]+)/g;
+        //$ is allowed as an expression, see terminate character: https://monaa.readthedocs.io/en/latest/TRE/
+        const expressionWithoutSymbol = /(?<![a-yA-Z)*+])([+*&|$]+)/g;
         const invalidExpression = tre.match(expressionWithoutSymbol);
         if (invalidExpression && invalidExpression.length > 0) {
             throw new Error(`Expression ${invalidExpression[0]} must be preceded by a mapped symbol.`);
