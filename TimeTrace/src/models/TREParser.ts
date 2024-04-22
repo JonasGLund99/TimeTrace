@@ -38,9 +38,15 @@ export abstract class TREParser {
         // match time constraints = /\d+(\.\d+)?/;
         // Regular expression to match and extract time constraints along with their time units
         const regex = /%\((\d+(\.\d+)?)(ms|s|m|h|d)?,(\d+(\.\d+)?)(ms|s|m|h|d)?\)/g;
+        const invalidDecimal = /(\d+\.\d+)(ms|,|\))/g;
         let match: RegExpExecArray | null;
         let timeConstraintCount = tre.split("%").length - 1;
         let matchCount = 0;
+        
+        const invalidDecimals = tre.match(invalidDecimal);
+        if (invalidDecimals && invalidDecimals.length > 0) {
+            throw new Error("Invalid decimals, decimal number must be followed by a unit greater than milliseconds");
+        }
 
         // Loop through all matches of time constraints in the TRE
         while ((match = regex.exec(tre)) !== null) {

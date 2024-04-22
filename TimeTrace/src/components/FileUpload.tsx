@@ -108,7 +108,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
             } catch (e) {
                 setError({
                     title: "Error during file upload",
-                    errorString: "Error duing upload of file <br/> <br/>" + e,
+                    errorString: "Error during upload of file <br/> <br/>" + e,
                     callback: null,
                     callbackTitle: null,
                     isDismissible: true
@@ -160,7 +160,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         className="hidden"
                         onChange={handleFileUpload}
                     />
-                    <Button style={{style: 'relative '}}>
+                    <Button style={{ style: 'relative ' }}>
                         <label htmlFor="contained-button-file" className="flex items-center px-6 py-4 rounded-md cursor-pointer">
                             {
                                 uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
