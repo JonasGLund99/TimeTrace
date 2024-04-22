@@ -6,8 +6,9 @@ import { getFileLines } from "../models/helpers/getFileLines";
 import { LogTableContext } from '../context/LogTableContext';
 import { Store } from 'react-notifications-component';
 import Button from './button/Button';
-import { ButtonStyle } from './button/IButtonProps';
 import Tooltip from './tooltip/ToolTip';
+import { MonaaZone } from '../models/MonaaZone';
+import { calcStartEndOfRender } from '../models/helpers/scrollLogTable';
 
 interface SearchFormProps {
     tooltip?: string;
@@ -18,15 +19,42 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
     const { mappings } = useContext(AppdataContext);
     const { fileLines } = useContext(AppdataContext);
     const { uploadedFile } = useContext(AppdataContext);
-    const { setMatches } = useContext(AppdataContext);
+    const { setMatches } = useContext(LogTableContext);
     const { setError } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
     const { setMonaaMatchIndex } = useContext(LogTableContext);
+    const { setShownLines } = useContext(LogTableContext);
+    const { filteredFileLines } = useContext(LogTableContext);
+    const { linesPerPage } = useContext(LogTableContext);
+    const { currentPageSpan, setCurrentPageSpan } = useContext(LogTableContext);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         callMonaa(tre);
     };
+
+    function findFirstMatch(matches: MonaaZone[]) {
+        if (matches.length === 0) {
+            setShownLines(filteredFileLines.slice(0, linesPerPage));
+            setCurrentPageSpan({ min: 0, max: 1 });
+            setMonaaMatchIndex(-1);
+            return;
+        }
+
+        const newMatchIndex = 0;
+        const minPage = 0;
+        const maxPage = Math.ceil(filteredFileLines.length / linesPerPage);
+        const startOfMatchIndex = matches[newMatchIndex].lineMatches[0];
+        const endOfMatchIndex = matches[newMatchIndex].lineMatches[matches[newMatchIndex].lineMatches.length - 1];
+        const renderObj = calcStartEndOfRender(minPage, maxPage, startOfMatchIndex, endOfMatchIndex, linesPerPage);
+        const matchIsOutsideCurrentPageSpan = renderObj.startOfRender < currentPageSpan.min || renderObj.endOfRender > currentPageSpan.max;
+        
+        if (matchIsOutsideCurrentPageSpan) {
+            setShownLines(filteredFileLines.slice(linesPerPage * renderObj.startOfRender, linesPerPage * renderObj.endOfRender));
+            setCurrentPageSpan({ min: renderObj.startOfRender, max: renderObj.endOfRender });
+        }
+        setMonaaMatchIndex(-1); //set to -1 to trigger a scroll to the first match (when use effect on LogTable sets it to 0 after this)
+    }
 
     async function callMonaa(tre: string) {
         setLoading(true);
@@ -36,21 +64,21 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
             const formattedLog = await LogFormatter.formatLog(uploadedFile, mappings);
             const formattedFile = await getFileLines(formattedLog);
             const monaaZones = await QueryHandler.search(tre, formattedFile, fileLines, mappings);
-            setMonaaMatchIndex(-1);
             setMatches(monaaZones);
+            findFirstMatch(monaaZones);
             const endTime = performance.now(); //End of Monaa call
             const duration = endTime - startTime;
             setLoading(false);
             Store.addNotification({
                 title: `Monaa searh for pattern: ${tre}`,
                 message: `Found ${monaaZones.length} matches in ${(duration / 1000).toFixed(1)} seconds`,
-                type: "success",
+                type: `${monaaZones.length > 0 ? "success" : "warning"}`,
                 insert: "top",
                 container: "bottom-right",
                 animationIn: ["animate__animated", "animate__fadeIn"],
                 animationOut: ["animate__animated", "animate__fadeOut"],
                 dismiss: {
-                    duration: 5000,
+                    duration: 2000,
                     onScreen: true
                 }
             });
@@ -82,12 +110,10 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
                         value={tre}
                         onChange={(e) => setTre(e.target.value)}
                         required
-                        />
-                    <Button style={{style: 'absolute end-2.5 bottom-2.5 px-4 py-2'}} type='submit'>Search</Button>
+                    />
+                    <Button style={{ style: 'absolute end-2.5 bottom-2.5 px-4 py-2' }} type='submit'>Search</Button>
                 </div>
             </form>
         </Tooltip>
     );
 }
-
-

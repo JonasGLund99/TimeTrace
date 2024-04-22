@@ -1,10 +1,9 @@
 import { useContext, useState } from "react";
-import { LogTableContext } from "../../../context/LogTableContext";
 import { AppdataContext } from "../../../context/AppContext";
 import { CustomMap } from "../../../models/Types/EventMapping";
 import Button from "../../button/Button";
 import { ButtonStyle } from "../../button/IButtonProps";
-import Tooltip from "../../tooltip/ToolTip";
+
 interface SearcherProps {
     searchQuery: string;
     setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -21,9 +20,11 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
         const mapValue = regexMapValue;
         let errorStr: string = "";
         if (regex === "") 
-            errorStr = "Write regex before mapping events or goto standard search";
-        else if(mapValue ==="")
+            errorStr = "Write regex before mapping events or go to standard search";
+        else if (mapValue === "")
             errorStr = "Make sure to input a map value that the matches of the regex should be mapped"
+        else if (!mapValue.match(/[a-yA-Y]/gi))
+            errorStr = "Map value must be a single character from a to y or A to Y"
         
         if (errorStr !== "") {
             setError({
@@ -90,7 +91,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                         id="map-regex-to-value"
                         className="w-20 px-2 mx-2 text-center border-2 border-gray-300 rounded-lg"
                         type="text"
-                        placeholder="map to..."
+                        placeholder="Map to.."
                         maxLength={1}
                         value={regexMapValue}
                         onChange={(e) => setRegexMapValue(e.target.value)}

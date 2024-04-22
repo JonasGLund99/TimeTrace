@@ -1,12 +1,9 @@
 import { useContext } from "react";
 import { LogTableContext } from "../../../context/LogTableContext";
 import { ShowLinesMode } from "../../../context/LogTableContext";
-import Tooltip from "../../tooltip/ToolTip";
-
 
 function ShowLineToggle() {
-
-    const { shownLinesMode, setShownLinesMode } = useContext(LogTableContext);
+    const { setShownLinesMode } = useContext(LogTableContext);
 
     function handleShowFilterUpdate(e: ShowLinesMode) {
         setShownLinesMode(e)

@@ -18,7 +18,7 @@ function MappedItemsList() {
     }
 
     return (
-        <div id="mappings-container" className="w-full h-full border-2 border-gray-300 rounded-lg">
+        <div id="mappings-container" className="border-2 border-gray-300 rounded-lg h-[95%]">
             <div className="px-4 pt-2">
                 <div className="grid grid-cols-12 gap-1 mb-2">
                     <p className="col-span-2 font-bold text-left">Mapping</p>
