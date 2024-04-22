@@ -25,9 +25,9 @@ mapZonesToFileLines(fileLines, searchIntervals)
 startIndex(timestamps, lastStart, interval, avgTimeGrowth)
     estimatedStart = floor((interval.start - timestamps[0]) / avgTimeGrowth)
     
-    if (interval.start <= timestamps[estimatedStart])
+    if (interval.start <= timestamps[estimatedStart]) #Search left side of array 
         start = binarySearch(timestamps, interval.start, lastStart, estimatedStart)
-    else
+    else #search right side of array
         start = Max(estimatedStart, lastStart)
         start = binarySearch(timestamps, interval.start, start, timestamps.length - 1)
 
