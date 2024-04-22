@@ -10,6 +10,7 @@ import { WithinTREClass, IPredefinedTRE, PredefinedTre, SequentialTREClass, Time
 import SequentialTRE from "../components/predefined-tres/SequentialTRE";
 import TimedEventTRE from "../components/predefined-tres/TimedEventTRE";
 import TimedSequentialTRE from "../components/predefined-tres/TimedSequentialTRE";
+import { ButtonStyle } from "../components/button/IButtonProps";
 
 function LogPage() {
     const { uploadedFile } = useContext(AppdataContext);
@@ -76,7 +77,6 @@ function LogPage() {
         setModal({
             isDismissible: false,
             title: modalTitle,
-            text: "This is a predefined query",
             submitTitle: "Insert TRE",
             children: predefinedTRE,
             submitButtonType: "submit",
@@ -93,11 +93,11 @@ function LogPage() {
         <div id="log-page" className="h-full gap-5">
             <LogTableProvider>
                 <div className="h-[15%] flex flex-col gap-2">
-                    <div id="Predefined queries" className="flex items-center self-center gap-2">
-                        <Button tooltip="TRE to find an event with a time constraint." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.TimedEvent)}>Timed Event</Button>
-                        <Button tooltip="TRE to match groups of events within a duration." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.Within)}>Within</Button>
-                        <Button tooltip="TRE to find two sequential events." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.Sequential)}>Sequential</Button>
-                        <Button tooltip="TRE to find two sequential events with their own time constraint." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.TimedSequential)}>Timed Sequential</Button>
+                    <div id="predefined-queries" className="flex items-center justify-center gap-2">
+                        <Button buttonStyle={ButtonStyle.Modal} tooltip="TRE to find an event with a time constraint." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.TimedEvent)}>Timed Event</Button>
+                        <Button buttonStyle={ButtonStyle.Modal} tooltip="TRE to match groups of events within a duration." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.Within)}>Within</Button>
+                        <Button buttonStyle={ButtonStyle.Modal} tooltip="TRE to find two sequential events." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.Sequential)}>Sequential</Button>
+                        <Button buttonStyle={ButtonStyle.Modal} tooltip="TRE to find two sequential events with their own time constraint." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.TimedSequential)}>Timed Sequential</Button>
                     </div>
                     <SearchForm/>
                 </div>
