@@ -12,7 +12,6 @@ export type ErrorObject = {
 }
 
 export type ModalObject = {
-    text: string,
     title: string,
     submit?: (() => void) | null,
     closeCallback?: (() => void),

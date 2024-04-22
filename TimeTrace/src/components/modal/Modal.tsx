@@ -28,7 +28,7 @@ export default function Modal() {
 
     return (
         <div className="h-screen w-screen flex items-center justify-center backdrop-blur-[3px] fixed z-10">
-            <div id="alert-additional-content-4" className="w-1/3 p-4 mb-4 border rounded-lg border-github-borderWhiteBg text-github-textWhiteBg bg-github-navbarBg" role="alert">
+            <div id="modal" className="w-1/3 p-4 mb-4 border rounded-lg border-github-borderWhiteBg text-github-textWhiteBg bg-github-navbarBg" role="alert">
                 <div className="flex items-center">
                     <h3 className="text-lg font-medium">{modalObj.title}</h3>
                 </div>
