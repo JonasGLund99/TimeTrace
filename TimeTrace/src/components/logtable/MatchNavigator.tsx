@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { AppdataContext } from "../../context/AppContext";
 import { LogTableContext } from "../../context/LogTableContext";
 import Button from "../button/Button";
+import { calcStartEndOfRender } from "../../models/helpers/scrollLogTable";
 
 interface MatchNavigatorProps {
     linesPerPage: number;
@@ -12,46 +12,37 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
     const { currentPageSpan, setCurrentPageSpan } = useContext(LogTableContext);
     const { setShownLines } = useContext(LogTableContext);
     const { filteredFileLines } = useContext(LogTableContext);
-    const { matches } = useContext(AppdataContext);
+    const { matches } = useContext(LogTableContext);
 
-    function handlePreviousMatchClick() {
-        const prevIndex = monaaMatchIndex === 0 ? 0 : monaaMatchIndex - 1;
-        const startOfMatchIndex: number = matches[prevIndex].lineMatches[0];
-        const endOfMatchIndex: number = matches[prevIndex].lineMatches[matches[prevIndex].lineMatches.length - 1];
-
-        if (startOfMatchIndex < currentPageSpan.min * linesPerPage) {
-            const endOfRender = Math.ceil(endOfMatchIndex / linesPerPage);
-            const startOfRender = Math.floor(startOfMatchIndex / linesPerPage); 
-            setShownLines([...(filteredFileLines.slice(linesPerPage * startOfRender, linesPerPage * endOfRender))]);
-            setCurrentPageSpan({ min: startOfRender, max: endOfRender });
+    function handleNewMatchIndex(newMatchIndex: number) {
+        if (newMatchIndex < 0) {
+            newMatchIndex = 0;
+        } else if (newMatchIndex > matches.length - 1) {
+            newMatchIndex = matches.length - 1;
         }
-        setMonaaMatchIndex(prevIndex)
-    }
 
-    function handeNextMatchClick() {
-        const nextIndex: number = monaaMatchIndex === matches.length - 1 ? monaaMatchIndex : monaaMatchIndex + 1;
-        const startOfMatchIndex: number = matches[nextIndex].lineMatches[0];
-        const endOfMatchIndex: number = matches[nextIndex].lineMatches[matches[nextIndex].lineMatches.length - 1];
-
-        if (endOfMatchIndex > currentPageSpan.max * linesPerPage) {
-            // If the end of the match is outside the currently shown lines
-            const endOfRender = Math.ceil(endOfMatchIndex / linesPerPage);
-            const startOfRender = Math.floor(startOfMatchIndex / linesPerPage); 
-
-            // Only render necessary pages
-            setShownLines([...(filteredFileLines.slice(linesPerPage * startOfRender, linesPerPage * endOfRender))]);
-            setCurrentPageSpan({ min: startOfRender, max: endOfRender });
+        const minPage = 0;
+        const maxPage = Math.ceil(filteredFileLines.length / linesPerPage);
+        const startOfMatchIndex = matches[newMatchIndex].lineMatches[0];
+        const endOfMatchIndex = matches[newMatchIndex].lineMatches[matches[newMatchIndex].lineMatches.length - 1];
+        const renderObj = calcStartEndOfRender(minPage, maxPage, startOfMatchIndex, endOfMatchIndex, linesPerPage);
+        const matchIsOutsideCurrentPageSpan = renderObj.startOfRender < currentPageSpan.min || renderObj.endOfRender > currentPageSpan.max;
+       
+        if (matchIsOutsideCurrentPageSpan) {
+            setShownLines(filteredFileLines.slice(linesPerPage * renderObj.startOfRender, linesPerPage * renderObj.endOfRender));
+            setCurrentPageSpan({ min: renderObj.startOfRender, max: renderObj.endOfRender });
         }
-        setMonaaMatchIndex(nextIndex);
+        setMonaaMatchIndex(newMatchIndex);
     }
 
     return (
         <div id="matches-buttons" className="mt-4 w-full h-[10%] flex flex-row justify-center items-center gap-20 ">
-            <Button style={{style: 'px-4 py-2'}} onClick={() => { handlePreviousMatchClick() }}>Previous match</Button>
+            <Button style={{ style: 'px-4 py-2' }} onClick={() => { handleNewMatchIndex(monaaMatchIndex - 1) }}>
+                Previous match
+            </Button>
             <pre id="monaa-match-input" className="text-gray-800 ">
-                {/* TODO:
                 <input
-                    className="text-right "
+                    className="text-right"
                     type="number"
                     name="matchIndex"
                     id=""
@@ -59,12 +50,12 @@ function MatchNavigator({ linesPerPage }: MatchNavigatorProps) {
                     min={1}
                     max={matches.length}
                     onChange={(e) => {
-                        setMonaaMatchIndex((e.target.value as unknown as number) - 1);
-                    }} /> */}
-                {monaaMatchIndex + 1} / {matches.length}
+                        handleNewMatchIndex((e.target.value as unknown as number) - 1);
+                    }} />
+                of {matches.length}
             </pre>
-            <Button style={{style: 'px-4 py-2'}}
-                onClick={() => handeNextMatchClick()}>
+            <Button style={{ style: 'px-4 py-2' }}
+                onClick={() => handleNewMatchIndex(monaaMatchIndex + 1)}>
                 Next match
             </Button>
         </div>

@@ -10,6 +10,7 @@ import { CustomMap } from "../models/Types/EventMapping";
 import DateFormatChooser from "./DateFormatChooser";
 import Button from './button/Button';
 import { ButtonStyle } from "./button/IButtonProps";
+import { LogTableContext } from "../context/LogTableContext";
 
 interface FileUploadProps {
     showDateFormatChooser?: boolean;
@@ -23,7 +24,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
     const { setError } = useContext(AppdataContext);
     const { setEvents } = useContext(AppdataContext);
     const { setLoading } = useContext(AppdataContext);
-    const { setMatches } = useContext(AppdataContext);
+    const { setMatches } = useContext(LogTableContext);
     const [dragging, setDragging] = useState(false);
 
     const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
