@@ -99,7 +99,7 @@ function LogPage() {
                         <Button tooltip="TRE to find two sequential events." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.Sequential)}>Sequential</Button>
                         <Button tooltip="TRE to find two sequential events with their own time constraint." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedTre.TimedSequential)}>Timed Sequential</Button>
                     </div>
-                    <SearchForm tooltip="Search for matches within your file with Timed Regular Expressions." />
+                    <SearchForm/>
                 </div>
                 <div className="w-full h-[85%]">
                     <LogTable mappingsAreEditable={false} />

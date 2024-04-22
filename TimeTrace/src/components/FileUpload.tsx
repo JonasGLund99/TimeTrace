@@ -160,7 +160,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         className="hidden"
                         onChange={handleFileUpload}
                     />
-                    <Button style={{style: 'relative '}} tooltip="Upload a file.">
+                    <Button style={{style: 'relative '}}>
                         <label htmlFor="contained-button-file" className="flex items-center px-6 py-4 rounded-md cursor-pointer">
                             {
                                 uploadedFile ? "Current file: " + uploadedFile.name : "Upload file"
@@ -172,7 +172,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                         }
                     </Button>
                     {!uploadedFile && showDateFormatChooser &&
-                        <DateFormatChooser tooltip="Select your date format." />
+                        <DateFormatChooser />
                     }
                     {uploadedFile &&
                         <Button tooltip={`Remove uploaded file (${uploadedFile.name}).`} buttonStyle={ButtonStyle.None} onClick={handleFileRemove} data-testid="remove-button">

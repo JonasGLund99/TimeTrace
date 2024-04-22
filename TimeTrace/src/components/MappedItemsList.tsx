@@ -4,6 +4,7 @@ import Trashcan from "./svgs/Trashcan";
 import { CustomMap } from "../models/Types/EventMapping";
 import Button from "./button/Button";
 import { ButtonStyle } from "./button/IButtonProps";
+import Tooltip from "./tooltip/ToolTip";
 
 function MappedItemsList() {
     const { mappings, setMappings } = useContext(AppdataContext);
@@ -28,8 +29,8 @@ function MappedItemsList() {
                         <p className="col-span-2">{map}</p>
                         <p className="col-span-9 truncate">{event}</p>
                         <div className="flex justify-center col-span-1">
-                            <Button buttonStyle={ButtonStyle.None} onClick={() => {removeMapping(event)}}>
-                                <Trashcan />
+                            <Button tooltip={`Remove mapping '${map}' from event '${event}'.`} buttonStyle={ButtonStyle.None} onClick={() => {removeMapping(event)}}>
+                                    <Trashcan />
                             </Button>
                         </div>
                     </div>
