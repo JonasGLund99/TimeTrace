@@ -88,7 +88,8 @@ export abstract class TREParser {
         if (invalidExpressionWithSmallZFollowedByStar && invalidExpressionWithSmallZFollowedByStar.length > 0) {
             throw new Error(`Expression ${invalidExpressionWithSmallZFollowedByStar[0]} is not allowed. "*" cannot be used after z as this is inferred as (a|b|c|....|Z)*.`);
         }
-        const expressionWithoutSymbolBefore = /(?<![a-zA-Z)*+])([+*&|]+)/g;
+        //$ is allowed as an expression, see terminate character: https://monaa.readthedocs.io/en/latest/TRE/
+        const expressionWithoutSymbolBefore = /(?<![a-zA-Z)*+])([+*&|$]+)/g;
         const invalidExpressionBefore = tre.match(expressionWithoutSymbolBefore);
         if (invalidExpressionBefore && invalidExpressionBefore.length > 0) {
             throw new Error(`Expression ${invalidExpressionBefore[0]} must be preceded by a mapped symbol.`);

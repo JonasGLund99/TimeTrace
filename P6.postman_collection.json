@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "377c820f-c9e3-4142-a72b-1438ee051756",
+		"name": "P6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26798854"
+	},
+	"item": [
+		{
+			"name": "monaa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lines\":[\r\n        \"A 1\",\r\n        \"B 2\",\r\n        \"A 3\",\r\n        \"B 4\",\r\n        \"B 5\",\r\n        \"A 6\"\r\n    ],\r\n    \"regex\": \"(AB)%(0,10)$\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/monaa/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"monaa",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "monaa",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/monaa/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"monaa",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.0.1 Python/3.10.12"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 19 Apr 2024 07:39:55 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "422"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"monaa search success\",\n    \"monaa_result\": {\n        \"lines\": [\n            \" -0.000000       <= t <   1.000000\\n\",\n            \"  2.000000        < t' <=   3.000000\\n\",\n            \"  1.000000        < t' - t <=   3.000000\\n\",\n            \"=============================\\n\",\n            \"  2.000000       <= t <   3.000000\\n\",\n            \"  4.000000        < t' <=   5.000000\\n\",\n            \"  1.000000        < t' - t <=   3.000000\\n\",\n            \"=============================\\n\"\n        ]\n    },\n    \"regex\": \"(AB)%(0,10)$\",\n    \"status\": \"success\"\n}"
+				}
+			]
+		}
+	]
+}
