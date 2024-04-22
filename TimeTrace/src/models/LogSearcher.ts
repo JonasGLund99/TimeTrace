@@ -15,16 +15,16 @@ export abstract class LogSearcher {
         let lastFoundMatchStartIndex = 0
         for (let i = 0; i < searchIntervals.length; i++) {
             let foundmatch = new MonaaZone();
-            let startingIndex = this.findStartingIndex(timestamps.slice(lastFoundMatchStartIndex), searchIntervals[i], averageTimegrowth);
-            lastFoundMatchStartIndex = startingIndex
-
+            let startingIndex = this.findStartingIndex(timestamps, lastFoundMatchStartIndex, searchIntervals[i], averageTimegrowth);
+            
             let j: number = startingIndex;
             while (timestamps[j] >= searchIntervals[i].start && timestamps[j] <= searchIntervals[i].end) {
                 foundmatch.lineMatches.push(j)
                 j++;
             }
-
+            
             if (foundmatch.lineMatches.length > 0) {
+                lastFoundMatchStartIndex = foundmatch.lineMatches[0];
                 MonaaZoneMatches.push(foundmatch);
             }
         }
@@ -47,15 +47,16 @@ export abstract class LogSearcher {
         return [timestamps, averageTimegrowth];
     }
 
-    private static findStartingIndex(timestamps: number[], searchInterval: SearchInterval, averageTimegrowth: number): number {
+    private static findStartingIndex(timestamps: number[], lastFoundIndex: number, searchInterval: SearchInterval, averageTimegrowth: number): number {
         const firstTimestamp = timestamps[0];
         const difference = searchInterval.start - firstTimestamp;
         const multiplum = difference / averageTimegrowth;
         let startingIndex = Math.floor(multiplum);
 
         if (searchInterval.start <= timestamps[startingIndex]) { // search in left side if we overshot estimation
-            startingIndex = this.binarySearch(timestamps, searchInterval.start, 0, startingIndex);
+            startingIndex = this.binarySearch(timestamps, searchInterval.start, lastFoundIndex, startingIndex);
         } else { //search in right side of array if we undershot estimation
+            startingIndex = startingIndex < lastFoundIndex ? lastFoundIndex : startingIndex;
             startingIndex = this.binarySearch(timestamps, searchInterval.start, startingIndex, timestamps.length - 1);
         }
 
