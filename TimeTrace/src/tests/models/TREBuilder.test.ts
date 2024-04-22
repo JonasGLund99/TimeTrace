@@ -86,7 +86,58 @@ describe('TREBuilder', () => {
             const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
             // Assert
             expect(convertedTRE).toEqual(expectedConvertedTRE);
-    });
+        });
+
+        test('Should handle no unit on first and unit on second', ()=>{
+            // Arrange
+            const trimmedTRE = "(A|B)%(100,1d)";
+            const expectedConvertedTRE = "(A|B)%(100,86400000)";
+            // Act
+            const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
+            // Assert
+            expect(convertedTRE).toEqual(expectedConvertedTRE);
+         });
+
+        test('Should handle unit on first and no unit on second', ()=>{
+            // Arrange
+            const trimmedTRE = "(A|B)%(100s,86400000)";
+            const expectedConvertedTRE = "(A|B)%(100000,86400000)";
+            // Act
+            const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
+            // Assert
+            expect(convertedTRE).toEqual(expectedConvertedTRE);
+        });
+
+        test('Should handle when unit on the first but no unit on second mulitiple constraints', ()=>{
+            // Arrange
+            const trimmedTRE = "AB%(100000,1d)BC%(20s,86400000)";
+            const expectedConvertedTRE = "AB%(100000,86400000)BC%(20000,86400000)";
+            // Act
+            const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
+            // Assert
+            expect(convertedTRE).toEqual(expectedConvertedTRE);
+        });
+
+        test('Should handle decimal on allowed units, when no unit the first but unit on second mulitiple constraints', ()=>{
+            // Arrange
+            const trimmedTRE = "AB%(100000,1.5d)BC%(20.5s,86400000)";
+            const expectedConvertedTRE = "AB%(100000,129600000)BC%(20500,86400000)";
+            // Act
+            const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
+            // Assert
+            expect(convertedTRE).toEqual(expectedConvertedTRE);
+        });
+
+        test('Should handle decimal timeconstraints if no unit or ms unit by floor', ()=>{
+            // Arrange
+            const trimmedTRE = "(A|B)%(100.8ms,86400000.04ms)";
+            const expectedConvertedTRE = "(A|B)%(100,86400000)";
+            // Act 
+            const convertedTRE = TREBuilder.convertTimeConstraint(trimmedTRE)
+            // Assert
+            expect(convertedTRE).toEqual(expectedConvertedTRE);
+        });
+
     });
     describe('buildTRE', () => {
         test('Correctly build tre from rawtre with unit and whitespace', ()=>{
