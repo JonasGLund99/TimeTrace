@@ -1,0 +1,28 @@
+mapSearchIntervalsToFileLines(fileLines, intervals)
+    matches = []
+    times = extractTimestamps(fileLines)
+    avgGrowth = (times[-1] - times[0]) / len(times)
+    lastIdx = 0
+
+    for intv in intervals
+        matching = []
+        estIdx = floor((intv.start - times[0]) / avgGrowth)
+
+        if (intv.start <= times[estIdx])
+            start, end = lastIdx, estIdx
+        else
+            start, end = max(estIdx, lastIdx), len(times) - 1
+
+        lastIdx = binSearch(times, intv.start, start, end)
+
+        j = lastIdx
+        while (times[j] between intv.start and intv.end) 
+            matching.push(j)
+            j++;
+
+
+        matches.push(matching)
+
+    return matches
+
+
