@@ -18,39 +18,48 @@ export abstract class LogSearcher {
     }
 
     public static findZones(logFile: string[], searchIntervals: SearchInterval[]): MonaaZone[] {
-        console.time("newfindZones");
+        console.time("findZones");
+        let binaryTime = 0, binaryCount = 0
+        let hashTime = 0, hashCount = 0
         let startOfLastFoundMatch = 0;
         const MonaaZoneMatches: MonaaZone[] = [];
         for (let i = 0; i < searchIntervals.length; i++) {
             let match = new MonaaZone();
-            let start: number | undefined = this.hashMap.get(Math.round(searchIntervals[i].start).toString());
-            let end: number | undefined = this.hashMap.get(Math.round(searchIntervals[i].end).toString());
-            if (start !== undefined && end !== undefined)
+            let hashTimeStart = performance.now()
+            let start: number | null = this.hashMap.get(Math.round(searchIntervals[i].start).toString());
+            let end: number | null = this.hashMap.get(Math.round(searchIntervals[i].end).toString());
+            if (start !== null && end !== null) {
                 match.lineMatches = Array.from({ length: end - start + 1 }, (_, index) => start! + index); //array containing numbers from start to end
-            else {
-                match = this.findNearestZone(logFile, searchIntervals[i], start === undefined ? startOfLastFoundMatch : start)
+                hashTime += performance.now() - hashTimeStart;
+                hashCount++;
             }
-            
+            else {
+                let binaryTimeStart = performance.now()
+                match = this.findNearestZone(logFile, searchIntervals[i], startOfLastFoundMatch);
+                binaryTime += performance.now() - binaryTimeStart;
+                binaryCount++;
+            }
+            startOfLastFoundMatch = match.lineMatches[0]
             MonaaZoneMatches.push(match)
             
         }
-        console.timeEnd("newfindZones");
+        console.timeEnd("findZones");
+        let hashAvg = hashCount === 0 ? 0 : hashTime/hashCount
+        let binaryAvg = binaryCount === 0 ? 0 : binaryTime/hashCount
+        console.log("Average hash zone time: " + hashAvg + " \nAverage binary zone time: " + binaryAvg)
         return MonaaZoneMatches
     }
 
     public static findNearestZone(logFile: string[], searchInterval: SearchInterval, startOfLastMatch: number): MonaaZone {
-        console.time("findNearestZones");
         let foundmatch = new MonaaZone();
         let startingIndex = this.findNearestIndex(startOfLastMatch, searchInterval);
 
         let j: number = startingIndex;
         while (this.timestamps[j] >= searchInterval.start && this.timestamps[j] <= searchInterval.end) {
-            console.log("in while: j="+j)
             foundmatch.lineMatches.push(j)
             j++;
         }
         
-        console.timeEnd("findNearestZones");
         return foundmatch;
     }
 
@@ -81,6 +90,8 @@ export abstract class LogSearcher {
         } else if (searchInterval.start > this.timestamps[startingIndex]) {//search in right side of array if we undershot estimation
             startingIndex = startingIndex < lastFoundIndex ? lastFoundIndex : startingIndex;
             startingIndex = this.binarySearch(searchInterval.start, startingIndex, this.timestamps.length - 1);
+        }else {
+            console.log("Direct binary hit!")
         }
 
         return startingIndex;

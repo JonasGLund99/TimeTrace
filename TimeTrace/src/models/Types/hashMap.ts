@@ -1,22 +1,21 @@
-
-
 export class HashMap {
-    private map: Map<string, number>
+    private map: Record<string, number>;
 
     constructor() {
-        this.map = new Map<string, number>()
+        this.map = {};
     }
 
     set(key: string, value: number) {
-        if (!this.map.has(key))
-            this.map.set(key, value)
+        if (!(key in this.map)) {
+            this.map[key] = value;
+        }
     }
 
     get(key: string) {
-        return this.map.get(key)
+        return this.map[key] !== undefined ? this.map[key] : null;
     }
 
     clear() {
-        this.map = new Map<string, number>()
+        this.map = {};
     }
 }
