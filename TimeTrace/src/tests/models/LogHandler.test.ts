@@ -20,7 +20,7 @@ describe('LogHandler', () => {
                 "2024-02-26T08:22:36.612645Z login",
                 "2024-02-26T08:22:36.677645Z logout"
             ];
-
+            LogSearcher.updateTimestampInfo(logFile)
             LogSearcher.hashMap.clear() //clear current entries
             for (let i = 0; i < logFile.length; i++) {
                 let timestamp: string = LogFormatter.convertDateToMs(extractTimeStamp(logFile[i]));

@@ -110,6 +110,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                 setMappings(new CustomMap(events.map((event) => [{ key: event, isRegex: false }, ""])));
                 
                 //create hashmap that is used later in the searching.
+                LogSearcher.updateTimestampInfo(lines)
                 LogSearcher.hashMap.clear() //clear current entries
                 for (let i = 0; i < lines.length; i++) {
                     let timestamp: string = LogFormatter.convertDateToMs(extractTimeStamp(lines[i]));

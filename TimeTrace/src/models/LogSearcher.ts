@@ -6,6 +6,9 @@ import { HashMap } from "./Types/hashMap";
 
 export abstract class LogSearcher {
     private static _hashMap = new HashMap();
+    private static timestamps: number[];
+    private static averageGrowth: number;
+
     constructor() {
         throw new Error(`${typeof this} is a static class`);
     }
@@ -16,6 +19,7 @@ export abstract class LogSearcher {
 
     public static findZones(logFile: string[], searchIntervals: SearchInterval[]): MonaaZone[] {
         console.time("newfindZones");
+        let startOfLastFoundMatch = 0;
         const MonaaZoneMatches: MonaaZone[] = [];
         for (let i = 0; i < searchIntervals.length; i++) {
             let match = new MonaaZone();
@@ -23,10 +27,79 @@ export abstract class LogSearcher {
             let end: number | undefined = this.hashMap.get(Math.round(searchIntervals[i].end).toString());
             if (start !== undefined && end !== undefined)
                 match.lineMatches = Array.from({ length: end - start + 1 }, (_, index) => start! + index); //array containing numbers from start to end
+            else {
+                match = this.findNearestZone(logFile, searchIntervals[i], start === undefined ? startOfLastFoundMatch : start)
+            }
+            
             MonaaZoneMatches.push(match)
+            
         }
         console.timeEnd("newfindZones");
         return MonaaZoneMatches
+    }
+
+    public static findNearestZone(logFile: string[], searchInterval: SearchInterval, startOfLastMatch: number): MonaaZone {
+        console.time("findNearestZones");
+        let foundmatch = new MonaaZone();
+        let startingIndex = this.findNearestIndex(startOfLastMatch, searchInterval);
+
+        let j: number = startingIndex;
+        while (this.timestamps[j] >= searchInterval.start && this.timestamps[j] <= searchInterval.end) {
+            console.log("in while: j="+j)
+            foundmatch.lineMatches.push(j)
+            j++;
+        }
         
+        console.timeEnd("findNearestZones");
+        return foundmatch;
+    }
+
+    public static updateTimestampInfo(logFile: string[]) {
+        let prevLineTime: number = 0;
+        const timestamps: number[] = [];
+
+        logFile.forEach((line: string) => {
+            const eventTimeStamp = parseInt(LogFormatter.convertDateToMs(extractTimeStamp(line)));
+            timestamps.push(eventTimeStamp);
+            prevLineTime = eventTimeStamp;
+        });
+
+        let averageTimegrowth: number = (timestamps[timestamps.length - 1] - timestamps[0]) / timestamps.length
+
+        this.timestamps = timestamps;
+        this.averageGrowth = averageTimegrowth;
+    }
+
+    private static findNearestIndex(lastFoundIndex: number, searchInterval: SearchInterval): number {
+        const firstTimestamp = this.timestamps[0];
+        const difference = searchInterval.start - firstTimestamp;
+        const multiplum = difference / this.averageGrowth;
+        let startingIndex = Math.floor(multiplum);
+
+        if (searchInterval.start < this.timestamps[startingIndex]) { // search in left side if we overshot estimation
+            startingIndex = this.binarySearch(searchInterval.start, lastFoundIndex, startingIndex);
+        } else if (searchInterval.start > this.timestamps[startingIndex]) {//search in right side of array if we undershot estimation
+            startingIndex = startingIndex < lastFoundIndex ? lastFoundIndex : startingIndex;
+            startingIndex = this.binarySearch(searchInterval.start, startingIndex, this.timestamps.length - 1);
+        }
+
+        return startingIndex;
+    }
+
+    // Binary search function to find the first index in the log to search from
+    private static binarySearch(target: number, left: number, right: number): number {
+        let resultIndex = -1;
+
+        while (left <= right) {
+            const mid = Math.floor((left + right) / 2);
+            if (this.timestamps[mid] >= target) {
+                resultIndex = mid; // Update result index, as we found an element greater than or equal to the target
+                right = mid - 1; // Continue searching in the left half
+            } else {
+                left = mid + 1; // Continue searching in the right half
+            }
+        }
+
+        return resultIndex;
     }
 }
