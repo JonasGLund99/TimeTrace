@@ -3,6 +3,8 @@ import { SearchInterval } from "../../models/SearchInterval";
 import { MonaaZone } from "../../models/MonaaZone";
 import { DateFormat } from "../../models/helpers/dateFormats";
 import { LogFormatter } from "../../models/LogFormatter";
+import { LogSearcher } from "../../models/LogSearcher";
+import { extractTimeStamp } from "../../models/helpers/extractTimeStamp";
 
 describe('LogHandler', () => {
     LogFormatter.dateFormat = DateFormat.ISO_8601;
@@ -19,6 +21,11 @@ describe('LogHandler', () => {
                 "2024-02-26T08:22:36.677645Z logout"
             ];
 
+            LogSearcher.hashMap.clear() //clear current entries
+            for (let i = 0; i < logFile.length; i++) {
+                let timestamp: string = LogFormatter.convertDateToMs(extractTimeStamp(logFile[i]));
+                LogSearcher.hashMap.set(timestamp, i)
+            }
             // Converted to Monaa format:
             // A 1708935754000
             // A 1708935754504
@@ -45,7 +52,8 @@ describe('LogHandler', () => {
 
             // Act
             const result = LogHandler.mapMonaaOutputToEvent(monaaOutput, logFile);
-
+            console.log("test result")
+            console.log(result)
             // Assert
             expect(result).toEqual(expectedZones);
         });

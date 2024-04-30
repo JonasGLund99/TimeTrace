@@ -19,8 +19,8 @@ export abstract class LogSearcher {
         const MonaaZoneMatches: MonaaZone[] = [];
         for (let i = 0; i < searchIntervals.length; i++) {
             let match = new MonaaZone();
-            let start: number | undefined = this.hashMap.get(searchIntervals[i].start.toString());
-            let end: number | undefined = this.hashMap.get(searchIntervals[i].end.toString());
+            let start: number | undefined = this.hashMap.get(Math.round(searchIntervals[i].start).toString());
+            let end: number | undefined = this.hashMap.get(Math.round(searchIntervals[i].end).toString());
             if (start !== undefined && end !== undefined)
                 match.lineMatches = Array.from({ length: end - start + 1 }, (_, index) => start! + index); //array containing numbers from start to end
             MonaaZoneMatches.push(match)
