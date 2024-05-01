@@ -1,8 +1,6 @@
-# TimeTrace
+# TimeTrace - Timed Pattern Searching in Log Files
 
-Better Timed Pattern Searching in Log Files
-
-## React front-end
+## React front end
 Clone the GitHub project and cd into the project 
 
 `cd TimeTrace`
@@ -13,7 +11,7 @@ Clone the GitHub project and cd into the project
 ### Start the project
 `npm start`
 
-## MONAA backend
+## MONAA back end
 Because this project uses the MONAA tool that only runs on Ubuntu, a separate backend server has been set up and runs on CLAAUDIA.
 For the front-end to connect to CLAAUDIA, it is necessary with an SSH tunnel.
 

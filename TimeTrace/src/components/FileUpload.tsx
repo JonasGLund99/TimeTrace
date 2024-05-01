@@ -11,6 +11,9 @@ import DateFormatChooser from "./DateFormatChooser";
 import Button from './button/Button';
 import { ButtonStyle } from "./button/IButtonProps";
 import { LogTableContext } from "../context/LogTableContext";
+import { LogSearcher } from "../models/LogSearcher";
+import { extractTimeStamp } from "../models/helpers/extractTimeStamp";
+import { LogFormatter } from "../models/LogFormatter";
 
 interface FileUploadProps {
     showDateFormatChooser?: boolean;
@@ -105,6 +108,15 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
                 const events = extractEventsFromFileLines(lines);
                 setEvents(events);
                 setMappings(new CustomMap(events.map((event) => [{ key: event, isRegex: false }, ""])));
+                
+                //create hashmap that is used later in the searching.
+                LogSearcher.updateTimestampInfo(lines)
+                LogSearcher.hashMap.clear() //clear current entries
+                for (let i = 0; i < lines.length; i++) {
+                    let timestamp: string = LogFormatter.convertDateToMs(extractTimeStamp(lines[i]));
+                    LogSearcher.hashMap.set(timestamp, i)
+                }
+                
             } catch (e) {
                 setError({
                     title: "Error during file upload",

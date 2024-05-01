@@ -1,6 +1,8 @@
 import { LogSearcher } from "../../models/LogSearcher";
 import { SearchInterval } from "../../models/SearchInterval";
 import { MonaaZone } from "../../models/MonaaZone";
+import { extractTimeStamp } from "../../models/helpers/extractTimeStamp";
+import { LogFormatter } from "../../models/LogFormatter";
 
 describe('LogSearcher', () => {
     describe('findZones', () => {
@@ -24,6 +26,11 @@ describe('LogSearcher', () => {
                 "2024-02-26T08:22:42.169645Z logout"
             ];
 
+            LogSearcher.hashMap.clear() //clear current entries
+            for (let i = 0; i < logFile.length; i++) {
+                let timestamp: string = LogFormatter.convertDateToMs(extractTimeStamp(logFile[i]));
+                LogSearcher.hashMap.set(timestamp, i)
+            }
             // https://codechi.com/dev-tools/date-to-millisecond-calculators/
             const searchIntervals : SearchInterval[] = [
                 {start: 1708935754000, end: 1708935756677},
@@ -35,7 +42,7 @@ describe('LogSearcher', () => {
             ]
 
             // Act
-            const zones = LogSearcher.findZones(logFile, searchIntervals);
+            const zones = LogSearcher.findZones(searchIntervals);
             
             // Assert
             expect(zones).toEqual(expectedZones);
