@@ -8,8 +8,6 @@ export abstract class TREBuilder {
         TREParser.parseTRE(trimmedTRE, mappings);
         let convertedTre: string = this.convertTimeConstraint(trimmedTRE);
         convertedTre = this.convertz(convertedTre, mappings)
-
-        
         return "("+ convertedTre + ")$";
     }
 
