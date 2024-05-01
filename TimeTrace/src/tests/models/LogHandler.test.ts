@@ -51,7 +51,7 @@ describe('LogHandler', () => {
             ]
 
             // Act
-            const result = LogHandler.mapMonaaOutputToEvent(monaaOutput, logFile);
+            const result = LogHandler.mapMonaaOutputToEvent(monaaOutput);
             console.log("test result")
             console.log(result)
             // Assert

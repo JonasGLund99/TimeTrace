@@ -42,7 +42,7 @@ describe('LogSearcher', () => {
             ]
 
             // Act
-            const zones = LogSearcher.findZones(logFile, searchIntervals);
+            const zones = LogSearcher.findZones(searchIntervals);
             
             // Assert
             expect(zones).toEqual(expectedZones);

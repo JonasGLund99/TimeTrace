@@ -17,7 +17,7 @@ export abstract class LogSearcher {
         return this._hashMap;
     }
 
-    public static findZones(logFile: string[], searchIntervals: SearchInterval[]): MonaaZone[] {
+    public static findZones(searchIntervals: SearchInterval[]): MonaaZone[] {
         console.time("findZones");
         let binaryTime = 0, binaryCount = 0
         let hashTime = 0, hashCount = 0
@@ -35,7 +35,7 @@ export abstract class LogSearcher {
             }
             else {
                 let binaryTimeStart = performance.now()
-                match = this.findNearestZone(logFile, searchIntervals[i], startOfLastFoundMatch);
+                match = this.findNearestZone(searchIntervals[i], start != null ? start : startOfLastFoundMatch);
                 binaryTime += performance.now() - binaryTimeStart;
                 binaryCount++;
             }
@@ -50,7 +50,7 @@ export abstract class LogSearcher {
         return MonaaZoneMatches
     }
 
-    public static findNearestZone(logFile: string[], searchInterval: SearchInterval, startOfLastMatch: number): MonaaZone {
+    public static findNearestZone(searchInterval: SearchInterval, startOfLastMatch: number): MonaaZone {
         let foundmatch = new MonaaZone();
         let startingIndex = this.findNearestIndex(startOfLastMatch, searchInterval);
 

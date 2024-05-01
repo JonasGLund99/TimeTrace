@@ -7,8 +7,8 @@ export abstract class LogHandler {
         throw new Error(`${typeof this} is a static class`);
     }
 
-    public static mapMonaaOutputToEvent(MonaaOutput: string[], logFile: string[]): MonaaZone[] {
-        return LogSearcher.findZones(logFile, this.extractSearchIntervals(MonaaOutput));
+    public static mapMonaaOutputToEvent(MonaaOutput: string[]): MonaaZone[] {
+        return LogSearcher.findZones(this.extractSearchIntervals(MonaaOutput));
     }
 
     public static extractSearchIntervals(MonaaOutput: string[]): SearchInterval[] {
