@@ -146,7 +146,7 @@ function FileUpload({ showDateFormatChooser, asDragAndDrop }: FileUploadProps) {
     return (
         <div>
             {asDragAndDrop &&
-                <div className={`relative w-full h-full border-2 flex flex-col justify-center items-center rounded-2xl border-gray-800 border-dashed p-14 ${dragging ? ' border-4' : ''}`}>
+                <div className={`relative w-full h-full border-2 flex flex-col justify-center items-center rounded-2xl border-time-trace-dark border-dashed p-14 ${dragging ? ' border-4' : ''}`}>
                     <FileUploadLogo />
                     <div className="text-2xl">
                         Drag and drop your file here to get started!

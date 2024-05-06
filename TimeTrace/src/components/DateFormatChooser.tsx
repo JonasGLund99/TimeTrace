@@ -16,7 +16,7 @@ function DateFormatChooser({tooltip}: DateFormatChooserProps) {
         <Tooltip tooltip={tooltip}>
             <form className="w-[50%]">
                 <label htmlFor="date-formats" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose a date format</label>
-                <select value={dateFormat} id="date-formats" className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                <select value={dateFormat} id="date-formats" className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:ring-time-trace focus:border-time-trace dark:bg-time-trace dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-time-trace dark:focus:border-time-trace"
                     onChange={(e) => {
                         setDateFormat(e.target.value);
                         LogFormatter.dateFormat = e.target.value as DateFormat;

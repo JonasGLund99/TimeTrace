@@ -62,12 +62,12 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                             ></input>
                         <Button
                             buttonStyle={ButtonStyle.None}
-                            style={{ style: "absolute top-0 left-0 h-full flex items-center justify-center h-full px-2 rounded-l-lg bg-gray-800 hover:bg-gray-700" }}
+                            style={{ style: "absolute top-0 left-0 h-full flex items-center justify-center h-full px-2 rounded-l-lg bg-time-trace-dark hover:bg-time-trace" }}
                             onClick={() => searchLog(searchQuery)}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="w-6 h-6 text-gray-400"
+                                className="w-6 h-6 text-gray-200"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
