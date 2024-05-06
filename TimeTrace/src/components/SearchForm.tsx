@@ -104,7 +104,7 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
                         </svg>
                     </div>
                     <input
-                        className="block w-full p-4 text-sm text-gray-900 bg-white border border-gray-600 rounded-lg ps-10 focus:ring-blue-500 focus:border-blue-500"
+                        className="block w-full p-4 text-sm text-gray-900 bg-white border border-gray-600 rounded-lg ps-10 focus:ring-time-trace focus:border-time-trace"
                         placeholder='Enter TRE...'
                         name="TRE"
                         value={tre}
