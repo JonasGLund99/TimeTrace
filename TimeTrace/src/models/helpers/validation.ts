@@ -46,7 +46,7 @@ function FileIsInAscendingOrder(lines: string[]): void {
             throw new Error(`Could not parse timestamp in line ${i + 1} or ${i + 2}.${lineContents}`);
         }
         
-        if (date1 >= date2) //if line1 >= than line2 it is not sorted
+        if (date1 > date2) //if line1 >= than line2 it is not sorted
             throw new Error(`File must be in strictly ascending order. Ordering failed at:${lineContents}`);
     }
 }
