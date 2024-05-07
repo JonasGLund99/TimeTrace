@@ -47,6 +47,6 @@ function FileIsInAscendingOrder(lines: string[]): void {
         }
         
         if (date1 > date2) //if line2 < than line1 it is not sorted
-            throw new Error(`File must be in strictly ascending order. Ordering failed at:${lineContents}`);
+            throw new Error(`File must be in ascending order. Ordering failed at:${lineContents}`);
     }
 }
