@@ -3,6 +3,7 @@ import Collapsible from '../components/Collapsible';
 import CloseAllIcon from '../components/svgs/CloseAllIcon';
 import OpenAllIcon from "../components/svgs/OpenAllIcon";
 import Button from "../components/button/Button";
+
 function Home() {
     const [collapseAll, setCollapseAll] = useState(false);
 
@@ -25,7 +26,7 @@ function Home() {
     return (
         <div className="flex flex-row justify-center h-full overflow-auto pt-14">
             <div className="relative w-[90%] h-full rounded-lg items-center flex flex-col ">
-                <Button style={{style: "absolute right-0 flex items-center gap-4 p-3 text-gray-100 -top-10"}} onClick={handleCollapseAll}>
+                <Button style={{ style: "absolute right-0 flex items-center gap-4 p-3 text-gray-100 -top-10" }} onClick={handleCollapseAll}>
                     {collapseAll ? (
                         <p>Close all</p>
                     ) : (
@@ -37,72 +38,85 @@ function Home() {
                         <OpenAllIcon />
                     )}
                 </Button>
-                
+
                 <Collapsible label="Welcome to TimeTrace" isOpen={collapseAll}>
                     <div className="">
                         <h3 className="text-xl font-semibold">Welcome!</h3>
                         <p>
-                            Welcome to TimeTrace, your premier solution for efficient log analysis. In the vast expanse of data, TimeTrace stands as your trusted navigator, meticulously sifting through logs to unveil valuable insights. Our cutting-edge technology ensures swift and precise pattern recognition, empowering you to extract meaningful information with unparalleled efficiency. Join us as we redefine the landscape of log analysis, where professionalism meets proficiency. Experience the power of TimeTrace and unlock the true potential of your data.
+                            Welcome to TimeTrace, your solution for streamlined log analysis. In the vast realm of data, TimeTrace serves as your reliable guide, meticulously sorting through logs to reveal valuable insights. Our advanced technology ensures rapid and accurate pattern recognition, enabling you to uncover meaningful information effortlessly. Explore the capabilities of TimeTrace as we transform log analysis, combining professionalism with efficiency. Discover the power of TimeTrace and unleash the full potential of your data.
                         </p>
                         <br />
-                        <h3 className="text-xl font-semibold">What can i do with TimeTrace</h3>
+                        <h3 className="text-xl font-semibold">What can I do with TimeTrace</h3>
                         <ul className="pl-8 list-disc">
-                            <li>Effeciently search for patterns in your big log files </li>
-                            <li>Analyse your timeseries data for specific patterns </li>
-                            <li>Effectivly find errors from the wast amount of data your system creates in form of logfiles</li>
+                            <li>Efficiently search for timed patterns in your extensive log files</li>
+                            <li>Analyze your time series data for specific timed patterns</li>
+                            <li>Effectively find errors from the vast amount of data your system creates in the form of log files</li>
                             <li>And much more</li>
                         </ul>
+                        <br />
+                        <h3 className="text-xl font-semibold">To come!</h3>
+                        <ul className="pl-8 list-disc">
+                            <li>Live data pattern matching</li>
+                        </ul>
                     </div>
+
+
                 </Collapsible>
                 <Collapsible label="How to get started" isOpen={collapseAll}>
                     <h3 className="text-xl font-semibold">To get started</h3>
                     <p>
-                        To get started with TimeTrace as your tool for searching and analyzing in your logfile or timeseries data, upload a file. The uploaded logfile must be either a .txt file or a .log file. If the logfile og timeseries is not in one of the following formats, you will have to convert your data to one of these supported formats.
-                    </p>
+                        To get started with TimeTrace as your tool for searching and analysing your log files or time series data, upload a file. The uploaded log file must be either a .txt file or a .log file. If the log file or time series data is not in one of the following formats, you will have to convert your data to one of these supported formats.                    </p>
                     <br />
                     <br />
                     <h4 className="text-lg font-semibold">Uploading a file</h4>
                     <p>
-                        Navigating to the mappings page the below screen will be seen.
+                        When navigating to the mappings page, the screen below will be visible.
                     </p>
-                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
-                    A file can either be uploaded by pressing the upload button dragging a file over the drop zone.
+                    <img className="w-3/4 h-auto my-4 " src="./assets/getstarted_1.png" alt="uploading file" />
+                    A file can either be uploaded by pressing the upload button or dragging a file over the drop zone
                     <br />
                     <br />
                     <h4 className="text-lg font-semibold">Mapping your events</h4>
                     <p>
-                        After uploading a file create the mappings of your events. The value to which you map your event have to be one charater from <span className="font-semibold">a-y or A-Y</span>. This means that you can map a total of 50 event to value.
-                        This restriction comes from the underlying search engine Monaa, which dokumentation your can view <a className="text-time-trace" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/">here</a>. Remark that the character z and Z are reserved values. Both will be used in the search page, where z are the mapped value of all mapped and unmapped events. The Z value are used as map value for all unmapped events.
+                        After uploading a file, create the mappings for your events. The value to which you map your event has to be one character from 'a' to 'y' or 'A' to 'Y'. This means that you can map a total of 50 events to values. This restriction comes from the underlying search engine Monaa, whose documentation you can view
+                        <a className="text-time-trace" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/">here</a>. Note that the characters 'z' and 'Z' are reserved values. 'z' will be used as the mapped value for all mapped and unmapped events on the search page, while 'Z' will be used as the map value for all unmapped events.
                     </p>
                     <br />
                     <br />
-                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
+                    <img className="w-3/4 h-auto my-4 " src="./assets/getstarted_2.png" alt="uploading file" />
                     <br />
                     <br />
-                    On the left the mapping created can be seen and on the right mappings can be created. Here giving a line a mapping value will map each identical event to this value. To delete and event press the trashcan. In the standard search setting you can search for the event that your which to find and map to value.
-                    Switching to the advanced search mode with regex allows you to create mapping based on regex patterns. To learn more about regex patterns <a className="text-time-trace" target="_blank" rel="noreferrer" href="https://regexr.com/">click here</a>.
+                    On the left, the created mappings can be seen, and on the right, new mappings can be created. Here, assigning a mapping value to a line will map each identical event to this value. To delete an event, press the trash can. In the standard search setting, you can search for the event that you wish to find and map to a value.
+                    Switching to the advanced search mode with regex allows you to create mappings based on regex patterns. To learn more about regex patterns, <a className="text-time-trace" target="_blank" rel="noreferrer" href="https://regexr.com/">click here</a>.
                     <br />
                     <br />
-                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
+                    <img className="w-3/4 h-auto my-4 " src="./assets/getstarted_3.png" alt="uploading file" />
                     <br />
                     <br />
-                    When mapping event to value mapping value with a regex search pattern all events matching this pattern will be given that map value.
-                    Notice, if two mappings created with regex search patterns are made and some event overlap, there will be no overwrite of the first mapped search pattern.
-                    Furthermore the single mappings created below the overview that mathces all indetical event, will overrule if they should be matched and mapped during advanced search with regex
+                    When mapping events to values using a regex search pattern, all events matching this pattern will be given that mapped value.
+                    Please note, if two mappings created with regex search patterns overlap, there will be no overwrite of the first mapped search pattern.
+                    Furthermore, the individual mappings created below the overview that match all identical events will take precedence if they are to be matched and mapped during advanced search with regex.
                     <br />
                     <br />
                     <h4 className="text-lg font-semibold">Searching for patterns in your file</h4>
-                    When you have created the mappings of the events you wish to base your search/analyzis upon, navigate the View log page.
+                    When you have created the mappings of the events you wish to base your search/analysis upon, navigate to the View Log page.
                     <br />
                     <br />
-                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
+                    <img className="w-3/4 h-auto my-4 " src="./assets/getstarted_4.png" alt="uploading file" />
                     <br />
                     <br />
-                    To start searching for the patterns in your logfile you simply create a timed regular expression. The syntax for searching for patters in your log i different from the previousely mentioned regex patterns. Here the syntax are specific to the underlying engine Monaa. For more information of the Monaa syntax <a className="text-time-trace" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/">click here</a>.
-                    After pressing search the timed regular expression and the mapped file are prossesed the matches will be represented in the overview below the searchbar. Here the matches will be highligted.
+                    To start searching for patterns in your log file, simply create a timed regular expression. The syntax for searching for patterns in your log is different from the previously mentioned regex patterns. Here, the syntax is specific to the underlying engine Monaa. For more information on the Monaa syntax, <a className="text-time-trace" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/">click here</a>.
+                    After pressing search, the timed regular expression and the mapped file are processed, and the matches will be represented in the overview below the search bar. Here, the matches will be highlighted.
+                    <br />
+
+                    <br />
+                    <img className="w-3/4 h-auto my-4 " src="./assets/getstarted_5.png" alt="uploading file" />
                     <br />
                     <br />
-                    <img height={600} width={750} src="https://t3.ftcdn.net/jpg/00/92/53/56/360_F_92535664_IvFsQeHjBzfE6sD4VHdO8u5OHUSc6yHF.jpg" alt="uploading file" />
+                    To help search for patterns in your log file, four predefined TRE structures are defined: Timed Event, Within, Sequential, and Timed Sequential. Below, Timed Event is presented. Here, input fields guide you for the input of events and time restraint. In the given example, 's' is used as the unit for the time constraint. Available units are [ms (millisecond), s (second), m (minute), h (hour), d (day)]. The default time unit is ms.
+                    <br />
+                    <br />
+                    <img className="w-3/4 h-auto my-4 " src="./assets/getstarted_6.png" alt="uploading file" />
                     <br />
                     <br />
                 </Collapsible>
@@ -192,7 +206,7 @@ function Home() {
                         <h2 className="mb-4 text-xl font-bold">Timed Regular Expressions</h2>
 
                         <div className="mb-4">
-                            <p className="mb-2">This section illustrates the utilization of timed regular expressions in MONAA. The syntax provided is identical to the underlying workings of MONAA. The documented work of Monaa can be seen at this <a className="text-time-trace" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/TRE/">webpage</a>.</p>
+                            <p className="mb-2">This section illustrates the utilisation of timed regular expressions in MONAA. The syntax provided is identical to the underlying workings of MONAA. The documented work of Monaa can be seen at this <a className="text-time-trace" target="_blank" rel="noreferrer" href="https://monaa.readthedocs.io/en/latest/TRE/">webpage</a>.</p>
                         </div>
 
                         <h2 className="mb-4 text-xl font-bold">Timed Regular Expressions in MONAA</h2>
@@ -216,13 +230,13 @@ function Home() {
                         </div>
 
                         <div className="mb-4">
-                            <p className="mb-2">An event in Monaa can be representet by a single character of the english alfabet [a-z,A-Z], thereby Monaa can define 52 events. In TimeTrace only 50 events can be representet with these mapping value, as z and Z are reserved keywords for all event and all umapped event acordingly.</p>
+                            <p className="mb-2">An event in MONAA can be represented by a single character of the English alphabet [a-z, A-Z]. Therefore, MONAA can define 52 events. In TimeTrace, only 50 events can be represented with these mapping values, as 'z' and 'Z' are reserved keywords for all events and all unmapped events accordingly.</p>
                         </div>
 
                         <h2 className="mb-4 text-xl font-bold">Examples of patterns search</h2>
 
                         <div className="mb-4">
-                            <p className="mb-2">The following expressions demonstrate pattern searches:</p>
+                            <p className="mb-2">The following expressions demonstrate timed pattern searches in MONAA:</p>
 
                             <div className="mb-4">
                                 <h3 className="font-bold">Example 1:</h3>
@@ -241,10 +255,9 @@ function Home() {
                 </Collapsible>
 
                 <Collapsible label="Video guide" isOpen={collapseAll}>
-                    <div className="flex justify-center">
+                    <div className="flex justify-center p-4 border-black border-y-2">
                         <video width="80%" height="80%" controls>
-                            <source src="movie.mp4" type="video/mp4" />
-                            <source src="movie.ogg" type="video/ogg" />
+                            <source src="./assets/tutorial.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                     </div>
