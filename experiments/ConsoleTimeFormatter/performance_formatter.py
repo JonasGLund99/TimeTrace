@@ -351,6 +351,8 @@ total_runtime = 0
 count = 0
 
 for line in lines:
+    if(line == ""):
+        continue
     parts = line.split(' ')
     runtime = float(parts[-2])
     total_runtime += runtime

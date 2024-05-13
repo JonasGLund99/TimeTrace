@@ -22,9 +22,9 @@ function Navbar() {
                     to={item.href}
                     className={cn(
                         pathname === item.href
-                            ? "bg-[#143D40] text-white"
-                            : "text-gray-300 hover:bg-time-trace hover:text-white",
-                        "rounded-md px-6 py-2 text-sm font-medium"
+                            ? "text-white  border-b-2 border-white"
+                            : "text-gray-300 hover:bg-time-trace hover:text-white rounded-lg ",
+                        "px-6 py-1 text-sm font-medium"
                     )}
                     aria-current={pathname === item.href ? "page" : undefined}
                 >
