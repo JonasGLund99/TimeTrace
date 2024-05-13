@@ -46,7 +46,7 @@ export abstract class LogSearcher {
         console.timeEnd("findZones");
         let hashAvg = hashCount === 0 ? 0 : hashTime/hashCount
         let binaryAvg = binaryCount === 0 ? 0 : binaryTime/hashCount
-        console.log("Average hash zone time: " + hashAvg + " \nAverage binary zone time: " + binaryAvg)
+        console.log("Averagehashzonetime: " + hashAvg + " \nAveragebinaryzonetime: " + binaryAvg)
         return MonaaZoneMatches
     }
 
