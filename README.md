@@ -1,6 +1,13 @@
 # TimeTrace - Timed Pattern Searching in Log Files
 
-## React front end
+## Where can TimeTrace be accessed?
+TimeTrace is deployed on vercel; however, it is necessary to have an SSH-key to send request to the MONAA backend. <br/>
+<a href="https://time-trace.vercel.app/">Try out TimeTrace here</a>
+
+An SSH-key can be obtained by contacting one of the following people: <a href="mailto:jgl21@student.aau.dk">jgl21@student.aau.dk</a>, <a href="mailto:asbchr21@student.aau.dk">asbchr21@student.aau.dk</a>.
+
+
+## React frontend
 Clone the GitHub project and cd into the project 
 
 `cd TimeTrace`
@@ -11,9 +18,9 @@ Clone the GitHub project and cd into the project
 ### Start the project
 `npm start`
 
-## MONAA back end
+## MONAA backend
 Because this project uses the MONAA tool that only runs on Ubuntu, a separate backend server has been set up and runs on CLAAUDIA.
-For the front-end to connect to CLAAUDIA, it is necessary with an SSH tunnel.
+For the frontend to connect to CLAAUDIA, it is necessary with an SSH tunnel.
 
 ### SSH tunnel setup
 **Step 1 - Private key**
@@ -25,7 +32,7 @@ Open a terminal and run the following ssh command:
 This will tunnel port 5000 on the server to localhost:5000.
 
 **Step 3 - Open browser**
-Open your browser and go to localhost:3000 where the TimeTrace front-end will be hosted.
+Open your browser and go to localhost:3000 where the TimeTrace frontend will be hosted.
 
 Follow the guides on the home page on how to use TimeTrace.
 
@@ -39,7 +46,7 @@ Ubuntu server: https://strato-new.claaudia.aau.dk/project/instances/
 Ubuntu server IP: http://130.225.37.239
 
 ### Start MONAA flask server
-`cd MONAA-backend` 
+`cd monaa-backend` 
 
 (`git pull`)
 
