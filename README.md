@@ -1,6 +1,6 @@
 # TimeTrace | Timed Pattern Searching in Log Files
 
-[TimeTrace](https://time-trace.vercel.app/){:target="_blank"} is deployed on Vercel; however, it is necessary to have an SSH-key to send request to the [MONAA backend](https://github.com/AndersToft20/monaa-backend). 
+[TimeTrace](https://time-trace.vercel.app/) is deployed on Vercel; however, it is necessary to have an SSH-key to send request to the [MONAA backend](https://github.com/AndersToft20/monaa-backend). 
 
 An SSH-key can be obtained by contacting either [jgl21@student.aau.dk](mailto:jgl21@student.aau.dk) or [asbchr21@student.aau.dk](mailto:asbchr21@student.aau.dk).
 
