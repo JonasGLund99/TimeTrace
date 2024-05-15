@@ -2,363 +2,449 @@ import pyperclip
 
 #781 matches
 data20000 = """
-LogSearcher.ts:26 findZones: 12.298095703125 ms
-LogSearcher.ts:26 findZones: 10.2109375 ms
-LogSearcher.ts:26 findZones: 9.60693359375 ms
-LogSearcher.ts:26 findZones: 9.77490234375 ms
-LogSearcher.ts:26 findZones: 9.119140625 ms
-LogSearcher.ts:26 findZones: 9.237060546875 ms
-LogSearcher.ts:26 findZones: 9.724853515625 ms
-LogSearcher.ts:26 findZones: 9.425048828125 ms
-LogSearcher.ts:26 findZones: 10.029052734375 ms
-LogSearcher.ts:26 findZones: 10.3291015625 ms
-LogSearcher.ts:26 findZones: 9.880126953125 ms
-LogSearcher.ts:26 findZones: 10.0498046875 ms
-LogSearcher.ts:26 findZones: 9.739990234375 ms
-LogSearcher.ts:26 findZones: 8.866943359375 ms
-LogSearcher.ts:26 findZones: 9.08984375 ms
-LogSearcher.ts:26 findZones: 36.87890625 ms
-LogSearcher.ts:26 findZones: 10.44384765625 ms
-LogSearcher.ts:26 findZones: 10.455078125 ms
-LogSearcher.ts:26 findZones: 10.573974609375 ms
-LogSearcher.ts:26 findZones: 10.62109375 ms
-LogSearcher.ts:26 findZones: 10.43408203125 ms
-LogSearcher.ts:26 findZones: 10.47998046875 ms
-LogSearcher.ts:26 findZones: 9.964111328125 ms
-LogSearcher.ts:26 findZones: 11.361083984375 ms
-LogSearcher.ts:26 findZones: 10.700927734375 ms
-LogSearcher.ts:26 findZones: 11.1240234375 ms
-LogSearcher.ts:26 findZones: 9.76416015625 ms
-LogSearcher.ts:26 findZones: 11.326904296875 ms
-LogSearcher.ts:26 findZones: 9.925048828125 ms
-LogSearcher.ts:26 findZones: 10.160888671875 ms
-LogSearcher.ts:26 findZones: 8.991943359375 ms
-LogSearcher.ts:26 findZones: 10.98681640625 ms
-LogSearcher.ts:26 findZones: 9.97802734375 ms
-LogSearcher.ts:26 findZones: 10.727783203125 ms
-LogSearcher.ts:26 findZones: 8.98193359375 ms
-LogSearcher.ts:26 findZones: 10.162109375 ms
-LogSearcher.ts:26 findZones: 8.9638671875 ms
-LogSearcher.ts:26 findZones: 9.135986328125 ms
-LogSearcher.ts:26 findZones: 9.045166015625 ms
-LogSearcher.ts:26 findZones: 9.06494140625 ms
-LogSearcher.ts:26 findZones: 10.093017578125 ms
-LogSearcher.ts:26 findZones: 9.089111328125 ms
-LogSearcher.ts:26 findZones: 9.10205078125 ms
-LogSearcher.ts:26 findZones: 8.89892578125 ms
-LogSearcher.ts:26 findZones: 10.747802734375 ms
-LogSearcher.ts:26 findZones: 10.033935546875 ms
-LogSearcher.ts:26 findZones: 10.639892578125 ms
-LogSearcher.ts:26 findZones: 9.076904296875 ms
-LogSearcher.ts:26 findZones: 9.119140625 ms
-LogSearcher.ts:26 findZones: 10.22998046875 ms
-LogSearcher.ts:26 findZones: 10.210205078125 ms
-LogSearcher.ts:26 findZones: 10.113037109375 ms
-LogSearcher.ts:26 findZones: 9.451904296875 ms
-LogSearcher.ts:26 findZones: 10.235107421875 ms
-LogSearcher.ts:26 findZones: 11.015869140625 ms
-LogSearcher.ts:26 findZones: 9.090087890625 ms
-LogSearcher.ts:26 findZones: 10.1650390625 ms
-LogSearcher.ts:26 findZones: 10.587890625 ms
-LogSearcher.ts:26 findZones: 10.0859375 ms
-LogSearcher.ts:26 findZones: 11.69189453125 ms
-LogSearcher.ts:26 findZones: 8.971923828125 ms
-LogSearcher.ts:26 findZones: 9.125 ms
-LogSearcher.ts:26 findZones: 10.9111328125 ms
-LogSearcher.ts:26 findZones: 9.7880859375 ms
-LogSearcher.ts:26 findZones: 9 ms
-LogSearcher.ts:26 findZones: 9.846923828125 ms
-LogSearcher.ts:26 findZones: 11.02099609375 ms
-LogSearcher.ts:26 findZones: 9.0380859375 ms
-LogSearcher.ts:26 findZones: 11.134033203125 ms
-LogSearcher.ts:26 findZones: 10.087890625 ms
-LogSearcher.ts:26 findZones: 9.3720703125 ms
-LogSearcher.ts:26 findZones: 10.287841796875 ms
-LogSearcher.ts:26 findZones: 9.026123046875 ms
-LogSearcher.ts:26 findZones: 8.966064453125 ms
-LogSearcher.ts:26 findZones: 9.2509765625 ms
-LogSearcher.ts:26 findZones: 9.152099609375 ms
-LogSearcher.ts:26 findZones: 9.025146484375 ms
-LogSearcher.ts:26 findZones: 10.2939453125 ms
-LogSearcher.ts:26 findZones: 9.06591796875 ms
-LogSearcher.ts:26 findZones: 9.26708984375 ms
-LogSearcher.ts:26 findZones: 10.8701171875 ms
-LogSearcher.ts:26 findZones: 11.160888671875 ms
-LogSearcher.ts:26 findZones: 10.23193359375 ms
-LogSearcher.ts:26 findZones: 10.616943359375 ms
-LogSearcher.ts:26 findZones: 9.60302734375 ms
-LogSearcher.ts:26 findZones: 10.799072265625 ms
-LogSearcher.ts:26 findZones: 9.239013671875 ms
-LogSearcher.ts:26 findZones: 10.04296875 ms
-LogSearcher.ts:26 findZones: 9.14208984375 ms
-LogSearcher.ts:26 findZones: 10.343017578125 ms
-LogSearcher.ts:26 findZones: 9.350830078125 ms
-LogSearcher.ts:26 findZones: 10.4970703125 ms
-LogSearcher.ts:26 findZones: 9.3408203125 ms
-LogSearcher.ts:26 findZones: 10.39990234375 ms
-LogSearcher.ts:26 findZones: 9.15087890625 ms
-LogSearcher.ts:26 findZones: 10.0751953125 ms
-LogSearcher.ts:26 findZones: 9.157958984375 ms
-LogSearcher.ts:26 findZones: 10.4912109375 ms
-LogSearcher.ts:26 findZones: 9.78515625 ms
-LogSearcher.ts:26 findZones: 10.236083984375 ms
-LogSearcher.ts:26 findZones: 9.197021484375 ms
-LogSearcher.ts:26 findZones: 10.458984375 ms
-LogSearcher.ts:26 findZones: 9.341064453125 ms
-LogSearcher.ts:26 findZones: 9.947021484375 ms
-LogSearcher.ts:26 findZones: 9.1728515625 ms
-LogSearcher.ts:26 findZones: 10.8349609375 ms
-LogSearcher.ts:26 findZones: 9.092041015625 ms
-LogSearcher.ts:26 findZones: 16.9169921875 ms
-LogSearcher.ts:26 findZones: 9.407958984375 ms
-LogSearcher.ts:26 findZones: 10.366943359375 ms
-LogSearcher.ts:26 findZones: 9.364013671875 ms
-LogSearcher.ts:26 findZones: 10.572998046875 ms
-LogSearcher.ts:26 findZones: 9.65087890625 ms
-LogSearcher.ts:26 findZones: 10.18701171875 ms
-LogSearcher.ts:26 findZones: 11.2529296875 ms
-LogSearcher.ts:26 findZones: 9.138916015625 ms
-LogSearcher.ts:26 findZones: 9.37890625 ms
-LogSearcher.ts:26 findZones: 9.248046875 ms
-LogSearcher.ts:26 findZones: 10.575927734375 ms
-LogSearcher.ts:26 findZones: 9.93505859375 ms
-LogSearcher.ts:26 findZones: 9.762939453125 ms
-LogSearcher.ts:26 findZones: 9.669921875 ms
-LogSearcher.ts:26 findZones: 10.35888671875 ms
-LogSearcher.ts:26 findZones: 9.2919921875 ms
-LogSearcher.ts:26 findZones: 11.235107421875 ms
-LogSearcher.ts:26 findZones: 9.01513671875 ms
-LogSearcher.ts:26 findZones: 10.192138671875 ms
-LogSearcher.ts:26 findZones: 11.409912109375 ms
-LogSearcher.ts:26 findZones: 9.507080078125 ms
-LogSearcher.ts:26 findZones: 10.52392578125 ms
-LogSearcher.ts:26 findZones: 9.446044921875 ms
-LogSearcher.ts:26 findZones: 11.43798828125 ms
-LogSearcher.ts:26 findZones: 11.93408203125 ms
-LogSearcher.ts:26 findZones: 13.181884765625 ms
-LogSearcher.ts:26 findZones: 10.1650390625 ms
+ Monaa: 130.203125 ms
+ findZones: 8.083984375 ms
+ Averagehashzonetime: 0.009987196146907636 
+Averagebinaryzonetime: 0
+ Monaa: 273.419189453125 ms
+ findZones: 1.970947265625 ms
+ Averagehashzonetime: 0.002304737454950428 
+Averagebinaryzonetime: 0
+ Monaa: 120.625 ms
+ findZones: 3.589111328125 ms
+ Averagehashzonetime: 0.004225352356894831 
+Averagebinaryzonetime: 0
+ Monaa: 143.718017578125 ms
+ findZones: 3.044921875 ms
+ Averagehashzonetime: 0.003457106640335845 
+Averagebinaryzonetime: 0
+ Monaa: 318.31201171875 ms
+ findZones: 2.3388671875 ms
+ Averagehashzonetime: 0.002560819462227913 
+Averagebinaryzonetime: 0
+ Monaa: 110.06591796875 ms
+ findZones: 1.927001953125 ms
+ Averagehashzonetime: 0.002048655447672943 
+Averagebinaryzonetime: 0
+ Monaa: 356.465087890625 ms
+ findZones: 1.7060546875 ms
+ Averagehashzonetime: 0.0019206149019444035 
+Averagebinaryzonetime: 0
+ Monaa: 140.26708984375 ms
+ findZones: 1.8720703125 ms
+ Averagehashzonetime: 0.0021766966039484196 
+Averagebinaryzonetime: 0
+ Monaa: 220.012939453125 ms
+ findZones: 2.592041015625 ms
+ Averagehashzonetime: 0.0030729831715094144 
+Averagebinaryzonetime: 0
+ Monaa: 133.814208984375 ms
+ findZones: 4.39599609375 ms
+ Averagehashzonetime: 0.004993597768180349 
+Averagebinaryzonetime: 0
+ Monaa: 130.027099609375 ms
+ findZones: 3.90087890625 ms
+ Averagehashzonetime: 0.004225352356894831 
+Averagebinaryzonetime: 0
+ Monaa: 122.43408203125 ms
+ findZones: 2.490966796875 ms
+ Averagehashzonetime: 0.00268886061850339 
+Averagebinaryzonetime: 0
+ Monaa: 116.0810546875 ms
+ findZones: 2.19287109375 ms
+ Averagehashzonetime: 0.002304737454950428 
+Averagebinaryzonetime: 0
+ Monaa: 136.284912109375 ms
+ findZones: 2.7890625 ms
+ Averagehashzonetime: 0.0030729828662359455 
+Averagebinaryzonetime: 0
+ Monaa: 133.030029296875 ms
+ findZones: 5.507080078125 ms
+ Averagehashzonetime: 0.005761844705833211 
+Averagebinaryzonetime: 0
+ Monaa: 122.578857421875 ms
+ findZones: 2.00390625 ms
+ Averagehashzonetime: 0.002560819462227913 
+Averagebinaryzonetime: 0
+ Monaa: 137.41015625 ms
+ findZones: 3.780029296875 ms
+ Averagehashzonetime: 0.0042253520516213625 
+Averagebinaryzonetime: 0
+ Monaa: 122.9931640625 ms
+ findZones: 3.22802734375 ms
+ Averagehashzonetime: 0.003841228888068401 
+Averagebinaryzonetime: 0
+ Monaa: 122.06103515625 ms
+ findZones: 1.619873046875 ms
+ Averagehashzonetime: 0.0015364920436649102 
+Averagebinaryzonetime: 0
+ Monaa: 140.60595703125 ms
+ findZones: 5.38818359375 ms
+ Averagehashzonetime: 0.006530089506571791 
+Averagebinaryzonetime: 0
+ Monaa: 147.68701171875 ms
+ findZones: 3.795166015625 ms
+ Averagehashzonetime: 0.00435339290262337 
+Averagebinaryzonetime: 0
+ Monaa: 129.523193359375 ms
+ findZones: 4.572021484375 ms
+ Averagehashzonetime: 0.005761844095286273 
+Averagebinaryzonetime: 0
+ Monaa: 116.8291015625 ms
+ findZones: 3.85400390625 ms
+ Averagehashzonetime: 0.004097311200619355 
+Averagebinaryzonetime: 0
+ Monaa: 174.927001953125 ms
+ findZones: 1.738037109375 ms
+ Averagehashzonetime: 0.0019206149019444035 
+Averagebinaryzonetime: 0
+ Monaa: 157.27294921875 ms
+ findZones: 8.7529296875 ms
+ Averagehashzonetime: 0.010627400707191145 
+Averagebinaryzonetime: 0
+ Monaa: 144.365966796875 ms
+ findZones: 7.44384765625 ms
+ Averagehashzonetime: 0.009090908968799704 
+Averagebinaryzonetime: 0
+ Monaa: 138.51513671875 ms
+ findZones: 2.071044921875 ms
+ Averagehashzonetime: 0.0021766969092218884 
+Averagebinaryzonetime: 0
+ Monaa: 119.669921875 ms
+ findZones: 6.10302734375 ms
+ Averagehashzonetime: 0.007298335528404245 
+Averagebinaryzonetime: 0
+ Monaa: 135.798095703125 ms
+ findZones: 3.10498046875 ms
+ Averagehashzonetime: 0.0037131883423398614 
+Averagebinaryzonetime: 0
+ Monaa: 127.862060546875 ms
+ findZones: 1.739013671875 ms
+ Averagehashzonetime: 0.002048655447672943 
+Averagebinaryzonetime: 0
+ Monaa: 146.540771484375 ms
+ findZones: 1.72802734375 ms
+ Averagehashzonetime: 0.0019206145966709346 
+Averagebinaryzonetime: 0
+ Monaa: 115.85986328125 ms
+ findZones: 6.01611328125 ms
+ Averagehashzonetime: 0.006786172124396213 
+Averagebinaryzonetime: 0
+ Monaa: 207.02392578125 ms
+LogSearcher.ts:46 findZones: 2.340087890625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.002816901469505398 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 172.18212890625 ms
+LogSearcher.ts:46 findZones: 3.718017578125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0044814346694457855 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 124.218994140625 ms
+LogSearcher.ts:46 findZones: 5.285888671875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.006274007804567774 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 129.425048828125 ms
+LogSearcher.ts:46 findZones: 2.180908203125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0023047377602238967 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 122.441162109375 ms
+LogSearcher.ts:46 findZones: 4.883056640625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.005889884641014812 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 132.718994140625 ms
+LogSearcher.ts:46 findZones: 1.9248046875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.002560819462227913 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 156.305908203125 ms
+LogSearcher.ts:46 findZones: 2.335205078125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.002688860313229921 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 125.889892578125 ms
+LogSearcher.ts:46 findZones: 8.64697265625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.010371318394640191 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 135.80615234375 ms
+LogSearcher.ts:46 findZones: 5.68701171875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0066581306628472675 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 116.43310546875 ms
+LogSearcher.ts:46 findZones: 1.921875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0021766966039484196 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 150.041015625 ms
+LogSearcher.ts:46 findZones: 3.037109375 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0035851471860643843 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 133.132080078125 ms
+LogSearcher.ts:46 findZones: 1.990966796875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.002304737149676959 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 195.81298828125 ms
+LogSearcher.ts:46 findZones: 3.280029296875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0037131880370663926 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 110.2041015625 ms
+LogSearcher.ts:46 findZones: 6.212158203125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0076824583866837385 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 94.5009765625 ms
+LogSearcher.ts:46 findZones: 4.802978515625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.006017925797290289 
+Averagebinaryzonetime: 0
 """
 
 #3905 matches
 data100000 = """
-LogSearcher.ts:26 findZones: 51.507080078125 ms
-LogSearcher.ts:26 findZones: 53.948974609375 ms
-LogSearcher.ts:26 findZones: 57.326904296875 ms
-LogSearcher.ts:26 findZones: 51.296142578125 ms
-LogSearcher.ts:26 findZones: 46.939208984375 ms
-LogSearcher.ts:26 findZones: 52.767822265625 ms
-LogSearcher.ts:26 findZones: 56.680908203125 ms
-LogSearcher.ts:26 findZones: 52.369140625 ms
-LogSearcher.ts:26 findZones: 52.01123046875 ms
-LogSearcher.ts:26 findZones: 49.47705078125 ms
-LogSearcher.ts:26 findZones: 50.416015625 ms
-LogSearcher.ts:26 findZones: 52.448974609375 ms
-LogSearcher.ts:26 findZones: 50.197021484375 ms
-LogSearcher.ts:26 findZones: 48.211181640625 ms
-LogSearcher.ts:26 findZones: 48.341796875 ms
-LogSearcher.ts:26 findZones: 49.5009765625 ms
-LogSearcher.ts:26 findZones: 48.071044921875 ms
-LogSearcher.ts:26 findZones: 52.75390625 ms
-LogSearcher.ts:26 findZones: 47.221923828125 ms
-LogSearcher.ts:26 findZones: 96.10791015625 ms
-LogSearcher.ts:26 findZones: 53.363037109375 ms
-LogSearcher.ts:26 findZones: 57.613037109375 ms
-LogSearcher.ts:26 findZones: 49.572021484375 ms
-LogSearcher.ts:26 findZones: 57.654052734375 ms
-LogSearcher.ts:26 findZones: 47.26708984375 ms
-LogSearcher.ts:26 findZones: 51.452880859375 ms
-LogSearcher.ts:26 findZones: 50.69580078125 ms
-LogSearcher.ts:26 findZones: 52.794189453125 ms
-LogSearcher.ts:26 findZones: 48.530029296875 ms
-LogSearcher.ts:26 findZones: 58.1728515625 ms
-LogSearcher.ts:26 findZones: 54.10107421875 ms
-LogSearcher.ts:26 findZones: 49.22998046875 ms
-LogSearcher.ts:26 findZones: 48.404052734375 ms
-LogSearcher.ts:26 findZones: 53.610107421875 ms
-LogSearcher.ts:26 findZones: 51.264892578125 ms
-LogSearcher.ts:26 findZones: 49.77490234375 ms
-LogSearcher.ts:26 findZones: 51.453125 ms
-LogSearcher.ts:26 findZones: 48.684814453125 ms
-LogSearcher.ts:26 findZones: 48.342041015625 ms
-LogSearcher.ts:26 findZones: 50.80810546875 ms
-LogSearcher.ts:26 findZones: 56.99609375 ms
-LogSearcher.ts:26 findZones: 54.639892578125 ms
-LogSearcher.ts:26 findZones: 49.156005859375 ms
-LogSearcher.ts:26 findZones: 47.97802734375 ms
-LogSearcher.ts:26 findZones: 49.47119140625 ms
-LogSearcher.ts:26 findZones: 49.492919921875 ms
-LogSearcher.ts:26 findZones: 50.945068359375 ms
-LogSearcher.ts:26 findZones: 52.52294921875 ms
-LogSearcher.ts:26 findZones: 50.06005859375 ms
-LogSearcher.ts:26 findZones: 46.585205078125 ms
-LogSearcher.ts:26 findZones: 50.43310546875 ms
-LogSearcher.ts:26 findZones: 48.882080078125 ms
-LogSearcher.ts:26 findZones: 49.900146484375 ms
-LogSearcher.ts:26 findZones: 54.9541015625 ms
-LogSearcher.ts:26 findZones: 52.788818359375 ms
-LogSearcher.ts:26 findZones: 46.815185546875 ms
-LogSearcher.ts:26 findZones: 50.13916015625 ms
-LogSearcher.ts:26 findZones: 48.29296875 ms
-LogSearcher.ts:26 findZones: 49.390869140625 ms
-LogSearcher.ts:26 findZones: 49.427001953125 ms
-LogSearcher.ts:26 findZones: 48.962890625 ms
-LogSearcher.ts:26 findZones: 62.719970703125 ms
-LogSearcher.ts:26 findZones: 50.261962890625 ms
-LogSearcher.ts:26 findZones: 45.614990234375 ms
-LogSearcher.ts:26 findZones: 45.358154296875 ms
-LogSearcher.ts:26 findZones: 50.614990234375 ms
-LogSearcher.ts:26 findZones: 48.35205078125 ms
-LogSearcher.ts:26 findZones: 48.933837890625 ms
-LogSearcher.ts:26 findZones: 51.55078125 ms
-LogSearcher.ts:26 findZones: 68.36181640625 ms
-LogSearcher.ts:26 findZones: 51.181884765625 ms
-LogSearcher.ts:26 findZones: 52.208984375 ms
-LogSearcher.ts:26 findZones: 52.61083984375 ms
-LogSearcher.ts:26 findZones: 50.691162109375 ms
-LogSearcher.ts:26 findZones: 53.4150390625 ms
-LogSearcher.ts:26 findZones: 58.52294921875 ms
-LogSearcher.ts:26 findZones: 58.13720703125 ms
-LogSearcher.ts:26 findZones: 47.373046875 ms
-LogSearcher.ts:26 findZones: 48.955078125 ms
-LogSearcher.ts:26 findZones: 60.328125 ms
-LogSearcher.ts:26 findZones: 47.070068359375 ms
-LogSearcher.ts:26 findZones: 48.947021484375 ms
-LogSearcher.ts:26 findZones: 52.18701171875 ms
-LogSearcher.ts:26 findZones: 47.76806640625 ms
-LogSearcher.ts:26 findZones: 52.135986328125 ms
-LogSearcher.ts:26 findZones: 46.493896484375 ms
-LogSearcher.ts:26 findZones: 45.193115234375 ms
-LogSearcher.ts:26 findZones: 49.162109375 ms
-LogSearcher.ts:26 findZones: 46.554931640625 ms
-LogSearcher.ts:26 findZones: 50.160888671875 ms
-LogSearcher.ts:26 findZones: 47.090087890625 ms
-LogSearcher.ts:26 findZones: 47.985107421875 ms
-LogSearcher.ts:26 findZones: 50.83984375 ms
-LogSearcher.ts:26 findZones: 76.37890625 ms
-LogSearcher.ts:26 findZones: 56 ms
-LogSearcher.ts:26 findZones: 52.39013671875 ms
-LogSearcher.ts:26 findZones: 49.129150390625 ms
-LogSearcher.ts:26 findZones: 19222.35205078125 ms
-LogSearcher.ts:26 findZones: 49.637939453125 ms
-LogSearcher.ts:26 findZones: 45.712890625 ms
-LogSearcher.ts:26 findZones: 46.552978515625 ms
-LogSearcher.ts:26 findZones: 45.85107421875 ms
-LogSearcher.ts:26 findZones: 45.553955078125 ms
-LogSearcher.ts:26 findZones: 48.51806640625 ms
-LogSearcher.ts:26 findZones: 55.044189453125 ms
-LogSearcher.ts:26 findZones: 55.517822265625 ms
-LogSearcher.ts:26 findZones: 63.758056640625 ms
-LogSearcher.ts:26 findZones: 73.849853515625 ms
-LogSearcher.ts:26 findZones: 55.6669921875 ms
-LogSearcher.ts:26 findZones: 52.4609375 ms
-LogSearcher.ts:26 findZones: 48.543212890625 ms
-LogSearcher.ts:26 findZones: 52.965087890625 ms
-LogSearcher.ts:26 findZones: 122.674072265625 ms
-LogSearcher.ts:26 findZones: 60.576171875 ms
-LogSearcher.ts:26 findZones: 69.054931640625 ms
-LogSearcher.ts:26 findZones: 55.883056640625 ms
-LogSearcher.ts:26 findZones: 65.758056640625 ms
-LogSearcher.ts:26 findZones: 53.4599609375 ms
-LogSearcher.ts:26 findZones: 49.491943359375 ms
-LogSearcher.ts:26 findZones: 44.406005859375 ms
-LogSearcher.ts:26 findZones: 48.72900390625 ms
-LogSearcher.ts:26 findZones: 48.135986328125 ms
-LogSearcher.ts:26 findZones: 53.95703125 ms
-LogSearcher.ts:26 findZones: 49.169921875 ms
-LogSearcher.ts:26 findZones: 48.578857421875 ms
-LogSearcher.ts:26 findZones: 48.656005859375 ms
-LogSearcher.ts:26 findZones: 46.800048828125 ms
-LogSearcher.ts:26 findZones: 51.85107421875 ms
-LogSearcher.ts:26 findZones: 60.488037109375 ms
-LogSearcher.ts:26 findZones: 66.02099609375 ms
-LogSearcher.ts:26 findZones: 68.359130859375 ms
-LogSearcher.ts:26 findZones: 48.99609375 ms
-LogSearcher.ts:26 findZones: 61.199951171875 ms
-LogSearcher.ts:26 findZones: 62.52197265625 ms
-LogSearcher.ts:26 findZones: 52.89013671875 ms
-LogSearcher.ts:26 findZones: 54.372802734375 ms
-LogSearcher.ts:26 findZones: 50.090087890625 ms
-LogSearcher.ts:26 findZones: 63.76416015625 ms
-LogSearcher.ts:26 findZones: 49.18994140625 ms
-LogSearcher.ts:26 findZones: 54.52294921875 ms
-LogSearcher.ts:26 findZones: 46.445068359375 ms
-LogSearcher.ts:26 findZones: 52.31103515625 ms
-LogSearcher.ts:26 findZones: 60.0439453125 ms
-LogSearcher.ts:26 findZones: 53.81103515625 ms
-LogSearcher.ts:26 findZones: 50.948974609375 ms
-LogSearcher.ts:26 findZones: 49.531982421875 ms
-LogSearcher.ts:26 findZones: 74.033203125 ms
-LogSearcher.ts:26 findZones: 49.671875 ms
-LogSearcher.ts:26 findZones: 61.597900390625 ms
-LogSearcher.ts:26 findZones: 48.861083984375 ms
-LogSearcher.ts:26 findZones: 51.39111328125 ms
-LogSearcher.ts:26 findZones: 47.030029296875 ms
+ Monaa: 1161.851806640625 ms
+ findZones: 30.271240234375 ms
+ Averagehashzonetime: 0.0071190779706732715 
+Averagebinaryzonetime: 0
+ Monaa: 596.336181640625 ms
+ findZones: 20.9609375 ms
+ Averagehashzonetime: 0.0047631243584861215 
+Averagebinaryzonetime: 0
+ Monaa: 764.9560546875 ms
+ findZones: 16.23095703125 ms
+ Averagehashzonetime: 0.003918053703943074 
+Averagebinaryzonetime: 0
+ Monaa: 447.735107421875 ms
+ findZones: 18.471923828125 ms
+ Averagehashzonetime: 0.004430217718498044 
+Averagebinaryzonetime: 0
+ Monaa: 603.6220703125 ms
+ findZones: 18.794921875 ms
+ Averagehashzonetime: 0.00455825869160944 
+Averagebinaryzonetime: 0
+ Monaa: 604.449951171875 ms
+ findZones: 16.255859375 ms
+ Averagehashzonetime: 0.00394366193519817 
+Averagebinaryzonetime: 0
+ Monaa: 1015.393798828125 ms
+ findZones: 14.310791015625 ms
+ Averagehashzonetime: 0.0033290653619509804 
+Averagebinaryzonetime: 0
+ Monaa: 553.446044921875 ms
+ findZones: 12.876953125 ms
+ Averagehashzonetime: 0.003149807926329394 
+Averagebinaryzonetime: 0
+ Monaa: 728.72607421875 ms
+ findZones: 32.870849609375 ms
+ Averagehashzonetime: 0.008169014231038307 
+Averagebinaryzonetime: 0
+ Monaa: 1161.7890625 ms
+ findZones: 17.97802734375 ms
+ Averagehashzonetime: 0.004379001255987854 
+Averagebinaryzonetime: 0
+ Monaa: 753.150146484375 ms
+ findZones: 19.1650390625 ms
+ Averagehashzonetime: 0.004635083202210645 
+Averagebinaryzonetime: 0
+ Monaa: 598.718017578125 ms
+ findZones: 15.553955078125 ms
+ Averagehashzonetime: 0.003841229132287176 
+Averagebinaryzonetime: 0
+ Monaa: 619.427978515625 ms
+ findZones: 15.56396484375 ms
+ Averagehashzonetime: 0.0036107555394288672 
+Averagebinaryzonetime: 0
+ Monaa: 1527.81591796875 ms
+ findZones: 15.938232421875 ms
+ Averagehashzonetime: 0.003790012852941066 
+Averagebinaryzonetime: 0
+ Monaa: 706.908935546875 ms
+ findZones: 18.006103515625 ms
+ Averagehashzonetime: 0.0043790011949331594 
+Averagebinaryzonetime: 0
+ Monaa: 1377.615966796875 ms
+ findZones: 18.04296875 ms
+ Averagehashzonetime: 0.004353393024732758 
+Averagebinaryzonetime: 0
+ Monaa: 659.720947265625 ms
+ findZones: 20.662841796875 ms
+ Averagehashzonetime: 0.00501920593838075 
+Averagebinaryzonetime: 0
+ Monaa: 1224.485107421875 ms
+ findZones: 17.31298828125 ms
+ Averagehashzonetime: 0.00404609467705447 
+Averagebinaryzonetime: 0
+ Monaa: 540.68408203125 ms
+ findZones: 14.953857421875 ms
+ Averagehashzonetime: 0.0036107554173194795 
+Averagebinaryzonetime: 0
+ Monaa: 647.130859375 ms
+ findZones: 18.184814453125 ms
+ Averagehashzonetime: 0.004276568575186247 
+Averagebinaryzonetime: 0
+ Monaa: 436.81201171875 ms
+ findZones: 21.532958984375 ms
+ Averagehashzonetime: 0.005224071605257432 
+Averagebinaryzonetime: 0
+ Monaa: 723.2890625 ms
+ findZones: 17.3740234375 ms
+ Averagehashzonetime: 0.004225352295840138 
+Averagebinaryzonetime: 0
+ Monaa: 418.4208984375 ms
+ findZones: 16.55517578125 ms
+ Averagehashzonetime: 0.003790012852941066 
+Averagebinaryzonetime: 0
+ Monaa: 338.14306640625 ms
+ findZones: 17.37109375 ms
+ Averagehashzonetime: 0.00402048669001815 
+Averagebinaryzonetime: 0
+ Monaa: 312.032958984375 ms
+LogSearcher.ts:46 findZones: 19.376220703125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0045326502161355696 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 304.383056640625 ms
+LogSearcher.ts:46 findZones: 16.02197265625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.003815620778922693 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 368.265869140625 ms
+LogSearcher.ts:46 findZones: 16.171142578125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.003918053642888381 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 563.6298828125 ms
+LogSearcher.ts:46 findZones: 11.10595703125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0025864276934830085 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 425.6669921875 ms
+LogSearcher.ts:46 findZones: 15.30712890625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0036363637706839625 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 406.01904296875 ms
+LogSearcher.ts:46 findZones: 47.43896484375 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.011370038375659117 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 409.524169921875 ms
+LogSearcher.ts:46 findZones: 16.68310546875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.00404609467705447 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 343.916015625 ms
+LogSearcher.ts:46 findZones: 17.298095703125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.00409731113956466 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 327.541015625 ms
+LogSearcher.ts:46 findZones: 18.43603515625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.004455825766589059 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 464.56884765625 ms
+LogSearcher.ts:46 findZones: 15.632080078125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.003738796512540263 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 610.805908203125 ms
+LogSearcher.ts:46 findZones: 14.8310546875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0035339309677729688 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 361.923095703125 ms
+LogSearcher.ts:46 findZones: 13.56298828125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.003226632497985293 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 402.7939453125 ms
+LogSearcher.ts:46 findZones: 20.458984375 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0046606914334657405 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 355.320068359375 ms
+LogSearcher.ts:46 findZones: 13.817138671875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.003329065239841593 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 400.3740234375 ms
+LogSearcher.ts:46 findZones: 13.9638671875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0033290653619509804 
+Averagebinaryzonetime: 0
 """
 
 #39050 matches
 data1000000 = """
-findZones: 517.968017578125 ms
-LogSearcher.ts:26 findZones: 447.909912109375 ms
-LogSearcher.ts:26 findZones: 450.3720703125 ms
-LogSearcher.ts:26 findZones: 443.72314453125 ms
-LogSearcher.ts:26 findZones: 448.43505859375 ms
-LogSearcher.ts:26 findZones: 441.300048828125 ms
-LogSearcher.ts:26 findZones: 437.947021484375 ms
-LogSearcher.ts:26 findZones: 461.60498046875 ms
-LogSearcher.ts:26 findZones: 440.93603515625 ms
-LogSearcher.ts:26 findZones: 442.095947265625 ms
-LogSearcher.ts:26 findZones: 459.51513671875 ms
-LogSearcher.ts:26 findZones: 444.75390625 ms
-LogSearcher.ts:26 findZones: 557.951904296875 ms
-LogSearcher.ts:26 findZones: 438.881103515625 ms
-LogSearcher.ts:26 findZones: 461.68115234375 ms
-LogSearcher.ts:26 findZones: 555.087890625 ms
-LogSearcher.ts:26 findZones: 555.52001953125 ms
-LogSearcher.ts:26 findZones: 564.051025390625 ms
-LogSearcher.ts:26 findZones: 479.986083984375 ms
-LogSearcher.ts:26 findZones: 470.718994140625 ms
-LogSearcher.ts:26 findZones: 458.69189453125 ms
-LogSearcher.ts:26 findZones: 464.7841796875 ms
-LogSearcher.ts:26 findZones: 471.026123046875 ms
-LogSearcher.ts:26 findZones: 456.847900390625 ms
-LogSearcher.ts:26 findZones: 454.238037109375 ms
-LogSearcher.ts:26 findZones: 506.8740234375 ms
-LogSearcher.ts:26 findZones: 464.34912109375 ms
-LogSearcher.ts:26 findZones: 449.02001953125 ms
-LogSearcher.ts:26 findZones: 457.647216796875 ms
-LogSearcher.ts:26 findZones: 450.18798828125 ms
-LogSearcher.ts:26 findZones: 457.337890625 ms
-LogSearcher.ts:26 findZones: 453.43701171875 ms
-LogSearcher.ts:26 findZones: 488.176025390625 ms
-LogSearcher.ts:26 findZones: 464.48779296875 ms
-LogSearcher.ts:26 findZones: 456.635009765625 ms
-LogSearcher.ts:26 findZones: 456.534912109375 ms
-LogSearcher.ts:26 findZones: 460.87890625 ms
-LogSearcher.ts:26 findZones: 456.4189453125 ms
-LogSearcher.ts:26 findZones: 456.56396484375 ms
-LogSearcher.ts:26 findZones: 454.97705078125 ms
-LogSearcher.ts:26 findZones: 452.70703125 ms
-LogSearcher.ts:26 findZones: 516.7109375 ms
-LogSearcher.ts:26 findZones: 462.736083984375 ms
-LogSearcher.ts:26 findZones: 461.906982421875 ms
-LogSearcher.ts:26 findZones: 470.402099609375 ms
+QueryHandler.ts:32 Monaa: 2631.824951171875 ms
+LogSearcher.ts:46 findZones: 176.93408203125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.004258642758358456 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3024.091796875 ms
+LogSearcher.ts:46 findZones: 181.39599609375 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.004297055038080936 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3707.0029296875 ms
+LogSearcher.ts:46 findZones: 168.131103515625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0039718309712623665 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3172.988037109375 ms
+LogSearcher.ts:46 findZones: 220.6181640625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.005170294490574875 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3262.095947265625 ms
+LogSearcher.ts:46 findZones: 205.489013671875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.004873239398765808 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3472.31884765625 ms
+LogSearcher.ts:46 findZones: 167.464111328125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0039846350807844445 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3372.4111328125 ms
+LogSearcher.ts:46 findZones: 208.921875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.0050576184256891895 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3568.387939453125 ms
+LogSearcher.ts:46 findZones: 179.158935546875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.004294494227166365 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 4874.239013671875 ms
+LogSearcher.ts:46 findZones: 195.348876953125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.004522407192274184 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3000.034912109375 ms
+LogSearcher.ts:46 findZones: 195.14794921875 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.004688860408475244 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3663.927001953125 ms
+LogSearcher.ts:46 findZones: 251.798095703125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.00613828425828687 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 2883.468017578125 ms
+LogSearcher.ts:46 findZones: 202.550048828125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.004827144698510554 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 3393.72509765625 ms
+LogSearcher.ts:46 findZones: 311.8291015625 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.007636363625373791 
+Averagebinaryzonetime: 0
+QueryHandler.ts:32 Monaa: 2871.157958984375 ms
+LogSearcher.ts:46 findZones: 178.4580078125 ms
+LogSearcher.ts:49 Averagehashzonetime: 0.00405633804282214 
+Averagebinaryzonetime: 0
 """
 
-lines = data20000.split('\n')
+lines = data1000000.split('\n')
 
 table = "| Run Time (ms) |\n|---------------|\n"
 total_runtime = 0
-count = 0
+
+tableDict = {}
 
 for line in lines:
-    parts = line.split(' ')
-    runtime = float(parts[-2])
-    total_runtime += runtime
-    count += 1
+    if(line == ""):
+        continue
+    parts = line.split(':')
+    method = ""
+    if(len(parts) == 3):
+        method = parts[1].split(' ')
+    else:
+        method = parts[0].split(' ')
+
+
+    if(len(method) == 1):
+        method = method[0]
+    else:
+        method = method[1]
+
+    if(tableDict.get(method) == None):
+        tableDict[method] = {'runtime': 0, 'count': 0}
+    parts = parts[-1].split(' ms')
+    runtime = float(parts[0])
+    tableDict[method]['runtime'] += runtime 
+    tableDict[method]['count'] += 1 
     table += f"| {runtime} |\n"
 
-average_runtime = total_runtime / count
-table += f"\nAverage Run Time: {average_runtime} ms\n"
+for key in tableDict:
+    print(key + " "+ str(tableDict[key]['runtime']/tableDict[key]['count']) + " count= " + str(tableDict[key]['count']))
 
 # Copy the table to clipboard
 pyperclip.copy(table)
