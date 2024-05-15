@@ -20,7 +20,7 @@ function TimedEventTRE({ treObject, onSubmit, closeTRE }: TimedEventTREProps) {
         <form id="after-tre" onSubmit={onSubmit}>
             <div className="flex flex-col gap-2">
                 <div className="flex gap-4">
-                    <ModalInput tooltip="The group of events you want to match." required={true} value={TREObject.input.firstGroup} onChange={(e) => { treObject.input.firstGroup = e.target.value; updateTREObject();}} label="First group of events" placeholder="Enter the first group of events" ></ModalInput>
+                    <ModalInput tooltip="The group of events you want to match." required={true} value={TREObject.input.firstGroup} onChange={(e) => { treObject.input.firstGroup = e.target.value; updateTREObject();}} label="Group of events" placeholder="Enter the group of events" ></ModalInput>
                 </div>
                 <div className="flex gap-4">
                     <ModalInput tooltip="The start" required={true} value={TREObject.input.startTime} onChange={(e) => { treObject.input.startTime = e.target.value; updateTREObject();}} label="Start time" placeholder="Enter the start time" ></ModalInput>
