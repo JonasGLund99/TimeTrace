@@ -1,5 +1,14 @@
 import re
 
+# The idea is to use the negation of inclusive over with the upper_bound get the result froms that matching the string,
+# then using inclusive over with the lower_bound to get the result from the previous string.
+
+
+# Todo handle negative numbers and floats 💀
+# For negative numbers one could use the inclusive over for larger negative values, simply put - in front of re
+# created from the absolute value of the number (lower/upper bound).
+
+
 def generate_regex_from_interval(lower_bound, upper_bound):
     # Convert bounds to strings
     lower_bound_str = str(lower_bound)

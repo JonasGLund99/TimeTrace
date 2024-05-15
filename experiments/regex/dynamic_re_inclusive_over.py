@@ -3,7 +3,6 @@ import re
 
 #Matches the lower_bound and upwards.
 def generate_regex_from_lower_bound(lower_bound):
-    # Constructing the regex pattern dynamically based on the interval
     pattern = "(("
     current_factor = 0
     num_len = len(str(lower_bound))
