@@ -8,34 +8,46 @@ import re
 # For negative numbers one could use the inclusive over for larger negative values, simply put - in front of re
 # created from the absolute value of the number (lower/upper bound).
 
+def generate_regex_from_lower_bound(lower_bound):
+    pattern = "(("
+    current_factor = 0
+    num_len = len(str(lower_bound))
+    lower_bound_str = str(lower_bound)
+    for digit in lower_bound_str:
+        digit = int(digit)
+        digit_diff = 9 - int(digit)
+        upper_range_in_factor = (digit+digit_diff)
+        if current_factor == 0:
+            pattern += "[{}-{}]".format(digit, upper_range_in_factor)
+        else:
+            if current_factor == num_len -1:
+                pattern += "[{}-9]".format(digit if digit == 9 else digit+1, upper_range_in_factor)
+            else:
+                pattern += "[{}-9]".format(digit, upper_range_in_factor)
+        current_factor += 1
+    pattern += ")"
+
+    larger_part = ""
+    for i in range(num_len):
+        if i == 0:
+            larger_part += "|([1-9]"
+        larger_part += "[0-9]"
+    larger_part += "+"
+    larger_part += "))(\.\d\+)?"
+
+    full_pattern = f"{pattern + larger_part}$"
+
+    full_pattern = r'' + full_pattern
+    
+    # Creating the regex object
+    regex = re.compile(full_pattern)
+
+    return regex
+
 
 def generate_regex_from_interval(lower_bound, upper_bound):
-    # Convert bounds to strings
-    lower_bound_str = str(lower_bound)
-    upper_bound_str = str(upper_bound)
-    
-    # Ensure the upper bound has the same number of digits as the lower bound
-    if len(upper_bound_str) != len(lower_bound_str):
-        raise ValueError("Upper bound must have the same number of digits as the lower bound.")
-    
-    # Initialize pattern
-    pattern = "^"
-    
-    # Iterate over each digit position
-    for lower_digit, upper_digit in zip(lower_bound_str, upper_bound_str):
-        # If digits are the same, add them to pattern
-        if lower_digit == upper_digit:
-            pattern += lower_digit
-        else:
-            # If digits are different, create a range
-            pattern += f"[{lower_digit}-{upper_digit}]"
-    
-    # Add optional digits and decimal part
-    pattern += r"\d*\.?\d*$"
-    
-    # Compile regex
-    regex = re.compile(pattern)
-    
+    upper_bound_str = generate_regex_from_lower_bound(upper_bound)
+
     return regex
 
 # Test cases
