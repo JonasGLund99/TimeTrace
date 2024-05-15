@@ -37,10 +37,10 @@ def generate_regex_from_lower_bound(lower_bound):
     return regex
 
 # Example usage:
-regex = generate_regex_from_lower_bound(83)
+regex = generate_regex_from_lower_bound(100)
 
 # Test the regex
-test_number = "85"
+test_number = "101"
 if regex.match(test_number):
     print(f"{test_number} is larger and thus allowed")
 else:
