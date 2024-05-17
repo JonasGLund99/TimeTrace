@@ -13,6 +13,11 @@ def generate_regex_from_lower_bound(lower_bound):
     current_factor = 0
     num_len = len(str(lower_bound))
     lower_bound_str = str(lower_bound)
+    round_numbers_pattern = "|("
+    overflow = True if lower_bound_str[0] == "9" else False
+    sum = int(lower_bound_str[0]) if overflow else int(lower_bound_str[0]) + 1
+    round_numbers_pattern += "[1-9][0-9]" if overflow else "[{}-9]".format(sum) 
+
     for digit in lower_bound_str:
         digit = int(digit)
         digit_diff = 9 - int(digit)
@@ -20,11 +25,10 @@ def generate_regex_from_lower_bound(lower_bound):
         if current_factor == 0:
             pattern += "[{}-{}]".format(digit, upper_range_in_factor)
         else:
-            if current_factor == num_len -1:
-                pattern += "[{}-9]".format(digit, upper_range_in_factor)
-            else:
-                pattern += "[{}-9]".format(digit, upper_range_in_factor)
+            pattern += "[{}-9]".format(digit, upper_range_in_factor)
+            round_numbers_pattern += "[0-9]"
         current_factor += 1
+    round_numbers_pattern += ")"
     pattern += ")"
 
     larger_part = ""
@@ -35,15 +39,14 @@ def generate_regex_from_lower_bound(lower_bound):
     larger_part += "+"
     larger_part += "))(\.\d+)?"
 
-    full_pattern = f"{pattern + larger_part}$"
+    full_pattern = f"{pattern + round_numbers_pattern + larger_part}$"
 
-    full_pattern = r'' + full_pattern
     
-    # Creating the regex object
-
+    full_pattern = r'' + full_pattern
     return full_pattern
 
 
+#Inclusive over for the lower bound up to the upper bound. [lower_bound - upper_bound)
 def find_matches_in_interval(lower_bound, upper_bound, logfile):
     upper_bound_str = r"^(?!" + generate_regex_from_lower_bound(upper_bound) + ").*"
     under_regex = re.compile(upper_bound_str)
@@ -66,14 +69,20 @@ def find_matches_in_interval(lower_bound, upper_bound, logfile):
     return final_matches
 
 # Test cases
+
 def test_generate_regex_from_interval():
     # Test with interval 100-199
     logfile = ["101", "100", "200", "300", "301", "299",  "199", "999", "99", "0", "15", "1000", "-1", "-100", "-1000", "-10000", "10000", "75.5234", "10.52"]
     regex_100_199 = find_matches_in_interval(100, 199, logfile)
+    assert "101" in regex_100_199
+    assert "100" in regex_100_199
+
+    logfile = ["1001", "1400", "1500", "2000", "1000", "2000"]
+    regex_1000_2000 = find_matches_in_interval(1000, 2000, logfile)
+    assert "101" in regex_100_199
+    assert "100" in regex_100_199
     
     # Test with interval 5000-5999
-    regex_5000_5999 = find_matches_in_interval(5000, 5999)
-    
     print("All tests passed successfully.")
 
 # Run the tests

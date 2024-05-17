@@ -33,7 +33,7 @@ def generate_regex_from_lower_bound(lower_bound):
     larger_part += "+"
     larger_part += "))(\.\d+)?"
 
-    full_pattern = f"{pattern + larger_part + round_numbers_pattern}$"
+    full_pattern = f"{pattern + round_numbers_pattern + larger_part}$"
 
     full_pattern = r'^' + full_pattern
     
