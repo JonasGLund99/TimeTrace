@@ -15,7 +15,7 @@ def generate_regex_from_lower_bound(lower_bound):
             pattern += "[{}-{}]".format(digit, upper_range_in_factor)
         else:
             if current_factor == num_len -1:
-                pattern += "[{}-9]".format(digit if digit == 9 else digit+1, upper_range_in_factor)
+                pattern += "[{}-9]".format(digit, upper_range_in_factor)
             else:
                 pattern += "[{}-9]".format(digit, upper_range_in_factor)
         current_factor += 1
@@ -27,7 +27,7 @@ def generate_regex_from_lower_bound(lower_bound):
             larger_part += "|([1-9]"
         larger_part += "[0-9]"
     larger_part += "+"
-    larger_part += "))(\.\d\+)?"
+    larger_part += "))(\.\d+)?"
 
     full_pattern = f"{pattern + larger_part}$"
 
@@ -42,9 +42,13 @@ def generate_regex_from_lower_bound(lower_bound):
 def test_generate_regex_from_lower_bound():
     # Test with lower bound 100
     regex_100 = generate_regex_from_lower_bound(100)
+    assert regex_100.match("901.12234")
+    assert regex_100.match("900")
     assert regex_100.match("101")
+    assert not regex_100.match("100")
     assert regex_100.match("199")
     assert regex_100.match("999")
+    assert regex_100.match("990.12234")
     assert not regex_100.match("99")
     assert not regex_100.match("0")
     assert not regex_100.match("15")

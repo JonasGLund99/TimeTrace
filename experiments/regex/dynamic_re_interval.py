@@ -33,27 +33,43 @@ def generate_regex_from_lower_bound(lower_bound):
             larger_part += "|([1-9]"
         larger_part += "[0-9]"
     larger_part += "+"
-    larger_part += "))(\.\d\+)?"
+    larger_part += "))(\.\d+)?"
 
     full_pattern = f"{pattern + larger_part}$"
 
     full_pattern = r'' + full_pattern
     
     # Creating the regex object
-    regex = re.compile(full_pattern)
 
-    return regex
+    return full_pattern
 
 
-def generate_regex_from_interval(lower_bound, upper_bound):
-    upper_bound_str = generate_regex_from_lower_bound(upper_bound)
+def find_matches_in_interval(lower_bound, upper_bound, logfile):
+    upper_bound_str = r"^(?!" + generate_regex_from_lower_bound(upper_bound) + ").*"
+    under_regex = re.compile(upper_bound_str)
+    matches = []
 
-    return regex
+    for line in logfile:
+        match = under_regex.match(line)
+        if match:
+            matches.append(line)
+
+    lower_bound_str = r"^" + generate_regex_from_lower_bound(lower_bound)
+    above_regex = re.compile(lower_bound_str)
+
+    final_matches = []
+    for i in range(len(matches)):
+        match = above_regex.match(matches[i])
+        if match:
+            final_matches.append(matches[i])
+
+    return final_matches
 
 # Test cases
 def test_generate_regex_from_interval():
     # Test with interval 100-199
-    regex_100_199 = generate_regex_from_interval(100, 199)
+    logfile = ["101", "199", "999", "99", "0", "15", "1000", "-1", "-100", "-1000", "-10000", "10000", "75.5234", "10.52"]
+    regex_100_199 = find_matches_in_interval(100, 199, logfile)
     assert regex_100_199.match("100")
     assert regex_100_199.match("101")
     assert regex_100_199.match("199")
@@ -62,7 +78,7 @@ def test_generate_regex_from_interval():
     assert not regex_100_199.match("200")
     
     # Test with interval 5000-5999
-    regex_5000_5999 = generate_regex_from_interval(5000, 5999)
+    regex_5000_5999 = find_matches_in_interval(5000, 5999)
     assert regex_5000_5999.match("5000")
     assert regex_5000_5999.match("5001")
     assert regex_5000_5999.match("5999")
