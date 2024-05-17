@@ -7,6 +7,11 @@ def generate_regex_from_lower_bound(lower_bound):
     current_factor = 0
     num_len = len(str(lower_bound))
     lower_bound_str = str(lower_bound)
+    round_numbers_pattern = "|("
+    overflow = True if lower_bound_str[0] == "9" else False
+    sum = int(lower_bound_str[0]) if overflow else int(lower_bound_str[0]) + 1
+    round_numbers_pattern += "[1-9][0-9]" if overflow else "[{}-9]".format(sum) 
+
     for digit in lower_bound_str:
         digit = int(digit)
         digit_diff = 9 - int(digit)
@@ -14,11 +19,10 @@ def generate_regex_from_lower_bound(lower_bound):
         if current_factor == 0:
             pattern += "[{}-{}]".format(digit, upper_range_in_factor)
         else:
-            if current_factor == num_len -1:
-                pattern += "[{}-9]".format(digit, upper_range_in_factor)
-            else:
-                pattern += "[{}-9]".format(digit, upper_range_in_factor)
+            pattern += "[{}-9]".format(digit, upper_range_in_factor)
+            round_numbers_pattern += "[0-9]"
         current_factor += 1
+    round_numbers_pattern += ")"
     pattern += ")"
 
     larger_part = ""
@@ -29,7 +33,7 @@ def generate_regex_from_lower_bound(lower_bound):
     larger_part += "+"
     larger_part += "))(\.\d+)?"
 
-    full_pattern = f"{pattern + larger_part}$"
+    full_pattern = f"{pattern + larger_part + round_numbers_pattern}$"
 
     full_pattern = r'^' + full_pattern
     
@@ -45,7 +49,7 @@ def test_generate_regex_from_lower_bound():
     assert regex_100.match("901.12234")
     assert regex_100.match("900")
     assert regex_100.match("101")
-    assert not regex_100.match("100")
+    assert regex_100.match("100")
     assert regex_100.match("199")
     assert regex_100.match("999")
     assert regex_100.match("990.12234")
@@ -53,6 +57,12 @@ def test_generate_regex_from_lower_bound():
     assert not regex_100.match("0")
     assert not regex_100.match("15")
     assert regex_100.match("1000")
+
+    regex_199 = generate_regex_from_lower_bound(198)
+    assert not regex_199.match("100")
+    assert regex_199.match("300")
+    assert regex_199.match("200")
+    assert regex_199.match("301")
 
     # Test with lower bound 5000
     regex_5000 = generate_regex_from_lower_bound(5000)
@@ -71,6 +81,14 @@ def test_generate_regex_from_lower_bound():
     assert regex_1.match("99")
     assert not regex_1.match("0")
     assert regex_1.match("100")
+    
+    # Test with lower bound 1
+    regex_9 = generate_regex_from_lower_bound(9)
+    assert regex_9.match("9")
+    assert regex_9.match("10")
+    assert regex_9.match("11")
+    assert regex_9.match("12")
+    assert regex_9.match("13")
 
     regex_0 = generate_regex_from_lower_bound(0)
     assert regex_0.match("1")
