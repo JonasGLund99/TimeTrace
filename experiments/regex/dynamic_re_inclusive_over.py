@@ -52,7 +52,12 @@ def test_generate_regex_from_lower_bound():
     regex_100 = generate_regex_from_lower_bound(100)
     assert regex_100.match("901.12234")
     assert regex_100.match("900")
+    assert regex_100.match("100")
     assert regex_100.match("101")
+    assert regex_100.match("102")
+    assert regex_100.match("121")
+    assert regex_100.match("123")
+    assert regex_100.match("201")
     assert regex_100.match("110")
     assert regex_100.match("120")
     assert regex_100.match("130")
@@ -76,6 +81,14 @@ def test_generate_regex_from_lower_bound():
     assert regex_199.match("300")
     assert regex_199.match("200")
     assert regex_199.match("301")
+
+    regex_188 = generate_regex_from_lower_bound(188)
+    assert not regex_188.match("100")
+    assert regex_188.match("198")
+    assert regex_188.match("199")
+    assert regex_188.match("189")
+    assert regex_188.match("201")
+    assert regex_188.match("201")
 
     # Test with lower bound 5000
     regex_5000 = generate_regex_from_lower_bound(5000)
