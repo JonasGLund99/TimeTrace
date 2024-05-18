@@ -77,10 +77,17 @@ def test_generate_regex_from_interval():
     assert "101" in regex_100_199
     assert "100" in regex_100_199
 
-    logfile = ["1001", "1400", "1500", "2000", "1000", "2000"]
+    logfile = ["1001", "1400", "1500", "1000", "1000.12323", "999.23", "10.2", "-123.23", "-123",  "2000"]
     regex_1000_2000 = find_matches_in_interval(1000, 2000, logfile)
-    assert "101" in regex_100_199
-    assert "100" in regex_100_199
+    assert "1001" in regex_1000_2000
+    assert "1000.12323" in regex_1000_2000
+    assert "1400" in regex_1000_2000
+    assert "1500" in regex_1000_2000
+    assert not "2000" in regex_1000_2000
+    assert not "10.2" in regex_1000_2000
+    assert not "-123.23" in regex_1000_2000
+    assert not "-123" in regex_1000_2000
+    assert "1000" in regex_1000_2000
     
     # Test with interval 5000-5999
     print("All tests passed successfully.")

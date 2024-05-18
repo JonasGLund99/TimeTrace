@@ -92,9 +92,12 @@ def test_generate_regex_from_lower_bound():
 
     regex_0 = generate_regex_from_lower_bound(0)
     assert regex_0.match("1")
+    assert regex_0.match("0")
+    assert regex_0.match("0.232323")
     assert regex_0.match("9")
     assert regex_0.match("99")
     assert not regex_0.match("-1")
+    assert not regex_0.match("-1.232")
     assert regex_0.match("100")
 
     # Test with lower bound 999
