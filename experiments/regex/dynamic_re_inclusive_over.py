@@ -36,10 +36,7 @@ def generate_regex_from_lower_bound(lower_bound):
     pattern += ")"
 
     larger_part = generate_larger_part(lower_bound)
-
     full_pattern = f"{"(?<!\.)" + pattern + round_numbers_pattern + larger_part}"
-
-    full_pattern = r'' + full_pattern
     
     # Creating the regex object
     regex = re.compile(full_pattern)
