@@ -7,7 +7,7 @@ function generateLargerPart(lowerBound) {
         largerPart += "[0-9]";
     }
     largerPart += "+";
-    largerPart += "))(\.\d+)?";
+    largerPart += "))(\\.\\d+)?";
     return largerPart;
 }
 
@@ -36,7 +36,7 @@ function generateRegexFromLowerBound(lowerBound) {
     pattern += ")";
 
     const largerPart = generateLargerPart(lowerBound);
-    let fullPattern = `(?!( ${lowerBoundStr}(\.0*)?$))` + "(?<!\.)" + pattern + roundNumbersPattern + largerPart;
+    let fullPattern = `(?!(${lowerBoundStr}(\\.0*)?$))` + "(?<!\.)" + pattern + roundNumbersPattern + largerPart;
     regex = new RegExp(fullPattern);
     return regex;
 }
