@@ -39,16 +39,29 @@ def generate_regex_from_lower_bound(lower_bound):
     larger_part += "+"
     larger_part += "))(\.\d+)?"
 
-    full_pattern = f"{pattern + round_numbers_pattern + larger_part}$"
+    full_pattern = f"{"(?<!\.)" + pattern + round_numbers_pattern + larger_part}"
 
     
     full_pattern = r'' + full_pattern
     return full_pattern
 
 
+def generate_interval_regex(lower_bound, upper_bound):
+    upper_bound_str = r"(?!(" + generate_regex_from_lower_bound(upper_bound) + "))"
+    lower_bound_str = r"" + generate_regex_from_lower_bound(lower_bound)
+    combined_regex = upper_bound_str + "" + lower_bound_str
+    return combined_regex
+# Test cases
+
 #Inclusive over for the lower bound up to the upper bound. [lower_bound - upper_bound)
 def find_matches_in_interval(lower_bound, upper_bound, logfile):
-    upper_bound_str = r"^(?!" + generate_regex_from_lower_bound(upper_bound) + ").*"
+    #What we want
+    # Speed=(?!((?<!\.)(([1-9][9-9][9-9])|([2-9][0-9][0-9])|([1-9][0-9][0-9][0-9]+))(\.\d+)?))
+    #       (?<!\.)(([1-9][0-9][0-9])|([2-9][0-9][0-9])|([1-9][0-9][0-9][0-9]+))(\.\d+)?
+
+    # Speed=(?!((?<!\.)(([1-9][9-9][9-9])|([2-9][0-9][0-9])|([1-9][0-9][0-9][0-9]+))(\.\d+)?))(?<!\.)(([1-9][0-9][0-9])|([2-9][0-9][0-9])|([1-9][0-9][0-9][0-9]+))(\.\d\+)?)
+    
+    upper_bound_str = r"(?!(" + generate_regex_from_lower_bound(upper_bound) + "))"
     under_regex = re.compile(upper_bound_str)
     matches = []
 
@@ -57,7 +70,7 @@ def find_matches_in_interval(lower_bound, upper_bound, logfile):
         if match:
             matches.append(line)
 
-    lower_bound_str = r"^" + generate_regex_from_lower_bound(lower_bound)
+    lower_bound_str = r"" + generate_regex_from_lower_bound(lower_bound)
     above_regex = re.compile(lower_bound_str)
 
     final_matches = []
@@ -66,13 +79,21 @@ def find_matches_in_interval(lower_bound, upper_bound, logfile):
         if match:
             final_matches.append(matches[i])
 
+
+    combined_regex = upper_bound_str + "" + lower_bound_str
+    combined_re = re.compile(combined_regex)
+    combined_matches = []
+    for line in logfile:
+        match = combined_re.match(line)
+        if match:
+            combined_matches.append(line)
     return final_matches
 
-# Test cases
-
 def test_generate_regex_from_interval():
+    # logfile = ("1.5")
+    # regex_1_2 = find_matches_in_interval(1, 2, logfile)
     # Test with interval 100-199
-    logfile = ["101", "100", "200", "300", "301", "299",  "199", "999", "99", "0", "15", "1000", "-1", "-100", "-1000", "-10000", "10000", "75.5234", "10.52"]
+    logfile = ["101", "101.1232", "100.123", "99.23", "100", "200", "300", "301", "299",  "199", "999", "99", "0", "15", "1000", "-1", "-100", "-1000", "-10000", "10000", "75.5234", "10.52"]
     regex_100_199 = find_matches_in_interval(100, 199, logfile)
     assert "101" in regex_100_199
     assert "100" in regex_100_199

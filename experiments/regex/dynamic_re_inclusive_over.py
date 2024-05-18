@@ -37,9 +37,9 @@ def generate_regex_from_lower_bound(lower_bound):
 
     larger_part = generate_larger_part(lower_bound)
 
-    full_pattern = f"{pattern + round_numbers_pattern + larger_part}$"
+    full_pattern = f"{"(?<!\.)" + pattern + round_numbers_pattern + larger_part}"
 
-    full_pattern = r'^' + full_pattern
+    full_pattern = r'' + full_pattern
     
     # Creating the regex object
     regex = re.compile(full_pattern)
@@ -48,11 +48,15 @@ def generate_regex_from_lower_bound(lower_bound):
 
 # Test cases
 def test_generate_regex_from_lower_bound():
+    regex_80 = generate_regex_from_lower_bound(80)
+
     # Test with lower bound 100
     regex_100 = generate_regex_from_lower_bound(100)
+    assert not regex_100.match(".2345")
     assert regex_100.match("901.12234")
     assert regex_100.match("900")
     assert regex_100.match("100")
+    assert regex_100.match("100.00000")
     assert regex_100.match("101")
     assert regex_100.match("102")
     assert regex_100.match("121")

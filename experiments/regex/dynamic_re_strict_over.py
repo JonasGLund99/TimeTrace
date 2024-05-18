@@ -37,19 +37,49 @@ def generate_regex_from_lower_bound(lower_bound):
 
     larger_part = generate_larger_part(lower_bound)
 
-    full_pattern = f"{f"(?!{lower_bound_str}$)" + pattern + round_numbers_pattern + larger_part}$"
+    full_pattern = f"{f"(?!{lower_bound_str}(\.0*)?$)" + "(?<!\.)" + pattern + round_numbers_pattern + larger_part}"
 
-    full_pattern = r'^' + full_pattern
+    full_pattern = r'' + full_pattern
     
     # Creating the regex object
     regex = re.compile(full_pattern)
 
     return regex
 
+# Log file tests:
+def test_generate_regex_from_lower_bound_log_file():
+    logfile = ["""
+    This is a logfile
+Velocity 100 adrenaline 50
+Velocity 120 adrenaline 60
+Velocity 110 adrenaline 55
+Velocity 130 adrenaline 70
+Velocity 115 adrenaline 65
+Velocity 140 adrenaline 75
+Velocity 125 adrenaline 68
+Velocity 135 adrenaline 72
+Velocity 145 adrenaline 80
+Velocity 150 adrenaline 85
+Velocity 155 adrenaline 90
+Velocity 160 adrenaline 95
+Velocity 165 adrenaline 100
+Velocity 170 adrenaline 105
+Velocity 175 adrenaline 110
+Velocity 180 adrenaline 115
+Velocity 185 adrenaline 120
+Velocity 190 adrenaline 125
+Velocity 195 adrenaline 130
+Velocity 200 adrenaline 135
+"""]
+    regex_over_100 = generate_regex_from_lower_bound(100)
+
+
 # Test cases
 def test_generate_regex_from_lower_bound():
     # Test with lower bound 100
     regex_100 = generate_regex_from_lower_bound(100)
+    assert not regex_100.match("100.")
+    assert not regex_100.match("100.000")
     assert regex_100.match("901.12234")
     assert regex_100.match("900")
     assert not regex_100.match("100")
@@ -148,3 +178,4 @@ def test_generate_regex_from_lower_bound():
 
 # Run the tests
 test_generate_regex_from_lower_bound()
+test_generate_regex_from_lower_bound_log_file()
