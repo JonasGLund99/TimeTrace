@@ -1,7 +1,7 @@
 import {useState } from "react";
 import ModalInput from "../modal/ModalInput";
-import PredefinedTREButtonGroup from "./PredefinedTREButtonGroup";
 import { SequentialTREClass } from "./PredefinedTREs";
+import FormButtonGroup from "../button/FormButtonGroup";
 
 interface SequentialTREProps {
     treObject: SequentialTREClass;
@@ -24,7 +24,7 @@ function SequentialTRE({ treObject, onSubmit, closeTRE }: SequentialTREProps) {
                     <ModalInput tooltip="The second group of events you want to match." required={true} value={TREObject.input.secondGroup} onChange={(e) => { treObject.input.secondGroup = e.target.value; updateTREObject();}} label="Second group of events" placeholder="Enter the second group of events" ></ModalInput>
                 </div>
             </div>
-            <PredefinedTREButtonGroup closeTRE={closeTRE}/>
+            <FormButtonGroup cancel={closeTRE} submitText="Insert TRE"/>
         </form>
     )
 }

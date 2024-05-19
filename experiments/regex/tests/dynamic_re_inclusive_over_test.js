@@ -21,7 +21,7 @@ function generateLargerPart(lowerBound) {
  * @param {*} lowerBound 
  * @returns A regex that matches all numbers above and including the lower bound.
  */
-function generateInclusiveOverRegex(lowerBound) {
+function generateStrictOverRegex(lowerBound) {
     const lowerBoundStr = lowerBound.toString();
     const overflow = lowerBoundStr[0] === "9";
     const sum = overflow ? parseInt(lowerBoundStr[0]) : parseInt(lowerBoundStr[0]) + 1;
@@ -57,7 +57,7 @@ function generateInclusiveOverRegex(lowerBound) {
 describe('generateInclusiveOverRegex', () => {
     // Test case for lower bound 100
     test('matches numbers greater than or equal to 100', () => {
-        const regex100 = generateInclusiveOverRegex(100);
+        const regex100 = generateStrictOverRegex(100);
         expect(regex100.test(".2345")).toBe(false);
         expect(regex100.test("901.12234")).toBe(true);
         expect(regex100.test("900")).toBe(true);
@@ -89,7 +89,7 @@ describe('generateInclusiveOverRegex', () => {
 
     // Repeat similar tests for other lower bounds
     test('matches numbers greater than or equal to 198', () => {
-        const regex199 = generateInclusiveOverRegex(198);
+        const regex199 = generateStrictOverRegex(198);
         expect(regex199.test("100")).toBe(false);
         expect(regex199.test("300")).toBe(true);
         expect(regex199.test("200")).toBe(true);
@@ -97,7 +97,7 @@ describe('generateInclusiveOverRegex', () => {
     });
 
     test('matches numbers greater than or equal to 188', () => {
-        const regex188 = generateInclusiveOverRegex(188);
+        const regex188 = generateStrictOverRegex(188);
         expect(regex188.test("100")).toBe(false);
         expect(regex188.test("198")).toBe(true);
         expect(regex188.test("199")).toBe(true);
@@ -108,7 +108,7 @@ describe('generateInclusiveOverRegex', () => {
 
     // Test with lower bound 5000
     test('matches numbers greater than or equal to 5000', () => {
-        const regex5000 = generateInclusiveOverRegex(5000);
+        const regex5000 = generateStrictOverRegex(5000);
         expect(regex5000.test("5001")).toBe(true);
         expect(regex5000.test("5999")).toBe(true);
         expect(regex5000.test("9999")).toBe(true);

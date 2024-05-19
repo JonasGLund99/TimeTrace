@@ -21,7 +21,7 @@ function generateLargerPart(lowerBound) {
  * @param {*} lowerBound 
  * @returns A regex that matches all numbers above the lower bound.
  */
-function generateInclusiveOverRegex(lowerBound) {
+function generateStrictOverRegex(lowerBound) {
     let pattern = "((";
     let currentFactor = 0;
     const lowerBoundStr = lowerBound.toString();
@@ -57,7 +57,7 @@ function generateInclusiveOverRegex(lowerBound) {
 // Test cases
 function testGenerateRegexFromLowerBound() {
     // Test with lower bound 100
-    const regex100 = generateInclusiveOverRegex(100);
+    const regex100 = generateStrictOverRegex(100);
     console.log(!regex100.test("100."));
     console.log(!regex100.test("100.000"));
     console.log(regex100.test("901.12234"));
@@ -85,13 +85,13 @@ function testGenerateRegexFromLowerBound() {
     console.log(!regex100.test("15"));
     console.log(regex100.test("1000"));
 
-    const regex199 = generateInclusiveOverRegex(198);
+    const regex199 = generateStrictOverRegex(198);
     console.log(!regex199.test("100"));
     console.log(regex199.test("300"));
     console.log(regex199.test("200"));
     console.log(regex199.test("301"));
 
-    const regex188 = generateInclusiveOverRegex(188);
+    const regex188 = generateStrictOverRegex(188);
     console.log(!regex188.test("100"));
     console.log(regex188.test("198"));
     console.log(regex188.test("199"));
@@ -100,7 +100,7 @@ function testGenerateRegexFromLowerBound() {
     console.log(regex188.test("201"));
 
     // Test with lower bound 5000
-    const regex5000 = generateInclusiveOverRegex(5000);
+    const regex5000 = generateStrictOverRegex(5000);
     console.log(regex5000.test("5001"));
     console.log(regex5000.test("5999"));
     console.log(regex5000.test("9999"));
@@ -110,7 +110,7 @@ function testGenerateRegexFromLowerBound() {
     console.log(regex5000.test("10000"));
 
     // Test with lower bound 1
-    const regex1 = generateInclusiveOverRegex(1);
+    const regex1 = generateStrictOverRegex(1);
     console.log(regex1.test("2"));
     console.log(regex1.test("9"));
     console.log(regex1.test("99"));
@@ -118,14 +118,14 @@ function testGenerateRegexFromLowerBound() {
     console.log(regex1.test("100"));
     
     // Test with lower bound 1
-    const regex9 = generateInclusiveOverRegex(9);
+    const regex9 = generateStrictOverRegex(9);
     console.log(!regex9.test("9"));
     console.log(regex9.test("10"));
     console.log(regex9.test("11"));
     console.log(regex9.test("12"));
     console.log(regex9.test("13"));
 
-    const regex0 = generateInclusiveOverRegex(0);
+    const regex0 = generateStrictOverRegex(0);
     console.log(regex0.test("1"));
     console.log(!regex0.test("0"));
     console.log(regex0.test("0.232323"));
@@ -136,7 +136,7 @@ function testGenerateRegexFromLowerBound() {
     console.log(regex0.test("100"));
 
     // Test with lower bound 999
-    const regex999 = generateInclusiveOverRegex(999);
+    const regex999 = generateStrictOverRegex(999);
     console.log(regex999.test("1000"));
     console.log(regex999.test("1099"));
     console.log(regex999.test("1999"));
@@ -147,7 +147,7 @@ function testGenerateRegexFromLowerBound() {
     console.log(regex999.test("9999"));
 
     // Test with lower bound 100000
-    const regex100000 = generateInclusiveOverRegex(100000);
+    const regex100000 = generateStrictOverRegex(100000);
     console.log(regex100000.test("100001"));
     console.log(regex100000.test("100999"));
     console.log(regex100000.test("199999"));

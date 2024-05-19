@@ -1,12 +1,35 @@
-// This function generates a regex pattern that matches all numbers above and including the lower bound.
+/**
+ * Generates a regex that maches all numbers from the next factor i.e. 100 -> [1-9][0-9][0-9][0-9]+
+ * @param {*} lowerBound
+ * @returns A regex that matches all numbers from the next factor.
+ */
+function generateLargerPart(lowerBound) {
+    const numLen = lowerBound.toString().length;
+    let largerPart = "";
+    for (let i = 0; i < numLen; i++) {
+        if (i === 0) {
+            largerPart += "|([1-9]";
+        }
+        largerPart += "[0-9]";
+    }
+    largerPart += "+";
+    largerPart += "))(\\.\\d+)?";
+    return largerPart;
+}
+
+/**
+ * @param {*} lowerBound 
+ * @returns A regex that matches all numbers above and including the lower bound.
+ */
 function generateInclusiveOverRegex(lowerBound) {
     let pattern = "((";
     let currentFactor = 0;
-    const numLen = lowerBound.toString().length;
     const lowerBoundStr = lowerBound.toString();
+    // This pattern ensures that when 33 is entered, 40, 50, 60 and so on can be matched.
     let roundNumbersPattern = "|(";
     const overflow = lowerBoundStr[0] === "9";
     const sum = overflow ? parseInt(lowerBoundStr[0]) : parseInt(lowerBoundStr[0]) + 1;
+    // If there is overflow then we must go to the next factor, therefore we add two parts.
     roundNumbersPattern += overflow ? "[1-9][0-9]" : `[${sum}-9]`;
 
     for (const digitChar of lowerBoundStr) {
@@ -23,17 +46,7 @@ function generateInclusiveOverRegex(lowerBound) {
     }
     roundNumbersPattern += ")";
     pattern += ")";
-
-    let largerPart = "";
-    for (let i = 0; i < numLen; i++) {
-        if (i === 0) {
-            largerPart += "|([1-9]";
-        }
-        largerPart += "[0-9]";
-    }
-    largerPart += "+";
-    largerPart += "))(\\.\\d+)?";
-
+    const largerPart = generateLargerPart(lowerBound);
     const dontMatchDigitsAfterDot = "(?<!\\.)";
     let fullPattern = `${dontMatchDigitsAfterDot}${pattern}${roundNumbersPattern}${largerPart}`;
 

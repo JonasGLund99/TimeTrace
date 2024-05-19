@@ -1,7 +1,7 @@
 import {useState } from "react";
 import ModalInput from "../modal/ModalInput";
 import { WithinTREClass } from "./PredefinedTREs";
-import PredefinedTREButtonGroup from "./PredefinedTREButtonGroup";
+import FormButtonGroup from "../button/FormButtonGroup";
 
 interface IWithinTREProps {
     treObject: WithinTREClass;
@@ -28,7 +28,7 @@ function WithinTRE({ treObject, onSubmit, closeTRE }: IWithinTREProps) {
                     <ModalInput tooltip="The end" required={true} value={TREObject.input.endTime} onChange={(e) => { treObject.input.endTime = e.target.value; updateTREObject();}} label="End time" placeholder="Enter the end time" ></ModalInput>
                 </div>
             </div>
-            <PredefinedTREButtonGroup closeTRE={closeTRE}/>
+            <FormButtonGroup cancel={closeTRE} submitText="Insert TRE"/>
         </form>
     )
 }
