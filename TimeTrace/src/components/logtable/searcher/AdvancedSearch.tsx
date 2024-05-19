@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode, useContext, useState } from "react";
+import { FormEvent, ReactNode, useContext, useEffect, useState } from "react";
 import { AppdataContext } from "../../../context/AppContext";
 import { CustomMap } from "../../../models/Types/EventMapping";
 import Button from "../../button/Button";
@@ -52,7 +52,8 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
     }
 
     function insertPredefRE(predefinedRE: PredefinedRE) {
-        setSearchQuery(searchQuery + predefinedRE.insertRE())
+        const newSearchQuery = searchQuery + predefinedRE.insertRE(); 
+        setSearchQuery(newSearchQuery);
         setModal(null);
     }
 
@@ -61,12 +62,12 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
         let modalTitle: string = '';
         switch(predefREType) {
             case PredefinedREType.InclusiveOver:
-                let inclusiveOver = new OverClass(false);
+                let inclusiveOver = new OverClass(true);
                 modalTitle = inclusiveOver.title;
                 predefinedRE = <Over reObject={inclusiveOver} onSubmit={(e: FormEvent) => {e.preventDefault(); insertPredefRE(inclusiveOver)}} closeRE={() => { setModal(null); } }/>
                 break;
             case PredefinedREType.StrictOver:
-                let strictOver = new OverClass(true);
+                let strictOver = new OverClass(false);
                 modalTitle = strictOver.title;
                 predefinedRE = <Over reObject={strictOver} onSubmit={(e: FormEvent) => {e.preventDefault(); insertPredefRE(strictOver)}} closeRE={() => { setModal(null); } }/>
                 break;
@@ -74,6 +75,16 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                 let interval = new IntervalClass();
                 modalTitle = interval.title;
                 predefinedRE = <Interval reObject={interval} onSubmit={(e: FormEvent) => {e.preventDefault(); insertPredefRE(interval)}} closeRE={() => { setModal(null); } }/>
+                break;
+            case PredefinedREType.StrictUnder:
+                let strictUnder = new OverClass(true, undefined, true);
+                modalTitle = strictUnder.title;
+                predefinedRE = <Over reObject={strictUnder} onSubmit={(e: FormEvent) => {e.preventDefault(); insertPredefRE(strictUnder)}} closeRE={() => { setModal(null); } }/>
+                break;
+            case PredefinedREType.InclusiveUnder:
+                let inclusiveUnder = new OverClass(false, undefined, true);
+                modalTitle = inclusiveUnder.title;
+                predefinedRE = <Over reObject={inclusiveUnder} onSubmit={(e: FormEvent) => {e.preventDefault(); insertPredefRE(inclusiveUnder)}} closeRE={() => { setModal(null); } }/>
                 break;
             default:
                 throw new Error("The predefined type of the TRE has not been defined in this switch case");
@@ -94,8 +105,10 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                     <div className="relative flex flex-col w-full gap-2">
                         <div id="predefined-re" className="flex self-center gap-2">
                             <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find greater or equal numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.InclusiveOver)}>Greater or Equal</Button>
-                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find numbers in an interval." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.Interval)}>Interval</Button>
                             <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find greater numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.StrictOver)}>Greater</Button>
+                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find numbers in an interval." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.Interval)}>Interval</Button>
+                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find smaller numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.StrictUnder)}>Smaller</Button>
+                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find smaller numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.InclusiveUnder)}>Smaller or Equal</Button>
                         </div>
                         <div className="relative flex">
                         <Button
