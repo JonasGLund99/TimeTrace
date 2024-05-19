@@ -2,6 +2,7 @@ import {FormEvent, useState } from "react";
 import ModalInput from "../modal/ModalInput";
 import { OverClass } from "./PredefinedREs"; 
 import FormButtonGroup from "../button/FormButtonGroup";
+import { validateNumberInput } from "./numbersOnlyInput";
 
 interface InclusiveOverProps {
     reObject: OverClass;
@@ -20,10 +21,10 @@ function TimedSequentialTRE({ reObject, onSubmit, closeRE }: InclusiveOverProps)
         <form id="interval-re" onSubmit={onSubmit}>
             <div className="flex flex-col gap-2">
                 <div className="flex gap-4">
-                    <ModalInput required={false} value={REObject.input.prependedText} onChange={(e) => { reObject.input.prependedText = e.target.value; updateREObject();}} label="Prepended text" placeholder="Optional text to prepend your RE" ></ModalInput>
+                    <ModalInput type="number" required={false} value={REObject.input.prependedText} onChange={(e) => {if(!validateNumberInput(e.target.value)) return; reObject.input.prependedText = String(e.target.value); updateREObject();}} label="Prepended text" placeholder="Optional text to prepend your RE" ></ModalInput>
                 </div>
                 <div className="flex gap-4">
-                    <ModalInput required={true} value={REObject.input.lowerBound} onChange={(e) => { reObject.input.lowerBound = e.target.value; updateREObject();}} label={`Lower Bound (numbers ${reObject.isStrictlyOver ? "larger than" : "larger or equal"})`} placeholder="Enter the lower bound" ></ModalInput>
+                    <ModalInput type="number" required={true} value={REObject.input.lowerBound} onChange={(e) => {if(!validateNumberInput(e.target.value)) return; reObject.input.lowerBound = String(e.target.value); updateREObject();}} label={`Lower Bound (numbers ${reObject.isStrictlyOver ? "larger than" : "larger or equal"})`} placeholder="Enter the lower bound" ></ModalInput>
                 </div>
             </div>
             <FormButtonGroup cancel={closeRE} submitText="Insert RE"/>
