@@ -1,3 +1,8 @@
+/**
+ * Generates a regex that maches all numbers from the next factor i.e. 100 -> [1-9][0-9][0-9][0-9]+
+ * @param {*} lowerBound
+ * @returns A regex that matches all numbers from the next factor.
+ */
 function generateLargerPart(lowerBound) {
     let largerPart = "";
     for (let i = 0; i < lowerBound.toString().length; i++) {
@@ -11,22 +16,28 @@ function generateLargerPart(lowerBound) {
     return largerPart;
 }
 
+
+/**
+ * @param {*} lowerBound 
+ * @returns A regex that matches all numbers above the lower bound.
+ */
 function generateRegexFromLowerBound(lowerBound) {
     let pattern = "((";
     let currentFactor = 0;
     const lowerBoundStr = lowerBound.toString();
+    
+    // This pattern ensures that when 33 is entered, 40, 50, 60 and so on can be matched.
     let roundNumbersPattern = "|(";
     const overflow = lowerBoundStr[0] === "9";
     const sum = overflow ? parseInt(lowerBoundStr[0]) : parseInt(lowerBoundStr[0]) + 1;
+    // If there is overflow then we must go to the next factor, therefore we add two parts.
     roundNumbersPattern += overflow ? "[1-9][0-9]" : `[${sum}-9]`;
 
     for (const digit of lowerBoundStr) {
-        const digitInt = parseInt(digit);
-        const digitDiff = 9 - digitInt;
-        const upperRangeInFactor = digitInt + digitDiff;
         if (currentFactor === 0) {
-            pattern += `[${digit}-${upperRangeInFactor}]`;
-        } else {
+            pattern += `[${digit}-9]`;
+        } 
+        else {
             pattern += `[${digit}-9]`;
             roundNumbersPattern += "[0-9]";
         }
@@ -36,38 +47,11 @@ function generateRegexFromLowerBound(lowerBound) {
     pattern += ")";
 
     const largerPart = generateLargerPart(lowerBound);
-    let fullPattern = `(?!(${lowerBoundStr}(\\.0*)?$))` + "(?<!\.)" + pattern + roundNumbersPattern + largerPart;
+    const dontMatchDigitsAfterDot = "(?<!\.)";
+    const dontMatchLowerBound = `(?!(${lowerBoundStr}(\\.0*)?$))`;
+    let fullPattern = dontMatchLowerBound + dontMatchDigitsAfterDot + pattern + roundNumbersPattern + largerPart;
     regex = new RegExp(fullPattern);
     return regex;
-}
-
-// Log file tests
-function testGenerateRegexFromLowerBoundLogFile() {
-    const logfile = `
-    This is a logfile
-Velocity 100 adrenaline 50
-Velocity 120 adrenaline 60
-Velocity 110 adrenaline 55
-Velocity 130 adrenaline 70
-Velocity 115 adrenaline 65
-Velocity 140 adrenaline 75
-Velocity 125 adrenaline 68
-Velocity 135 adrenaline 72
-Velocity 145 adrenaline 80
-Velocity 150 adrenaline 85
-Velocity 155 adrenaline 90
-Velocity 160 adrenaline 95
-Velocity 165 adrenaline 100
-Velocity 170 adrenaline 105
-Velocity 175 adrenaline 110
-Velocity 180 adrenaline 115
-Velocity 185 adrenaline 120
-Velocity 190 adrenaline 125
-Velocity 195 adrenaline 130
-Velocity 200 adrenaline 135
-`;
-
-    const regexOver100 = generateRegexFromLowerBound(100);
 }
 
 // Test cases
@@ -169,8 +153,6 @@ function testGenerateRegexFromLowerBound() {
     console.log(regex100000.test("199999"));
     console.log(!regex100000.test("99999"));
     console.log(regex100000.test("1000000"));
-
-    console.log("All tests passed successfully.");
 }
 
 // Run the tests
