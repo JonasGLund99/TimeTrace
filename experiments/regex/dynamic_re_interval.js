@@ -1,6 +1,5 @@
-
 // This function generates a regex pattern that matches all numbers above and including the lower bound.
-function generateRegexFromLowerBound(lowerBound) {
+function generateInclusiveOverRegex(lowerBound) {
     let pattern = "((";
     let currentFactor = 0;
     const numLen = lowerBound.toString().length;
@@ -42,12 +41,31 @@ function generateRegexFromLowerBound(lowerBound) {
 }
 
 function generateIntervalRegex(lowerBound, upperBound) {
-    const upperBoundStr = `(?!(${generateRegexFromLowerBound(upperBound)}))`;
-    const lowerBoundStr = `${generateRegexFromLowerBound(lowerBound)}`;
-    const combinedRegex = upperBoundStr + lowerBoundStr;
+    const negatedOverUpperBound = `(?!(${generateInclusiveOverRegex(upperBound)}))`;
+    const overLowerBound = `${generateInclusiveOverRegex(lowerBound)}`;
+    const combinedRegex = negatedOverUpperBound + overLowerBound;
     return combinedRegex;
 }
 
 
 let regex100199 = generateIntervalRegex(1000, 2000);
-console.log(regex100199);
+
+function testGenerateRegexFromInterval() {
+    const regex100199 = generateIntervalRegex(100, 199);
+    const reg100199 = new RegExp(regex100199);
+    console.log(reg100199.test("101"));
+    console.log(reg100199.test("100"));
+    
+    const regex10002000 = generateIntervalRegex(1000, 2000);
+    const reg10002000 = new RegExp(regex10002000);
+    console.log(reg10002000.test("1001"));
+    console.log(reg10002000.test("1000.12323"));
+    console.log(reg10002000.test("1400"));
+    console.log(reg10002000.test("1500"));
+    console.log(!reg10002000.test("2000"));
+    console.log(!reg10002000.test("10.2"));
+    console.log(!reg10002000.test("-123.23"));
+    console.log(!reg10002000.test("-123"));
+    console.log(reg10002000.test("1000"));
+}
+testGenerateRegexFromInterval();
