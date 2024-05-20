@@ -108,7 +108,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                             <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find greater numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.StrictOver)}>Greater</Button>
                             <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find numbers in an interval." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.Interval)}>Interval</Button>
                             <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find smaller numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.StrictUnder)}>Smaller</Button>
-                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find smaller numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.InclusiveUnder)}>Smaller or Equal</Button>
+                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find smaller or equal numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.InclusiveUnder)}>Smaller or Equal</Button>
                         </div>
                         <div className="relative flex">
                         <Button
