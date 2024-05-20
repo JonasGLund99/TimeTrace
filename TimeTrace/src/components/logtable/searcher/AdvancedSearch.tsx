@@ -87,7 +87,7 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                 predefinedRE = <Over reObject={inclusiveUnder} onSubmit={(e: FormEvent) => {e.preventDefault(); insertPredefRE(inclusiveUnder)}} closeRE={() => { setModal(null); } }/>
                 break;
             default:
-                throw new Error("The predefined type of the TRE has not been defined in this switch case");
+                throw new Error("The predefined type of the RE has not been defined in this switch case");
         }
 
         setModal({
