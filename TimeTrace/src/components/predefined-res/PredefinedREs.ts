@@ -23,7 +23,7 @@ export interface IntervalInput {
 
 export class IntervalClass implements PredefinedRE {
     public input: IntervalInput;
-    public title: string = 'Find numbers between an interval';
+    public title: string = 'Find integers between an interval';
 
     public insertRE(): string {
         return `${this.input.prependedText}${generateIntervalRegex(this.input.lowerBound, this.input.upperBound)}`;
@@ -65,13 +65,13 @@ export class OverClass implements PredefinedRE {
 
     public constructor(includesLowerBound: boolean, input: OverInput = { prependedText: '',  lowerBound: '' }, negateRe: boolean = false) {
         this.includesLowerBound = includesLowerBound;
-        this.title = !includesLowerBound ? 'Find numbers greater than some value' : 'Find numbers greater or equal to some value';
+        this.title = !includesLowerBound ? 'Find integers greater than some value' : 'Find integers greater or equal to some value';
         this.input = input;
         this.negateRe = negateRe;
-        this.label = `Lower Bound (numbers ${!this.includesLowerBound ? "larger than" : "larger or equal"})`
+        this.label = `Lower Bound (integers ${!this.includesLowerBound ? "larger than" : "larger or equal"})`
         if(negateRe) {
-            this.title = `Find numbers ${includesLowerBound ? 'under' : 'under and including'} some value`;
-            this.label = `Lower Bound (numbers ${this.includesLowerBound ? "under" : "under and including"})`
+            this.title = `Find integers ${includesLowerBound ? 'under' : 'under and including'} some value`;
+            this.label = `Lower Bound (integers ${this.includesLowerBound ? "under" : "under and including"})`
         }
     }
 }

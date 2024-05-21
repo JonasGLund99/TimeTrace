@@ -104,11 +104,11 @@ function AdvancedSearch({searchQuery, setSearchQuery, searchLog}: SearcherProps)
                 <div className="flex">
                     <div className="relative flex flex-col w-full gap-2">
                         <div id="predefined-re" className="flex self-center gap-2">
-                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find greater or equal numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.InclusiveOver)}>Greater or Equal</Button>
-                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find greater numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.StrictOver)}>Greater</Button>
-                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find numbers in an interval." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.Interval)}>Interval</Button>
-                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find smaller numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.StrictUnder)}>Smaller</Button>
-                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find smaller or equal numbers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.InclusiveUnder)}>Smaller or Equal</Button>
+                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find greater or equal integers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.InclusiveOver)}>Greater or Equal</Button>
+                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find greater integers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.StrictOver)}>Greater</Button>
+                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find integers in an interval." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.Interval)}>Interval</Button>
+                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find smaller integers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.StrictUnder)}>Smaller</Button>
+                            <Button buttonStyle={ButtonStyle.Modal} tooltip="RE to find smaller or equal integers." style={{style: 'px-4 py-2'}} onClick={() => createModalObject(PredefinedREType.InclusiveUnder)}>Smaller or Equal</Button>
                         </div>
                         <div className="relative flex">
                         <Button
