@@ -39,6 +39,13 @@ Follow the guides on the [home page](https://time-trace.vercel.app/)  on how to 
 *You should not need anything else from this guide to use the tool unless you are a developer*
 ---
 
+### Running tests
+`npm test`
+
+or
+
+`npm run testCoverage`
+
 ### SSH information
 - [CLAAUDIA documentation](https://www.strato-docs.claaudia.aau.dk/guides/getting_started/access_instance/) on SSH connection.
 
