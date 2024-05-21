@@ -1,7 +1,7 @@
 import {useState } from "react";
 import ModalInput from "../modal/ModalInput";
 import { TimedEventTREClass } from "./PredefinedTREs";
-import PredefinedTREButtonGroup from "./PredefinedTREButtonGroup";
+import FormButtonGroup from "../button/FormButtonGroup";
 
 interface TimedEventTREProps {
     treObject: TimedEventTREClass;
@@ -27,7 +27,7 @@ function TimedEventTRE({ treObject, onSubmit, closeTRE }: TimedEventTREProps) {
                     <ModalInput tooltip="The end" required={true} value={TREObject.input.endTime} onChange={(e) => { treObject.input.endTime = e.target.value; updateTREObject();}} label="End time" placeholder="Enter the end time" ></ModalInput>
                 </div>
             </div>
-            <PredefinedTREButtonGroup closeTRE={closeTRE}/>
+            <FormButtonGroup cancel={closeTRE} submitText="Insert TRE"/>
         </form>
     )
 }

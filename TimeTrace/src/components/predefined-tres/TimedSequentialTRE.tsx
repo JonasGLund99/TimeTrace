@@ -1,7 +1,7 @@
 import {useState } from "react";
 import ModalInput from "../modal/ModalInput";
-import PredefinedTREButtonGroup from "./PredefinedTREButtonGroup";
 import { TimedSequentialClass } from "./PredefinedTREs";
+import FormButtonGroup from "../button/FormButtonGroup";
 
 interface TimedSequentialTREProps {
     treObject: TimedSequentialClass;
@@ -34,7 +34,7 @@ function TimedSequentialTRE({ treObject, onSubmit, closeTRE }: TimedSequentialTR
                     <ModalInput tooltip="The end" required={true} value={TREObject.input.secondEndTime} onChange={(e) => { treObject.input.secondEndTime = e.target.value; updateTREObject();}} label="End time" placeholder="Enter the end time" ></ModalInput>
                 </div>
             </div>
-            <PredefinedTREButtonGroup closeTRE={closeTRE}/>
+            <FormButtonGroup cancel={closeTRE} submitText="Insert TRE"/>
         </form>
     )
 }
