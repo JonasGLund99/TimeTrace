@@ -1,3 +1,4 @@
+![TimeTrace banner](https://github.com/JonasGLund99/TimeTrace/assets/89989380/5963e757-440f-4539-a5b3-4913730f35c9)
 # TimeTrace | Timed Pattern Matching in Log Files
 
 [TimeTrace](https://time-trace.vercel.app/) is deployed on Vercel; however, it is necessary to have an SSH-key to send request to the [MONAA backend](https://github.com/AndersToft20/monaa-backend). 
