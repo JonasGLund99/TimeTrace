@@ -9,12 +9,20 @@ export enum PredefinedREType {
     InclusiveUnder,
 }
 
+/**
+ * Every predefinedRE must have a title for its modal and a method to insert the RE.
+ * {@link PredefinedRE.title}
+ * {@link PredefinedRE.insertRE}
+ */
 export interface PredefinedRE {
     title: string;
     insertRE: () => string;
 }
 
 
+/**
+ * These interfaces are just to make the predefinedRE classes more compact
+ */
 export interface IntervalInput {
     prependedText: string;
     lowerBound: string;
@@ -44,19 +52,29 @@ export interface OverInput {
     lowerBound: string;
 }
 
+/**
+ * This class is used for the predefinedREs: "Greater or Equal", "Greater", "Smaller", "Smaller or Equal"
+ */
 export class OverClass implements PredefinedRE {
     public input: OverInput;
     public title: string = '';
     public includesLowerBound: boolean;
+    /**
+     * {@link negateRe} is used to turn the over into an under predefined RE.
+     */
     public negateRe: boolean;
     public label: string = '';
 
     public insertRE(): string {
         let re = '';
+        //We want to include the lowerbound, this is done using inclusiveOver.
         if(this.includesLowerBound) {
+            //If the RE should be negated that is turned into under we prepend (?!(
             re = `${this.input.prependedText}${this.negateRe ? '(?!(': ''}${generateInclusiveOverRegex(this.input.lowerBound)}${this.negateRe ? '))': ''}`;
         }
+        //We want to exclude the lowerbound, this is done using strictOver.
         else {
+            //If the RE should be negated that is turned into under we prepend (?!(
             re = `${this.input.prependedText}${this.negateRe ? '(?!(': ''}${generateStrictOverRegex(this.input.lowerBound)}${this.negateRe ? '))': ''}`;
         }
 

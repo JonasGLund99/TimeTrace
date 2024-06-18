@@ -1,3 +1,7 @@
+
+/**
+ * Scrolls to a specific MonaaMatch by finding the mapped-line class on an {@link HTMLElement}
+ */
 export function scrollToMonaaMatch() {
     const logTable = document.querySelector("#log-table");
     if (!logTable) return;

@@ -1,3 +1,7 @@
+
+/**
+ * HashMap consisting of key-value pairs where the key is the timestamp from an event and the value is the index of the line in the logfile.
+ */
 export class HashMap {
     private map: Record<string, number>;
 

@@ -6,12 +6,18 @@ export enum PredefinedTre {
     TimedSequential,
 }
 
+/**
+ * Every predefinedTRE must have a title ({@link IPredefinedTRE.title}) used for the title of the modal
+ * Every predefiendTRE must have a method ({@link IPredefinedTRE.insertTRE}) that returns the predefinedTRE as a string 
+ */
 export interface IPredefinedTRE {
     title: string;
     insertTRE: () => string;
 }
 
-
+/**
+ * To make the {@link WithinTREClass} a bit more compact
+ */
 export interface WithinTREInput {
     firstGroup: string;
     secondGroup: string;

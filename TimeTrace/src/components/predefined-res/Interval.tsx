@@ -2,7 +2,6 @@ import {FormEvent, useState } from "react";
 import ModalInput from "../modal/ModalInput";
 import { IntervalClass } from "./PredefinedREs"; 
 import FormButtonGroup from "../button/FormButtonGroup";
-import { validateNumberInput } from "./numbersOnlyInput";
 
 interface IntervalProps {
     reObject: IntervalClass;

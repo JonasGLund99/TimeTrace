@@ -1,6 +1,10 @@
 import { LogFormatter } from "../LogFormatter";
 import { dateFormats } from "./dateFormats";
 
+
+/**
+ * @returns a timestamp extracted via {@link dateFormats} and the currently selected dateFormat {@link LogFormatter.dateFormat}
+ */
 export function extractTimeStamp(line: string): string {
     let timestamp: string | undefined;
 

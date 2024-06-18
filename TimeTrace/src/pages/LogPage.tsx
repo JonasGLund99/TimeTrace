@@ -12,6 +12,9 @@ import TimedEventTRE from "../components/predefined-tres/TimedEventTRE";
 import TimedSequentialTRE from "../components/predefined-tres/TimedSequentialTRE";
 import { ButtonStyle } from "../components/button/IButtonProps";
 
+/**
+ * @returns The page to analyse a log file with TREs. 
+ */
 function LogPage() {
     const { uploadedFile } = useContext(AppdataContext);
     const { setError } = useContext(AppdataContext);
@@ -20,6 +23,9 @@ function LogPage() {
 
 
 
+    /**
+     * sets preventDefault on the event.
+     */
     function handleOnBeforeUnload(e: BeforeUnloadEvent) {
         e.preventDefault();
         return (e.returnValue = '');
@@ -44,6 +50,9 @@ function LogPage() {
         }
     }, [uploadedFile, setError]);
 
+    /**
+     * Function used to create a Modal based on a {@link PredefinedTre} that allows users to type information into predefinedTRES 
+     */
     function createModalObject(predefTREType: PredefinedTre) {
         let predefinedTRE: ReactNode;
         let modalTitle: string = '';

@@ -1,19 +1,32 @@
 import { LogFormatter } from "../LogFormatter";
 import { extractTimeStamp } from "./extractTimeStamp";
 
+/**
+ * Asserts that the logfile is validly structured, it is in ascending order and 
+ * checks whether two identical events happen at the same timestamp
+ * @returns Either an error as a string or null.  
+ */
 export function fileLinesAreValid(lines: string[]): string | null {
     try {
-        FileIsInAscendingOrder(lines); //throws errors if not valid
-        DuplicateEventsAtSameTimestampCheck(lines); //throws errors if not valid
+        //throws errors if not valid
+        FileIsInAscendingOrder(lines); 
+        //throws errors if not valid
+        DuplicateEventsAtSameTimestampCheck(lines); 
     } catch (e) {
-        if (typeof e === 'string') { //typescript needs to be sure it is a string
+        //typescript needs to be sure it is a string
+        if (typeof e === 'string') { 
             return e;
         }
-        throw e; //if not string, something uncaught happened
+        //if not string, something uncaught happened
+        throw e; 
     }
     return null
 }
 
+/**
+ * Iterates the log file and will throw an error if two identical event strings happen to have the same time stamp
+ * @returns throws an error if two event strings are identical and have the same timestamp.
+ */
 function DuplicateEventsAtSameTimestampCheck(lines: string[]): void {
     //loops throgh file once. for each line, compare with the lines after until timestamp changes.
     for (let i = 0; i < lines.length - 1; i++) {
@@ -31,6 +44,9 @@ function DuplicateEventsAtSameTimestampCheck(lines: string[]): void {
     }
 }
 
+/**
+ * Validates that the lines in the log file are in ascending order.
+ */
 function FileIsInAscendingOrder(lines: string[]): void {
     //compare timestamp of current line with next line. if next >= current, then all good
     for (let i = 0; i < lines.length - 1; i++) {

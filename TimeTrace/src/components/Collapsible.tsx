@@ -7,6 +7,10 @@ interface Collapsibleprop {
     children?: ReactNode;
     isOpen: boolean; // Add open prop
 }
+/**
+ * 
+ * @returns A component that can encompass other react components and show them based on whether it is collapsed or not. 
+ */
 function Collapsible({ label, children, isOpen }: Collapsibleprop) {
     const [open, setIsOpen] = useState(isOpen || false);
 

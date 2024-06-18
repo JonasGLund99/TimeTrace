@@ -3,6 +3,10 @@ import { useContext } from "react";
 import Button from "./button/Button";
 import { ButtonStyle } from "./button/IButtonProps";
 
+/**
+ * 
+ * @returns A pop-up that exclaims that there was some sort of error
+ */
 export default function Warning() {
     const { errorObj, setError } = useContext(AppdataContext);
 

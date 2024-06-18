@@ -6,11 +6,15 @@ import Button from "./button/Button";
 import { ButtonStyle } from "./button/IButtonProps";
 import Tooltip from "./tooltip/ToolTip";
 
+/**
+ * @returns The mappings list/table on the MappingsPage
+ */
 function MappedItemsList() {
     const { mappings, setMappings } = useContext(AppdataContext);
 
     function removeMapping(eventText: string): void {
         mappings.remove(eventText)
+        // new reference to alert the frontend that it should reload HTML that relies on the mappings.
         const newMappings = new CustomMap(mappings);
         if (setMappings) {
             setMappings(newMappings);
