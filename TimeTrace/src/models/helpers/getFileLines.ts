@@ -1,16 +1,23 @@
-
+/**
+ * @returns A promise Promise<string[]>. That is a promise that when resolved contains all the lines from a logfile. 
+ */
 export async function getFileLines(file: File): Promise<string[]> {
-    return new Promise<string[]>((resolve, reject) => { //must return promise because reader is async
+    //must return promise because reader is async
+    return new Promise<string[]>((resolve, reject) => { 
         let reader = new FileReader();
         reader.onload = async (event) => {
-            let textLines = (reader.result as string).split("\n"); //split file on newlines
+            //split file on newlines
+            let textLines = (reader.result as string).split("\n"); 
             textLines = textLines.filter(line => line.replace(/(\r\n|\n|\r)/gm, "") !== '')
-            resolve(textLines); //all went well, return textLines
+            //all went well, return textLines
+            resolve(textLines); 
         };
-        reader.onerror = async (e) => { //on error reject
+        //on error reject
+        reader.onerror = async (e) => { 
             console.error("Unable to read file", file.name, e);
             reject(e);
         };
-        reader.readAsText(file); //call reader
+        //call reader
+        reader.readAsText(file); 
     });
 }

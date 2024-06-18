@@ -18,6 +18,8 @@ export abstract class LogHandler {
 
         for (let i = 0; i < MonaaOutput.length; i++) {
             const line = MonaaOutput[i]; 
+            
+            //Indicates that a new match begins
             if (line.includes("=======") && foundStart !== -1 && foundEnd !== -1) { //RESET interval
                 let SearchInterval: SearchInterval = { start: foundStart, end: foundEnd };
                 foundIntervals.push(SearchInterval);
@@ -25,10 +27,13 @@ export abstract class LogHandler {
                 foundStart = -1;
                 foundEnd = -1;
             }
+            //Lower bound of Monaazone
             else if (MonaaOutput[i].includes("<= t <") || MonaaOutput[i].includes("< t <") || MonaaOutput[i].includes("< t <=") || MonaaOutput[i].includes("<= t <=")) {  //FIND Start
 
                 foundStart = parseFloat(MonaaOutput[i].split(/\s+/).filter(part => !isNaN(parseFloat(part))).pop() || '');
             }
+
+            //Upper bound of Monaazone
             else if (MonaaOutput[i].includes("<= t' <") || MonaaOutput[i].includes("< t' <") || MonaaOutput[i].includes("< t' <=") || MonaaOutput[i].includes("<= t' <=")) { //FIND End
 
                 foundEnd = parseFloat(MonaaOutput[i].split(/\s+/).filter(part => !isNaN(parseFloat(part))).shift() || '');

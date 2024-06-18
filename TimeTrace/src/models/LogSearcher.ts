@@ -17,22 +17,29 @@ export abstract class LogSearcher {
         return this._hashMap;
     }
 
+    /**
+     * Finds the indices in the logfile where there is a match
+     */
     public static findZones(searchIntervals: SearchInterval[]): MonaaZone[] {
         console.time("findZones");
         let binaryTime = 0, binaryCount = 0
         let hashTime = 0, hashCount = 0
         let startOfLastFoundMatch = 0;
         const MonaaZoneMatches: MonaaZone[] = [];
+
         for (let i = 0; i < searchIntervals.length; i++) {
             let match = new MonaaZone();
             let hashTimeStart = performance.now()
             let start: number | null = this.hashMap.get(Math.round(searchIntervals[i].start).toString());
             let end: number | null = this.hashMap.get(Math.round(searchIntervals[i].end).toString());
+
+            // Start and end could be looked up in the hashmap.
             if (start !== null && end !== null) {
                 match.lineMatches = Array.from({ length: end - start + 1 }, (_, index) => start! + index); //array containing numbers from start to end
                 hashTime += performance.now() - hashTimeStart;
                 hashCount++;
             }
+            // Start or end may be null. We will use binary search
             else {
                 let binaryTimeStart = performance.now()
                 match = this.findNearestZone(searchIntervals[i], start != null ? start : startOfLastFoundMatch);
@@ -50,6 +57,9 @@ export abstract class LogSearcher {
         return MonaaZoneMatches
     }
 
+    /**
+     * Finds an individual match in the case where the start or end could not be found via the hashmap. 
+     */
     public static findNearestZone(searchInterval: SearchInterval, startOfLastMatch: number): MonaaZone {
         let foundmatch = new MonaaZone();
         let startingIndex = this.findNearestIndex(startOfLastMatch, searchInterval);
@@ -63,14 +73,16 @@ export abstract class LogSearcher {
         return foundmatch;
     }
 
+    /**
+     * 
+     * Converts the timestamps to ms when a file is uploaded
+     */
     public static updateTimestampInfo(logFile: string[]) {
-        let prevLineTime: number = 0;
         const timestamps: number[] = [];
 
         logFile.forEach((line: string) => {
             const eventTimeStamp = parseInt(LogFormatter.convertDateToMs(extractTimeStamp(line)));
             timestamps.push(eventTimeStamp);
-            prevLineTime = eventTimeStamp;
         });
 
         let averageTimegrowth: number = (timestamps[timestamps.length - 1] - timestamps[0]) / timestamps.length
@@ -79,15 +91,19 @@ export abstract class LogSearcher {
         this.averageGrowth = averageTimegrowth;
     }
 
+    /** Used to find the starting index.  */
     private static findNearestIndex(lastFoundIndex: number, searchInterval: SearchInterval): number {
         const firstTimestamp = this.timestamps[0];
         const difference = searchInterval.start - firstTimestamp;
         const multiplum = difference / this.averageGrowth;
         let startingIndex = Math.floor(multiplum);
 
-        if (searchInterval.start < this.timestamps[startingIndex]) { // search in left side if we overshot estimation
+        // search in left side if we overshot estimation
+        if (searchInterval.start < this.timestamps[startingIndex]) { 
             startingIndex = this.binarySearch(searchInterval.start, lastFoundIndex, startingIndex);
-        } else if (searchInterval.start > this.timestamps[startingIndex]) {//search in right side of array if we undershot estimation
+        } 
+        // search in right side of array if we undershot estimation
+        else if (searchInterval.start > this.timestamps[startingIndex]) {
             startingIndex = startingIndex < lastFoundIndex ? lastFoundIndex : startingIndex;
             startingIndex = this.binarySearch(searchInterval.start, startingIndex, this.timestamps.length - 1);
         }else {

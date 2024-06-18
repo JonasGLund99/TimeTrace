@@ -1,6 +1,10 @@
 import { extractEventFromLine } from "./extractEventFromLine";
 import { extractTimeStamp } from "./extractTimeStamp";
 
+
+/**
+ * @returns All the event strings in a log file 
+ */
 export function extractEventsFromFileLines(fileLines: string[]): string[] {
 
     let events = fileLines.map((line, i) => {
