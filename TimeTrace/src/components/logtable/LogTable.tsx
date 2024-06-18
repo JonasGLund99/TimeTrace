@@ -48,6 +48,7 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         scrollToMonaaMatch();
     }, [monaaMatchIndex]);
 
+    //Ensures that whenever the currentPageSpan changes we still listen to the scroll event on the logtable.
     useEffect(() => {
         const logTable = document.querySelector("#log-table");
         if (!logTable) return;
@@ -61,6 +62,9 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         setFilteredFileLines(filterAllMappedUnmappedLines(mapEventsToFileLine(events), shownLinesMode, mappings))
     }, [shownLinesMode])
 
+    /**
+     * Searches the logfile using either {@link searchUsingRegex} or {@link searchStandard} based on the boolean {@link advancedSearchMode}
+     */
     function searchLog(query: string) {
         if (query === "") {
             setFilteredFileLines(filterAllMappedUnmappedLines(mapEventsToFileLine(events), shownLinesMode, mappings));
@@ -145,6 +149,9 @@ function LogTable({ mappingsAreEditable }: LogTableProps) {
         }
     };
 
+    /**
+     * @returns A boolean that indicates whether a line is highlighted (that is when it is included in a currently shown match) 
+     */
     function lineIsHighlighted(line: number): boolean {
         if (mappingsAreEditable || !matches[monaaMatchIndex]) return false;
         let highlightLine = false;

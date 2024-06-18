@@ -3,6 +3,10 @@ import { useContext } from 'react';
 import Button from "../button/Button";
 import { ButtonStyle } from "../button/IButtonProps";
 
+/**
+ * 
+ * @returns A pop up used for non errors that display some sort of information.
+ */
 export default function Modal() {
     const { modalObj, setModal } = useContext(AppdataContext);
 

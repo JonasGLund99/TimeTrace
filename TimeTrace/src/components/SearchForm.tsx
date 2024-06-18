@@ -14,6 +14,10 @@ interface SearchFormProps {
     tooltip?: string;
 }
 
+/**
+ * 
+ * @returns A searchform which allows the user to type in a TRE and perform a search 
+ */
 export default function SearchForm({ tooltip }: SearchFormProps) {
     const { tre, setTre } = useContext(AppdataContext);
     const { mappings } = useContext(AppdataContext);
@@ -28,11 +32,17 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
     const { linesPerPage } = useContext(LogTableContext);
     const { currentPageSpan, setCurrentPageSpan } = useContext(LogTableContext);
 
+    /**
+     * we preventDefault on the event to stop a request from being sent in the browser - this would cause a 'page refresh' 
+     */
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         callMonaa(tre);
     };
 
+    /**
+     * Finds the first match in the match set.
+     */
     function findFirstMatch(matches: MonaaZone[]) {
         if (matches.length === 0) {
             setShownLines(filteredFileLines.slice(0, linesPerPage));
@@ -56,6 +66,9 @@ export default function SearchForm({ tooltip }: SearchFormProps) {
         setMonaaMatchIndex(-1); //set to -1 to trigger a scroll to the first match (when use effect on LogTable sets it to 0 after this)
     }
 
+    /**
+     * Gets the results from Monaa using a tre. 
+     */
     async function callMonaa(tre: string) {
         setLoading(true);
         if (!uploadedFile) return; //should never happen

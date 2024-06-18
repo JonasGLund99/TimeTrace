@@ -4,6 +4,10 @@ import MappedItemsList from "../components/MappedItemsList";
 import LogTable from "../components/logtable/LogTable";
 import LogTableProvider from '../context/LogTableContext';
 
+/**
+ * 
+ * @returns The page to create mappings
+ */
 function MappingsPage() {
 
     function handleOnBeforeUnload(e: BeforeUnloadEvent) {
